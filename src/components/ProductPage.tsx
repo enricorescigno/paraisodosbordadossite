@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { ArrowRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
@@ -340,23 +340,28 @@ const categoryTitles: Record<string, string> = {
 };
 
 const ProductPage = () => {
-  const { categoryName } = useParams<{ categoryName: string }>();
+  const location = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    if (categoryName) {
-      // In a real application, this would be an API call
-      setLoading(true);
-      setTimeout(() => {
-        const categoryProducts = allProducts[categoryName] || [];
-        setProducts(categoryProducts);
-        setLoading(false);
-      }, 500); // Simulate network request
-    }
-  }, [categoryName]);
+    // Extract the category from the URL path
+    const pathParts = location.pathname.split('/');
+    const categoryPath = pathParts[pathParts.length - 1];
+    
+    // In a real application, this would be an API call
+    setLoading(true);
+    setTimeout(() => {
+      const categoryProducts = allProducts[categoryPath] || [];
+      setProducts(categoryProducts);
+      setLoading(false);
+    }, 500); // Simulate network request
+  }, [location.pathname]);
   
-  const categoryTitle = categoryName ? categoryTitles[categoryName] || categoryName : 'Produtos';
+  // Extract the category from the URL path for title
+  const pathParts = location.pathname.split('/');
+  const categoryPath = pathParts[pathParts.length - 1];
+  const categoryTitle = categoryTitles[categoryPath] || categoryPath;
 
   return (
     <div className="min-h-screen bg-white">
