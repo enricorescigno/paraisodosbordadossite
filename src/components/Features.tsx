@@ -1,23 +1,29 @@
-import { Medal, Truck, CreditCard, HeadphonesIcon } from 'lucide-react';
+
+import { Medal, Headphones, Scale, ClipboardCheck } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+
 const features = [{
   icon: Medal,
   title: "Qualidade Garantida",
   description: "Todos os nossos produtos são cuidadosamente confeccionados com materiais de primeira linha."
 }, {
-  icon: Truck,
-  title: "Entrega Rápida",
-  description: "Enviamos seu pedido com rapidez e segurança para todo o Brasil."
+  icon: Headphones,
+  title: "Atendimento Especializado",
+  description: "Nossa equipe de especialistas está pronta para tirar suas dúvidas e oferecer um atendimento personalizado."
 }, {
-  icon: CreditCard,
-  title: "Pagamento Seguro",
-  description: "Diversas opções de pagamento com total segurança para suas compras."
+  icon: Scale,
+  title: "Preço Justo",
+  description: "Garantimos preços competitivos sem abrir mão da qualidade dos nossos bordados e serviços."
 }, {
-  icon: HeadphonesIcon,
-  title: "Suporte Especializado",
-  description: "Nossa equipe está sempre pronta para auxiliar em qualquer dúvida ou necessidade."
+  icon: ClipboardCheck,
+  title: "Clique aqui e faça seu orçamento",
+  description: "Solicite seu orçamento personalizado agora mesmo e descubra como podemos bordar seus sonhos!",
+  isClickable: true,
+  link: "https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20fazer%20um%20orçamento!"
 }];
+
 const Features = () => {
   const {
     ref,
@@ -26,6 +32,7 @@ const Features = () => {
     triggerOnce: true,
     threshold: 0.1
   });
+  
   return <section ref={ref} className="py-16 bg-white px-[10px]">
       <div className="container mx-auto px-4">
         <motion.div initial={{
@@ -49,28 +56,59 @@ const Features = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => {
           const Icon = feature.icon;
-          return <motion.div key={index} initial={{
-            opacity: 0,
-            y: 30
-          }} animate={inView ? {
-            opacity: 1,
-            y: 0
-          } : {
-            opacity: 0,
-            y: 30
-          }} transition={{
-            duration: 0.5,
-            delay: index * 0.1
-          }} className="flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 px-[5px] py-[5px]">
-                <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-50 text-brand-red mb-5">
-                  <Icon size={30} />
+          const FeatureContent = () => (
+            <>
+              <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-50 text-brand-red mb-5">
+                <Icon size={30} />
+              </div>
+              <h3 className="text-brand-dark mb-3 font-thin text-xl">{feature.title}</h3>
+              <p className="text-gray-600 text-center text-sm">{feature.description}</p>
+            </>
+          );
+          
+          const cardClass = "flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 px-[5px] py-[5px]";
+          
+          return (
+            <motion.div 
+              key={index} 
+              initial={{
+                opacity: 0,
+                y: 30
+              }} 
+              animate={inView ? {
+                opacity: 1,
+                y: 0
+              } : {
+                opacity: 0,
+                y: 30
+              }} 
+              transition={{
+                duration: 0.5,
+                delay: index * 0.1
+              }} 
+              className={feature.isClickable ? "cursor-pointer" : ""}
+            >
+              {feature.isClickable ? (
+                <a 
+                  href={feature.link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className={`${cardClass} hover:bg-red-50/50`}
+                  aria-label={`Link para ${feature.title}`}
+                >
+                  <FeatureContent />
+                </a>
+              ) : (
+                <div className={cardClass}>
+                  <FeatureContent />
                 </div>
-                <h3 className="text-brand-dark mb-3 font-thin text-xl">{feature.title}</h3>
-                <p className="text-gray-600 text-center text-sm">{feature.description}</p>
-              </motion.div>;
+              )}
+            </motion.div>
+          );
         })}
         </div>
       </div>
     </section>;
 };
+
 export default Features;
