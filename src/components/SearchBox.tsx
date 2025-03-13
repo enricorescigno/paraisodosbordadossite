@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import { searchProducts, getProductUrl, Product } from '../utils/searchUtils';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface SearchBoxProps {
   className?: string;
@@ -15,17 +16,22 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
   const [isOpen, setIsOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  // Handle search on input change
+  // Handle search on input change with debounce
   useEffect(() => {
-    if (searchQuery.length > 1) {
-      const foundProducts = searchProducts(searchQuery);
-      setResults(foundProducts);
-      setIsOpen(true);
-    } else {
-      setResults([]);
-      setIsOpen(false);
-    }
+    const delayDebounceFn = setTimeout(() => {
+      if (searchQuery.length > 1) {
+        const foundProducts = searchProducts(searchQuery);
+        setResults(foundProducts);
+        setIsOpen(true);
+      } else {
+        setResults([]);
+        setIsOpen(false);
+      }
+    }, 300); // 300ms delay
+
+    return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
   // Close dropdown when clicking outside
@@ -67,18 +73,35 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
     setSearchQuery('');
     setResults([]);
     setIsOpen(false);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  const highlightMatch = (text: string, query: string) => {
+    if (!query) return text;
+    
+    const regex = new RegExp(`(${query})`, 'gi');
+    const parts = text.split(regex);
+    
+    return parts.map((part, i) => 
+      regex.test(part) ? <span key={i} className="bg-yellow-100 font-semibold">{part}</span> : part
+    );
   };
 
   return (
     <div ref={searchRef} className={`relative ${className}`}>
       <form onSubmit={handleSearchSubmit} className="w-full">
         <div className="relative w-full">
-          <input
+          <motion.input
+            ref={inputRef}
             type="text"
             placeholder="O que você procura?"
             className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
+            whileFocus={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
           />
           {searchQuery ? (
             <button
@@ -89,46 +112,79 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
               <X className="h-5 w-5" />
             </button>
           ) : null}
-          <button
+          <motion.button
             type="submit"
             className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-brand-red rounded-r-full"
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
           >
             <Search className="h-5 w-5" />
-          </button>
+          </motion.button>
         </div>
       </form>
 
       {/* Search results dropdown */}
-      {isOpen && results.length > 0 && (
-        <div className={`absolute top-full mt-1 w-full bg-white shadow-lg rounded-lg z-50 max-h-[80vh] overflow-y-auto ${mobileView ? 'left-0' : ''}`}>
-          <div className="py-2">
-            <div className="px-4 py-2 text-sm font-medium text-gray-500 border-b">
-              Resultados da pesquisa
-            </div>
-            {results.map((product) => (
-              <div
-                key={product.id}
-                className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => handleResultClick(product)}
-              >
-                <div className="text-sm font-medium">{product.name}</div>
-                <div className="text-xs text-gray-500">
-                  {product.type === 'portfolio' ? 'Portfólio: ' : 'Produto: '}
-                  {product.category}
-                </div>
+      <AnimatePresence>
+        {isOpen && results.length > 0 && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className={`absolute top-full mt-1 w-full bg-white shadow-lg rounded-lg z-50 max-h-[80vh] overflow-y-auto ${mobileView ? 'left-0' : ''}`}
+          >
+            <div className="py-2">
+              <div className="px-4 py-2 text-sm font-medium text-gray-500 border-b">
+                Resultados da pesquisa
               </div>
-            ))}
-          </div>
-        </div>
-      )}
+              {results.map((product) => (
+                <motion.div
+                  key={product.id}
+                  className="px-4 py-2 hover:bg-gray-100 cursor-pointer flex items-center gap-3"
+                  onClick={() => handleResultClick(product)}
+                  whileHover={{ backgroundColor: "#f3f4f6" }}
+                >
+                  {product.imageUrl ? (
+                    <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                      <img 
+                        src={product.imageUrl} 
+                        alt={product.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center flex-shrink-0">
+                      <span className="text-gray-400 text-xs">Sem imagem</span>
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <div className="text-sm font-medium">{highlightMatch(product.name, searchQuery)}</div>
+                    <div className="text-xs text-gray-500">
+                      {product.type === 'portfolio' ? 'Portfólio: ' : 'Produto: '}
+                      {highlightMatch(product.category, searchQuery)}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {isOpen && searchQuery.length > 1 && results.length === 0 && (
-        <div className="absolute top-full mt-1 w-full bg-white shadow-lg rounded-lg z-50">
-          <div className="p-4 text-sm text-gray-500">
-            Nenhum resultado encontrado para "{searchQuery}"
-          </div>
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && searchQuery.length > 1 && results.length === 0 && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="absolute top-full mt-1 w-full bg-white shadow-lg rounded-lg z-50"
+          >
+            <div className="p-4 text-sm text-gray-500">
+              Nenhum resultado encontrado para "{searchQuery}"
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

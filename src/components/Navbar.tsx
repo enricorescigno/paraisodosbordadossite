@@ -1,11 +1,14 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X, ChevronDown, User } from 'lucide-react';
 import SearchBox from './SearchBox';
 import MenubarNav from './MenubarNav';
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -15,6 +18,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
   return <header className="w-full bg-white z-50">
       {/* Top bar with account, language, etc. */}
       
@@ -24,7 +28,7 @@ const Navbar = () => {
         <div className="container-custom flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="relative z-10">
-            <img alt="Paraíso dos Bordados" src="/lovable-uploads/01c74faa-daf1-4918-a69a-9de345d8901d.png" className="h-14 md:h-16 object-scale-down" />
+            <img alt="Paraíso dos Bordados" src="/lovable-uploads/01c74faa-daf1-4918-a69a-9de345d8901d.png" className="h-16 md:h-20 object-scale-down" />
           </Link>
 
           {/* Search Bar */}
@@ -52,8 +56,8 @@ const Navbar = () => {
       </div>
 
       {/* Categories Navigation */}
-      <div className="bg-brand-light border-t border-b border-gray-200 hidden lg:flex justify-center">
-        <div className="container max-w-4xl mx-auto">
+      <div className="bg-brand-light border-t border-b border-gray-200 hidden lg:block">
+        <div className="container mx-auto flex justify-center">
           <MenubarNav />
         </div>
       </div>
@@ -158,4 +162,5 @@ const Navbar = () => {
       </div>
     </header>;
 };
+
 export default Navbar;

@@ -1,4 +1,7 @@
+
 import { useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+
 const partners = [{
   name: "Doutor Pet",
   logo: "/lovable-uploads/2621c87d-6ff0-42bb-9c13-0598532a29ba.png"
@@ -15,54 +18,120 @@ const partners = [{
   name: "NX Boats",
   logo: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png"
 }];
-const Partners = () => {
+
+interface PartnersProps {
+  showTitle?: boolean;
+  fullPage?: boolean;
+}
+
+const Partners = ({ showTitle = true, fullPage = false }: PartnersProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    if (fullPage) return; // Don't animate on full page view
+    
     const scrollElement = scrollRef.current;
     if (!scrollElement) return;
+    
     const scrollWidth = scrollElement.scrollWidth;
     const clientWidth = scrollElement.clientWidth;
+    
     if (scrollWidth <= clientWidth) return;
+    
     let direction = 1;
     let position = 0;
     const speed = 0.5;
+    
     const scroll = () => {
       if (!scrollElement) return;
       position += speed * direction;
+      
       if (position >= scrollWidth - clientWidth) {
         direction = -1;
       } else if (position <= 0) {
         direction = 1;
       }
+      
       scrollElement.scrollLeft = position;
       requestAnimationFrame(scroll);
     };
+    
     const animationId = requestAnimationFrame(scroll);
+    
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, []);
-  return <section className="bg-brand-light py-[5px]">
+  }, [fullPage]);
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+  };
+
+  return (
+    <section className={`bg-brand-light py-8 ${fullPage ? 'rounded-xl' : ''}`}>
       <div className="container-custom">
-        <div className="text-center mb-10">
-          <h2 className="text-2xl font-semibold text-brand-dark">Nossos Parceiros</h2>
-        </div>
-        
-        <div className="relative overflow-hidden">
-          <div className="flex space-x-8 py-4 overflow-x-auto scrollbar-hide" ref={scrollRef}>
-            {partners.map((partner, index) => <div key={index} className="flex-shrink-0 glass rounded-lg px-6 py-4 flex items-center justify-center min-w-[180px] h-20">
-                <img src={partner.logo} alt={partner.name} className="max-h-12 max-w-full" />
-              </div>)}
-            
-            {partners.map((partner, index) => <div key={`duplicate-${index}`} className="flex-shrink-0 glass rounded-lg px-6 py-4 flex items-center justify-center min-w-[180px] h-20">
-                <img src={partner.logo} alt={partner.name} className="max-h-12 max-w-full" />
-              </div>)}
+        {showTitle && (
+          <div className="text-center mb-10">
+            <h2 className="text-2xl font-semibold text-brand-dark">Nossos Parceiros</h2>
           </div>
-          
-          <div className="absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-brand-light to-transparent"></div>
-          <div className="absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-brand-light to-transparent"></div>
-        </div>
+        )}
+        
+        {fullPage ? (
+          <motion.div 
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {partners.map((partner, index) => (
+              <motion.div 
+                key={index} 
+                variants={item}
+                className="glass rounded-lg p-8 flex flex-col items-center justify-center h-64 transition-transform hover:scale-105"
+              >
+                <img 
+                  src={partner.logo} 
+                  alt={partner.name} 
+                  className="max-h-32 max-w-full mb-4" 
+                />
+                <h3 className="text-xl font-medium text-brand-dark">{partner.name}</h3>
+              </motion.div>
+            ))}
+          </motion.div>
+        ) : (
+          <div className="relative overflow-hidden">
+            <div className="flex space-x-8 py-4 overflow-x-auto scrollbar-hide" ref={scrollRef}>
+              {partners.map((partner, index) => (
+                <div key={index} className="flex-shrink-0 glass rounded-lg px-8 py-6 flex items-center justify-center min-w-[220px] h-28">
+                  <img src={partner.logo} alt={partner.name} className="max-h-16 max-w-full" />
+                </div>
+              ))}
+              
+              {partners.map((partner, index) => (
+                <div key={`duplicate-${index}`} className="flex-shrink-0 glass rounded-lg px-8 py-6 flex items-center justify-center min-w-[220px] h-28">
+                  <img src={partner.logo} alt={partner.name} className="max-h-16 max-w-full" />
+                </div>
+              ))}
+            </div>
+            
+            <div className="absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-brand-light to-transparent"></div>
+            <div className="absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-brand-light to-transparent"></div>
+          </div>
+        )}
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default Partners;
