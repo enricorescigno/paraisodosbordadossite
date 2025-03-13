@@ -1,14 +1,11 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X, ChevronDown, User } from 'lucide-react';
 import SearchBox from './SearchBox';
 import MenubarNav from './MenubarNav';
-
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -18,31 +15,16 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   return <header className="w-full bg-white z-50">
       {/* Top bar with account, language, etc. */}
-      <div className="bg-brand-light py-2 border-b border-gray-200">
-        <div className="container-custom flex justify-end items-center">
-          <div className="flex items-center space-x-6 text-sm">
-            <Link to="/minha-conta" className="hover:text-brand-red transition-colors">
-              Minha Conta
-            </Link>
-            <Link to="/favoritos" className="hover:text-brand-red transition-colors">
-              Favoritos
-            </Link>
-            <Link to="/ajuda" className="hover:text-brand-red transition-colors">
-              Central de Ajuda
-            </Link>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Main navbar with logo, search and cart */}
       <div className={`py-3 ${isScrolled ? 'shadow-sm' : ''}`}>
         <div className="container-custom flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="relative z-10">
-            <img alt="Paraíso dos Bordados" className="h-14 md:h-16" src="/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png" />
+            <img alt="Paraíso dos Bordados" src="/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png" className="h-15 md:h-17 object-fill" />
           </Link>
 
           {/* Search Bar */}
@@ -52,10 +34,7 @@ const Navbar = () => {
 
           {/* Right Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
-            <Link to="/login" className="flex flex-col items-center text-brand-dark group">
-              <User className="h-6 w-6 group-hover:text-brand-red transition-colors" />
-              <span className="text-xs mt-1">Entrar</span>
-            </Link>
+            
             <Link to="/carrinho" className="flex flex-col items-center text-brand-dark group relative">
               <ShoppingCart className="h-6 w-6 group-hover:text-brand-red transition-colors" />
               <span className="absolute -top-2 -right-2 bg-brand-red text-white text-xs h-5 w-5 rounded-full flex items-center justify-center">
@@ -179,5 +158,4 @@ const Navbar = () => {
       </div>
     </header>;
 };
-
 export default Navbar;
