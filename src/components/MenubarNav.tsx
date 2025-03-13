@@ -3,7 +3,7 @@ import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, Me
 const MenubarNav = () => {
   return <Menubar className="w-full border-none bg-brand-light rounded-none py-[8px] my-0 mx-[120px]">
       <MenubarMenu>
-        <MenubarTrigger className="font-medium text-left mx-[40px]">Início</MenubarTrigger>
+        <MenubarTrigger className="font-medium text-left mx-0">Início</MenubarTrigger>
         <MenubarContent>
           <MenubarItem asChild>
             <Link to="/">Página Inicial</Link>
