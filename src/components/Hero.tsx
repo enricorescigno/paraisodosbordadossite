@@ -90,7 +90,7 @@ const Hero = () => {
       {/* Image Background with overlay */}
       <div className="absolute inset-0 bg-black/40 z-10"></div>
       <img 
-        src="/lovable-uploads/54f438f6-ea78-4b71-aaae-ed64ac172ecb.png" 
+        src="/lovable-uploads/3eac496f-461d-4e47-9cc8-af09ad0873a2.png" 
         alt="Bordado luxuoso com detalhes em vermelho e dourado" 
         className="absolute inset-0 w-full h-full object-cover scale-[1.01] transition-opacity duration-1000 opacity-100"
         onError={(e) => {
