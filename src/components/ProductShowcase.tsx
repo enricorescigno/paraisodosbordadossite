@@ -9,36 +9,42 @@ interface Product {
   image: string;
   category: string;
   rating: number;
+  portfolioType: string;
 }
 
+// Updated products to match portfolio categories from MenubarNav
 const products: Product[] = [
   {
-    id: 101, // Updated to match ProductDetailPage ID
-    name: "Kit Bordado Floral",
-    image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
-    category: "Kits",
-    rating: 4.8
+    id: 301,
+    name: "Boné Personalizado Empresarial",
+    image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop",
+    category: "Bordado em Boné",
+    rating: 4.8,
+    portfolioType: "bordado-bone"
   },
   {
-    id: 140, // Updated to match a banho product
-    name: "Toalha Bordada à Mão",
-    image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
-    category: "Bordados Manuais",
-    rating: 5.0
-  },
-  {
-    id: 310, // Updated to match necessaire product
-    name: "Necessaire Bordada",
+    id: 310,
+    name: "Necessaire Floral Bordada",
     image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
-    category: "Acessórios",
-    rating: 4.7
+    category: "Bordado em Necessaire",
+    rating: 4.9,
+    portfolioType: "bordado-necessaire"
   },
   {
-    id: 150, // Updated to match infantil product
-    name: "Kit Infantil Bordado",
-    image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=500&auto=format&fit=crop",
-    category: "Bordados à Máquina",
-    rating: 4.9
+    id: 320,
+    name: "Bolsa Tote com Bordado",
+    image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
+    category: "Bordado em Bolsa",
+    rating: 4.7,
+    portfolioType: "bordado-bolsa"
+  },
+  {
+    id: 330,
+    name: "Jaleco Médico Personalizado",
+    image: "https://images.unsplash.com/photo-1524901548305-08eeddc35080?q=80&w=500&auto=format&fit=crop",
+    category: "Bordado em Jaleco",
+    rating: 5.0,
+    portfolioType: "bordado-jaleco"
   }
 ];
 
@@ -52,14 +58,17 @@ const ProductShowcase = () => {
   const [visibleProducts, setVisibleProducts] = useState<Product[]>(products);
   const [animateProducts, setAnimateProducts] = useState(false);
   
-  const categories = ["all", ...new Set(products.map(product => product.category.toLowerCase().replace(' ', '-')))];
+  // Extract unique portfolio categories for tabs
+  const categories = ["all", ...new Set(products.map(product => product.portfolioType))];
   
   const categoryLabels: {[key: string]: string} = {
     "all": "Todos",
-    "kits": "Kits",
-    "bordados-manuais": "Bordados Manuais",
-    "acessórios": "Acessórios",
-    "bordados-à-máquina": "Bordados à Máquina"
+    "bordado-bone": "Bordado em Boné",
+    "bordado-necessaire": "Bordado em Necessaire",
+    "bordado-bolsa": "Bordado em Bolsa",
+    "bordado-jaleco": "Bordado em Jaleco",
+    "bordado-infantis": "Bordado Infantil",
+    "bordado-toalha-banho": "Bordado em Toalha"
   };
 
   useEffect(() => {
@@ -70,7 +79,7 @@ const ProductShowcase = () => {
         setVisibleProducts(products);
       } else {
         const filtered = products.filter(
-          product => product.category.toLowerCase().replace(' ', '-') === activeTab
+          product => product.portfolioType === activeTab
         );
         setVisibleProducts(filtered);
       }
@@ -84,9 +93,9 @@ const ProductShowcase = () => {
     <section className="section-padding bg-brand-light">
       <div className="container-custom">
         <div className="text-center">
-          <h2 className="section-title">Nossos Produtos</h2>
+          <h2 className="section-title">Nosso Portfólio de Bordados</h2>
           <p className="section-subtitle">
-            Explore nossa seleção de bordados e acessórios de alta qualidade, feitos com amor e dedicação.
+            Conheça nossos trabalhos de bordado personalizados para diversas aplicações, feitos com qualidade e atenção aos detalhes.
           </p>
         </div>
         
@@ -160,10 +169,10 @@ const ProductShowcase = () => {
         {/* View All Link */}
         <div className="flex justify-center mt-12">
           <Link 
-            to="/produtos"
+            to="/portfolio"
             className="btn-secondary flex items-center gap-2"
           >
-            Ver Todos os Produtos
+            Ver Todo o Portfólio
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
