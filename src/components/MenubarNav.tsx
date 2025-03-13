@@ -52,7 +52,7 @@ const MenubarNav = () => {
           </MenubarSub>
           <MenubarSeparator />
           <MenubarItem asChild>
-            <Link to="/produtos">Ver Todos os Produtos</Link>
+            <Link to="/categoria/cama-mesa-banho">Ver Todos os Produtos</Link>
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>

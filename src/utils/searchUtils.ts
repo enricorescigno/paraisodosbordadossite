@@ -97,48 +97,71 @@ export const products: Product[] = [
   }
 ];
 
-// Function to search products based on query - now with improved matching
+// Function to search products based on query - with improved matching and prioritization
 export function searchProducts(query: string): Product[] {
-  if (!query) return [];
+  if (!query || query.trim().length < 2) return [];
   
-  const searchTerms = query.toLowerCase().split(' ').filter(term => term.length > 0);
+  const normalizedQuery = query.toLowerCase().trim();
+  const searchTerms = normalizedQuery.split(' ').filter(term => term.length > 0);
   
-  const results = products.filter(product => {
-    // Check product name - higher priority
-    if (product.name.toLowerCase().includes(query.toLowerCase())) return true;
+  // Score-based search for better relevance
+  const scoredResults = products.map(product => {
+    let score = 0;
     
-    // Check category - medium priority
-    if (product.category.toLowerCase().includes(query.toLowerCase())) return true;
+    // Check for exact product name match (highest priority)
+    if (product.name.toLowerCase() === normalizedQuery) {
+      score += 100;
+    }
+    // Check for partial product name match
+    else if (product.name.toLowerCase().includes(normalizedQuery)) {
+      score += 50;
+    }
     
-    // Check description - medium priority
-    if (product.description.toLowerCase().includes(query.toLowerCase())) return true;
-    
-    // Check keywords - for partial matches across terms
-    if (product.keywords) {
-      for (const term of searchTerms) {
-        if (product.keywords.some(keyword => keyword.toLowerCase().includes(term))) {
-          return true;
-        }
+    // Check individual terms in product name
+    for (const term of searchTerms) {
+      if (product.name.toLowerCase().includes(term)) {
+        score += 30;
       }
     }
     
-    return false;
-  });
-
-  // Sort results by relevance - exact matches first, then partial matches
-  return results.sort((a, b) => {
-    const aNameMatch = a.name.toLowerCase().includes(query.toLowerCase());
-    const bNameMatch = b.name.toLowerCase().includes(query.toLowerCase());
+    // Check keywords
+    if (product.keywords) {
+      // Check for exact keyword match
+      if (product.keywords.some(keyword => keyword.toLowerCase() === normalizedQuery)) {
+        score += 40;
+      }
+      // Check for keyword partial matches
+      for (const term of searchTerms) {
+        const matchingKeywords = product.keywords.filter(keyword => 
+          keyword.toLowerCase().includes(term)
+        );
+        score += matchingKeywords.length * 10;
+      }
+    }
     
-    if (aNameMatch && !bNameMatch) return -1;
-    if (!aNameMatch && bNameMatch) return 1;
+    // Check category
+    if (product.category.toLowerCase().includes(normalizedQuery)) {
+      score += 20;
+    }
     
-    return 0;
+    // Check description (lowest priority)
+    if (product.description.toLowerCase().includes(normalizedQuery)) {
+      score += 10;
+    }
+    
+    return { product, score };
   });
+  
+  // Filter out products with no relevance and sort by score
+  const filteredResults = scoredResults
+    .filter(result => result.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map(result => result.product);
+  
+  return filteredResults;
 }
 
-// Function to get product URL - updated to ensure correct paths for portfolio items
+// Function to get product URL
 export function getProductUrl(product: Product): string {
-  // All products and portfolio items should go to the product detail page
   return `/produto/${product.id}`;
 }

@@ -2,11 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+
 const Hero = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.addEventListener('loadeddata', () => {
@@ -33,6 +35,7 @@ const Hero = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
   const titleVariants = {
     hidden: {
       opacity: 0,
@@ -47,6 +50,7 @@ const Hero = () => {
       }
     }
   };
+
   const descriptionVariants = {
     hidden: {
       opacity: 0,
@@ -62,6 +66,7 @@ const Hero = () => {
       }
     }
   };
+
   const buttonVariants = {
     hidden: {
       opacity: 0,
@@ -83,6 +88,7 @@ const Hero = () => {
       }
     }
   };
+
   return <section ref={containerRef} className="relative w-full h-screen overflow-hidden">
       {/* Video Background */}
       <div className="absolute inset-0 bg-black/30 z-10"></div>
@@ -105,7 +111,7 @@ const Hero = () => {
           
           <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4" initial="hidden" animate="visible" variants={buttonVariants}>
             <motion.div whileHover="hover" variants={buttonVariants}>
-              <Link to="/produtos" className="btn-primary flex items-center gap-2 px-6 py-3 shadow-md">
+              <Link to="/categoria/cama-mesa-banho" className="btn-primary flex items-center gap-2 px-6 py-3 shadow-md">
                 Explorar Produtos
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>
@@ -138,4 +144,5 @@ const Hero = () => {
       </div>
     </section>;
 };
+
 export default Hero;

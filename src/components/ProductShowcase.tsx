@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
+
 interface Product {
   id: number;
   name: string;
@@ -46,6 +47,7 @@ const products: Product[] = [{
 const generateWhatsAppMessage = (productName: string): string => {
   return encodeURIComponent(`Olá! Vi o produto ${productName.toLowerCase()} e gostaria de fazer um orçamento!`);
 };
+
 const ProductShowcase = () => {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [visibleProducts, setVisibleProducts] = useState<Product[]>(products);
@@ -147,4 +149,5 @@ const ProductShowcase = () => {
       </div>
     </section>;
 };
+
 export default ProductShowcase;
