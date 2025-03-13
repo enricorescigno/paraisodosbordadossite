@@ -12,6 +12,8 @@ import PortfolioPage from "./components/PortfolioPage";
 import ProductDetailPage from "./components/ProductDetailPage";
 import OurPartners from "./pages/OurPartners";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AllProductsPage from "./components/AllProductsPage";
+import AllPortfolioPage from "./components/AllPortfolioPage";
 
 const queryClient = new QueryClient();
 
@@ -23,7 +25,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/produtos" element={<ProductPage />} />
+          <Route path="/produtos" element={<AllProductsPage />} />
           
           {/* Main Categories */}
           <Route path="/categoria/cama-mesa-banho" element={<ProductPage />} />
@@ -42,7 +44,7 @@ const App = () => (
           <Route path="/categoria/pantufa" element={<ProductPage />} />
           
           {/* Portfolio Pages */}
-          <Route path="/portfolio" element={<PortfolioPage />} />
+          <Route path="/portfolio" element={<AllPortfolioPage />} />
           <Route path="/portfolio/bordado-bone" element={<PortfolioPage />} />
           <Route path="/portfolio/bordado-necessaire" element={<PortfolioPage />} />
           <Route path="/portfolio/bordado-bolsa" element={<PortfolioPage />} />

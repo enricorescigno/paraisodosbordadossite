@@ -16,6 +16,10 @@ const MenubarNav = () => {
       <MenubarMenu>
         <MenubarTrigger className="font-medium text-center mx-2">Todas as Categorias</MenubarTrigger>
         <MenubarContent>
+          <MenubarItem asChild>
+            <Link to="/produtos">Ver Todos os Produtos</Link>
+          </MenubarItem>
+          <MenubarSeparator />
           <MenubarSub>
             <MenubarSubTrigger>Cama, Mesa e Banho</MenubarSubTrigger>
             <MenubarSubContent>
@@ -50,10 +54,6 @@ const MenubarNav = () => {
               </MenubarItem>
             </MenubarSubContent>
           </MenubarSub>
-          <MenubarSeparator />
-          <MenubarItem asChild>
-            <Link to="/categoria/cama-mesa-banho">Ver Todos os Produtos</Link>
-          </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
 

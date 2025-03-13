@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -111,7 +112,7 @@ const Hero = () => {
           
           <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-4" initial="hidden" animate="visible" variants={buttonVariants}>
             <motion.div whileHover="hover" variants={buttonVariants}>
-              <Link to="/categoria/cama-mesa-banho" className="btn-primary flex items-center gap-2 px-6 py-3 shadow-md">
+              <Link to="/produtos" className="btn-primary flex items-center gap-2 px-6 py-3 shadow-md">
                 Explorar Produtos
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
               </Link>

@@ -76,6 +76,11 @@ const Navbar = () => {
               Início
             </Link>
             
+            {/* Ver Todos os Produtos - Mobile */}
+            <Link to="/produtos" className="text-lg font-medium py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>
+              Todos os Produtos
+            </Link>
+            
             {/* Cama, Mesa e Banho - Mobile */}
             <div className="py-2 border-b border-gray-100">
               <Link to="/categoria/cama-mesa-banho" className="text-lg font-medium mb-2" onClick={() => setIsMobileMenuOpen(false)}>

@@ -33,7 +33,17 @@ export const products: Product[] = [
     keywords: ["boné", "bone", "personalizado", "empresarial", "bordado", "empresa"],
     slug: "bone-personalizado-empresarial",
     type: "portfolio",
-    imageUrl: "/lovable-uploads/5db187fa-df04-492a-883f-c007af693e55.png"
+    imageUrl: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop"
+  },
+  {
+    id: "302", // ID matching portfolio bone
+    name: "Boné Esportivo Bordado",
+    category: "bordado-bone",
+    description: "Bordado com símbolos esportivos, perfeito para equipes e torcedores",
+    keywords: ["boné", "bone", "esportivo", "time", "bordado"],
+    slug: "bone-esportivo-bordado",
+    type: "portfolio",
+    imageUrl: "https://images.unsplash.com/photo-1580880783109-4d9daf311df5?q=80&w=500&auto=format&fit=crop"
   },
   {
     id: "330", // ID matching portfolio jaleco
