@@ -39,13 +39,17 @@ const Navbar = () => {
     >
       <div className="container-custom mx-auto">
         <nav className="h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center">
-            <img 
-              src="/lovable-uploads/4fa3ceb4-eef0-484e-94d0-c94fe355c748.png" 
-              alt="Paraíso dos Bordados" 
-              className="h-10 w-auto"
-            />
-          </Link>
+          <div className="flex items-center space-x-6">
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/lovable-uploads/1b6b8029-a368-4270-a444-57d4aab3676e.png" 
+                alt="Paraíso dos Bordados" 
+                className="h-8 w-auto"
+              />
+            </Link>
+            
+            {!isMobile && <MenubarNav />}
+          </div>
 
           <div className="flex items-center gap-4">
             {!isMobile && (
@@ -114,7 +118,7 @@ const Navbar = () => {
         
         {!isMobile && (
           <AnimatePresence>
-            {isSearchOpen ? (
+            {isSearchOpen && (
               <motion.div 
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -124,8 +128,6 @@ const Navbar = () => {
               >
                 <SearchBox onClose={() => setIsSearchOpen(false)} />
               </motion.div>
-            ) : (
-              <MenubarNav />
             )}
           </AnimatePresence>
         )}
