@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger, MenubarSub, MenubarSubContent, MenubarSubTrigger } from "@/components/ui/menubar";
 const MenubarNav = () => {
-  return <Menubar className="w-full border-none bg-brand-light rounded-none py-[8px] my-0 mx-[240px]">
+  return <Menubar className="w-full border-none bg-brand-light rounded-none py-[8px] my-0 mx-[120px]">
       <MenubarMenu>
         <MenubarTrigger className="font-medium text-left mx-[40px]">Início</MenubarTrigger>
         <MenubarContent>
