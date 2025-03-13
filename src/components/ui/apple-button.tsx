@@ -11,7 +11,7 @@ const appleButtonVariants = cva(
       variant: {
         default: "bg-brand-red text-white hover:bg-brand-red/90 shadow-sm hover:shadow-md",
         secondary: "bg-white text-brand-dark border border-gray-200 hover:bg-gray-50 shadow-sm",
-        outline: "border border-brand-red text-brand-red hover:bg-brand-red/5",
+        outline: "bg-white text-brand-red border-2 border-brand-red hover:bg-brand-red hover:text-white transition-colors ease-in-out duration-300",
         ghost: "text-brand-dark hover:bg-gray-100",
         link: "text-brand-red underline-offset-4 hover:underline",
       },
