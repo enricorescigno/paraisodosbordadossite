@@ -1,9 +1,7 @@
-
 import { Medal, Headphones, Scale, ClipboardCheck } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-
 const features = [{
   icon: Medal,
   title: "Qualidade Garantida",
@@ -23,7 +21,6 @@ const features = [{
   isClickable: true,
   link: "https://api.whatsapp.com/send?phone=5581995970776&text=Olá!%20Vi%20o%20site%20de%20vocês%20e%20gostaria%20de%20um%20orçamento!%0A%0A%5Bnão%20apague%20essa%20mensagem,%20por%20gentileza%5D"
 }];
-
 const Features = () => {
   const {
     ref,
@@ -32,7 +29,6 @@ const Features = () => {
     triggerOnce: true,
     threshold: 0.1
   });
-  
   return <section ref={ref} className="py-16 bg-white px-[10px]">
       <div className="container mx-auto px-4">
         <motion.div initial={{
@@ -47,7 +43,7 @@ const Features = () => {
       }} transition={{
         duration: 0.5
       }} className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-red-600">Por que escolher a Paraíso dos Bordados?</h2>
+          <h2 className="text-3xl font-medium text-red-600">Por que escolher a Paraíso dos Bordados?</h2>
           <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
             Oferecemos uma experiência de compra completa com produtos de qualidade e atendimento personalizado.
           </p>
@@ -56,59 +52,36 @@ const Features = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature, index) => {
           const Icon = feature.icon;
-          const FeatureContent = () => (
-            <>
+          const FeatureContent = () => <>
               <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-50 text-brand-red mb-5">
                 <Icon size={30} />
               </div>
               <h3 className="text-brand-dark mb-3 font-thin text-xl">{feature.title}</h3>
               <p className="text-gray-600 text-center text-sm">{feature.description}</p>
-            </>
-          );
-          
+            </>;
           const cardClass = "flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 px-[5px] py-[5px]";
-          
-          return (
-            <motion.div 
-              key={index} 
-              initial={{
-                opacity: 0,
-                y: 30
-              }} 
-              animate={inView ? {
-                opacity: 1,
-                y: 0
-              } : {
-                opacity: 0,
-                y: 30
-              }} 
-              transition={{
-                duration: 0.5,
-                delay: index * 0.1
-              }} 
-              className={feature.isClickable ? "cursor-pointer" : ""}
-            >
-              {feature.isClickable ? (
-                <a 
-                  href={feature.link} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className={`${cardClass} hover:bg-red-50/50`}
-                  aria-label={`Link para ${feature.title}`}
-                >
+          return <motion.div key={index} initial={{
+            opacity: 0,
+            y: 30
+          }} animate={inView ? {
+            opacity: 1,
+            y: 0
+          } : {
+            opacity: 0,
+            y: 30
+          }} transition={{
+            duration: 0.5,
+            delay: index * 0.1
+          }} className={feature.isClickable ? "cursor-pointer" : ""}>
+              {feature.isClickable ? <a href={feature.link} target="_blank" rel="noopener noreferrer" className={`${cardClass} hover:bg-red-50/50`} aria-label={`Link para ${feature.title}`}>
                   <FeatureContent />
-                </a>
-              ) : (
-                <div className={cardClass}>
+                </a> : <div className={cardClass}>
                   <FeatureContent />
-                </div>
-              )}
-            </motion.div>
-          );
+                </div>}
+            </motion.div>;
         })}
         </div>
       </div>
     </section>;
 };
-
 export default Features;
