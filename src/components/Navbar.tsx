@@ -1,20 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  ShoppingCart, 
-  Menu, 
-  X, 
-  ChevronDown,
-  User,
-  Search
-} from 'lucide-react';
-
+import { ShoppingCart, Menu, X, ChevronDown, User, Search } from 'lucide-react';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -24,15 +14,12 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle search functionality here
     console.log('Search query:', searchQuery);
   };
-
-  return (
-    <header className="w-full bg-white z-50">
+  return <header className="w-full bg-white z-50">
       {/* Top bar with account, language, etc. */}
       <div className="bg-brand-light py-2 border-b border-gray-200">
         <div className="container-custom flex justify-end items-center">
@@ -55,30 +42,14 @@ const Navbar = () => {
         <div className="container-custom flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="relative z-10">
-            <img 
-              src="/lovable-uploads/5db187fa-df04-492a-883f-c007af693e55.png" 
-              alt="Paraíso dos Bordados" 
-              className="h-14 md:h-16"
-            />
+            <img alt="Paraíso dos Bordados" className="h-14 md:h-16" src="/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png" />
           </Link>
 
           {/* Search Bar */}
-          <form 
-            onSubmit={handleSearchSubmit}
-            className="hidden md:flex flex-1 max-w-xl mx-6"
-          >
+          <form onSubmit={handleSearchSubmit} className="hidden md:flex flex-1 max-w-xl mx-6">
             <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="O que você procura?"
-                className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button 
-                type="submit"
-                className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-brand-red rounded-r-full"
-              >
+              <input type="text" placeholder="O que você procura?" className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+              <button type="submit" className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-brand-red rounded-r-full">
                 <Search className="h-5 w-5" />
               </button>
             </div>
@@ -100,15 +71,8 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu button */}
-          <button 
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
-            className="lg:hidden relative z-10"
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-6 w-6 text-brand-dark" />
-            ) : (
-              <Menu className="h-6 w-6 text-brand-dark" />
-            )}
+          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden relative z-10">
+            {isMobileMenuOpen ? <X className="h-6 w-6 text-brand-dark" /> : <Menu className="h-6 w-6 text-brand-dark" />}
           </button>
         </div>
       </div>
@@ -127,16 +91,10 @@ const Navbar = () => {
               </button>
               <div className="absolute top-full left-0 mt-1 w-60 glass rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg">
                 <div className="py-2 px-3">
-                  <Link 
-                    to="/categoria/bordados-personalizado" 
-                    className="block py-2 px-3 hover:bg-brand-red/5 rounded-md"
-                  >
+                  <Link to="/categoria/bordados-personalizado" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
                     Bordados Personalizados
                   </Link>
-                  <Link 
-                    to="/categoria/camisas" 
-                    className="block py-2 px-3 hover:bg-brand-red/5 rounded-md"
-                  >
+                  <Link to="/categoria/camisas" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
                     Camisas
                   </Link>
                 </div>
@@ -149,16 +107,10 @@ const Navbar = () => {
               </button>
               <div className="absolute top-full left-0 mt-1 w-60 glass rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg">
                 <div className="py-2 px-3">
-                  <Link 
-                    to="/categoria/ponto-cruz" 
-                    className="block py-2 px-3 hover:bg-brand-red/5 rounded-md"
-                  >
+                  <Link to="/categoria/ponto-cruz" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
                     Ponto Cruz
                   </Link>
-                  <Link 
-                    to="/categoria/vagonite" 
-                    className="block py-2 px-3 hover:bg-brand-red/5 rounded-md"
-                  >
+                  <Link to="/categoria/vagonite" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
                     Vagonite
                   </Link>
                 </div>
@@ -181,56 +133,30 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu */}
-      <div 
-        className={`fixed inset-0 bg-white z-[45] transform transition-transform duration-300 lg:hidden
-        ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
-      >
+      <div className={`fixed inset-0 bg-white z-[45] transform transition-transform duration-300 lg:hidden
+        ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex flex-col h-full pt-20 px-6">
           {/* Mobile search */}
-          <form 
-            onSubmit={handleSearchSubmit}
-            className="mb-6"
-          >
+          <form onSubmit={handleSearchSubmit} className="mb-6">
             <div className="relative w-full">
-              <input
-                type="text"
-                placeholder="O que você procura?"
-                className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-              <button 
-                type="submit"
-                className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-brand-red rounded-r-full"
-              >
+              <input type="text" placeholder="O que você procura?" className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+              <button type="submit" className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-brand-red rounded-r-full">
                 <Search className="h-5 w-5" />
               </button>
             </div>
           </form>
 
           <nav className="flex flex-col space-y-4">
-            <Link 
-              to="/" 
-              className="text-lg font-medium py-2 border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link to="/" className="text-lg font-medium py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>
               Início
             </Link>
             <div className="py-2 border-b border-gray-100">
               <div className="text-lg font-medium mb-2">Bordados à Máquina</div>
               <div className="pl-4 flex flex-col space-y-2">
-                <Link 
-                  to="/categoria/bordados-personalizado" 
-                  className="text-gray-700"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
+                <Link to="/categoria/bordados-personalizado" className="text-gray-700" onClick={() => setIsMobileMenuOpen(false)}>
                   Bordados Personalizados
                 </Link>
-                <Link 
-                  to="/categoria/camisas" 
-                  className="text-gray-700"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
+                <Link to="/categoria/camisas" className="text-gray-700" onClick={() => setIsMobileMenuOpen(false)}>
                   Camisas
                 </Link>
               </div>
@@ -238,70 +164,36 @@ const Navbar = () => {
             <div className="py-2 border-b border-gray-100">
               <div className="text-lg font-medium mb-2">Bordados Manuais</div>
               <div className="pl-4 flex flex-col space-y-2">
-                <Link 
-                  to="/categoria/ponto-cruz" 
-                  className="text-gray-700"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
+                <Link to="/categoria/ponto-cruz" className="text-gray-700" onClick={() => setIsMobileMenuOpen(false)}>
                   Ponto Cruz
                 </Link>
-                <Link 
-                  to="/categoria/vagonite" 
-                  className="text-gray-700"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
+                <Link to="/categoria/vagonite" className="text-gray-700" onClick={() => setIsMobileMenuOpen(false)}>
                   Vagonite
                 </Link>
               </div>
             </div>
-            <Link 
-              to="/categoria/kits" 
-              className="text-lg font-medium py-2 border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link to="/categoria/kits" className="text-lg font-medium py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>
               Kits de Bordado
             </Link>
-            <Link 
-              to="/categoria/acessorios" 
-              className="text-lg font-medium py-2 border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link to="/categoria/acessorios" className="text-lg font-medium py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>
               Acessórios
             </Link>
-            <Link 
-              to="/portfolio" 
-              className="text-lg font-medium py-2 border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link to="/portfolio" className="text-lg font-medium py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>
               Portfólio
             </Link>
-            <Link 
-              to="/sobre" 
-              className="text-lg font-medium py-2 border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link to="/sobre" className="text-lg font-medium py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>
               Sobre Nós
             </Link>
-            <Link 
-              to="/login" 
-              className="text-lg font-medium py-2 border-b border-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link to="/login" className="text-lg font-medium py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>
               Login
             </Link>
-            <Link 
-              to="/carrinho" 
-              className="text-lg font-medium py-2 border-b border-gray-100 flex items-center gap-2"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
+            <Link to="/carrinho" className="text-lg font-medium py-2 border-b border-gray-100 flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
               <ShoppingCart className="h-5 w-5" />
               Carrinho (0)
             </Link>
           </nav>
         </div>
       </div>
-    </header>
-  );
+    </header>;
 };
-
 export default Navbar;
