@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom';
 interface Product {
   id: number;
   name: string;
-  price: number;
   image: string;
   category: string;
   rating: number;
@@ -16,7 +15,6 @@ const products: Product[] = [
   {
     id: 1,
     name: "Kit Bordado Floral",
-    price: 89.90,
     image: "https://images.unsplash.com/photo-1594393758308-55708ca3c5c6?q=80&w=500&auto=format&fit=crop",
     category: "Kits",
     rating: 4.8
@@ -24,7 +22,6 @@ const products: Product[] = [
   {
     id: 2,
     name: "Toalha Bordada à Mão",
-    price: 129.90,
     image: "https://images.unsplash.com/photo-1593032555309-4362c0f3f8a5?q=80&w=500&auto=format&fit=crop",
     category: "Bordados Manuais",
     rating: 5.0
@@ -32,7 +29,6 @@ const products: Product[] = [
   {
     id: 3,
     name: "Conjunto de Agulhas Premium",
-    price: 49.90,
     image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=500&auto=format&fit=crop",
     category: "Acessórios",
     rating: 4.7
@@ -40,7 +36,6 @@ const products: Product[] = [
   {
     id: 4,
     name: "Almofada Bordada",
-    price: 149.90,
     image: "https://images.unsplash.com/photo-1532329683184-6ffd13387c2c?q=80&w=500&auto=format&fit=crop",
     category: "Bordados à Máquina",
     rating: 4.9
@@ -132,11 +127,9 @@ const ProductShowcase = () => {
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   <span className="text-sm text-gray-700">{product.rating.toFixed(1)}</span>
                 </div>
-                <h3 className="font-medium text-lg mb-1">{product.name}</h3>
+                <h3 className="font-medium text-lg mb-3">{product.name}</h3>
                 <div className="flex items-center justify-between">
-                  <p className="font-semibold text-brand-red">
-                    R$ {product.price.toFixed(2).replace('.', ',')}
-                  </p>
+                  <span className="text-sm text-gray-600">Solicite um orçamento</span>
                   <Link 
                     to={`/produto/${product.id}`}
                     className="text-brand-dark hover:text-brand-red transition-colors duration-300"

@@ -1,17 +1,15 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, ShoppingCart, Star } from 'lucide-react';
+import { ArrowLeft, MessageCircle, Star } from 'lucide-react';
 import { Button } from './ui/button';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { toast } from './ui/use-toast';
 
 interface Product {
   id: number;
   name: string;
-  price: number;
   image: string;
   category: string;
   rating: number;
@@ -28,7 +26,6 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 101,
       name: "Kit Bordado Cama, Mesa e Banho",
-      price: 199.90,
       image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=500&auto=format&fit=crop",
       category: "Cama, Mesa e Banho",
       rating: 4.9,
@@ -40,7 +37,6 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 102,
       name: "Toalha Bordada Decorativa",
-      price: 89.90,
       image: "https://images.unsplash.com/photo-1579656450812-5b1bcd4a952e?q=80&w=500&auto=format&fit=crop",
       category: "Cama, Mesa e Banho",
       rating: 4.7,
@@ -55,7 +51,6 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 150,
       name: "Kit Berço Bordado",
-      price: 299.90,
       image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=500&auto=format&fit=crop",
       category: "Infantil",
       rating: 4.9,
@@ -69,7 +64,6 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 160,
       name: "Camisa Bordada Social",
-      price: 129.90,
       image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=500&auto=format&fit=crop",
       category: "Vestuário",
       rating: 4.7,
@@ -118,13 +112,14 @@ const ProductDetailPage = () => {
     }, 500); // Simulate network request
   }, [productId]);
 
-  const handleAddToCart = () => {
-    // In a real app, this would add the product to the cart
-    toast({
-      title: "Produto adicionado",
-      description: `${product?.name} foi adicionado ao carrinho.`,
-      variant: "default",
-    });
+  const getWhatsAppLink = () => {
+    if (!product) return '';
+    
+    // Create a personalized message based on the product name
+    const message = `Olá! Vi o ${product.name.toLowerCase()} e gostaria de fazer um orçamento!`;
+    
+    // Create the WhatsApp link with the message
+    return `https://wa.me/5581995970776?text=${encodeURIComponent(message)}`;
   };
 
   const incrementQuantity = () => {
@@ -176,11 +171,7 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
                 
-                <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
-                
-                <p className="text-2xl font-semibold text-brand-red mb-6">
-                  R$ {product.price.toFixed(2).replace('.', ',')}
-                </p>
+                <h1 className="text-3xl font-bold mb-6">{product.name}</h1>
                 
                 <p className="text-gray-600 mb-6">
                   {product.description || "Descrição do produto não disponível."}
@@ -264,14 +255,16 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
                 
-                {/* Add to Cart Button */}
-                <Button 
-                  onClick={handleAddToCart}
-                  className="bg-brand-red hover:bg-brand-red/90 text-white w-full md:w-auto"
+                {/* WhatsApp Contact Button */}
+                <a 
+                  href={getWhatsAppLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors w-full md:w-auto"
                 >
-                  <ShoppingCart className="w-4 h-4 mr-2" />
-                  Adicionar ao Carrinho
-                </Button>
+                  <MessageCircle className="w-5 h-5 mr-2" />
+                  Solicitar Orçamento
+                </a>
               </div>
             </div>
           </div>
