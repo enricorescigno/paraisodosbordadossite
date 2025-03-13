@@ -6,7 +6,7 @@ const AboutUs = () => {
   return <div className="min-h-screen bg-white">
       <Navbar />
       
-      <main className="pt-24 pb-16">
+      <main className="pt-24 pb-16 py-0">
         {/* Hero Section */}
         <section className="bg-brand-light py-16 md:py-20">
           <div className="container-custom">

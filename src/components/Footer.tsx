@@ -4,26 +4,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   return <footer className="bg-white text-gray-700">
       {/* Location Banner */}
-      <div className="bg-brand-green py-16 text-white relative overflow-hidden">
-        <div className="container-custom relative z-10">
-          <h2 className="font-serif text-4xl md:text-5xl text-center">Veja nossa localização!</h2>
-        </div>
-        <div className="absolute right-0 top-0 h-full w-1/3 hidden md:block">
-          
-        </div>
-        <button className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white" aria-label="Anterior">
-          <span className="sr-only">Anterior</span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-        <button className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white" aria-label="Próximo">
-          <span className="sr-only">Próximo</span>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-      </div>
+      
       
       <hr className="border-gray-200" />
       
