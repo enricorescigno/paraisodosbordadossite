@@ -24,7 +24,7 @@ const Navbar = () => {
         <div className="container-custom flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="relative z-10">
-            <img alt="Paraíso dos Bordados" src="/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png" className="h-15 md:h-17 object-fill" />
+            <img alt="Paraíso dos Bordados" src="/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png" className="h-14md:h-16 object-none" />
           </Link>
 
           {/* Search Bar */}
