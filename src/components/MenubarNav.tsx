@@ -100,7 +100,7 @@ const MenubarNav = () => {
                 </ul>
               </div>
               <div>
-                <h3 className="font-medium text-gray-900 mb-3">Casa e Decoração</h3>
+                <h3 className="font-medium text-gray-900 mb-3">Bordado</h3>
                 <ul className="space-y-2">
                   <li>
                     <Link to="/portfolio/bordado-infantis" className="block text-sm text-gray-700 hover:text-brand-red transition-colors">
