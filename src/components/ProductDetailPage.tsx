@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, MessageCircle, Star, Truck, RefreshCw, ShieldCheck, ChevronRight } from 'lucide-react';
@@ -19,6 +18,7 @@ interface Product {
   features?: string[];
   colors?: string[];
   sizes?: string[];
+  isNew?: boolean;
 }
 
 interface PortfolioItem {
@@ -29,9 +29,7 @@ interface PortfolioItem {
   category: string;
 }
 
-// Combined product data including all categories
 const allProducts: Record<string, Product[]> = {
-  // Products from main categories
   'cama-mesa-banho': [
     {
       id: 101,
@@ -56,7 +54,6 @@ const allProducts: Record<string, Product[]> = {
       sizes: ["Pequena (1,2m)", "Média (1,5m)", "Grande (2m)"]
     }
   ],
-  // Products from other categories - abbreviated for brevity
   'infantil': [
     {
       id: 150,
@@ -85,7 +82,6 @@ const allProducts: Record<string, Product[]> = {
   ]
 };
 
-// Portfolio items data - same as in PortfolioPage.tsx
 const allPortfolioItems: Record<string, PortfolioItem[]> = {
   'bordado-bone': [
     {
@@ -185,19 +181,16 @@ const allPortfolioItems: Record<string, PortfolioItem[]> = {
   ]
 };
 
-// Flatten portfolio items
 const flattenedPortfolioItems: PortfolioItem[] = Object.values(allPortfolioItems).reduce(
   (acc, items) => [...acc, ...items], 
   []
 );
 
-// Flatten all products into a single array for easy lookup by ID
 const flattenedProducts: Product[] = Object.values(allProducts).reduce(
   (acc, products) => [...acc, ...products], 
   []
 );
 
-// Add portfolio product defaults
 const portfolioDefaults = {
   rating: 5.0,
   colors: ["Personalizado", "Sob consulta"],
@@ -215,23 +208,19 @@ const ProductDetailPage = () => {
   const [isFromPortfolio, setIsFromPortfolio] = useState(false);
 
   useEffect(() => {
-    // In a real app, this would be an API call to get product by ID
     setLoading(true);
     
     setTimeout(() => {
       if (productId) {
-        // First try to find in regular products
         let foundProduct = flattenedProducts.find(p => p.id === parseInt(productId));
         
         if (foundProduct) {
           setProduct(foundProduct);
           setIsFromPortfolio(false);
         } else {
-          // If not found, check portfolio items
           const portfolioItem = flattenedPortfolioItems.find(p => p.id === parseInt(productId));
           
           if (portfolioItem) {
-            // Convert portfolio item to product format
             foundProduct = {
               id: portfolioItem.id,
               name: portfolioItem.title,
@@ -250,7 +239,6 @@ const ProductDetailPage = () => {
           }
         }
         
-        // Set default selections if product is found
         if (foundProduct) {
           if (foundProduct.colors && foundProduct.colors.length > 0) {
             setSelectedColor(foundProduct.colors[0]);
@@ -261,16 +249,14 @@ const ProductDetailPage = () => {
         }
       }
       setLoading(false);
-    }, 500); // Simulate network request
+    }, 500);
   }, [productId]);
 
   const getWhatsAppLink = () => {
     if (!product) return '';
     
-    // Create a personalized message based on the product name
     let message = `Olá! Vi o ${product.name.toLowerCase()} e gostaria de fazer um orçamento!`;
     
-    // Add selected options to the message
     if (selectedColor) {
       message += ` Cor: ${selectedColor}.`;
     }
@@ -281,7 +267,6 @@ const ProductDetailPage = () => {
     
     message += ` Quantidade: ${quantity}.`;
     
-    // Create the WhatsApp link with the message
     return `https://wa.me/5581995970776?text=${encodeURIComponent(message)}`;
   };
 
@@ -293,7 +278,6 @@ const ProductDetailPage = () => {
     setQuantity(prev => (prev > 1 ? prev - 1 : 1));
   };
 
-  // Determine the back link based on where the user came from
   const getBackLink = () => {
     if (isFromPortfolio || location.pathname.includes('/portfolio')) {
       return '/portfolio';
@@ -302,7 +286,6 @@ const ProductDetailPage = () => {
   };
 
   const placeholder = (category: string) => {
-    // Return placeholder based on category
     const placeholders: Record<string, string> = {
       'Cama, Mesa e Banho': '/images/placeholders/home-textile.jpg',
       'Infantil': '/images/placeholders/kids.jpg',
@@ -338,7 +321,6 @@ const ProductDetailPage = () => {
             </Link>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-              {/* Product Image with Apple-style carousel */}
               <div className="bg-white rounded-2xl overflow-hidden">
                 <Carousel className="w-full">
                   <CarouselContent>
@@ -354,17 +336,15 @@ const ProductDetailPage = () => {
                         />
                       </AspectRatio>
                     </CarouselItem>
-                    {/* Additional images would go here in a real app */}
+                    <div className="flex justify-center gap-2 mt-4">
+                      <div className="h-2 w-2 rounded-full bg-brand-red"></div>
+                      <div className="h-2 w-2 rounded-full bg-gray-300"></div>
+                      <div className="h-2 w-2 rounded-full bg-gray-300"></div>
+                    </div>
                   </CarouselContent>
-                  <div className="flex justify-center gap-2 mt-4">
-                    <div className="h-2 w-2 rounded-full bg-brand-red"></div>
-                    <div className="h-2 w-2 rounded-full bg-gray-300"></div>
-                    <div className="h-2 w-2 rounded-full bg-gray-300"></div>
-                  </div>
                 </Carousel>
               </div>
               
-              {/* Product Details - Apple Style */}
               <div className="flex flex-col justify-center">
                 {product.isNew && (
                   <span className="inline-block bg-brand-red/10 text-brand-red px-3 py-1 rounded-full text-xs font-medium mb-3">
@@ -386,7 +366,6 @@ const ProductDetailPage = () => {
                   {product.description || "Descrição do produto não disponível."}
                 </p>
                 
-                {/* Product Features - Apple Style with clean dots */}
                 {product.features && product.features.length > 0 && (
                   <div className="mb-6">
                     <h3 className="font-semibold mb-3 text-gray-800">Características:</h3>
@@ -401,13 +380,11 @@ const ProductDetailPage = () => {
                   </div>
                 )}
                 
-                {/* Color Selection - Apple Style with circles */}
                 {product.colors && product.colors.length > 0 && (
                   <div className="mb-6">
                     <h3 className="font-semibold mb-3 text-gray-800">Cor:</h3>
                     <div className="flex flex-wrap gap-3">
                       {product.colors.map((color) => {
-                        // Map color names to actual color values
                         const colorMap: Record<string, string> = {
                           "Branco": "#ffffff",
                           "Preto": "#000000",
@@ -449,7 +426,6 @@ const ProductDetailPage = () => {
                   </div>
                 )}
                 
-                {/* Size Selection - Apple Style with clean buttons */}
                 {product.sizes && product.sizes.length > 0 && (
                   <div className="mb-6">
                     <h3 className="font-semibold mb-3 text-gray-800">Tamanho:</h3>
@@ -471,7 +447,6 @@ const ProductDetailPage = () => {
                   </div>
                 )}
                 
-                {/* Quantity Selection - Apple Style */}
                 <div className="mb-8">
                   <h3 className="font-semibold mb-3 text-gray-800">Quantidade:</h3>
                   <div className="flex w-full max-w-[180px]">
@@ -493,7 +468,6 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
                 
-                {/* WhatsApp CTA - Apple Style */}
                 <a 
                   href={getWhatsAppLink()}
                   target="_blank"
@@ -509,7 +483,6 @@ const ProductDetailPage = () => {
                   </AppleButton>
                 </a>
                 
-                {/* Benefits Section - Apple Style */}
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-gray-200 pt-8">
                   <div className="flex flex-col items-center text-center">
                     <Truck className="h-8 w-8 text-brand-red mb-2" />
