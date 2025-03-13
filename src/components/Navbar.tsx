@@ -5,7 +5,8 @@ import {
   ShoppingCart, 
   Menu, 
   X, 
-  ChevronDown 
+  ChevronDown,
+  User
 } from 'lucide-react';
 
 const Navbar = () => {
@@ -25,24 +26,25 @@ const Navbar = () => {
   return (
     <header 
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300
-      ${isScrolled ? 'bg-white shadow-sm py-3' : 'bg-transparent py-5'}`}
+      ${isScrolled ? 'bg-white shadow-sm py-2' : 'bg-white py-2'}`}
     >
       <div className="container-custom flex items-center justify-between">
         {/* Logo */}
-        <Link 
-          to="/" 
-          className="relative z-10 font-serif text-2xl font-bold text-brand-red"
-        >
-          Paraíso dos Bordados
+        <Link to="/" className="relative z-10">
+          <img 
+            src="/lovable-uploads/5db187fa-df04-492a-883f-c007af693e55.png" 
+            alt="Paraíso dos Bordados" 
+            className="h-14 md:h-16"
+          />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center space-x-8">
-          <Link to="/" className="nav-link">
+        <nav className="hidden lg:flex items-center space-x-12">
+          <Link to="/" className="nav-link text-brand-dark">
             Início
           </Link>
           <div className="relative group">
-            <button className="nav-link flex items-center gap-1">
+            <button className="nav-link text-brand-dark flex items-center gap-1">
               Todas as Categorias
               <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
             </button>
@@ -75,17 +77,18 @@ const Navbar = () => {
               </div>
             </div>
           </div>
-          <Link to="/portfolio" className="nav-link">
+          <Link to="/portfolio" className="nav-link text-brand-dark">
             Portfólio Bordado
           </Link>
-          <Link to="/sobre" className="nav-link">
+          <Link to="/sobre" className="nav-link text-brand-dark">
             Sobre Nós
           </Link>
         </nav>
 
         {/* Right Navigation */}
         <div className="hidden lg:flex items-center space-x-6">
-          <Link to="/login" className="nav-link">
+          <Link to="/login" className="nav-link text-brand-dark flex items-center gap-1">
+            <User className="h-5 w-5" />
             Login
           </Link>
           <Link to="/carrinho" className="relative">
