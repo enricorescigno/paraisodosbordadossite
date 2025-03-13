@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 
 const partners = [
@@ -21,10 +20,6 @@ const partners = [
   {
     name: "NX Boats",
     logo: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png"
-  },
-  {
-    name: "Paraíso dos Bordados",
-    logo: "/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png"
   }
 ];
 
@@ -50,7 +45,6 @@ const Partners = () => {
       
       position += speed * direction;
       
-      // Change direction when reaching ends
       if (position >= scrollWidth - clientWidth) {
         direction = -1;
       } else if (position <= 0) {
@@ -93,7 +87,6 @@ const Partners = () => {
               </div>
             ))}
             
-            {/* Duplicate partners for infinite scroll effect */}
             {partners.map((partner, index) => (
               <div 
                 key={`duplicate-${index}`}
@@ -108,7 +101,6 @@ const Partners = () => {
             ))}
           </div>
           
-          {/* Gradient overlays for fading effect */}
           <div className="absolute top-0 left-0 h-full w-16 bg-gradient-to-r from-brand-light to-transparent"></div>
           <div className="absolute top-0 right-0 h-full w-16 bg-gradient-to-l from-brand-light to-transparent"></div>
         </div>
