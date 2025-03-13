@@ -1,9 +1,7 @@
-
 import { useEffect, useState, useRef } from 'react';
 import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
-
 interface Product {
   id: number;
   name: string;
@@ -14,59 +12,57 @@ interface Product {
 }
 
 // Updated products to match portfolio categories from MenubarNav
-const products: Product[] = [
-  {
-    id: 301,
-    name: "Boné Personalizado Empresarial",
-    image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop",
-    category: "Bordado em Boné",
-    rating: 4.8,
-    portfolioType: "bordado-bone"
-  },
-  {
-    id: 310,
-    name: "Necessaire Floral Bordada",
-    image: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png",
-    category: "Bordado em Necessaire",
-    rating: 4.9,
-    portfolioType: "bordado-necessaire"
-  },
-  {
-    id: 320,
-    name: "Bolsa Tote com Bordado",
-    image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
-    category: "Bordado em Bolsa",
-    rating: 4.7,
-    portfolioType: "bordado-bolsa"
-  },
-  {
-    id: 330,
-    name: "Jaleco Médico Personalizado",
-    image: "https://images.unsplash.com/photo-1524901548305-08eeddc35080?q=80&w=500&auto=format&fit=crop",
-    category: "Bordado em Jaleco",
-    rating: 5.0,
-    portfolioType: "bordado-jaleco"
-  }
-];
+const products: Product[] = [{
+  id: 301,
+  name: "Boné Personalizado Empresarial",
+  image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop",
+  category: "Bordado em Boné",
+  rating: 4.8,
+  portfolioType: "bordado-bone"
+}, {
+  id: 310,
+  name: "Necessaire Floral Bordada",
+  image: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png",
+  category: "Bordado em Necessaire",
+  rating: 4.9,
+  portfolioType: "bordado-necessaire"
+}, {
+  id: 320,
+  name: "Bolsa Tote com Bordado",
+  image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
+  category: "Bordado em Bolsa",
+  rating: 4.7,
+  portfolioType: "bordado-bolsa"
+}, {
+  id: 330,
+  name: "Jaleco Médico Personalizado",
+  image: "https://images.unsplash.com/photo-1524901548305-08eeddc35080?q=80&w=500&auto=format&fit=crop",
+  category: "Bordado em Jaleco",
+  rating: 5.0,
+  portfolioType: "bordado-jaleco"
+}];
 
 // Gerador de mensagens personalizadas para WhatsApp
 const generateWhatsAppMessage = (productName: string): string => {
   return encodeURIComponent(`Olá! Vi o produto ${productName.toLowerCase()} e gostaria de fazer um orçamento!`);
 };
-
 const ProductShowcase = () => {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [visibleProducts, setVisibleProducts] = useState<Product[]>(products);
   const [animateProducts, setAnimateProducts] = useState(false);
-  const { ref: sectionRef, inView: sectionInView } = useInView({
+  const {
+    ref: sectionRef,
+    inView: sectionInView
+  } = useInView({
     triggerOnce: true,
     threshold: 0.1
   });
-  
+
   // Extract unique portfolio categories for tabs
   const categories = ["all", ...new Set(products.map(product => product.portfolioType))];
-  
-  const categoryLabels: {[key: string]: string} = {
+  const categoryLabels: {
+    [key: string]: string;
+  } = {
     "all": "Todos",
     "bordado-bone": "Bordado em Boné",
     "bordado-necessaire": "Bordado em Necessaire",
@@ -75,31 +71,22 @@ const ProductShowcase = () => {
     "bordado-infantis": "Bordado Infantil",
     "bordado-toalha-banho": "Bordado em Toalha"
   };
-
   useEffect(() => {
     setAnimateProducts(false);
-    
     setTimeout(() => {
       if (activeTab === "all") {
         setVisibleProducts(products);
       } else {
-        const filtered = products.filter(
-          product => product.portfolioType === activeTab
-        );
+        const filtered = products.filter(product => product.portfolioType === activeTab);
         setVisibleProducts(filtered);
       }
       setAnimateProducts(true);
     }, 300);
   }, [activeTab]);
-
   const whatsappNumber = "+5581995970776";
-
-  return (
-    <section ref={sectionRef} className="section-padding bg-brand-light transition-all duration-500">
-      <div className="container-custom">
-        <div 
-          className={`text-center transform transition-all duration-700 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-        >
+  return <section ref={sectionRef} className="section-padding bg-brand-light transition-all duration-500">
+      <div className="container-custom py-0">
+        <div className={`text-center transform transition-all duration-700 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <h2 className="section-title">Nosso Portfólio de Bordados</h2>
           <p className="section-subtitle">
             Conheça nossos trabalhos de bordado personalizados para diversas aplicações, feitos com qualidade e atenção aos detalhes.
@@ -107,44 +94,23 @@ const ProductShowcase = () => {
         </div>
         
         {/* Category Tabs */}
-        <div 
-          className={`flex justify-center mb-10 overflow-x-auto pb-2 transform transition-all duration-700 delay-100 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-        >
+        <div className={`flex justify-center mb-10 overflow-x-auto pb-2 transform transition-all duration-700 delay-100 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <div className="flex gap-2 md:gap-3">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setActiveTab(category)}
-                className={`px-4 py-2 whitespace-nowrap rounded-full transition-all duration-300
-                ${activeTab === category 
-                  ? 'bg-brand-red text-white scale-105 shadow-md' 
-                  : 'bg-white text-brand-dark hover:bg-brand-red/10'}`}
-              >
+            {categories.map(category => <button key={category} onClick={() => setActiveTab(category)} className={`px-4 py-2 whitespace-nowrap rounded-full transition-all duration-300
+                ${activeTab === category ? 'bg-brand-red text-white scale-105 shadow-md' : 'bg-white text-brand-dark hover:bg-brand-red/10'}`}>
                 {categoryLabels[category]}
-              </button>
-            ))}
+              </button>)}
           </div>
         </div>
         
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-          {visibleProducts.map((product, index) => (
-            <div 
-              key={product.id}
-              className={`product-card transform transition-all duration-500 ${
-                animateProducts 
-                  ? 'translate-y-0 opacity-100 scale-100' 
-                  : 'translate-y-8 opacity-0 scale-95'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
+          {visibleProducts.map((product, index) => <div key={product.id} className={`product-card transform transition-all duration-500 ${animateProducts ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'}`} style={{
+          transitionDelay: `${index * 100}ms`
+        }}>
               <Link to={`/produto/${product.id}`} className="block group">
                 <div className="relative overflow-hidden aspect-square">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 filter group-hover:brightness-105"
-                  />
+                  <img src={product.image} alt={product.name} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 filter group-hover:brightness-105" />
                   <div className="absolute top-3 left-3 transform transition-all duration-300 group-hover:scale-105">
                     <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full shadow-sm">
                       {product.category}
@@ -159,42 +125,26 @@ const ProductShowcase = () => {
                 </div>
                 <h3 className="font-medium text-lg mb-3 transition-colors duration-300 group-hover:text-brand-red">{product.name}</h3>
                 <div className="flex items-center justify-between">
-                  <a 
-                    href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(product.name)}`}
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-sm text-gray-600 hover:text-brand-red flex items-center gap-1 transition-all duration-300 hover:translate-x-1"
-                  >
+                  <a href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(product.name)}`} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 hover:text-brand-red flex items-center gap-1 transition-all duration-300 hover:translate-x-1">
                     <MessageCircle className="h-4 w-4" />
                     Solicitar orçamento
                   </a>
-                  <Link 
-                    to={`/produto/${product.id}`}
-                    className="text-brand-dark hover:text-brand-red transition-all duration-300 transform hover:translate-x-1"
-                  >
+                  <Link to={`/produto/${product.id}`} className="text-brand-dark hover:text-brand-red transition-all duration-300 transform hover:translate-x-1">
                     <ArrowRight className="h-5 w-5" />
                   </Link>
                 </div>
               </div>
-            </div>
-          ))}
+            </div>)}
         </div>
         
         {/* View All Link */}
-        <div 
-          className={`flex justify-center mt-12 transform transition-all duration-700 delay-300 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-        >
-          <Link 
-            to="/portfolio"
-            className="btn-secondary flex items-center gap-2 transition-all duration-300 hover:scale-105"
-          >
+        <div className={`flex justify-center mt-12 transform transition-all duration-700 delay-300 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
+          <Link to="/portfolio" className="btn-secondary flex items-center gap-2 transition-all duration-300 hover:scale-105">
             Ver Todo o Portfólio
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default ProductShowcase;
