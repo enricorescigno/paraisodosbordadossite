@@ -39,11 +39,12 @@ const Navbar = () => {
     >
       <div className="container-custom mx-auto">
         <nav className="h-16 flex items-center justify-between">
-          <Link 
-            to="/" 
-            className="text-xl font-serif font-medium tracking-tight text-brand-dark"
-          >
-            Paraíso dos Bordados
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/lovable-uploads/4fa3ceb4-eef0-484e-94d0-c94fe355c748.png" 
+              alt="Paraíso dos Bordados" 
+              className="h-10 w-auto"
+            />
           </Link>
 
           <div className="flex items-center gap-4">
