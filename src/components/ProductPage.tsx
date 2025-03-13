@@ -1,11 +1,14 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
+import { Card, CardContent } from "@/components/ui/card";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
 
 interface Product {
   id: number;
@@ -310,6 +313,8 @@ const ProductPage = () => {
   const location = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   
   useEffect(() => {
     // Extract the category from the URL path
@@ -321,9 +326,23 @@ const ProductPage = () => {
     setTimeout(() => {
       const categoryProducts = allProducts[categoryPath] || [];
       setProducts(categoryProducts);
+      setFilteredProducts(categoryProducts);
       setLoading(false);
     }, 500); // Simulate network request
   }, [location.pathname]);
+  
+  // Filter products based on search query
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter(product => 
+        product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        product.category.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [searchQuery, products]);
   
   // Extract the category from the URL path for title
   const pathParts = location.pathname.split('/');
@@ -334,49 +353,75 @@ const ProductPage = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       
-      <section className="py-10 md:py-16 bg-brand-light">
+      <section className="py-10 md:py-16 bg-[#f5f5f7]">
         <div className="container-custom">
-          <h1 className="text-3xl md:text-4xl font-bold text-center mb-6">{categoryTitle}</h1>
+          <div className="mb-8 space-y-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-center">{categoryTitle}</h1>
+            <p className="text-center text-gray-500 max-w-2xl mx-auto">
+              Explore nossa coleção de {categoryTitle.toLowerCase()} feitos com qualidade e atenção aos detalhes.
+            </p>
+            
+            {/* Search Bar */}
+            <div className="relative max-w-md mx-auto">
+              <input
+                type="text"
+                placeholder={`Buscar em ${categoryTitle}...`}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="apple-input pl-10 pr-4 py-2 w-full rounded-full border-gray-300 focus:border-brand-red focus:ring focus:ring-brand-red/20 transition-all"
+              />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+            </div>
+          </div>
           
           {loading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
             </div>
-          ) : products.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-              {products.map((product) => (
-                <div key={product.id} className="product-card bg-white rounded-lg overflow-hidden shadow-md animate-scale-in">
+          ) : filteredProducts.length > 0 ? (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
+              {filteredProducts.map((product) => (
+                <Card 
+                  key={product.id} 
+                  className="rounded-xl overflow-hidden border-0 bg-white shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:scale-[1.01]"
+                >
                   <Link to={`/produto/${product.id}`} className="block">
-                    <div className="relative overflow-hidden aspect-square">
+                    <AspectRatio ratio={1/1} className="relative bg-[#f5f5f7]">
                       <img 
                         src={product.image} 
                         alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                        onError={(e) => {
+                          // Fallback image based on category
+                          const target = e.target as HTMLImageElement;
+                          target.onerror = null; // Prevent infinite loop
+                          target.src = `https://via.placeholder.com/300x300?text=${encodeURIComponent(product.category)}`;
+                        }}
                       />
-                      <div className="absolute top-3 left-3">
-                        <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full">
+                      <div className="absolute top-2 left-2">
+                        <span className="bg-white/80 backdrop-blur-sm text-gray-800 text-xs px-2 py-1 rounded-full">
                           {product.category}
                         </span>
                       </div>
-                    </div>
+                    </AspectRatio>
                   </Link>
-                  <div className="p-4">
-                    <div className="flex items-center gap-1 mb-2">
-                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      <span className="text-sm text-gray-700">{product.rating.toFixed(1)}</span>
+                  <CardContent className="p-4">
+                    <div className="flex items-center gap-1 mb-1">
+                      <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+                      <span className="text-xs text-gray-600">{product.rating.toFixed(1)}</span>
                     </div>
-                    <h3 className="font-medium text-lg mb-3">{product.name}</h3>
+                    <h3 className="font-semibold text-base md:text-lg mb-3 line-clamp-2">{product.name}</h3>
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-gray-600">Solicite um orçamento</span>
+                      <span className="text-xs md:text-sm text-gray-600">Solicite um orçamento</span>
                       <Link 
                         to={`/produto/${product.id}`}
                         className="text-brand-dark hover:text-brand-red transition-colors duration-300"
                       >
-                        <ArrowRight className="h-5 w-5" />
+                        <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
                       </Link>
                     </div>
-                  </div>
-                </div>
+                  </CardContent>
+                </Card>
               ))}
             </div>
           ) : (
@@ -385,6 +430,26 @@ const ProductPage = () => {
               <Link to="/" className="inline-block mt-4 btn-primary">
                 Voltar para página inicial
               </Link>
+            </div>
+          )}
+          
+          {/* Navigation arrows (for carousel on desktop) */}
+          {filteredProducts.length > 4 && (
+            <div className="hidden lg:flex justify-between mt-8">
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-full bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                className="rounded-full bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </Button>
             </div>
           )}
         </div>
