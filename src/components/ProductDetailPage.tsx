@@ -1,8 +1,6 @@
-
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, MessageCircle, Star } from 'lucide-react';
-import { Button } from './ui/button';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
@@ -17,6 +15,14 @@ interface Product {
   features?: string[];
   colors?: string[];
   sizes?: string[];
+}
+
+interface PortfolioItem {
+  id: number;
+  title: string;
+  description: string;
+  image: string;
+  category: string;
 }
 
 // Combined product data including all categories
@@ -75,19 +81,134 @@ const allProducts: Record<string, Product[]> = {
   ]
 };
 
+// Portfolio items data - same as in PortfolioPage.tsx
+const allPortfolioItems: Record<string, PortfolioItem[]> = {
+  'bordado-bone': [
+    {
+      id: 301,
+      title: "Boné Personalizado Empresarial",
+      description: "Bordado com logotipo empresarial, feito com linha de alta durabilidade.",
+      image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Boné"
+    },
+    {
+      id: 302,
+      title: "Boné Esportivo Bordado",
+      description: "Bordado com símbolos esportivos, perfeito para equipes e torcedores.",
+      image: "https://images.unsplash.com/photo-1580880783109-4d9daf311df5?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Boné"
+    }
+  ],
+  'bordado-necessaire': [
+    {
+      id: 310,
+      title: "Necessaire Floral Bordada",
+      description: "Bordado floral feito à mão, com detalhes em cores vibrantes.",
+      image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Necessaire"
+    },
+    {
+      id: 311,
+      title: "Necessaire com Monograma",
+      description: "Bordado elegante com monograma personalizado, ideal para presentes.",
+      image: "https://images.unsplash.com/photo-1502741126161-b048400d085d?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Necessaire"
+    }
+  ],
+  'bordado-bolsa': [
+    {
+      id: 320,
+      title: "Bolsa Tote com Bordado",
+      description: "Bolsa resistente com bordado personalizado, feita para o dia a dia.",
+      image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Bolsa"
+    },
+    {
+      id: 321,
+      title: "Bolsa de Praia Bordada",
+      description: "Bordado temático marinho, ideal para dias de sol e mar.",
+      image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Bolsa"
+    }
+  ],
+  'bordado-jaleco': [
+    {
+      id: 330,
+      title: "Jaleco Médico Personalizado",
+      description: "Bordado com nome e especialidade, feito com tecido antimicrobiano.",
+      image: "https://images.unsplash.com/photo-1524901548305-08eeddc35080?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Jaleco"
+    },
+    {
+      id: 331,
+      title: "Jaleco para Dentistas",
+      description: "Modelo exclusivo com bordado personalizado para profissionais da odontologia.",
+      image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Jaleco"
+    }
+  ],
+  'bordado-infantis': [
+    {
+      id: 340,
+      title: "Babador Bordado",
+      description: "Bordado temático infantil, feito com material hipoalergênico.",
+      image: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado Infantis"
+    },
+    {
+      id: 341,
+      title: "Manta Infantil Personalizada",
+      description: "Bordado com nome da criança, feito com algodão macio.",
+      image: "https://images.unsplash.com/photo-1616627561839-074385245934?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado Infantis"
+    }
+  ],
+  'bordado-toalha-banho': [
+    {
+      id: 350,
+      title: "Toalha de Banho Premium",
+      description: "Bordado elegante em toalha de alta absorção e durabilidade.",
+      image: "https://images.unsplash.com/photo-1585229259017-e527151ac558?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Toalha de Banho"
+    },
+    {
+      id: 351,
+      title: "Kit Toalhas Personalizadas",
+      description: "Conjunto de toalhas com bordado uniforme, ideal para presentes.",
+      image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
+      category: "Bordado em Toalha de Banho"
+    }
+  ]
+};
+
+// Flatten portfolio items
+const flattenedPortfolioItems: PortfolioItem[] = Object.values(allPortfolioItems).reduce(
+  (acc, items) => [...acc, ...items], 
+  []
+);
+
 // Flatten all products into a single array for easy lookup by ID
 const flattenedProducts: Product[] = Object.values(allProducts).reduce(
   (acc, products) => [...acc, ...products], 
   []
 );
 
+// Add portfolio product defaults
+const portfolioDefaults = {
+  rating: 5.0,
+  colors: ["Personalizado", "Sob consulta"],
+  sizes: ["Único", "Personalizado"]
+};
+
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
+  const location = useLocation();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
+  const [isFromPortfolio, setIsFromPortfolio] = useState(false);
 
   useEffect(() => {
     // In a real app, this would be an API call to get product by ID
@@ -95,8 +216,35 @@ const ProductDetailPage = () => {
     
     setTimeout(() => {
       if (productId) {
-        const foundProduct = flattenedProducts.find(p => p.id === parseInt(productId));
-        setProduct(foundProduct || null);
+        // First try to find in regular products
+        let foundProduct = flattenedProducts.find(p => p.id === parseInt(productId));
+        
+        if (foundProduct) {
+          setProduct(foundProduct);
+          setIsFromPortfolio(false);
+        } else {
+          // If not found, check portfolio items
+          const portfolioItem = flattenedPortfolioItems.find(p => p.id === parseInt(productId));
+          
+          if (portfolioItem) {
+            // Convert portfolio item to product format
+            foundProduct = {
+              id: portfolioItem.id,
+              name: portfolioItem.title,
+              image: portfolioItem.image,
+              category: portfolioItem.category,
+              description: portfolioItem.description,
+              rating: portfolioDefaults.rating,
+              colors: portfolioDefaults.colors,
+              sizes: portfolioDefaults.sizes
+            };
+            
+            setProduct(foundProduct);
+            setIsFromPortfolio(true);
+          } else {
+            setProduct(null);
+          }
+        }
         
         // Set default selections if product is found
         if (foundProduct) {
@@ -116,7 +264,18 @@ const ProductDetailPage = () => {
     if (!product) return '';
     
     // Create a personalized message based on the product name
-    const message = `Olá! Vi o ${product.name.toLowerCase()} e gostaria de fazer um orçamento!`;
+    let message = `Olá! Vi o ${product.name.toLowerCase()} e gostaria de fazer um orçamento!`;
+    
+    // Add selected options to the message
+    if (selectedColor) {
+      message += ` Cor: ${selectedColor}.`;
+    }
+    
+    if (selectedSize) {
+      message += ` Tamanho: ${selectedSize}.`;
+    }
+    
+    message += ` Quantidade: ${quantity}.`;
     
     // Create the WhatsApp link with the message
     return `https://wa.me/5581995970776?text=${encodeURIComponent(message)}`;
@@ -128,6 +287,14 @@ const ProductDetailPage = () => {
 
   const decrementQuantity = () => {
     setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  };
+
+  // Determine the back link based on where the user came from
+  const getBackLink = () => {
+    if (isFromPortfolio || location.pathname.includes('/portfolio')) {
+      return '/portfolio';
+    }
+    return '/';
   };
 
   return (
@@ -142,11 +309,11 @@ const ProductDetailPage = () => {
         ) : product ? (
           <div className="animate-scale-in">
             <Link 
-              to="/" 
+              to={getBackLink()} 
               className="inline-flex items-center text-gray-600 hover:text-brand-red mb-6 transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Voltar para a loja
+              {isFromPortfolio ? 'Voltar para o portfólio' : 'Voltar para a loja'}
             </Link>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -255,12 +422,12 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
                 
-                {/* WhatsApp Contact Button */}
+                {/* WhatsApp Contact Button - Changed to red */}
                 <a 
                   href={getWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg transition-colors w-full md:w-auto"
+                  className="inline-flex items-center justify-center bg-brand-red hover:bg-brand-red/90 text-white px-6 py-3 rounded-lg transition-colors w-full md:w-auto"
                 >
                   <MessageCircle className="w-5 h-5 mr-2" />
                   Solicitar Orçamento

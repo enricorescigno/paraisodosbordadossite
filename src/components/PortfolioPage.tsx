@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { MessageCircle } from 'lucide-react';
+import { MessageCircle, ArrowRight } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
@@ -172,13 +172,15 @@ const PortfolioPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {portfolioItems.map((item) => (
                 <div key={item.id} className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow animate-scale-in">
-                  <div className="aspect-[4/3] overflow-hidden">
-                    <img 
-                      src={item.image} 
-                      alt={item.title}
-                      className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+                  <Link to={`/produto/${item.id}`} className="block">
+                    <div className="aspect-[4/3] overflow-hidden">
+                      <img 
+                        src={item.image} 
+                        alt={item.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      />
+                    </div>
+                  </Link>
                   <div className="p-5">
                     <h3 className="font-semibold text-xl mb-2">{item.title}</h3>
                     <p className="text-gray-600 mb-4">{item.description}</p>
@@ -186,15 +188,23 @@ const PortfolioPage = () => {
                       <span className="inline-block bg-brand-red/10 text-brand-red px-3 py-1 rounded-full text-sm mb-2">
                         {item.category}
                       </span>
-                      <a 
-                        href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(item.title)}`}
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="btn-primary flex items-center gap-2 text-sm"
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                        Solicitar orçamento
-                      </a>
+                      <div className="flex items-center gap-2">
+                        <a 
+                          href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(item.title)}`}
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-gray-600 hover:text-brand-red flex items-center gap-1"
+                        >
+                          <MessageCircle className="h-4 w-4" />
+                          Solicitar orçamento
+                        </a>
+                        <Link 
+                          to={`/produto/${item.id}`}
+                          className="text-brand-dark hover:text-brand-red transition-colors duration-300"
+                        >
+                          <ArrowRight className="h-5 w-5" />
+                        </Link>
+                      </div>
                     </div>
                   </div>
                 </div>

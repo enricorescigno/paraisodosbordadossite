@@ -48,7 +48,7 @@ const App = () => (
           <Route path="/portfolio/bordado-infantis" element={<PortfolioPage />} />
           <Route path="/portfolio/bordado-toalha-banho" element={<PortfolioPage />} />
           
-          {/* Product Detail Page */}
+          {/* Product Detail Page - works for both regular products and portfolio items */}
           <Route path="/produto/:productId" element={<ProductDetailPage />} />
           
           <Route path="/sobre" element={<AboutUs />} />
