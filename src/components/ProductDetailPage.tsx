@@ -88,7 +88,7 @@ const allPortfolioItems: Record<string, PortfolioItem[]> = {
       id: 301,
       title: "Boné Personalizado Empresarial",
       description: "Bordado com logotipo empresarial, feito com linha de alta durabilidade.",
-      image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Boné"
     },
     {
@@ -136,7 +136,7 @@ const allPortfolioItems: Record<string, PortfolioItem[]> = {
       id: 330,
       title: "Jaleco Médico Personalizado",
       description: "Bordado com nome e especialidade, feito com tecido antimicrobiano.",
-      image: "https://images.unsplash.com/photo-1524901548305-08eeddc35080?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1624711478065-83f88a296aad?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Jaleco"
     },
     {
@@ -168,7 +168,7 @@ const allPortfolioItems: Record<string, PortfolioItem[]> = {
       id: 350,
       title: "Toalha de Banho Premium",
       description: "Bordado elegante em toalha de alta absorção e durabilidade.",
-      image: "https://images.unsplash.com/photo-1585229259017-e527151ac558?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1600431521340-491eca880813?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Toalha de Banho"
     },
     {

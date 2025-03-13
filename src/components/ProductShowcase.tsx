@@ -13,30 +13,30 @@ interface Product {
 
 const products: Product[] = [
   {
-    id: 1,
+    id: 101, // Updated to match ProductDetailPage ID
     name: "Kit Bordado Floral",
-    image: "https://images.unsplash.com/photo-1594393758308-55708ca3c5c6?q=80&w=500&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
     category: "Kits",
     rating: 4.8
   },
   {
-    id: 2,
+    id: 140, // Updated to match a banho product
     name: "Toalha Bordada à Mão",
-    image: "https://images.unsplash.com/photo-1593032555309-4362c0f3f8a5?q=80&w=500&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
     category: "Bordados Manuais",
     rating: 5.0
   },
   {
-    id: 3,
-    name: "Conjunto de Agulhas Premium",
-    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=500&auto=format&fit=crop",
+    id: 310, // Updated to match necessaire product
+    name: "Necessaire Bordada",
+    image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
     category: "Acessórios",
     rating: 4.7
   },
   {
-    id: 4,
-    name: "Almofada Bordada",
-    image: "https://images.unsplash.com/photo-1532329683184-6ffd13387c2c?q=80&w=500&auto=format&fit=crop",
+    id: 150, // Updated to match infantil product
+    name: "Kit Infantil Bordado",
+    image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=500&auto=format&fit=crop",
     category: "Bordados à Máquina",
     rating: 4.9
   }

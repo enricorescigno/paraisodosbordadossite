@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowRight, Star } from 'lucide-react';
@@ -21,14 +22,14 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 101,
       name: "Kit Bordado Cama, Mesa e Banho",
-      image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
       category: "Cama, Mesa e Banho",
       rating: 4.9
     },
     {
       id: 102,
       name: "Toalha Bordada Decorativa",
-      image: "https://images.unsplash.com/photo-1579656450812-5b1bcd4a952e?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1600431521340-491eca880813?q=80&w=500&auto=format&fit=crop",
       category: "Cama, Mesa e Banho",
       rating: 4.7
     }
@@ -46,7 +47,7 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 111,
       name: "Jogo de Lençol Bordado",
-      image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=500&auto=format&fit=crop",
       category: "Cama",
       rating: 4.9
     }
@@ -55,14 +56,14 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 120,
       name: "Toalha de Mesa Bordada",
-      image: "https://images.unsplash.com/photo-1619123707367-bb5cbd42072d?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1623393945964-5f6bb1ed6c21?q=80&w=500&auto=format&fit=crop",
       category: "Mesa e Cozinha",
       rating: 4.7
     },
     {
       id: 121,
       name: "Guardanapos Bordados Kit 12 Peças",
-      image: "https://images.unsplash.com/photo-1598115553860-e5319475a589?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1615368711218-100435dbcc19?q=80&w=500&auto=format&fit=crop",
       category: "Mesa e Cozinha",
       rating: 4.6
     }
@@ -71,14 +72,14 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 130,
       name: "Tapete Artesanal Bordado",
-      image: "https://images.unsplash.com/photo-1576698483491-8c43f0862543?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1600166898405-da9535204843?q=80&w=500&auto=format&fit=crop",
       category: "Tapete e Cortinas",
       rating: 4.9
     },
     {
       id: 131,
       name: "Cortina Bordada 2,80m",
-      image: "https://images.unsplash.com/photo-1605774337664-7a846e9cdf17?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=500&auto=format&fit=crop",
       category: "Tapete e Cortinas",
       rating: 4.8
     }
@@ -87,14 +88,14 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 140,
       name: "Toalha de Banho Bordada",
-      image: "https://images.unsplash.com/photo-1576698485592-ea6854087245?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
       category: "Banho",
       rating: 4.9
     },
     {
       id: 141,
       name: "Kit Toalhas Bordadas 4 Peças",
-      image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1616710562269-8f36ed494c9c?q=80&w=500&auto=format&fit=crop",
       category: "Banho",
       rating: 4.7
     }
@@ -130,7 +131,7 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 161,
       name: "Jaleco Bordado Profissional",
-      image: "https://images.unsplash.com/photo-1594824476967-48c8b964273f?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1624711478065-83f88a296aad?q=80&w=500&auto=format&fit=crop",
       category: "Vestuário",
       rating: 4.8
     }
@@ -157,14 +158,14 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 180,
       name: "Jaleco Bordado Medicina",
-      image: "https://images.unsplash.com/photo-1612349514383-d488b3fab0a2?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1624711478065-83f88a296aad?q=80&w=500&auto=format&fit=crop",
       category: "Jaleco",
       rating: 4.9
     },
     {
       id: 181,
       name: "Jaleco Bordado Enfermagem",
-      image: "https://images.unsplash.com/photo-1576671414121-aa3fcf770b7a?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=500&auto=format&fit=crop",
       category: "Jaleco",
       rating: 4.8
     }
@@ -207,14 +208,14 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 210,
       name: "Necessaire Bordada Flores",
-      image: "https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Necessaire",
       rating: 4.9
     },
     {
       id: 211,
       name: "Necessaire Bordada Personalizada",
-      image: "https://images.unsplash.com/photo-1593642532744-d377ab507dc8?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Necessaire",
       rating: 4.8
     }
@@ -223,14 +224,14 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 220,
       name: "Bolsa Bordada Tradicional",
-      image: "https://images.unsplash.com/photo-1594016113411-8c1e12a40567?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Bolsa",
       rating: 4.9
     },
     {
       id: 221,
       name: "Bolsa Bordada Praia",
-      image: "https://images.unsplash.com/photo-1601401380722-cc8e33831cc6?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Bolsa",
       rating: 4.7
     }
@@ -239,14 +240,14 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 230,
       name: "Jaleco Bordado Premium",
-      image: "https://images.unsplash.com/photo-1608543195389-8f4b089c2121?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1624711478065-83f88a296aad?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Jaleco",
       rating: 5.0
     },
     {
       id: 231,
       name: "Jaleco Bordado Odontologia",
-      image: "https://images.unsplash.com/photo-1598316560463-0083295ca951?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Jaleco",
       rating: 4.8
     }
@@ -278,7 +279,7 @@ const allProducts: Record<string, Product[]> = {
     {
       id: 251,
       name: "Kit Toalhas Bordadas Casal",
-      image: "https://images.unsplash.com/photo-1603046891744-1f66d6fc89c9?q=80&w=500&auto=format&fit=crop",
+      image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
       category: "Bordado em Toalha de Banho",
       rating: 4.9
     }
