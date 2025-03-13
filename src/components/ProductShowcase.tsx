@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -12,28 +13,28 @@ interface Product {
 
 const products: Product[] = [
   {
-    id: 101,
+    id: 101, // Updated to match ProductDetailPage ID
     name: "Kit Bordado Floral",
     image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
     category: "Kits",
     rating: 4.8
   },
   {
-    id: 140,
+    id: 140, // Updated to match a banho product
     name: "Toalha Bordada à Mão",
     image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
     category: "Bordados Manuais",
     rating: 5.0
   },
   {
-    id: 310,
+    id: 310, // Updated to match necessaire product
     name: "Necessaire Bordada",
     image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
     category: "Acessórios",
     rating: 4.7
   },
   {
-    id: 150,
+    id: 150, // Updated to match infantil product
     name: "Kit Infantil Bordado",
     image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=500&auto=format&fit=crop",
     category: "Bordados à Máquina",
@@ -41,6 +42,7 @@ const products: Product[] = [
   }
 ];
 
+// Gerador de mensagens personalizadas para WhatsApp
 const generateWhatsAppMessage = (productName: string): string => {
   return encodeURIComponent(`Olá! Vi o produto ${productName.toLowerCase()} e gostaria de fazer um orçamento!`);
 };
@@ -88,6 +90,7 @@ const ProductShowcase = () => {
           </p>
         </div>
         
+        {/* Category Tabs */}
         <div className="flex justify-center mb-10 overflow-x-auto pb-2">
           <div className="flex gap-2 md:gap-3">
             {categories.map((category) => (
@@ -105,6 +108,7 @@ const ProductShowcase = () => {
           </div>
         </div>
         
+        {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
           {visibleProducts.map((product) => (
             <div 
@@ -153,6 +157,7 @@ const ProductShowcase = () => {
           ))}
         </div>
         
+        {/* View All Link */}
         <div className="flex justify-center mt-12">
           <Link 
             to="/produtos"

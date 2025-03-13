@@ -10,7 +10,6 @@ import NotFound from "./pages/NotFound";
 import ProductPage from "./components/ProductPage";
 import PortfolioPage from "./components/PortfolioPage";
 import ProductDetailPage from "./components/ProductDetailPage";
-import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -52,10 +51,7 @@ const App = () => (
           {/* Product Detail Page - works for both regular products and portfolio items */}
           <Route path="/produto/:productId" element={<ProductDetailPage />} />
           
-          {/* Institutional Pages */}
           <Route path="/sobre" element={<AboutUs />} />
-          <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
-          
           <Route path="/login" element={<Index />} />
           <Route path="/carrinho" element={<Index />} />
           <Route path="*" element={<NotFound />} />
