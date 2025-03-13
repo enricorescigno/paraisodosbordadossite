@@ -86,7 +86,7 @@ const Navbar = () => {
             </Link>
             <div className="relative group">
               <button className="nav-link text-brand-dark flex items-center gap-1">
-                Bordados à Máquina
+                Todas as Categorias
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
               </button>
               <div className="absolute top-full left-0 mt-1 w-60 glass rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg">
@@ -102,7 +102,7 @@ const Navbar = () => {
             </div>
             <div className="relative group">
               <button className="nav-link text-brand-dark flex items-center gap-1">
-                Bordados Manuais
+                Protifólio Bordado
                 <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
               </button>
               <div className="absolute top-full left-0 mt-1 w-60 glass rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg">
@@ -116,14 +116,8 @@ const Navbar = () => {
                 </div>
               </div>
             </div>
-            <Link to="/categoria/kits" className="nav-link text-brand-dark">
-              Kits de Bordado
-            </Link>
-            <Link to="/categoria/acessorios" className="nav-link text-brand-dark">
-              Acessórios
-            </Link>
             <Link to="/portfolio" className="nav-link text-brand-dark">
-              Portfólio
+              Portfólio Bordado
             </Link>
             <Link to="/sobre" className="nav-link text-brand-dark">
               Sobre Nós
