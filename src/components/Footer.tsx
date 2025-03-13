@@ -123,7 +123,7 @@ const Footer = () => {
       {/* Copyright Bar */}
       <div className="bg-brand-red text-white py-4 relative">
         <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm">
+          <p className="text-sm text-slate-50">
             Gj Bordados Gilvan Comercio de Confeccao - CNPJ: 19.979.908/0001-17 © Todos os direitos reservados. {currentYear}
           </p>
           <button onClick={() => window.scrollTo({
