@@ -379,18 +379,20 @@ const ProductPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
               {products.map((product) => (
                 <div key={product.id} className="product-card bg-white rounded-lg overflow-hidden shadow-md animate-scale-in">
-                  <div className="relative overflow-hidden aspect-square">
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                    />
-                    <div className="absolute top-3 left-3">
-                      <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full">
-                        {product.category}
-                      </span>
+                  <Link to={`/produto/${product.id}`} className="block">
+                    <div className="relative overflow-hidden aspect-square">
+                      <img 
+                        src={product.image} 
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                      />
+                      <div className="absolute top-3 left-3">
+                        <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full">
+                          {product.category}
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  </Link>
                   <div className="p-4">
                     <div className="flex items-center gap-1 mb-2">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />

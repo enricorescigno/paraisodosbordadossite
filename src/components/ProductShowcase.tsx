@@ -113,18 +113,20 @@ const ProductShowcase = () => {
               key={product.id}
               className={`product-card ${animateProducts ? 'animate-scale-in' : 'opacity-0'}`}
             >
-              <div className="relative overflow-hidden aspect-square">
-                <img 
-                  src={product.image} 
-                  alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                />
-                <div className="absolute top-3 left-3">
-                  <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full">
-                    {product.category}
-                  </span>
+              <Link to={`/produto/${product.id}`} className="block">
+                <div className="relative overflow-hidden aspect-square">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                  />
+                  <div className="absolute top-3 left-3">
+                    <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full">
+                      {product.category}
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </Link>
               <div className="p-4">
                 <div className="flex items-center gap-1 mb-2">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />

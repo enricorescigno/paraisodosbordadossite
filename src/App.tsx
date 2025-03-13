@@ -9,6 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import NotFound from "./pages/NotFound";
 import ProductPage from "./components/ProductPage";
 import PortfolioPage from "./components/PortfolioPage";
+import ProductDetailPage from "./components/ProductDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -47,7 +48,9 @@ const App = () => (
           <Route path="/portfolio/bordado-infantis" element={<PortfolioPage />} />
           <Route path="/portfolio/bordado-toalha-banho" element={<PortfolioPage />} />
           
-          <Route path="/produto/:productId" element={<Index />} />
+          {/* Product Detail Page */}
+          <Route path="/produto/:productId" element={<ProductDetailPage />} />
+          
           <Route path="/sobre" element={<AboutUs />} />
           <Route path="/login" element={<Index />} />
           <Route path="/carrinho" element={<Index />} />
