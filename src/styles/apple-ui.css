@@ -5,33 +5,34 @@
     @apply text-[15px] leading-relaxed text-brand-dark antialiased font-sans selection:bg-brand-red/10 selection:text-brand-red;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    font-feature-settings: "kern";
   }
 
   /* Modern Heading Styles */
   h1 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-serif tracking-[-0.02em];
+    @apply text-3xl md:text-4xl lg:text-5xl font-serif tracking-tight;
   }
   
   h2 {
-    @apply text-2xl md:text-3xl lg:text-4xl font-serif tracking-[-0.02em];
+    @apply text-2xl md:text-3xl lg:text-4xl font-serif tracking-tight;
   }
   
   h3 {
-    @apply text-xl md:text-2xl font-serif tracking-[-0.02em];
+    @apply text-xl md:text-2xl font-serif tracking-tight;
   }
 }
 
 @layer components {
   /* Apple-inspired Card */
   .apple-card {
-    @apply bg-white rounded-2xl shadow-sm p-6 transition-all duration-300
-    hover:shadow-lg hover:-translate-y-1;
+    @apply bg-white rounded-lg shadow-sm p-6 transition-all duration-300
+    hover:shadow-md hover:-translate-y-1;
   }
 
   /* Sticky Navbar with Blur Effect */
   .apple-navbar {
     @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300
-    bg-white/80 backdrop-blur-xl border-b border-gray-200/50;
+    bg-white/90 backdrop-blur-xl border-b border-gray-200/50 shadow-sm;
   }
 
   /* Apple-inspired Hover Link */
@@ -49,8 +50,8 @@
 
   /* Enhanced Product Card */
   .product-card-enhanced {
-    @apply relative bg-white rounded-2xl overflow-hidden transition-all duration-300
-    hover:shadow-lg hover:-translate-y-1 group;
+    @apply relative bg-white rounded-lg overflow-hidden transition-all duration-300
+    hover:shadow-md hover:-translate-y-1 group;
   }
 
   /* Image Container */
@@ -67,6 +68,56 @@
   /* Product Content */
   .product-content {
     @apply p-4 space-y-2;
+  }
+  
+  /* Apple-style form controls */
+  .apple-input {
+    @apply px-4 py-2 rounded-lg border border-gray-300 w-full
+    focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red
+    focus:outline-none transition-all duration-200;
+  }
+  
+  /* Apple-style select */
+  .apple-select {
+    @apply px-4 py-2 rounded-lg border border-gray-300 w-full
+    focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red
+    focus:outline-none transition-all duration-200 bg-white;
+  }
+  
+  /* Apple-style chip */
+  .apple-chip {
+    @apply px-3 py-1 rounded-full text-sm font-medium
+    bg-gray-100 text-gray-800 inline-flex items-center gap-1;
+  }
+  
+  /* Apple-style chip active */
+  .apple-chip-active {
+    @apply bg-brand-red/10 text-brand-red;
+  }
+  
+  /* Apple-style mega menu */
+  .apple-mega-menu {
+    @apply absolute top-full left-0 w-full bg-white/95 backdrop-blur-md
+    shadow-lg border-t border-gray-200/50 py-8 z-50 opacity-0 invisible
+    transition-all duration-300 transform -translate-y-2;
+  }
+  
+  /* Apple-style mega menu open */
+  .apple-mega-menu-open {
+    @apply opacity-100 visible translate-y-0;
+  }
+  
+  /* Search results refined styles */
+  .search-result-item {
+    @apply flex items-center gap-3 px-4 py-3 hover:bg-gray-50
+    cursor-pointer transition-colors duration-200 border-b border-gray-100 last:border-b-0;
+  }
+  
+  /* Search input refined styles */
+  .search-input {
+    @apply w-full py-2.5 pl-4 pr-10 border border-gray-300 rounded-full
+    focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red
+    text-base transition-all duration-200;
   }
 }
 
@@ -96,3 +147,17 @@
 .product-grid > *:nth-child(2) { animation-delay: 0.2s; }
 .product-grid > *:nth-child(3) { animation-delay: 0.3s; }
 .product-grid > *:nth-child(4) { animation-delay: 0.4s; }
+
+/* Apple-style button hover transition */
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+/* Apple-style text scaling */
+.text-scale {
+  transition: font-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}

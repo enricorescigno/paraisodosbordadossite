@@ -25,9 +25,10 @@ const Navbar = () => {
   return (
     <header 
       className={cn(
-        "apple-navbar z-50",
-        isScrolled ? "backdrop-blur-xl bg-white/80" : "backdrop-blur-none bg-white",
-        "fixed top-0 left-0 right-0 w-full transition-all duration-300"
+        "z-50 fixed top-0 left-0 right-0 w-full transition-all duration-300",
+        isScrolled 
+          ? "backdrop-blur-xl bg-white/90 shadow-sm" 
+          : "backdrop-blur-none bg-white"
       )}
     >
       <div className="container-custom mx-auto">

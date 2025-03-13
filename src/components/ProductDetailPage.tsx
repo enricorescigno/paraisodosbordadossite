@@ -1,9 +1,11 @@
+
 import { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, MessageCircle, Star } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
+import { AppleButton } from '@/components/ui/apple-button';
 
 interface Product {
   id: number;
@@ -297,11 +299,28 @@ const ProductDetailPage = () => {
     return '/';
   };
 
+  const placeholder = (category: string) => {
+    // Return placeholder based on category
+    const placeholders: Record<string, string> = {
+      'Cama, Mesa e Banho': '/images/placeholders/home-textile.jpg',
+      'Infantil': '/images/placeholders/kids.jpg',
+      'Vestuário': '/images/placeholders/clothing.jpg',
+      'Bordado em Boné': '/images/placeholders/cap.jpg',
+      'Bordado em Necessaire': '/images/placeholders/necessaire.jpg',
+      'Bordado em Bolsa': '/images/placeholders/bag.jpg',
+      'Bordado em Jaleco': '/images/placeholders/uniform.jpg',
+      'Bordado Infantis': '/images/placeholders/kids-embroidery.jpg',
+      'Bordado em Toalha de Banho': '/images/placeholders/towel.jpg'
+    };
+    
+    return placeholders[category] || '/images/placeholders/default.jpg';
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
       
-      <div className="container-custom py-10">
+      <div className="container-custom pt-24 pb-16">
         {loading ? (
           <div className="flex justify-center items-center py-40">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
@@ -318,18 +337,22 @@ const ProductDetailPage = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {/* Product Image */}
-              <div className="bg-gray-50 rounded-lg overflow-hidden">
+              <div className="bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                 <img 
                   src={product.image} 
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover aspect-square"
+                  onError={(e) => {
+                    // If image fails to load, set a placeholder based on category
+                    e.currentTarget.src = placeholder(product.category);
+                  }}
                 />
               </div>
               
               {/* Product Details */}
               <div>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="bg-brand-red/10 text-brand-red px-3 py-1 rounded-full text-sm">
+                  <span className="bg-brand-red/10 text-brand-red px-3 py-1 rounded-full text-xs font-medium">
                     {product.category}
                   </span>
                   <div className="flex items-center gap-1">
@@ -338,19 +361,22 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
                 
-                <h1 className="text-3xl font-bold mb-6">{product.name}</h1>
+                <h1 className="text-2xl md:text-3xl font-bold mb-4">{product.name}</h1>
                 
-                <p className="text-gray-600 mb-6">
+                <p className="text-gray-600 mb-6 leading-relaxed">
                   {product.description || "Descrição do produto não disponível."}
                 </p>
                 
                 {/* Product Features */}
                 {product.features && product.features.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="font-semibold mb-2">Características:</h3>
-                    <ul className="list-disc pl-5 space-y-1">
+                    <h3 className="font-semibold mb-3 text-gray-800">Características:</h3>
+                    <ul className="space-y-2">
                       {product.features.map((feature, index) => (
-                        <li key={index} className="text-gray-600">{feature}</li>
+                        <li key={index} className="flex items-center gap-2">
+                          <span className="h-1.5 w-1.5 rounded-full bg-brand-red"></span>
+                          <span className="text-gray-600">{feature}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -359,16 +385,16 @@ const ProductDetailPage = () => {
                 {/* Color Selection */}
                 {product.colors && product.colors.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="font-semibold mb-2">Cor:</h3>
-                    <div className="flex gap-2">
+                    <h3 className="font-semibold mb-3 text-gray-800">Cor:</h3>
+                    <div className="flex flex-wrap gap-2">
                       {product.colors.map((color) => (
                         <button
                           key={color}
                           onClick={() => setSelectedColor(color)}
-                          className={`px-3 py-1 border rounded-md ${
+                          className={`px-4 py-2 border rounded-md transition-all duration-200 ${
                             selectedColor === color 
-                              ? 'border-brand-red text-brand-red' 
-                              : 'border-gray-300 text-gray-600'
+                              ? 'border-brand-red bg-brand-red/5 text-brand-red' 
+                              : 'border-gray-300 text-gray-600 hover:border-gray-400'
                           }`}
                         >
                           {color}
@@ -381,16 +407,16 @@ const ProductDetailPage = () => {
                 {/* Size Selection */}
                 {product.sizes && product.sizes.length > 0 && (
                   <div className="mb-6">
-                    <h3 className="font-semibold mb-2">Tamanho:</h3>
-                    <div className="flex gap-2">
+                    <h3 className="font-semibold mb-3 text-gray-800">Tamanho:</h3>
+                    <div className="flex flex-wrap gap-2">
                       {product.sizes.map((size) => (
                         <button
                           key={size}
                           onClick={() => setSelectedSize(size)}
-                          className={`px-3 py-1 border rounded-md ${
+                          className={`px-4 py-2 border rounded-md transition-all duration-200 ${
                             selectedSize === size 
-                              ? 'border-brand-red text-brand-red' 
-                              : 'border-gray-300 text-gray-600'
+                              ? 'border-brand-red bg-brand-red/5 text-brand-red' 
+                              : 'border-gray-300 text-gray-600 hover:border-gray-400'
                           }`}
                         >
                           {size}
@@ -401,36 +427,41 @@ const ProductDetailPage = () => {
                 )}
                 
                 {/* Quantity Selection */}
-                <div className="mb-6">
-                  <h3 className="font-semibold mb-2">Quantidade:</h3>
-                  <div className="flex">
+                <div className="mb-8">
+                  <h3 className="font-semibold mb-3 text-gray-800">Quantidade:</h3>
+                  <div className="flex w-full max-w-[180px]">
                     <button 
                       onClick={decrementQuantity}
-                      className="border border-gray-300 px-3 py-1 rounded-l-md"
+                      className="border border-gray-300 hover:border-gray-400 px-4 py-2 rounded-l-md transition-colors"
                     >
                       -
                     </button>
-                    <div className="border-t border-b border-gray-300 px-4 py-1 flex items-center justify-center min-w-[60px]">
+                    <div className="border-t border-b border-gray-300 px-6 py-2 flex items-center justify-center min-w-[60px] bg-gray-50">
                       {quantity}
                     </div>
                     <button 
                       onClick={incrementQuantity}
-                      className="border border-gray-300 px-3 py-1 rounded-r-md"
+                      className="border border-gray-300 hover:border-gray-400 px-4 py-2 rounded-r-md transition-colors"
                     >
                       +
                     </button>
                   </div>
                 </div>
                 
-                {/* WhatsApp Contact Button - Changed to red */}
+                {/* WhatsApp Contact Button */}
                 <a 
                   href={getWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center bg-brand-red hover:bg-brand-red/90 text-white px-6 py-3 rounded-lg transition-colors w-full md:w-auto"
+                  className="w-full md:w-auto"
                 >
-                  <MessageCircle className="w-5 h-5 mr-2" />
-                  Solicitar Orçamento
+                  <AppleButton 
+                    size="lg" 
+                    className="w-full md:w-auto rounded-md flex items-center justify-center gap-2"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Solicitar Orçamento
+                  </AppleButton>
                 </a>
               </div>
             </div>
@@ -439,8 +470,10 @@ const ProductDetailPage = () => {
           <div className="text-center py-20">
             <h2 className="text-2xl font-bold mb-4">Produto não encontrado</h2>
             <p className="text-gray-600 mb-6">O produto que você está procurando não existe ou foi removido.</p>
-            <Link to="/" className="btn-primary">
-              Voltar para a loja
+            <Link to="/">
+              <AppleButton>
+                Voltar para a loja
+              </AppleButton>
             </Link>
           </div>
         )}

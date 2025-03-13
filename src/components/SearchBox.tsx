@@ -81,6 +81,25 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false, on
     }
   };
 
+  const placeholderImageForCategory = (category: string) => {
+    // Return category-specific placeholder URLs
+    const categoryMap: Record<string, string> = {
+      'Cama': '/images/placeholders/bed-placeholder.jpg',
+      'Mesa e Cozinha': '/images/placeholders/table-placeholder.jpg',
+      'Banho': '/images/placeholders/bath-placeholder.jpg',
+      'Infantil': '/images/placeholders/kids-placeholder.jpg',
+      'Vestuário': '/images/placeholders/clothing-placeholder.jpg',
+      'Bordado em Boné': '/images/placeholders/cap-placeholder.jpg',
+      'Bordado em Necessaire': '/images/placeholders/necessaire-placeholder.jpg',
+      'Bordado em Bolsa': '/images/placeholders/bag-placeholder.jpg',
+      'Bordado em Jaleco': '/images/placeholders/uniform-placeholder.jpg',
+      'Bordado Infantis': '/images/placeholders/kids-embroidery-placeholder.jpg',
+      'Bordado em Toalha de Banho': '/images/placeholders/towel-placeholder.jpg',
+    };
+    
+    return categoryMap[category] || '/images/placeholders/generic-placeholder.jpg';
+  };
+
   const highlightMatch = (text: string, query: string) => {
     if (!query) return text;
     
@@ -148,19 +167,17 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false, on
                   onClick={() => handleResultClick(product)}
                   whileHover={{ backgroundColor: "#f3f4f6" }}
                 >
-                  {product.imageUrl ? (
-                    <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-                      <img 
-                        src={product.imageUrl} 
-                        alt={product.name} 
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ) : (
-                    <div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center flex-shrink-0">
-                      <span className="text-gray-400 text-xs">Sem imagem</span>
-                    </div>
-                  )}
+                  <div className="w-12 h-12 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                    <img 
+                      src={product.imageUrl || placeholderImageForCategory(product.category)} 
+                      alt={product.name} 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        // If image fails to load, set a placeholder based on category
+                        e.currentTarget.src = placeholderImageForCategory(product.category);
+                      }}
+                    />
+                  </div>
                   <div className="flex-1">
                     <div className="text-sm font-medium">{highlightMatch(product.name, searchQuery)}</div>
                     <div className="text-xs text-gray-500">

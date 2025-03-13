@@ -29,13 +29,13 @@ const appleButtonVariants = cva(
   }
 )
 
-export interface Apple_buttonProps
+export interface AppleButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof appleButtonVariants> {
   asChild?: boolean
 }
 
-const AppleButton = React.forwardRef<HTMLButtonElement, Apple_buttonProps>(
+const AppleButton = React.forwardRef<HTMLButtonElement, AppleButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     const Comp = asChild ? Slot : "button"
     return (
