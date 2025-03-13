@@ -1,20 +1,7 @@
-
 import { Link } from 'react-router-dom';
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarTrigger,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-} from "@/components/ui/menubar";
-
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger, MenubarSub, MenubarSubContent, MenubarSubTrigger } from "@/components/ui/menubar";
 const MenubarNav = () => {
-  return (
-    <Menubar className="w-full border-none bg-brand-light py-2 rounded-none">
+  return <Menubar className="w-full border-none bg-brand-light rounded-none py-[8px] my-0 mx-[240px]">
       <MenubarMenu>
         <MenubarTrigger className="font-medium">Início</MenubarTrigger>
         <MenubarContent>
@@ -104,8 +91,6 @@ const MenubarNav = () => {
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-    </Menubar>
-  );
+    </Menubar>;
 };
-
 export default MenubarNav;
