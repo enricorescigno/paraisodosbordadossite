@@ -1,0 +1,165 @@
+
+import { useEffect, useState } from 'react';
+import { ArrowRight, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  category: string;
+  rating: number;
+}
+
+const products: Product[] = [
+  {
+    id: 1,
+    name: "Kit Bordado Floral",
+    price: 89.90,
+    image: "https://images.unsplash.com/photo-1594393758308-55708ca3c5c6?q=80&w=500&auto=format&fit=crop",
+    category: "Kits",
+    rating: 4.8
+  },
+  {
+    id: 2,
+    name: "Toalha Bordada à Mão",
+    price: 129.90,
+    image: "https://images.unsplash.com/photo-1593032555309-4362c0f3f8a5?q=80&w=500&auto=format&fit=crop",
+    category: "Bordados Manuais",
+    rating: 5.0
+  },
+  {
+    id: 3,
+    name: "Conjunto de Agulhas Premium",
+    price: 49.90,
+    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=500&auto=format&fit=crop",
+    category: "Acessórios",
+    rating: 4.7
+  },
+  {
+    id: 4,
+    name: "Almofada Bordada",
+    price: 149.90,
+    image: "https://images.unsplash.com/photo-1532329683184-6ffd13387c2c?q=80&w=500&auto=format&fit=crop",
+    category: "Bordados à Máquina",
+    rating: 4.9
+  }
+];
+
+const ProductShowcase = () => {
+  const [activeTab, setActiveTab] = useState<string>("all");
+  const [visibleProducts, setVisibleProducts] = useState<Product[]>(products);
+  const [animateProducts, setAnimateProducts] = useState(false);
+  
+  const categories = ["all", ...new Set(products.map(product => product.category.toLowerCase().replace(' ', '-')))];
+  
+  const categoryLabels: {[key: string]: string} = {
+    "all": "Todos",
+    "kits": "Kits",
+    "bordados-manuais": "Bordados Manuais",
+    "acessórios": "Acessórios",
+    "bordados-à-máquina": "Bordados à Máquina"
+  };
+
+  useEffect(() => {
+    setAnimateProducts(false);
+    
+    setTimeout(() => {
+      if (activeTab === "all") {
+        setVisibleProducts(products);
+      } else {
+        const filtered = products.filter(
+          product => product.category.toLowerCase().replace(' ', '-') === activeTab
+        );
+        setVisibleProducts(filtered);
+      }
+      setAnimateProducts(true);
+    }, 300);
+  }, [activeTab]);
+
+  return (
+    <section className="section-padding bg-brand-light">
+      <div className="container-custom">
+        <div className="text-center">
+          <h2 className="section-title">Nossos Produtos</h2>
+          <p className="section-subtitle">
+            Explore nossa seleção de bordados e acessórios de alta qualidade, feitos com amor e dedicação.
+          </p>
+        </div>
+        
+        {/* Category Tabs */}
+        <div className="flex justify-center mb-10 overflow-x-auto pb-2">
+          <div className="flex gap-2 md:gap-3">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setActiveTab(category)}
+                className={`px-4 py-2 whitespace-nowrap rounded-full transition-all duration-300
+                ${activeTab === category 
+                  ? 'bg-brand-red text-white' 
+                  : 'bg-white text-brand-dark hover:bg-brand-red/10'}`}
+              >
+                {categoryLabels[category]}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          {visibleProducts.map((product) => (
+            <div 
+              key={product.id}
+              className={`product-card ${animateProducts ? 'animate-scale-in' : 'opacity-0'}`}
+            >
+              <div className="relative overflow-hidden aspect-square">
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                />
+                <div className="absolute top-3 left-3">
+                  <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full">
+                    {product.category}
+                  </span>
+                </div>
+              </div>
+              <div className="p-4">
+                <div className="flex items-center gap-1 mb-2">
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <span className="text-sm text-gray-700">{product.rating.toFixed(1)}</span>
+                </div>
+                <h3 className="font-medium text-lg mb-1">{product.name}</h3>
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold text-brand-red">
+                    R$ {product.price.toFixed(2).replace('.', ',')}
+                  </p>
+                  <Link 
+                    to={`/produto/${product.id}`}
+                    className="text-brand-dark hover:text-brand-red transition-colors duration-300"
+                  >
+                    <ArrowRight className="h-5 w-5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        {/* View All Link */}
+        <div className="flex justify-center mt-12">
+          <Link 
+            to="/produtos"
+            className="btn-secondary flex items-center gap-2"
+          >
+            Ver Todos os Produtos
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ProductShowcase;
