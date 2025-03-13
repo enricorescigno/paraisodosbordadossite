@@ -85,6 +85,21 @@ const Hero = () => {
     }
   };
 
+  const glassCardVariants = {
+    hidden: {
+      opacity: 0,
+      scale: 0.95
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.16, 1, 0.3, 1]
+      }
+    }
+  };
+
   return (
     <section ref={containerRef} className="relative w-full h-screen overflow-hidden">
       {/* Image Background with overlay */}
@@ -118,42 +133,53 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-20 flex items-center justify-center h-full">
         <div className="container-custom text-center">
-          <motion.h1 
-            initial="hidden" 
-            animate="visible" 
-            variants={titleVariants} 
-            className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6 font-medium text-white"
-          >
-            Paraíso dos Bordados
-          </motion.h1>
-          
-          <motion.p 
-            className="text-white/90 text-lg md:text-xl max-w-2xl mx-auto mb-10" 
-            initial="hidden" 
-            animate="visible" 
-            variants={descriptionVariants}
-          >
-            Transformamos linhas e agulhas em verdadeiras obras de arte. Conheça nossa coleção exclusiva de bordados feitos com paixão e maestria.
-          </motion.p>
-          
+          {/* Frosted Glass Card */}
           <motion.div 
-            className="flex flex-col sm:flex-row items-center justify-center gap-6" 
-            initial="hidden" 
-            animate="visible" 
-            variants={buttonVariants}
+            initial="hidden"
+            animate="visible"
+            variants={glassCardVariants}
+            className="inline-block mx-auto px-8 py-10 md:px-12 md:py-12 
+                       bg-white/40 backdrop-blur-[12px] rounded-2xl 
+                       shadow-[0_8px_32px_rgba(0,0,0,0.1)] 
+                       border border-white/60"
           >
-            <AppleButton size="lg" className="w-full sm:w-auto">
-              <Link to="/produtos" className="flex items-center gap-2">
-                Explorar Produtos
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </AppleButton>
+            <motion.h1 
+              initial="hidden" 
+              animate="visible" 
+              variants={titleVariants} 
+              className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6 font-medium text-brand-dark"
+            >
+              Paraíso dos Bordados
+            </motion.h1>
             
-            <AppleButton variant="outline" size="lg" className="w-full sm:w-auto">
-              <Link to="/portfolio">
-                Ver Portfólio de Bordados
-              </Link>
-            </AppleButton>
+            <motion.p 
+              className="text-brand-dark/90 text-lg md:text-xl max-w-2xl mx-auto mb-10" 
+              initial="hidden" 
+              animate="visible" 
+              variants={descriptionVariants}
+            >
+              Transformamos linhas e agulhas em verdadeiras obras de arte. Conheça nossa coleção exclusiva de bordados feitos com paixão e maestria.
+            </motion.p>
+            
+            <motion.div 
+              className="flex flex-col sm:flex-row items-center justify-center gap-6" 
+              initial="hidden" 
+              animate="visible" 
+              variants={buttonVariants}
+            >
+              <AppleButton size="lg" className="w-full sm:w-auto">
+                <Link to="/produtos" className="flex items-center gap-2">
+                  Explorar Produtos
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </AppleButton>
+              
+              <AppleButton variant="outline" size="lg" className="w-full sm:w-auto">
+                <Link to="/portfolio">
+                  Ver Portfólio de Bordados
+                </Link>
+              </AppleButton>
+            </motion.div>
           </motion.div>
         </div>
       </div>
