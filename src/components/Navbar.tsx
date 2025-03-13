@@ -1,13 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X, ChevronDown, User, Search } from 'lucide-react';
-
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -17,13 +14,11 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle search functionality here
     console.log('Search query:', searchQuery);
   };
-
   return <header className="w-full bg-white z-50">
       {/* Top bar with account, language, etc. */}
       <div className="bg-brand-light py-2 border-b border-gray-200">
@@ -181,9 +176,7 @@ const Navbar = () => {
               </div>
             </div>
             
-            <Link to="/portfolio" className="nav-link text-brand-dark">
-              Portfólio Bordado
-            </Link>
+            
             <Link to="/sobre" className="nav-link text-brand-dark">
               Sobre Nós
             </Link>
@@ -296,5 +289,4 @@ const Navbar = () => {
       </div>
     </header>;
 };
-
 export default Navbar;
