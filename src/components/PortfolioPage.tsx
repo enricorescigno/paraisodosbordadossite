@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { MessageCircle } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
@@ -124,6 +125,11 @@ const categoryTitles: Record<string, string> = {
   'bordado-toalha-banho': 'Bordado em Toalha de Banho'
 };
 
+// Gerador de mensagens personalizadas para WhatsApp
+const generateWhatsAppMessage = (itemTitle: string): string => {
+  return encodeURIComponent(`Olá! Vi o ${itemTitle.toLowerCase()} e gostaria de fazer um orçamento!`);
+};
+
 const PortfolioPage = () => {
   const location = useLocation();
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
@@ -147,6 +153,8 @@ const PortfolioPage = () => {
   const pathParts = location.pathname.split('/');
   const categoryPath = pathParts[pathParts.length - 1];
   const categoryTitle = categoryTitles[categoryPath] || categoryPath;
+
+  const whatsappNumber = "+5581995970776";
 
   return (
     <div className="min-h-screen bg-white">
@@ -174,9 +182,20 @@ const PortfolioPage = () => {
                   <div className="p-5">
                     <h3 className="font-semibold text-xl mb-2">{item.title}</h3>
                     <p className="text-gray-600 mb-4">{item.description}</p>
-                    <span className="inline-block bg-brand-red/10 text-brand-red px-3 py-1 rounded-full text-sm">
-                      {item.category}
-                    </span>
+                    <div className="flex flex-wrap items-center justify-between">
+                      <span className="inline-block bg-brand-red/10 text-brand-red px-3 py-1 rounded-full text-sm mb-2">
+                        {item.category}
+                      </span>
+                      <a 
+                        href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(item.title)}`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="btn-primary flex items-center gap-2 text-sm"
+                      >
+                        <MessageCircle className="h-4 w-4" />
+                        Solicitar orçamento
+                      </a>
+                    </div>
                   </div>
                 </div>
               ))}

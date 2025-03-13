@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { ArrowRight, Star } from 'lucide-react';
+import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface Product {
@@ -42,6 +42,11 @@ const products: Product[] = [
   }
 ];
 
+// Gerador de mensagens personalizadas para WhatsApp
+const generateWhatsAppMessage = (productName: string): string => {
+  return encodeURIComponent(`Olá! Vi o produto ${productName.toLowerCase()} e gostaria de fazer um orçamento!`);
+};
+
 const ProductShowcase = () => {
   const [activeTab, setActiveTab] = useState<string>("all");
   const [visibleProducts, setVisibleProducts] = useState<Product[]>(products);
@@ -72,6 +77,8 @@ const ProductShowcase = () => {
       setAnimateProducts(true);
     }, 300);
   }, [activeTab]);
+
+  const whatsappNumber = "+5581995970776";
 
   return (
     <section className="section-padding bg-brand-light">
@@ -129,7 +136,15 @@ const ProductShowcase = () => {
                 </div>
                 <h3 className="font-medium text-lg mb-3">{product.name}</h3>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Solicite um orçamento</span>
+                  <a 
+                    href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(product.name)}`}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-sm text-gray-600 hover:text-brand-red flex items-center gap-1"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    Solicitar orçamento
+                  </a>
                   <Link 
                     to={`/produto/${product.id}`}
                     className="text-brand-dark hover:text-brand-red transition-colors duration-300"
