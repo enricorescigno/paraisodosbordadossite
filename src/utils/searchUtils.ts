@@ -15,7 +15,7 @@ export interface Product {
 // Sample product database - In a real app, you would fetch this from an API
 export const products: Product[] = [
   {
-    id: "1",
+    id: "101", // Changed ID to match the ones in ProductDetailPage
     name: "Toalha Bordada Personalizada",
     category: "banho",
     description: "Toalha de alta qualidade com bordados personalizados",
@@ -24,7 +24,7 @@ export const products: Product[] = [
     type: "product"
   },
   {
-    id: "2",
+    id: "301", // Changed ID to match the portfolio item in ProductDetailPage
     name: "Boné Personalizado Empresarial",
     category: "bordado-bone",
     description: "Boné de alta qualidade com bordado personalizado para sua empresa",
@@ -33,7 +33,7 @@ export const products: Product[] = [
     type: "portfolio"
   },
   {
-    id: "3",
+    id: "330", // Changed ID to match portfolio jaleco
     name: "Jaleco Bordado",
     category: "jaleco",
     description: "Jaleco profissional com bordado personalizado",
@@ -42,7 +42,7 @@ export const products: Product[] = [
     type: "product"
   },
   {
-    id: "4",
+    id: "310", // Changed ID to match portfolio necessaire
     name: "Necessaire Bordada",
     category: "bordado-necessaire",
     description: "Necessaire com bordados personalizados",
@@ -51,7 +51,7 @@ export const products: Product[] = [
     type: "portfolio"
   },
   {
-    id: "5",
+    id: "150", // Changed ID to match product in ProductDetailPage
     name: "Kit Infantil Bordado",
     category: "infantil",
     description: "Kit completo de itens bordados para bebês e crianças",
@@ -60,7 +60,7 @@ export const products: Product[] = [
     type: "product"
   },
   {
-    id: "6",
+    id: "102", // Changed ID to match product in ProductDetailPage
     name: "Jogo de Toalhas Casal",
     category: "cama",
     description: "Jogo completo de toalhas bordadas para casal",
@@ -69,7 +69,7 @@ export const products: Product[] = [
     type: "product"
   },
   {
-    id: "7",
+    id: "320", // Changed ID to match portfolio bolsa
     name: "Bolsa Bordada Personalizada",
     category: "bordado-bolsa",
     description: "Bolsa com bordados personalizados exclusivos",
@@ -78,7 +78,7 @@ export const products: Product[] = [
     type: "portfolio"
   },
   {
-    id: "8",
+    id: "350", // Changed ID to match portfolio toalha
     name: "Toalha de Mesa Bordada",
     category: "mesa-cozinha",
     description: "Toalha de mesa com bordados elegantes",
