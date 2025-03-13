@@ -117,11 +117,8 @@ export function searchProducts(query: string): Product[] {
   });
 }
 
-// Function to get product URL
+// Function to get product URL - updated to ensure correct paths for portfolio items
 export function getProductUrl(product: Product): string {
-  if (product.type === 'portfolio') {
-    return `/portfolio/${product.category}/${product.id}`;
-  } else {
-    return `/produto/${product.id}`;
-  }
+  // All products and portfolio items should go to the product detail page
+  return `/produto/${product.id}`;
 }

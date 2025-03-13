@@ -48,6 +48,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
     // If we have results, navigate to the first one
     if (results.length > 0) {
       const url = getProductUrl(results[0]);
+      console.log(`Navigating to: ${url}`);
       navigate(url);
       setSearchQuery('');
       setIsOpen(false);
@@ -56,6 +57,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
 
   const handleResultClick = (product: Product) => {
     const url = getProductUrl(product);
+    console.log(`Result clicked, navigating to: ${url}`);
     navigate(url);
     setSearchQuery('');
     setIsOpen(false);
