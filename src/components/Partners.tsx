@@ -3,7 +3,8 @@ import { useEffect, useRef } from 'react';
 
 const partners = [
   {
-    logo: "https://uploaddeimagens.com.br/imagens/lmeM7o8"
+    name: "Dr Pet",
+    logo: "https://imgur.com/HJfPn3w"
   },
   {
     logo: "https://uploaddeimagens.com.br/imagens/NMcp0kE"
