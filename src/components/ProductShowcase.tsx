@@ -1,11 +1,17 @@
 
 import { useEffect, useState } from 'react';
-import { ArrowRight, Star, MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Star, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 interface Product {
   id: number;
@@ -106,9 +112,9 @@ const ProductShowcase = () => {
           </p>
         </div>
         
-        {/* Category Tabs */}
+        {/* Category Tabs - Apple Style */}
         <div className={`flex justify-center mb-10 overflow-x-auto pb-2 transform transition-all duration-700 delay-100 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <div className="flex gap-2 md:gap-3">
+          <div className="flex gap-2 md:gap-3 bg-white/80 backdrop-blur-sm p-1 rounded-full shadow-sm">
             {categories.map(category => (
               <button 
                 key={category} 
@@ -116,7 +122,7 @@ const ProductShowcase = () => {
                 className={`px-4 py-2 whitespace-nowrap rounded-full transition-all duration-300
                   ${activeTab === category 
                     ? 'bg-brand-red text-white shadow-md' 
-                    : 'bg-white text-brand-dark hover:bg-brand-red/10'}`}
+                    : 'bg-transparent text-brand-dark hover:bg-brand-red/10'}`}
               >
                 {categoryLabels[category]}
               </button>
@@ -124,87 +130,42 @@ const ProductShowcase = () => {
           </div>
         </div>
         
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
-          {visibleProducts.map((product, index) => (
-            <Card 
-              key={product.id} 
-              className={`rounded-xl overflow-hidden border-0 bg-white shadow-sm transition-all duration-500 
-                ${animateProducts 
-                  ? 'translate-y-0 opacity-100 scale-100' 
-                  : 'translate-y-8 opacity-0 scale-95'}`} 
-              style={{
-                transitionDelay: `${index * 100}ms`
-              }}
-            >
-              <Link to={`/produto/${product.id}`} className="block">
-                <AspectRatio ratio={1/1} className="relative bg-[#f5f5f7]">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter group-hover:brightness-105"
-                    onError={(e) => {
-                      // Fallback image based on category
-                      const target = e.target as HTMLImageElement;
-                      target.onerror = null; // Prevent infinite loop
-                      target.src = `https://via.placeholder.com/300x300?text=${encodeURIComponent(product.category)}`;
-                    }}
+        {/* Desktop Layout */}
+        <div className="hidden md:block">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 relative">
+            {visibleProducts.map((product, index) => (
+              <ProductCard 
+                key={product.id} 
+                product={product} 
+                index={index} 
+                animateProducts={animateProducts} 
+                whatsappNumber={whatsappNumber} 
+              />
+            ))}
+          </div>
+        </div>
+        
+        {/* Mobile Carousel - Apple Style */}
+        <div className="md:hidden">
+          <Carousel className="w-full">
+            <CarouselContent>
+              {visibleProducts.map((product, index) => (
+                <CarouselItem key={product.id} className="basis-full sm:basis-1/2">
+                  <ProductCard 
+                    product={product} 
+                    index={index} 
+                    animateProducts={animateProducts} 
+                    whatsappNumber={whatsappNumber} 
                   />
-                  <div className="absolute top-2 left-2">
-                    <span className="bg-white/80 backdrop-blur-sm text-gray-800 text-xs px-2 py-1 rounded-full">
-                      {product.category}
-                    </span>
-                  </div>
-                </AspectRatio>
-              </Link>
-              <CardContent className="p-4">
-                <div className="flex items-center gap-1 mb-2">
-                  <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                  <span className="text-xs text-gray-600">{product.rating.toFixed(1)}</span>
-                </div>
-                <h3 className="font-semibold text-base md:text-lg mb-3 line-clamp-2">
-                  {product.name}
-                </h3>
-                <div className="flex items-center justify-between">
-                  <a 
-                    href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(product.name)}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-xs md:text-sm text-gray-600 hover:text-brand-red flex items-center gap-1 transition-all duration-300 hover:translate-x-1"
-                  >
-                    <MessageCircle className="h-3.5 w-3.5 md:h-4 md:w-4" />
-                    <span>Solicitar orçamento</span>
-                  </a>
-                  <Link 
-                    to={`/produto/${product.id}`}
-                    className="text-brand-dark hover:text-brand-red transition-all duration-300 hover:translate-x-1"
-                  >
-                    <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-          
-          {/* Navigation arrows */}
-          {visibleProducts.length > 2 && (
-            <>
-              <Button
-                variant="outline"
-                size="icon"
-                className="hidden lg:flex absolute -left-5 top-1/2 transform -translate-y-1/2 rounded-full bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white z-10 shadow-sm"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="hidden lg:flex absolute -right-5 top-1/2 transform -translate-y-1/2 rounded-full bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white z-10 shadow-sm"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
-            </>
-          )}
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center gap-2 mt-6">
+              {Array.from({ length: Math.min(5, Math.ceil(visibleProducts.length / 2)) }).map((_, index) => (
+                <div key={index} className={`h-2 w-2 rounded-full ${index === 0 ? 'bg-brand-red' : 'bg-gray-300'}`}></div>
+              ))}
+            </div>
+          </Carousel>
         </div>
         
         {/* View All Link */}
@@ -219,6 +180,79 @@ const ProductShowcase = () => {
         </div>
       </div>
     </section>
+  );
+};
+
+// Apple-style Product Card Component
+const ProductCard = ({ 
+  product, 
+  index, 
+  animateProducts, 
+  whatsappNumber 
+}: { 
+  product: Product, 
+  index: number, 
+  animateProducts: boolean, 
+  whatsappNumber: string 
+}) => {
+  return (
+    <Card 
+      className={`rounded-xl overflow-hidden border-0 bg-white shadow-sm transition-all duration-500 
+        ${animateProducts 
+          ? 'translate-y-0 opacity-100 scale-100' 
+          : 'translate-y-8 opacity-0 scale-95'}
+        hover:shadow-md hover:-translate-y-1 hover:scale-[1.02] group`} 
+      style={{
+        transitionDelay: `${index * 100}ms`
+      }}
+    >
+      <Link to={`/produto/${product.id}`} className="block">
+        <AspectRatio ratio={1/1} className="relative bg-[#f8f8f8]">
+          <img 
+            src={product.image} 
+            alt={product.name}
+            className="w-full h-full object-contain mix-blend-multiply p-4"
+            onError={(e) => {
+              // Fallback image based on category
+              const target = e.target as HTMLImageElement;
+              target.onerror = null; // Prevent infinite loop
+              target.src = `https://via.placeholder.com/300x300?text=${encodeURIComponent(product.category)}`;
+            }}
+          />
+          <div className="absolute top-3 left-3">
+            <span className="bg-white/80 backdrop-blur-sm text-gray-800 text-xs px-2 py-1 rounded-full">
+              {product.category}
+            </span>
+          </div>
+        </AspectRatio>
+      </Link>
+      <CardContent className="p-4">
+        <div className="flex items-center gap-1 mb-2">
+          <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
+          <span className="text-xs text-gray-600">{product.rating.toFixed(1)}</span>
+        </div>
+        <h3 className="font-semibold text-base md:text-lg mb-3 line-clamp-2">
+          {product.name}
+        </h3>
+        <div className="flex items-center justify-between">
+          <a 
+            href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(product.name)}`} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="text-xs md:text-sm text-gray-600 hover:text-brand-red flex items-center gap-1 transition-all duration-300 group-hover:translate-x-1"
+          >
+            <MessageCircle className="h-3.5 w-3.5 md:h-4 md:w-4" />
+            <span>Solicitar orçamento</span>
+          </a>
+          <Link 
+            to={`/produto/${product.id}`}
+            className="text-brand-dark hover:text-brand-red transition-all duration-300 group-hover:translate-x-1"
+          >
+            <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
+          </Link>
+        </div>
+      </CardContent>
+    </Card>
   );
 };
 
