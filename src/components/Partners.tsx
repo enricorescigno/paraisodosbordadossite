@@ -3,27 +3,21 @@ import { useEffect, useRef } from 'react';
 
 const partners = [
   {
-    name: "Cotton Brasil",
-    logo: "https://placehold.co/200x80/white/333333?text=Cotton+Brasil&font=montserrat"
+    logo: "https://uploaddeimagens.com.br/imagens/lmeM7o8"
   },
   {
-    name: "Fios Premium",
-    logo: "https://placehold.co/200x80/white/333333?text=Fios+Premium&font=montserrat"
+    logo: "https://uploaddeimagens.com.br/imagens/NMcp0kE"
   },
   {
-    name: "Agulha & Arte",
     logo: "https://placehold.co/200x80/white/333333?text=Agulha+%26+Arte&font=montserrat"
   },
   {
-    name: "Bordado Master",
     logo: "https://placehold.co/200x80/white/333333?text=Bordado+Master&font=montserrat"
   },
   {
-    name: "Tecidos Deluxe",
     logo: "https://placehold.co/200x80/white/333333?text=Tecidos+Deluxe&font=montserrat"
   },
   {
-    name: "Linhas & Cia",
     logo: "https://placehold.co/200x80/white/333333?text=Linhas+%26+Cia&font=montserrat"
   }
 ];
