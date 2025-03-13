@@ -1,12 +1,9 @@
-
 import { MapPin, Phone, Mail, Clock, Heart, Award, Zap, ShoppingBag, Check, Gift } from 'lucide-react';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppSupport from "../components/WhatsAppSupport";
-
 const AboutUs = () => {
-  return (
-    <div className="min-h-screen bg-white">
+  return <div className="min-h-screen bg-white">
       <Navbar />
       
       <main className="pt-24 pb-16">
@@ -42,11 +39,7 @@ const AboutUs = () => {
               </div>
               <div className="order-1 lg:order-2 relative">
                 <div className="aspect-[4/3] rounded-lg overflow-hidden shadow-xl">
-                  <img 
-                    src="https://placehold.co/800x600/e0e0e0/333333?text=Paraíso+dos+Bordados" 
-                    alt="Equipe Paraíso dos Bordados" 
-                    className="w-full h-full object-cover"
-                  />
+                  <img alt="Equipe Paraíso dos Bordados" className="w-full h-full object-cover" src="/lovable-uploads/cb60af2d-a399-4029-ab74-6f5374d38b9c.png" />
                 </div>
                 <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg hidden md:block">
                   <div className="flex items-center gap-3">
@@ -200,8 +193,6 @@ const AboutUs = () => {
       
       <Footer />
       <WhatsAppSupport />
-    </div>
-  );
+    </div>;
 };
-
 export default AboutUs;
