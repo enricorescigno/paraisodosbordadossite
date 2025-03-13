@@ -144,7 +144,7 @@ const AboutUs = () => {
                       <MapPin className="h-5 w-5 text-brand-red shrink-0 mt-1" />
                       <div>
                         <p className="font-medium text-brand-dark">Endereço</p>
-                        <p className="text-gray-600">Av. das Bordadeiras, 123<br />Recife - PE, 01234-567</p>
+                        <p className="text-gray-600">R. das Calçadas, 232 - São José, Recife PE</p>
                       </div>
                     </div>
                     
@@ -152,8 +152,8 @@ const AboutUs = () => {
                       <Phone className="h-5 w-5 text-brand-red shrink-0 mt-1" />
                       <div>
                         <p className="font-medium text-brand-dark">Telefone</p>
-                        <a href="tel:+551198765-4321" className="text-gray-600 hover:text-brand-red transition-colors">
-                          (11) 98765-4321
+                        <a href="tel:+558137873206" className="text-gray-600 hover:text-brand-red transition-colors">
+                          (81) 3787-3206
                         </a>
                       </div>
                     </div>
@@ -162,8 +162,8 @@ const AboutUs = () => {
                       <Mail className="h-5 w-5 text-brand-red shrink-0 mt-1" />
                       <div>
                         <p className="font-medium text-brand-dark">E-mail</p>
-                        <a href="mailto:contato@paraisodosbordados.com" className="text-gray-600 hover:text-brand-red transition-colors">
-                          contato@paraisodosbordados.com
+                        <a href="mailto:paraisodosbordados65@hotmail.com" className="text-gray-600 hover:text-brand-red transition-colors">
+                          paraisodosbordados65@hotmail.com
                         </a>
                       </div>
                     </div>
@@ -173,8 +173,8 @@ const AboutUs = () => {
                       <div>
                         <p className="font-medium text-brand-dark">Horário de Funcionamento</p>
                         <p className="text-gray-600">
-                          Segunda - Sexta: 09:00 - 18:00<br />
-                          Sábado: 09:00 - 13:00
+                          Seg - Sex: 09h às 18h<br />
+                          Sábado: 09h às 15h
                         </p>
                       </div>
                     </div>

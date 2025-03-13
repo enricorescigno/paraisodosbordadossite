@@ -1,196 +1,185 @@
 
 import { Link } from 'react-router-dom';
 import { 
-  Facebook, 
-  Instagram, 
-  Youtube, 
-  MapPin, 
-  Phone, 
-  Mail, 
-  Clock 
+  ArrowUp,
+  Phone,
+  Mail,
+  MapPin
 } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-brand-dark text-white pt-16 pb-8">
-      <div className="container-custom">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* About */}
-          <div>
-            <h3 className="font-serif text-2xl font-bold mb-4">Paraíso dos Bordados</h3>
-            <p className="text-gray-300 mb-4">
-              Especialistas em bordados artesanais e produtos de alta qualidade para os amantes dessa arte milenar.
-            </p>
-            <div className="flex space-x-4">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-red transition-colors duration-300"
-                aria-label="Facebook"
-              >
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-red transition-colors duration-300"
-                aria-label="Instagram"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-red transition-colors duration-300"
-                aria-label="Youtube"
-              >
-                <Youtube className="h-4 w-4" />
-              </a>
+    <footer className="bg-white text-gray-700">
+      {/* Location Banner */}
+      <div className="bg-brand-green py-16 text-white relative overflow-hidden">
+        <div className="container-custom relative z-10">
+          <h2 className="font-serif text-4xl md:text-5xl">Veja nossa localização!</h2>
+        </div>
+        <div className="absolute right-0 top-0 h-full w-1/3 hidden md:block">
+          <img 
+            src="/lovable-uploads/0a4859ea-7a2a-45c7-ac73-e7f7a709aab4.png"
+            alt="Localização Paraíso dos Bordados" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <button 
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white"
+          aria-label="Anterior"
+        >
+          <span className="sr-only">Anterior</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+        <button 
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center bg-white/20 rounded-full text-white"
+          aria-label="Próximo"
+        >
+          <span className="sr-only">Próximo</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+      
+      <hr className="border-gray-200" />
+      
+      {/* Main Footer Content */}
+      <div className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+            {/* Categories */}
+            <div>
+              <h3 className="font-bold text-xl mb-6 text-red-600">Todas as Categorias</h3>
+              <ul className="space-y-3">
+                <li>
+                  <Link to="/categoria/todas" className="hover:text-red-600 transition-colors">
+                    Todas as Categorias
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/portfolio" className="hover:text-red-600 transition-colors">
+                    Portfólio Bordado
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/sobre" className="hover:text-red-600 transition-colors">
+                    Sobre Nós
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Institutional */}
+            <div>
+              <h3 className="font-bold text-xl mb-6 text-red-600">Institucional</h3>
+              <ul className="space-y-3">
+                <li>
+                  <Link to="/fale-conosco" className="hover:text-red-600 transition-colors">
+                    Fale Conosco
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/nossos-parceiros" className="hover:text-red-600 transition-colors">
+                    Nossos Parceiros
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/politica-de-privacidade" className="hover:text-red-600 transition-colors">
+                    Política de Privacidade
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/sobre" className="hover:text-red-600 transition-colors">
+                    Sobre Nós
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Contact */}
+            <div>
+              <h3 className="font-bold text-xl mb-6 text-red-600">Atendimento</h3>
+              <ul className="space-y-3">
+                <li className="flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-gray-700" />
+                  <a href="tel:+558137873206" className="hover:text-red-600 transition-colors">
+                    (81) 3787-3206
+                  </a>
+                </li>
+                <li className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+                  </svg>
+                  <a href="https://wa.me/5581995970776" className="hover:text-red-600 transition-colors">
+                    (81) 99597-0776
+                  </a>
+                </li>
+                <li>
+                  <p className="mb-1">E-mail:</p>
+                  <a 
+                    href="mailto:paraisodosbordados65@hotmail.com" 
+                    className="hover:text-red-600 transition-colors"
+                  >
+                    paraisodosbordados65@hotmail.com
+                  </a>
+                </li>
+                
+                <li className="pt-4">
+                  <p className="font-bold mb-2">Horário de Atendimento</p>
+                  <p>Seg - Sex - 09h às 18h | Sáb. 09h às 15h</p>
+                  <p>R. das Calçadas, 232 - São José, Recife PE</p>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Social Media */}
+            <div>
+              <h3 className="font-bold text-xl mb-6 text-red-600">Acompanhe nas Redes</h3>
+              <div className="flex gap-4">
+                <a 
+                  href="https://instagram.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
+                  </svg>
+                </a>
+                <a 
+                  href="https://facebook.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="hover:opacity-80 transition-opacity"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
+                  </svg>
+                </a>
+              </div>
             </div>
           </div>
-          
-          {/* Quick Links */}
-          <div>
-            <h4 className="font-medium text-lg mb-4">Links Rápidos</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Início
-                </Link>
-              </li>
-              <li>
-                <Link to="/produtos" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Produtos
-                </Link>
-              </li>
-              <li>
-                <Link to="/portfolio" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Portfólio
-                </Link>
-              </li>
-              <li>
-                <Link to="/sobre" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Sobre Nós
-                </Link>
-              </li>
-              <li>
-                <Link to="/duvidas-frequentes" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Dúvidas Frequentes
-                </Link>
-              </li>
-              <li>
-                <Link to="/politica-de-privacidade" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Política de Privacidade
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          {/* Categorias */}
-          <div>
-            <h4 className="font-medium text-lg mb-4">Categorias</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/categoria/bordados-maquina" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Bordados à Máquina
-                </Link>
-              </li>
-              <li>
-                <Link to="/categoria/bordados-manuais" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Bordados Manuais
-                </Link>
-              </li>
-              <li>
-                <Link to="/categoria/kits" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Kits de Bordado
-                </Link>
-              </li>
-              <li>
-                <Link to="/categoria/acessorios" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Acessórios
-                </Link>
-              </li>
-              <li>
-                <Link to="/categoria/tecidos" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Tecidos
-                </Link>
-              </li>
-              <li>
-                <Link to="/categoria/linhas" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  Linhas e Agulhas
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          {/* Contact */}
-          <div>
-            <h4 className="font-medium text-lg mb-4">Contato</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-3">
-                <MapPin className="h-5 w-5 text-brand-red shrink-0 mt-0.5" />
-                <span className="text-gray-300">
-                  Av. das Bordadeiras, 123<br />
-                  São Paulo - SP, 01234-567
-                </span>
-              </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-5 w-5 text-brand-red shrink-0" />
-                <a href="tel:+551198765-4321" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  (11) 98765-4321
-                </a>
-              </li>
-              <li className="flex items-center gap-3">
-                <Mail className="h-5 w-5 text-brand-red shrink-0" />
-                <a href="mailto:contato@paraisodosbordados.com" className="text-gray-300 hover:text-white transition-colors duration-300">
-                  contato@paraisodosbordados.com
-                </a>
-              </li>
-              <li className="flex items-start gap-3">
-                <Clock className="h-5 w-5 text-brand-red shrink-0 mt-0.5" />
-                <span className="text-gray-300">
-                  Segunda - Sexta: 09:00 - 18:00<br />
-                  Sábado: 09:00 - 13:00
-                </span>
-              </li>
-            </ul>
-          </div>
         </div>
-        
-        <hr className="border-gray-800 my-10" />
-        
-        {/* Bottom */}
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
-            &copy; {currentYear} Paraíso dos Bordados. Todos os direitos reservados.
+      </div>
+      
+      {/* Copyright Bar */}
+      <div className="bg-red-600 text-white py-4 relative">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm">
+            Gj Bordados Gilvan Comercio de Confeccao - CNPJ: 19.979.908/0001-17 © Todos os direitos reservados. {currentYear}
           </p>
-          <div className="mt-4 md:mt-0 flex items-center gap-4">
-            <img 
-              src="https://placehold.co/40x25/333333/FFFFFF?text=VISA&font=montserrat" 
-              alt="Visa" 
-              className="h-6"
-            />
-            <img 
-              src="https://placehold.co/40x25/333333/FFFFFF?text=MC&font=montserrat" 
-              alt="MasterCard" 
-              className="h-6"
-            />
-            <img 
-              src="https://placehold.co/40x25/333333/FFFFFF?text=AMEX&font=montserrat" 
-              alt="American Express" 
-              className="h-6"
-            />
-            <img 
-              src="https://placehold.co/40x25/333333/FFFFFF?text=PIX&font=montserrat" 
-              alt="PIX" 
-              className="h-6"
-            />
-          </div>
+          <button 
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex items-center gap-2 mt-4 md:mt-0"
+            aria-label="Voltar ao topo"
+          >
+            Topo <ArrowUp className="h-4 w-4" />
+          </button>
         </div>
       </div>
     </footer>
