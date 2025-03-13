@@ -1,7 +1,15 @@
 
 import { Link } from 'react-router-dom';
-import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger, MenubarSub, MenubarSubContent, MenubarSubTrigger } from "@/components/ui/menubar";
+import { 
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuContent,
+  NavigationMenuTrigger,
+  NavigationMenuLink
+} from "@/components/ui/navigation-menu";
 import { useIsMobile } from '../hooks/use-mobile';
+import { cn } from '@/lib/utils';
 
 const MenubarNav = () => {
   const isMobile = useIsMobile();
@@ -10,97 +18,138 @@ const MenubarNav = () => {
   if (isMobile) return null;
   
   return (
-    <Menubar className="w-full border-none bg-brand-light rounded-none py-[8px]">
-      <MenubarMenu>
-        <MenubarTrigger className="font-medium text-left mx-2">Início</MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem asChild>
-            <Link to="/">Página Inicial</Link>
-          </MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
+    <div className="flex justify-center pb-2">
+      <NavigationMenu>
+        <NavigationMenuList className="flex space-x-6">
+          <NavigationMenuItem>
+            <Link 
+              to="/" 
+              className="text-sm text-brand-dark/90 hover:text-brand-dark transition-colors duration-200"
+            >
+              Início
+            </Link>
+          </NavigationMenuItem>
 
-      <MenubarMenu>
-        <MenubarTrigger className="font-medium text-center mx-2">Todas as Categorias</MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem asChild>
-            <Link to="/produtos">Ver Todos os Produtos</Link>
-          </MenubarItem>
-          <MenubarSeparator />
-          <MenubarSub>
-            <MenubarSubTrigger>Cama, Mesa e Banho</MenubarSubTrigger>
-            <MenubarSubContent>
-              <MenubarItem asChild>
-                <Link to="/categoria/cama">Cama</Link>
-              </MenubarItem>
-              <MenubarItem asChild>
-                <Link to="/categoria/mesa-cozinha">Mesa e Cozinha</Link>
-              </MenubarItem>
-              <MenubarItem asChild>
-                <Link to="/categoria/tapete-cortinas">Tapete e Cortinas</Link>
-              </MenubarItem>
-              <MenubarItem asChild>
-                <Link to="/categoria/banho">Banho</Link>
-              </MenubarItem>
-            </MenubarSubContent>
-          </MenubarSub>
-          <MenubarItem asChild>
-            <Link to="/categoria/infantil">Infantil</Link>
-          </MenubarItem>
-          <MenubarSub>
-            <MenubarSubTrigger>Vestuário</MenubarSubTrigger>
-            <MenubarSubContent>
-              <MenubarItem asChild>
-                <Link to="/categoria/camisa">Camisa</Link>
-              </MenubarItem>
-              <MenubarItem asChild>
-                <Link to="/categoria/jaleco">Jaleco</Link>
-              </MenubarItem>
-              <MenubarItem asChild>
-                <Link to="/categoria/pantufa">Pantufa</Link>
-              </MenubarItem>
-            </MenubarSubContent>
-          </MenubarSub>
-        </MenubarContent>
-      </MenubarMenu>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className="text-sm text-brand-dark/90 hover:text-brand-dark bg-transparent hover:bg-transparent focus:bg-transparent">
+              Categorias
+            </NavigationMenuTrigger>
+            <NavigationMenuContent className="bg-white rounded-xl p-4 shadow-lg min-w-[220px]">
+              <div className="grid gap-3">
+                <Link 
+                  to="/produtos" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Ver Todos os Produtos
+                </Link>
+                <hr className="my-1" />
+                <h4 className="px-2 text-xs font-medium text-gray-500 uppercase tracking-wider">Cama, Mesa e Banho</h4>
+                <Link 
+                  to="/categoria/cama" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Cama
+                </Link>
+                <Link 
+                  to="/categoria/mesa-cozinha" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Mesa e Cozinha
+                </Link>
+                <Link 
+                  to="/categoria/tapete-cortinas" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Tapete e Cortinas
+                </Link>
+                <Link 
+                  to="/categoria/banho" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Banho
+                </Link>
+                <hr className="my-1" />
+                <h4 className="px-2 text-xs font-medium text-gray-500 uppercase tracking-wider">Outras Categorias</h4>
+                <Link 
+                  to="/categoria/infantil" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Infantil
+                </Link>
+                <Link 
+                  to="/categoria/vestuario" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Vestuário
+                </Link>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
 
-      <MenubarMenu>
-        <MenubarTrigger className="font-medium text-center mx-2">Portfólio Bordado</MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem asChild>
-            <Link to="/portfolio/bordado-bone">Bordado em Boné</Link>
-          </MenubarItem>
-          <MenubarItem asChild>
-            <Link to="/portfolio/bordado-necessaire">Bordado em Necessaire</Link>
-          </MenubarItem>
-          <MenubarItem asChild>
-            <Link to="/portfolio/bordado-bolsa">Bordado em Bolsa</Link>
-          </MenubarItem>
-          <MenubarItem asChild>
-            <Link to="/portfolio/bordado-jaleco">Bordado em Jaleco</Link>
-          </MenubarItem>
-          <MenubarItem asChild>
-            <Link to="/portfolio/bordado-infantis">Bordado Infantis</Link>
-          </MenubarItem>
-          <MenubarItem asChild>
-            <Link to="/portfolio/bordado-toalha-banho">Bordado em Toalha de Banho</Link>
-          </MenubarItem>
-          <MenubarSeparator />
-          <MenubarItem asChild>
-            <Link to="/portfolio">Ver Todo o Portfólio</Link>
-          </MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger className="text-sm text-brand-dark/90 hover:text-brand-dark bg-transparent hover:bg-transparent focus:bg-transparent">
+              Portfólio
+            </NavigationMenuTrigger>
+            <NavigationMenuContent className="bg-white rounded-xl p-4 shadow-lg min-w-[220px]">
+              <div className="grid gap-3">
+                <Link 
+                  to="/portfolio" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Ver Todo o Portfólio
+                </Link>
+                <hr className="my-1" />
+                <Link 
+                  to="/portfolio/bordado-bone" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Bordado em Boné
+                </Link>
+                <Link 
+                  to="/portfolio/bordado-necessaire" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Bordado em Necessaire
+                </Link>
+                <Link 
+                  to="/portfolio/bordado-bolsa" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Bordado em Bolsa
+                </Link>
+                <Link 
+                  to="/portfolio/bordado-jaleco" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Bordado em Jaleco
+                </Link>
+                <Link 
+                  to="/portfolio/bordado-infantis" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Bordado Infantis
+                </Link>
+                <Link 
+                  to="/portfolio/bordado-toalha-banho" 
+                  className="block px-2 py-1.5 text-sm text-brand-dark/80 hover:bg-gray-50 rounded-md transition-colors duration-200"
+                >
+                  Bordado em Toalha de Banho
+                </Link>
+              </div>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
 
-      <MenubarMenu>
-        <MenubarTrigger className="font-medium text-center mx-2">Sobre Nós</MenubarTrigger>
-        <MenubarContent>
-          <MenubarItem asChild>
-            <Link to="/sobre">Nossa História</Link>
-          </MenubarItem>
-        </MenubarContent>
-      </MenubarMenu>
-    </Menubar>
+          <NavigationMenuItem>
+            <Link 
+              to="/sobre" 
+              className="text-sm text-brand-dark/90 hover:text-brand-dark transition-colors duration-200"
+            >
+              Sobre Nós
+            </Link>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+    </div>
   );
 };
 

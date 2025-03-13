@@ -94,7 +94,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false, on
 
   return (
     <div ref={searchRef} className={`relative ${className}`}>
-      <form onSubmit={handleSearchSubmit} className="w-full">
+      <form onSubmit={handleSearchSubmit} className="w-full max-w-2xl mx-auto">
         <div className="relative w-full">
           <motion.input
             ref={inputRef}
@@ -105,6 +105,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false, on
             onChange={(e) => setSearchQuery(e.target.value)}
             whileFocus={{ scale: isMobile ? 1 : 1.02 }}
             transition={{ duration: 0.2 }}
+            autoFocus
           />
           {searchQuery ? (
             <button
@@ -134,7 +135,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false, on
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className={`absolute top-full mt-1 w-full bg-white shadow-lg rounded-lg z-50 max-h-[60vh] overflow-y-auto ${mobileView ? 'left-0' : ''}`}
+            className={`absolute top-full mt-1 w-full max-w-2xl mx-auto bg-white shadow-lg rounded-lg z-50 max-h-[60vh] overflow-y-auto ${mobileView ? 'left-0' : ''}`}
           >
             <div className="py-2">
               <div className="px-4 py-2 text-sm font-medium text-gray-500 border-b">
@@ -180,7 +181,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false, on
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full mt-1 w-full bg-white shadow-lg rounded-lg z-50"
+            className="absolute top-full mt-1 w-full max-w-2xl mx-auto bg-white shadow-lg rounded-lg z-50"
           >
             <div className="p-4 text-sm text-gray-500">
               Nenhum resultado encontrado para "{searchQuery}"
