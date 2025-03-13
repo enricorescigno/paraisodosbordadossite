@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X, ChevronDown, User } from 'lucide-react';
 import SearchBox from './SearchBox';
 import MenubarNav from './MenubarNav';
+import { useIsMobile } from '../hooks/use-mobile';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,16 +21,20 @@ const Navbar = () => {
     };
   }, []);
 
-  return <header className="w-full bg-white z-50">
-      {/* Top bar with account, language, etc. */}
-      
-
+  return (
+    <header className={`w-full z-50 ${isMobile ? 'fixed top-0 transition-all duration-300' : 'relative'} ${
+      isScrolled && isMobile ? 'bg-white/80 backdrop-blur-md shadow-sm' : 'bg-white'
+    }`}>
       {/* Main navbar with logo, search and cart */}
-      <div className={`py-3 ${isScrolled ? 'shadow-sm' : ''}`}>
+      <div className={`py-3 ${isScrolled && !isMobile ? 'shadow-sm' : ''}`}>
         <div className="container-custom flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="relative z-10">
-            <img alt="Paraíso dos Bordados" src="/lovable-uploads/01c74faa-daf1-4918-a69a-9de345d8901d.png" className="h-16 md:h-20 object-scale-down" />
+            <img 
+              alt="Paraíso dos Bordados" 
+              src="/lovable-uploads/01c74faa-daf1-4918-a69a-9de345d8901d.png" 
+              className="h-14 md:h-20 object-scale-down" 
+            />
           </Link>
 
           {/* Search Bar */}
@@ -38,7 +44,6 @@ const Navbar = () => {
 
           {/* Right Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
-            
             <Link to="/carrinho" className="flex flex-col items-center text-brand-dark group relative">
               <ShoppingCart className="h-6 w-6 group-hover:text-brand-red transition-colors" />
               <span className="absolute -top-2 -right-2 bg-brand-red text-white text-xs h-5 w-5 rounded-full flex items-center justify-center">
@@ -49,8 +54,15 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu button */}
-          <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="lg:hidden relative z-10">
-            {isMobileMenuOpen ? <X className="h-6 w-6 text-brand-dark" /> : <Menu className="h-6 w-6 text-brand-dark" />}
+          <button 
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} 
+            className="lg:hidden relative z-10 p-2"
+            aria-label={isMobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+          >
+            {isMobileMenuOpen ? 
+              <X className="h-6 w-6 text-brand-dark" /> : 
+              <Menu className="h-6 w-6 text-brand-dark" />
+            }
           </button>
         </div>
       </div>
@@ -63,8 +75,10 @@ const Navbar = () => {
       </div>
 
       {/* Mobile menu */}
-      <div className={`fixed inset-0 bg-white z-[45] transform transition-transform duration-300 lg:hidden
-        ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <div 
+        className={`fixed inset-0 bg-white z-[45] transform transition-transform duration-300 lg:hidden
+        ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
+      >
         <div className="flex flex-col h-full pt-20 px-6 overflow-y-auto">
           {/* Mobile search */}
           <div className="mb-6">
@@ -165,7 +179,8 @@ const Navbar = () => {
           </nav>
         </div>
       </div>
-    </header>;
+    </header>
+  );
 };
 
 export default Navbar;

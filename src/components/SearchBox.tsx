@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Search, X } from 'lucide-react';
 import { searchProducts, getProductUrl, Product } from '../utils/searchUtils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useIsMobile } from '../hooks/use-mobile';
 
 interface SearchBoxProps {
   className?: string;
@@ -17,6 +18,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
   const searchRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
+  const isMobile = useIsMobile();
 
   // Handle search on input change with debounce
   useEffect(() => {
@@ -54,7 +56,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
     // If we have results, navigate to the first one
     if (results.length > 0) {
       const url = getProductUrl(results[0]);
-      console.log(`Navigating to: ${url}`);
       navigate(url);
       setSearchQuery('');
       setIsOpen(false);
@@ -63,7 +64,6 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
 
   const handleResultClick = (product: Product) => {
     const url = getProductUrl(product);
-    console.log(`Result clicked, navigating to: ${url}`);
     navigate(url);
     setSearchQuery('');
     setIsOpen(false);
@@ -97,10 +97,10 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
             ref={inputRef}
             type="text"
             placeholder="O que você procura?"
-            className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red"
+            className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red text-base"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            whileFocus={{ scale: 1.02 }}
+            whileFocus={{ scale: isMobile ? 1 : 1.02 }}
             transition={{ duration: 0.2 }}
           />
           {searchQuery ? (
@@ -131,7 +131,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.2 }}
-            className={`absolute top-full mt-1 w-full bg-white shadow-lg rounded-lg z-50 max-h-[80vh] overflow-y-auto ${mobileView ? 'left-0' : ''}`}
+            className={`absolute top-full mt-1 w-full bg-white shadow-lg rounded-lg z-50 max-h-[60vh] overflow-y-auto ${mobileView ? 'left-0' : ''}`}
           >
             <div className="py-2">
               <div className="px-4 py-2 text-sm font-medium text-gray-500 border-b">

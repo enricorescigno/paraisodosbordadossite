@@ -1,9 +1,16 @@
 
 import { Link } from 'react-router-dom';
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, MenubarTrigger, MenubarSub, MenubarSubContent, MenubarSubTrigger } from "@/components/ui/menubar";
+import { useIsMobile } from '../hooks/use-mobile';
 
 const MenubarNav = () => {
-  return <Menubar className="w-full border-none bg-brand-light rounded-none py-[8px]">
+  const isMobile = useIsMobile();
+  
+  // For mobile, we'll return null as the mobile menu is handled in Navbar.tsx
+  if (isMobile) return null;
+  
+  return (
+    <Menubar className="w-full border-none bg-brand-light rounded-none py-[8px]">
       <MenubarMenu>
         <MenubarTrigger className="font-medium text-left mx-2">Início</MenubarTrigger>
         <MenubarContent>
@@ -93,7 +100,8 @@ const MenubarNav = () => {
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-    </Menubar>;
+    </Menubar>
+  );
 };
 
 export default MenubarNav;
