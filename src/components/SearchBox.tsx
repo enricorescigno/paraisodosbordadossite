@@ -9,9 +9,10 @@ import { useIsMobile } from '../hooks/use-mobile';
 interface SearchBoxProps {
   className?: string;
   mobileView?: boolean;
+  onClose?: () => void;
 }
 
-const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) => {
+const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false, onClose }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [results, setResults] = useState<Product[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -59,6 +60,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
       navigate(url);
       setSearchQuery('');
       setIsOpen(false);
+      if (onClose) onClose();
     }
   };
 
@@ -67,6 +69,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ className, mobileView = false }) 
     navigate(url);
     setSearchQuery('');
     setIsOpen(false);
+    if (onClose) onClose();
   };
 
   const clearSearch = () => {
