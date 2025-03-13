@@ -70,7 +70,7 @@ const Navbar = () => {
 
       {/* Categories Navigation */}
       <div className="bg-brand-light border-t border-b border-gray-200 hidden lg:block">
-        <div className="container-custom py-0 my-0 mx-[120px]">
+        <div className="container-custom py-0 my-0 mx-0">
           {/* Use the MenubarNav component here */}
           <MenubarNav />
         </div>
