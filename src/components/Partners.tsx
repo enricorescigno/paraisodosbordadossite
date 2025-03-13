@@ -3,23 +3,28 @@ import { useEffect, useRef } from 'react';
 
 const partners = [
   {
-    name: "Dr Pet",
-    logo: "https://imgur.com/HJfPn3w"
+    name: "Doutor Pet",
+    logo: "/lovable-uploads/2621c87d-6ff0-42bb-9c13-0598532a29ba.png"
   },
   {
-    logo: "https://uploaddeimagens.com.br/imagens/NMcp0kE"
+    name: "Locar House",
+    logo: "/lovable-uploads/ab58fe55-29a7-473f-85f5-12b906a493de.png"
   },
   {
-    logo: "https://placehold.co/200x80/white/333333?text=Agulha+%26+Arte&font=montserrat"
+    name: "Tomaselli",
+    logo: "/lovable-uploads/681f2ac7-f2d7-4f75-814e-9279195db99b.png"
   },
   {
-    logo: "https://placehold.co/200x80/white/333333?text=Bordado+Master&font=montserrat"
+    name: "Gerson Parisio",
+    logo: "/lovable-uploads/d4081c14-99d1-497a-93ea-81600e2314fd.png"
   },
   {
-    logo: "https://placehold.co/200x80/white/333333?text=Tecidos+Deluxe&font=montserrat"
+    name: "NX Boats",
+    logo: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png"
   },
   {
-    logo: "https://placehold.co/200x80/white/333333?text=Linhas+%26+Cia&font=montserrat"
+    name: "Paraíso dos Bordados",
+    logo: "/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png"
   }
 ];
 
