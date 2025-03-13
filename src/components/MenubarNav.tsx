@@ -12,7 +12,7 @@ const MenubarNav = () => {
       </MenubarMenu>
 
       <MenubarMenu>
-        <MenubarTrigger className="font-medium text-center mx-[40px]">Todas as Categorias</MenubarTrigger>
+        <MenubarTrigger className="font-medium text-center mx-0">Todas as Categorias</MenubarTrigger>
         <MenubarContent>
           <MenubarSub>
             <MenubarSubTrigger>Cama, Mesa e Banho</MenubarSubTrigger>
@@ -56,7 +56,7 @@ const MenubarNav = () => {
       </MenubarMenu>
 
       <MenubarMenu>
-        <MenubarTrigger className="font-medium text-center mx-[40px]">Portfólio Bordado</MenubarTrigger>
+        <MenubarTrigger className="font-medium text-center mx-0">Portfólio Bordado</MenubarTrigger>
         <MenubarContent>
           <MenubarItem asChild>
             <Link to="/portfolio/bordado-bone">Bordado em Boné</Link>
@@ -84,7 +84,7 @@ const MenubarNav = () => {
       </MenubarMenu>
 
       <MenubarMenu>
-        <MenubarTrigger className="font-medium text-center mx-[40px]">Sobre Nós</MenubarTrigger>
+        <MenubarTrigger className="font-medium text-center mx-0">Sobre Nós</MenubarTrigger>
         <MenubarContent>
           <MenubarItem asChild>
             <Link to="/sobre">Nossa História</Link>
