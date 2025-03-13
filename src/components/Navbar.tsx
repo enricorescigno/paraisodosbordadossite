@@ -1,10 +1,13 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X, ChevronDown, User, Search } from 'lucide-react';
+import { ShoppingCart, Menu, X, ChevronDown, User } from 'lucide-react';
+import SearchBox from './SearchBox';
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -14,11 +17,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle search functionality here
-    console.log('Search query:', searchQuery);
-  };
+
   return <header className="w-full bg-white z-50">
       {/* Top bar with account, language, etc. */}
       <div className="bg-brand-light py-2 border-b border-gray-200">
@@ -46,14 +45,9 @@ const Navbar = () => {
           </Link>
 
           {/* Search Bar */}
-          <form onSubmit={handleSearchSubmit} className="hidden md:flex flex-1 max-w-xl mx-6">
-            <div className="relative w-full">
-              <input type="text" placeholder="O que você procura?" className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-              <button type="submit" className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-brand-red rounded-r-full">
-                <Search className="h-5 w-5" />
-              </button>
-            </div>
-          </form>
+          <div className="hidden md:block flex-1 max-w-xl mx-6">
+            <SearchBox />
+          </div>
 
           {/* Right Navigation */}
           <div className="hidden lg:flex items-center space-x-6">
@@ -176,7 +170,6 @@ const Navbar = () => {
               </div>
             </div>
             
-            
             <Link to="/sobre" className="nav-link text-brand-dark">
               Sobre Nós
             </Link>
@@ -189,14 +182,9 @@ const Navbar = () => {
         ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex flex-col h-full pt-20 px-6 overflow-y-auto">
           {/* Mobile search */}
-          <form onSubmit={handleSearchSubmit} className="mb-6">
-            <div className="relative w-full">
-              <input type="text" placeholder="O que você procura?" className="w-full py-2 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
-              <button type="submit" className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-brand-red rounded-r-full">
-                <Search className="h-5 w-5" />
-              </button>
-            </div>
-          </form>
+          <div className="mb-6">
+            <SearchBox mobileView={true} />
+          </div>
 
           <nav className="flex flex-col space-y-4">
             <Link to="/" className="text-lg font-medium py-2 border-b border-gray-100" onClick={() => setIsMobileMenuOpen(false)}>
@@ -289,4 +277,5 @@ const Navbar = () => {
       </div>
     </header>;
 };
+
 export default Navbar;
