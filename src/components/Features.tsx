@@ -21,7 +21,7 @@ const features = [{
   title: "Clique aqui e faça seu orçamento",
   description: "Solicite seu orçamento personalizado agora mesmo e descubra como podemos bordar seus sonhos!",
   isClickable: true,
-  link: "https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20fazer%20um%20orçamento!"
+  link: "https://api.whatsapp.com/send?phone=5581995970776&text=Olá!%20Vi%20o%20site%20de%20vocês%20e%20gostaria%20de%20um%20orçamento!%0A%0A%5Bnão%20apague%20essa%20mensagem,%20por%20gentileza%5D"
 }];
 
 const Features = () => {
