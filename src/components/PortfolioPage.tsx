@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -38,7 +37,7 @@ const allPortfolioItems: Record<string, PortfolioItem[]> = {
       id: 310,
       title: "Necessaire Floral Bordada",
       description: "Bordado floral feito à mão, com detalhes em cores vibrantes.",
-      image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
+      image: "/lovable-uploads/7258c407-8a22-427b-a486-5e2bc2170d5f.png",
       category: "Bordado em Necessaire"
     },
     {

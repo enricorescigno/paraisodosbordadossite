@@ -25,7 +25,7 @@ const products: Product[] = [
   {
     id: 310,
     name: "Necessaire Floral Bordada",
-    image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
+    image: "/lovable-uploads/7258c407-8a22-427b-a486-5e2bc2170d5f.png",
     category: "Bordado em Necessaire",
     rating: 4.9,
     portfolioType: "bordado-necessaire"
