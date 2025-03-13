@@ -1,0 +1,98 @@
+
+@layer base {
+  /* Apple-inspired Typography */
+  body {
+    @apply text-[15px] leading-relaxed text-brand-dark antialiased font-sans selection:bg-brand-red/10 selection:text-brand-red;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Modern Heading Styles */
+  h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl font-serif tracking-[-0.02em];
+  }
+  
+  h2 {
+    @apply text-2xl md:text-3xl lg:text-4xl font-serif tracking-[-0.02em];
+  }
+  
+  h3 {
+    @apply text-xl md:text-2xl font-serif tracking-[-0.02em];
+  }
+}
+
+@layer components {
+  /* Apple-inspired Card */
+  .apple-card {
+    @apply bg-white rounded-2xl shadow-sm p-6 transition-all duration-300
+    hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Sticky Navbar with Blur Effect */
+  .apple-navbar {
+    @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300
+    bg-white/80 backdrop-blur-xl border-b border-gray-200/50;
+  }
+
+  /* Apple-inspired Hover Link */
+  .apple-link {
+    @apply relative py-1 text-brand-dark/80 transition-colors duration-300
+    after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[2px]
+    after:bg-brand-red after:transition-all after:duration-300
+    hover:text-brand-red hover:after:w-full;
+  }
+
+  /* Product Grid */
+  .product-grid {
+    @apply grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6;
+  }
+
+  /* Enhanced Product Card */
+  .product-card-enhanced {
+    @apply relative bg-white rounded-2xl overflow-hidden transition-all duration-300
+    hover:shadow-lg hover:-translate-y-1 group;
+  }
+
+  /* Image Container */
+  .product-image-container {
+    @apply relative aspect-square overflow-hidden;
+  }
+
+  /* Product Image */
+  .product-image {
+    @apply w-full h-full object-cover transition-transform duration-700
+    group-hover:scale-105 group-hover:brightness-105;
+  }
+
+  /* Product Content */
+  .product-content {
+    @apply p-4 space-y-2;
+  }
+}
+
+/* Apple-inspired Animations */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Staggered animations for product grid */
+.product-grid > * {
+  opacity: 0;
+  animation: fade-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.product-grid > *:nth-child(1) { animation-delay: 0.1s; }
+.product-grid > *:nth-child(2) { animation-delay: 0.2s; }
+.product-grid > *:nth-child(3) { animation-delay: 0.3s; }
+.product-grid > *:nth-child(4) { animation-delay: 0.4s; }

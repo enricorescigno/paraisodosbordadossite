@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+@import './styles/apple-ui.css';
 
 @tailwind base;
 @tailwind components;
@@ -91,20 +92,19 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased;
-    overflow-x: hidden;
+    @apply bg-background text-foreground font-sans antialiased overflow-x-hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
 
+  /* Enhanced Typography */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-serif;
-    letter-spacing: -0.025em;
+    @apply font-serif tracking-tight;
   }
 
   p {
-    @apply leading-relaxed;
+    @apply leading-relaxed text-brand-dark/80;
   }
   
   /* Apple-like smooth scrolling */
