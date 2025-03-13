@@ -3,7 +3,7 @@ import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarSeparator, Me
 const MenubarNav = () => {
   return <Menubar className="w-full border-none bg-brand-light rounded-none py-[8px] my-0 mx-[240px]">
       <MenubarMenu>
-        <MenubarTrigger className="font-medium">Início</MenubarTrigger>
+        <MenubarTrigger className="font-medium text-center">Início</MenubarTrigger>
         <MenubarContent>
           <MenubarItem asChild>
             <Link to="/">Página Inicial</Link>
@@ -12,7 +12,7 @@ const MenubarNav = () => {
       </MenubarMenu>
 
       <MenubarMenu>
-        <MenubarTrigger className="font-medium">Todas as Categorias</MenubarTrigger>
+        <MenubarTrigger className="font-medium text-center">Todas as Categorias</MenubarTrigger>
         <MenubarContent>
           <MenubarSub>
             <MenubarSubTrigger>Cama, Mesa e Banho</MenubarSubTrigger>
@@ -56,7 +56,7 @@ const MenubarNav = () => {
       </MenubarMenu>
 
       <MenubarMenu>
-        <MenubarTrigger className="font-medium">Portfólio Bordado</MenubarTrigger>
+        <MenubarTrigger className="font-medium text-center">Portfólio Bordado</MenubarTrigger>
         <MenubarContent>
           <MenubarItem asChild>
             <Link to="/portfolio/bordado-bone">Bordado em Boné</Link>
@@ -84,7 +84,7 @@ const MenubarNav = () => {
       </MenubarMenu>
 
       <MenubarMenu>
-        <MenubarTrigger className="font-medium">Sobre Nós</MenubarTrigger>
+        <MenubarTrigger className="font-medium text-center">Sobre Nós</MenubarTrigger>
         <MenubarContent>
           <MenubarItem asChild>
             <Link to="/sobre">Nossa História</Link>
