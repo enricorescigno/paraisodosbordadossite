@@ -35,7 +35,7 @@ const Hero = () => {
         className={`absolute inset-0 w-full h-full object-cover scale-[1.01] transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`}
       >
         <source src="/videos/bordado-background.mp4" type="video/mp4" />
-        <source src="https://vod-progressive.akamaized.net/exp=1722441531~acl=%2Fvimeo-prod-skyfire-std-us%2F01%2F4501%2F8%2F222507966%2F780368530.mp4~hmac=2d60aefd3b5bf0ceabdc45cd27e7b1c4ac3bcc3bed3267714613ffd08f61feb4/vimeo-prod-skyfire-std-us/01/4501/8/222507966/780368530.mp4" type="video/mp4" />
+        <source src="https://i.imgur.com/OeHLvJP.mp4" type="video/mp4" />
         Seu navegador não suporta vídeos HTML5.
       </video>
       
