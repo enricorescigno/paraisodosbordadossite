@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X, ChevronDown, User } from 'lucide-react';
 import SearchBox from './SearchBox';
+import MenubarNav from './MenubarNav';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -18,7 +19,8 @@ const Navbar = () => {
     };
   }, []);
 
-  return <header className="w-full bg-white z-50">
+  return (
+    <header className="w-full bg-white z-50">
       {/* Top bar with account, language, etc. */}
       <div className="bg-brand-light py-2 border-b border-gray-200">
         <div className="container-custom flex justify-end items-center">
@@ -74,106 +76,8 @@ const Navbar = () => {
       {/* Categories Navigation */}
       <div className="bg-brand-light border-t border-b border-gray-200 hidden lg:block">
         <div className="container-custom">
-          <nav className="flex items-center justify-between py-3">
-            <Link to="/" className="nav-link text-brand-dark">
-              Início
-            </Link>
-            
-            {/* Todas as Categorias with subcategories */}
-            <div className="relative group">
-              <button className="nav-link text-brand-dark flex items-center gap-1">
-                Todas as Categorias
-                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
-              </button>
-              <div className="absolute top-full left-0 mt-1 w-60 glass rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg z-50">
-                <div className="py-2 px-3">
-                  {/* Cama, Mesa e Banho submenu */}
-                  <div className="relative group/sub">
-                    <Link to="/categoria/cama-mesa-banho" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md flex items-center justify-between">
-                      Cama, Mesa e Banho
-                      <ChevronDown className="h-4 w-4 ml-2" />
-                    </Link>
-                    <div className="absolute top-0 left-full ml-1 w-60 glass rounded-lg overflow-hidden opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 shadow-lg">
-                      <div className="py-2 px-3">
-                        <Link to="/categoria/cama" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                          Cama
-                        </Link>
-                        <Link to="/categoria/mesa-cozinha" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                          Mesa e Cozinha
-                        </Link>
-                        <Link to="/categoria/tapete-cortinas" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                          Tapete e Cortinas
-                        </Link>
-                        <Link to="/categoria/banho" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                          Banho
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Infantil submenu */}
-                  <Link to="/categoria/infantil" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                    Infantil
-                  </Link>
-                  
-                  {/* Vestuário submenu */}
-                  <div className="relative group/sub">
-                    <Link to="/categoria/vestuario" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md flex items-center justify-between">
-                      Vestuário
-                      <ChevronDown className="h-4 w-4 ml-2" />
-                    </Link>
-                    <div className="absolute top-0 left-full ml-1 w-60 glass rounded-lg overflow-hidden opacity-0 invisible group-hover/sub:opacity-100 group-hover/sub:visible transition-all duration-300 shadow-lg">
-                      <div className="py-2 px-3">
-                        <Link to="/categoria/camisa" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                          Camisa
-                        </Link>
-                        <Link to="/categoria/jaleco" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                          Jaleco
-                        </Link>
-                        <Link to="/categoria/pantufa" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                          Pantufa
-                        </Link>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Portifólio Bordado with subcategories */}
-            <div className="relative group">
-              <button className="nav-link text-brand-dark flex items-center gap-1">
-                Portfólio Bordado
-                <ChevronDown className="h-4 w-4 transition-transform group-hover:rotate-180" />
-              </button>
-              <div className="absolute top-full left-0 mt-1 w-72 glass rounded-lg overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-lg z-50">
-                <div className="py-2 px-3">
-                  <Link to="/portfolio/bordado-bone" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                    Bordado em Boné
-                  </Link>
-                  <Link to="/portfolio/bordado-necessaire" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                    Bordado em Necessaire
-                  </Link>
-                  <Link to="/portfolio/bordado-bolsa" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                    Bordado em Bolsa
-                  </Link>
-                  <Link to="/portfolio/bordado-jaleco" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                    Bordado em Jaleco
-                  </Link>
-                  <Link to="/portfolio/bordado-infantis" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                    Bordado Infantis
-                  </Link>
-                  <Link to="/portfolio/bordado-toalha-banho" className="block py-2 px-3 hover:bg-brand-red/5 rounded-md">
-                    Bordado em Toalha de Banho
-                  </Link>
-                </div>
-              </div>
-            </div>
-            
-            <Link to="/sobre" className="nav-link text-brand-dark">
-              Sobre Nós
-            </Link>
-          </nav>
+          {/* Use the MenubarNav component here */}
+          <MenubarNav />
         </div>
       </div>
 
@@ -275,7 +179,8 @@ const Navbar = () => {
           </nav>
         </div>
       </div>
-    </header>;
+    </header>
+  );
 };
 
 export default Navbar;
