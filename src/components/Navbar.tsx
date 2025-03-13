@@ -1,11 +1,14 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X, ChevronDown, User } from 'lucide-react';
 import SearchBox from './SearchBox';
 import MenubarNav from './MenubarNav';
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -15,6 +18,7 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
   return <header className="w-full bg-white z-50">
       {/* Top bar with account, language, etc. */}
       <div className="bg-brand-light py-2 border-b border-gray-200">
@@ -69,9 +73,8 @@ const Navbar = () => {
       </div>
 
       {/* Categories Navigation */}
-      <div className="bg-brand-light border-t border-b border-gray-200 hidden lg:block">
-        <div className="container-custom py-0 my-0 mx-0">
-          {/* Use the MenubarNav component here */}
+      <div className="bg-brand-light border-t border-b border-gray-200 hidden lg:flex justify-center">
+        <div className="container max-w-4xl mx-auto">
           <MenubarNav />
         </div>
       </div>
@@ -176,4 +179,5 @@ const Navbar = () => {
       </div>
     </header>;
 };
+
 export default Navbar;
