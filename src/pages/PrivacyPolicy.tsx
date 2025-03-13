@@ -2,8 +2,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import WhatsAppSupport from '../components/WhatsAppSupport';
 const PrivacyPolicy = () => {
-  return <div className="min-h-screen bg-white">
-      <Navbar />
+  return <div className="min-h-screen bg-white px-0 my-[20px]">
+      
       
       <div className="container mx-auto px-4 py-0">
         <h1 className="text-3xl md:text-4xl font-bold mb-8 text-center">A Loja Paraíso dos Bordados se compromete com a segurança de seus dados e é claro que aqui na nossa loja oficial não é diferente. Mantemos suas informações no mais absoluto sigilo!
