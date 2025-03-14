@@ -1,27 +1,10 @@
+
 // This file provides search functionality across products
-
-// Sample product data structure - this would be replaced with actual data in a real implementation
-export interface Product {
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  keywords?: string[];
-  slug?: string;
-  type: 'product' | 'portfolio';
-  imageUrl?: string;
-  price?: string;
-  colors?: string[];
-  sizes?: string[];
-  rating?: number;
-  isNew?: boolean;
-  features?: string[];
-}
-
-// Sample product database - In a real app, you would fetch this from an API
+import { Product } from '../types/product';
 import { pantufaProducts } from './productUtils';
 
-export const products = [
+// Sample product database - In a real app, you would fetch this from an API
+const sampleProducts: Product[] = [
   {
     id: "101", // ID matching ProductDetailPage
     name: "Toalha Bordada Personalizada",
@@ -111,9 +94,17 @@ export const products = [
     slug: "toalha-mesa-bordada",
     type: "product",
     imageUrl: "/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png"
-  },
-  ...pantufaProducts
+  }
 ];
+
+// Create keywords for pantufaProducts if they don't have them
+const pantufasWithKeywords = pantufaProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['pantufa', 'pantufas', 'conforto', 'calçado', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
+
+export const products: Product[] = [...sampleProducts, ...pantufasWithKeywords];
 
 // Function to search products based on query - with improved matching and prioritization
 export function searchProducts(query: string): Product[] {
@@ -163,7 +154,7 @@ export function searchProducts(query: string): Product[] {
     }
     
     // Check description (lowest priority)
-    if (product.description.toLowerCase().includes(normalizedQuery)) {
+    if (product.description && product.description.toLowerCase().includes(normalizedQuery)) {
       score += 10;
     }
     

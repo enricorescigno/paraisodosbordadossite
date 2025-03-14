@@ -1,6 +1,6 @@
 
 export interface Product {
-  id: number;
+  id: number | string;
   name: string;
   type: string;
   category: string;
@@ -12,4 +12,6 @@ export interface Product {
   rating?: number;
   isNew?: boolean;
   features?: string[];
+  keywords?: string[];
+  slug?: string;
 }
