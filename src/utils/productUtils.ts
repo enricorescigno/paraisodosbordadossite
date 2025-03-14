@@ -1,4 +1,3 @@
-
 import { Product } from '../types/product';
 
 // Pantufas Collection
@@ -564,11 +563,12 @@ export const toalhasProducts: Product[] = [
 
 // Combine all products for export
 export const allProducts: Product[] = [
-  ...pantufaProducts,
-  ...bonesProducts,
-  ...camisetasProducts,
-  ...camisasPoloProducts,
-  ...jalecosProducts,
-  ...roupoesProducts,
-  ...toalhasProducts
+  ...pantufaProducts.map(product => ({ ...product, type: 'product' })),
+  ...bonesProducts.map(product => ({ ...product, type: 'product' })),
+  ...camisetasProducts.map(product => ({ ...product, type: 'product' })),
+  ...camisasPoloProducts.map(product => ({ ...product, type: 'product' })),
+  ...jalecosProducts.map(product => ({ ...product, type: 'product' })),
+  ...roupoesProducts.map(product => ({ ...product, type: 'product' })),
+  ...toalhasProducts.map(product => ({ ...product, type: 'product' }))
 ];
+
