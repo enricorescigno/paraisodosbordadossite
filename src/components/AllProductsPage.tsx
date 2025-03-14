@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { ArrowRight, Star, Search, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -81,7 +80,9 @@ const AllProductsPage = () => {
       'banho': 'Banho',
       'infantil': 'Infantil',
       'vestuário': 'Vestuário',
-      'bordado': 'Bordado'
+      'bordado': 'Bordado',
+      'pantufas': 'Pantufas',
+      'roupões': 'Roupões'
     };
     
     return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);

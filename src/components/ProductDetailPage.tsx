@@ -19,6 +19,7 @@ interface Product {
   colors?: string[];
   sizes?: string[];
   isNew?: boolean;
+  images?: string[];
 }
 
 interface PortfolioItem {
@@ -78,6 +79,90 @@ const allProducts: Record<string, Product[]> = {
       features: ["Tecido nobre", "Bordado personalizado", "Confortável"],
       colors: ["Branco", "Azul", "Preto"],
       sizes: ["P", "M", "G", "GG"]
+    }
+  ],
+  'pantufas': [
+    {
+      id: 200,
+      name: "Pantufa Confort Clássica",
+      image: "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
+      images: [
+        "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
+        "/lovable-uploads/36a38d60-1eeb-4d00-a815-5b06d32171d7.png"
+      ],
+      category: "Pantufas",
+      rating: 4.8,
+      description: "Pantufa em tecido texturizado com forro macio e confortável, ideal para o uso diário.",
+      features: ["Material macio", "Sola antiderrapante", "Forro confortável", "Design moderno"],
+      colors: ["Cinza", "Branco"],
+      sizes: ["P", "M", "G"],
+      isNew: true
+    },
+    {
+      id: 201,
+      name: "Pantufa Pompom Delicada",
+      image: "/lovable-uploads/36ab88ca-5429-45cc-ba92-22c02f9e8814.png",
+      images: [
+        "/lovable-uploads/36ab88ca-5429-45cc-ba92-22c02f9e8814.png",
+        "/lovable-uploads/fbfe7b78-08bd-45c6-ae97-f62616c4a07a.png"
+      ],
+      category: "Pantufas",
+      rating: 4.9,
+      description: "Pantufa feminina com pompom decorativo, feita com tecido texturizado e interior aconchegante.",
+      features: ["Pompom decorativo", "Interior macio", "Exterior texturizado", "Base antiderrapante"],
+      colors: ["Rosa", "Bege"],
+      sizes: ["P", "M", "G"],
+      isNew: true
+    },
+    {
+      id: 202,
+      name: "Pantufa Soft Minimalista",
+      image: "/lovable-uploads/9dc9535d-7bb6-4271-9178-d812bb402441.png",
+      images: [
+        "/lovable-uploads/9dc9535d-7bb6-4271-9178-d812bb402441.png",
+        "/lovable-uploads/59ad10cb-885b-434c-ad24-0cf9f17f8381.png",
+        "/lovable-uploads/c838ec71-8c01-4583-8e31-576a4829181c.png"
+      ],
+      category: "Pantufas",
+      rating: 4.7,
+      description: "Pantufa minimalista com design simples e elegante, disponível em diversas cores.",
+      features: ["Design minimalista", "Ultraconfortável", "Material aveludado", "Leve e prática"],
+      colors: ["Azul", "Roxo", "Vermelho"],
+      sizes: ["P", "M", "G"],
+      isNew: true
+    },
+    {
+      id: 203,
+      name: "Pantufa Plush Premium",
+      image: "/lovable-uploads/97ec483a-beee-45ae-8a3a-773fc71c8368.png",
+      images: [
+        "/lovable-uploads/97ec483a-beee-45ae-8a3a-773fc71c8368.png",
+        "/lovable-uploads/828f06cf-6a82-40ff-b5e7-d105a447924d.png",
+        "/lovable-uploads/50986439-23d5-4069-8fa2-2556c20af5a6.png"
+      ],
+      category: "Pantufas",
+      rating: 4.9,
+      description: "Pantufa confeccionada em plush premium, oferecendo máximo conforto e durabilidade.",
+      features: ["Plush de alta qualidade", "Ultramacia", "Confortável", "Durável"],
+      colors: ["Preto", "Rosa", "Marrom"],
+      sizes: ["P", "M", "G", "GG"],
+      isNew: true
+    },
+    {
+      id: 204,
+      name: "Pantufa Essencial Lisa",
+      image: "/lovable-uploads/233f51ac-fe3a-472c-aad2-33238d2de3ef.png",
+      images: [
+        "/lovable-uploads/233f51ac-fe3a-472c-aad2-33238d2de3ef.png",
+        "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+      ],
+      category: "Pantufas",
+      rating: 4.6,
+      description: "Pantufa essencial em design liso e clean, perfeita para o dia a dia com muito conforto.",
+      features: ["Design básico", "Extremamente macia", "Forrada internamente", "Versátil"],
+      colors: ["Branco", "Bege"],
+      sizes: ["P", "M", "G"],
+      isNew: true
     }
   ]
 };
@@ -206,6 +291,7 @@ const ProductDetailPage = () => {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [isFromPortfolio, setIsFromPortfolio] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -246,6 +332,7 @@ const ProductDetailPage = () => {
           if (foundProduct.sizes && foundProduct.sizes.length > 0) {
             setSelectedSize(foundProduct.sizes[0]);
           }
+          setActiveImageIndex(0);
         }
       }
       setLoading(false);
@@ -295,7 +382,8 @@ const ProductDetailPage = () => {
       'Bordado em Bolsa': '/images/placeholders/bag.jpg',
       'Bordado em Jaleco': '/images/placeholders/uniform.jpg',
       'Bordado Infantis': '/images/placeholders/kids-embroidery.jpg',
-      'Bordado em Toalha de Banho': '/images/placeholders/towel.jpg'
+      'Bordado em Toalha de Banho': '/images/placeholders/towel.jpg',
+      'Pantufas': '/images/placeholders/default.jpg'
     };
     
     return placeholders[category] || '/images/placeholders/default.jpg';
@@ -324,24 +412,57 @@ const ProductDetailPage = () => {
               <div className="bg-white rounded-2xl overflow-hidden">
                 <Carousel className="w-full">
                   <CarouselContent>
-                    <CarouselItem>
-                      <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
-                        <img 
-                          src={product.image} 
-                          alt={product.name}
-                          className="w-full h-full object-contain mix-blend-multiply p-4"
-                          onError={(e) => {
-                            e.currentTarget.src = placeholder(product.category);
-                          }}
-                        />
-                      </AspectRatio>
-                    </CarouselItem>
-                    <div className="flex justify-center gap-2 mt-4">
-                      <div className="h-2 w-2 rounded-full bg-brand-red"></div>
-                      <div className="h-2 w-2 rounded-full bg-gray-300"></div>
-                      <div className="h-2 w-2 rounded-full bg-gray-300"></div>
-                    </div>
+                    {product.images && product.images.length > 0 ? (
+                      product.images.map((img, index) => (
+                        <CarouselItem key={index}>
+                          <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
+                            <img 
+                              src={img} 
+                              alt={`${product.name} - Imagem ${index + 1}`}
+                              className="w-full h-full object-contain mix-blend-multiply p-4"
+                              onError={(e) => {
+                                e.currentTarget.src = placeholder(product.category);
+                              }}
+                            />
+                          </AspectRatio>
+                        </CarouselItem>
+                      ))
+                    ) : (
+                      <CarouselItem>
+                        <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
+                          <img 
+                            src={product.image} 
+                            alt={product.name}
+                            className="w-full h-full object-contain mix-blend-multiply p-4"
+                            onError={(e) => {
+                              e.currentTarget.src = placeholder(product.category);
+                            }}
+                          />
+                        </AspectRatio>
+                      </CarouselItem>
+                    )}
                   </CarouselContent>
+
+                  {product.images && product.images.length > 1 && (
+                    <>
+                      <CarouselPrevious className="left-2" />
+                      <CarouselNext className="right-2" />
+                    </>
+                  )}
+                  
+                  {product.images && product.images.length > 1 && (
+                    <div className="flex justify-center gap-2 mt-4">
+                      {product.images.map((_, index) => (
+                        <div 
+                          key={index} 
+                          className={`h-2 w-2 rounded-full cursor-pointer transition-colors ${
+                            index === activeImageIndex ? 'bg-brand-red' : 'bg-gray-300'
+                          }`}
+                          onClick={() => setActiveImageIndex(index)}
+                        ></div>
+                      ))}
+                    </div>
+                  )}
                 </Carousel>
               </div>
               

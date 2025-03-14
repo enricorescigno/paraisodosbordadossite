@@ -1,4 +1,3 @@
-
 // This file provides search functionality across products
 
 // Sample product data structure - this would be replaced with actual data in a real implementation
@@ -11,10 +10,18 @@ export interface Product {
   slug?: string;
   type: 'product' | 'portfolio';
   imageUrl?: string;
+  price?: string;
+  colors?: string[];
+  sizes?: string[];
+  rating?: number;
+  isNew?: boolean;
+  features?: string[];
 }
 
 // Sample product database - In a real app, you would fetch this from an API
-export const products: Product[] = [
+import { pantufaProducts } from './productUtils';
+
+export const products = [
   {
     id: "101", // ID matching ProductDetailPage
     name: "Toalha Bordada Personalizada",
@@ -104,7 +111,8 @@ export const products: Product[] = [
     slug: "toalha-mesa-bordada",
     type: "product",
     imageUrl: "/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png"
-  }
+  },
+  ...pantufaProducts
 ];
 
 // Function to search products based on query - with improved matching and prioritization
