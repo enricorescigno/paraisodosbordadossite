@@ -14,4 +14,5 @@ export interface Product {
   features?: string[];
   keywords?: string[];
   slug?: string;
+  images?: string[];
 }
