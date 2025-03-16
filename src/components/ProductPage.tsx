@@ -128,7 +128,7 @@ const ProductPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={product.imageUrl || (product.images && product.images[0]) || `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.category)}`} 
+                              src={product.imageUrl || (product.images && Array.isArray(product.images) ? product.images[0] : null) || `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.category)}`} 
                               alt={product.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                               onError={(e) => {

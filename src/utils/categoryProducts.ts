@@ -97,30 +97,30 @@ export const mesaCozinhaProducts: Product[] = [
   },
   {
     id: 202,
-    name: "Jogo Americano Bordado",
+    name: "Jogo Americano Requinte Ondulado",
     type: "product",
     category: "Mesa e Cozinha",
-    imageUrl: "/lovable-uploads/35fdd01b-0132-458d-983c-615b03832503.png",
+    imageUrl: "/lovable-uploads/71c6178b-1439-499f-9354-f8bd6d43c514.png",
     description: "Jogo americano com bordado elegante, conjunto com 4 unidades. Confeccionado em tecido durável e fácil de limpar, protege sua mesa com estilo.",
     price: "Sob consulta",
     colors: ["Branco", "Dourado", "Cobre", "Rosa", "Verde", "Vinho", "Marrom"],
-    sizes: ["35cm x 45cm"],
-    rating: 4.7,
+    sizes: ["38cm (diâmetro)"],
+    rating: 4.8,
     isNew: true,
     features: [
-      "Confeccionado em tecido durável e fácil de limpar",
-      "Bordado delicado e elegante",
-      "Ideal para compor a mesa com charme e sofisticação",
+      "Composição: 75% polipropileno e 25% poliéster",
+      "Formato redondo ondulado",
+      "Secagem rápida",
       "Conjunto com 4 unidades"
     ],
     images: {
-      "Branco": ["/lovable-uploads/35fdd01b-0132-458d-983c-615b03832503.png"],
-      "Dourado": ["/lovable-uploads/979b2ce8-93f3-4b1a-afee-992dd0bbabc4.png"],
-      "Cobre": ["/lovable-uploads/c5ba1f95-4bce-46db-9fbf-e403106ae1b3.png"],
-      "Rosa": ["/lovable-uploads/351861e8-db18-467f-bc8f-3a9156b226ee.png"],
-      "Verde": ["/lovable-uploads/42ee978a-3e1b-471e-b5c8-eb0daa01dc6d.png"],
-      "Vinho": ["/lovable-uploads/a2fe6aac-000d-496d-89fa-a7945525cd07.png"],
-      "Marrom": ["/lovable-uploads/6d267af2-7362-4b77-b80f-2b3d8c1c053f.png"]
+      "Branco": ["/lovable-uploads/71c6178b-1439-499f-9354-f8bd6d43c514.png"],
+      "Dourado": ["/lovable-uploads/55ee7159-6ba2-4ea8-ba47-fe26c718040d.png"],
+      "Cobre": ["/lovable-uploads/e8fbdabd-3ce9-4d51-bbcf-0ecf9bed4a44.png"],
+      "Rosa": ["/lovable-uploads/901b9c40-ca3f-48a8-9135-38facf09b3da.png"],
+      "Verde": ["/lovable-uploads/f28c69c5-853f-469b-afba-91b8202120d0.png"],
+      "Vinho": ["/lovable-uploads/1bb354e7-598f-421d-9f97-f716da838757.png"],
+      "Marrom": ["/lovable-uploads/b8507f62-379e-42ba-b9c4-e08ff04db821.png"]
     }
   },
   {
