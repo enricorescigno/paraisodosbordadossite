@@ -123,7 +123,7 @@ const Hero = () => {
               Paraíso dos Bordados
             </motion.h1>
             
-            <motion.p className="text-brand-dark/90 text-lg md:text-xl max-w-2xl mx-auto mb-10" initial="hidden" animate="visible" variants={descriptionVariants}>
+            <motion.p initial="hidden" animate="visible" variants={descriptionVariants} className="text-brand-dark/90 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-normal">
               Transformamos linhas e agulhas em verdadeiras obras de arte. Conheça nossa coleção exclusiva de bordados feitos com paixão e maestria.
             </motion.p>
             
