@@ -5,62 +5,60 @@ import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { products } from '../utils/searchUtils';
 import { useIsMobile } from '../hooks/use-mobile';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { motion } from 'framer-motion';
+import { useProducts } from '../hooks/useProducts';
+import { useMainCategories, useSubcategories } from '../hooks/useCategories';
+import { Category } from '../types/database';
 
 const AllProductsPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [allProducts, setAllProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   
-  useEffect(() => {
-    // In a real app, this would fetch from an API
-    setLoading(true);
-    setTimeout(() => {
-      // Filter only products (not portfolio items)
-      const productItems = products.filter(product => product.type === 'product');
-      setAllProducts(productItems);
-      setFilteredProducts(productItems);
-      setLoading(false);
-    }, 300); // Simulate network request
-  }, []);
-
+  // Fetch all products
+  const { data: products = [], isLoading } = useProducts('product');
+  
+  // Fetch main categories
+  const { data: mainCategories = [] } = useMainCategories('product');
+  
+  // State for filtered products
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  
   // Filter products based on category
   useEffect(() => {
-    let result = [...allProducts];
-    
-    // Apply category filter
-    if (activeCategory !== 'all') {
-      result = result.filter(product => product.category.toLowerCase().includes(activeCategory.toLowerCase()));
+    if (products.length > 0) {
+      let result = [...products];
+      
+      // Apply category filter
+      if (activeCategory !== 'all') {
+        result = products.filter(product => {
+          const category = mainCategories.find((cat: Category) => cat.id === product.category_id);
+          
+          if (category) {
+            return category.slug === activeCategory;
+          }
+          
+          return false;
+        });
+      }
+      
+      setFilteredProducts(result);
     }
-    
-    setFilteredProducts(result);
-  }, [activeCategory, allProducts]);
+  }, [activeCategory, products, mainCategories]);
 
   // Extract unique categories for filtering
-  const categories = ['all', ...new Set(allProducts.map(product => product.category.split(',')[0].trim().toLowerCase()))];
+  const categories = [
+    { id: 'all', name: 'Todos', slug: 'all' },
+    ...mainCategories
+  ];
 
   // Function to get category display name
-  const getCategoryDisplayName = (category: string) => {
-    const categoryMap: Record<string, string> = {
-      'all': 'Todos',
-      'cama': 'Cama',
-      'mesa': 'Mesa',
-      'banho': 'Banho',
-      'infantil': 'Infantil',
-      'vestuário': 'Vestuário',
-      'bordado': 'Bordado',
-      'pantufas': 'Pantufas',
-      'roupões': 'Roupões'
-    };
-    return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
+  const getCategoryDisplayName = (category: Category | { id: string, name: string, slug: string }) => {
+    return category.name;
   };
   
   return (
@@ -83,9 +81,9 @@ const AllProductsPage = () => {
             <TabsList className="bg-white rounded-full shadow-sm overflow-x-auto py-1 px-1 w-auto flex flex-nowrap">
               {categories.map((category) => (
                 <TabsTrigger 
-                  key={category}
-                  value={category}
-                  onClick={() => setActiveCategory(category)}
+                  key={category.id}
+                  value={category.slug}
+                  onClick={() => setActiveCategory(category.slug)}
                   className="px-4 py-2 rounded-full data-[state=active]:bg-brand-red data-[state=active]:text-white"
                 >
                   {getCategoryDisplayName(category)}
@@ -94,7 +92,7 @@ const AllProductsPage = () => {
             </TabsList>
           </Tabs>
           
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
             </div>
@@ -113,7 +111,7 @@ const AllProductsPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={product.imageUrl || "https://via.placeholder.com/500x500?text=Sem+Imagem"} 
+                              src={product.images?.[0] || "https://via.placeholder.com/500x500?text=Sem+Imagem"} 
                               alt={product.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                             />
@@ -128,11 +126,9 @@ const AllProductsPage = () => {
                           
                           <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">{product.name}</h3>
                           
-                          {product.description && (
+                          {product.shortDescription && (
                             <p className="text-center text-gray-500 mb-6 max-w-md">
-                              {product.description.length > 100 
-                                ? `${product.description.substring(0, 100)}...` 
-                                : product.description}
+                              {product.shortDescription}
                             </p>
                           )}
                           
