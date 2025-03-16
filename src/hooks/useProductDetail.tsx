@@ -99,22 +99,22 @@ export const useProductDetail = () => {
     
     if (product && product.category_id) {
       const categoryMap: Record<string, string> = {
-        2: '/categoria/cama',
-        3: '/categoria/mesa-cozinha',
-        4: '/categoria/banho',
-        5: '/categoria/infantil',
-        6: '/categoria/vestuario',
-        7: '/categoria/jaleco',
-        8: '/categoria/pantufa',
-        9: '/portfolio/bordado-bone',
-        10: '/portfolio/bordado-necessaire',
-        11: '/portfolio/bordado-bolsa',
-        12: '/portfolio/bordado-jaleco',
-        13: '/portfolio/bordado-infantis',
-        14: '/portfolio/bordado-toalha-banho'
+        '2': '/categoria/cama',
+        '3': '/categoria/mesa-cozinha',
+        '4': '/categoria/banho',
+        '5': '/categoria/infantil',
+        '6': '/categoria/vestuario',
+        '7': '/categoria/jaleco',
+        '8': '/categoria/pantufa',
+        '9': '/portfolio/bordado-bone',
+        '10': '/portfolio/bordado-necessaire',
+        '11': '/portfolio/bordado-bolsa',
+        '12': '/portfolio/bordado-jaleco',
+        '13': '/portfolio/bordado-infantis',
+        '14': '/portfolio/bordado-toalha-banho'
       };
       
-      return categoryMap[product.category_id] || '/produtos';
+      return categoryMap[product.category_id.toString()] || '/produtos';
     }
     
     return '/produtos';

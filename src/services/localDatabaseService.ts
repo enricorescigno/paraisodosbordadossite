@@ -1,5 +1,5 @@
 
-import { Category, Product, ProductImage } from '../types/database';
+import { Category, Product, ProductImage, ColorVariantImages } from '../types/database';
 import { allProducts } from '../utils/productUtils';
 import { 
   camaProducts, 
@@ -54,7 +54,7 @@ export const initializeDatabase = () => {
     return {
       id: typeof p.id === 'string' ? parseInt(p.id) : p.id,
       name: p.name,
-      type: p.type,
+      type: (p.type === 'product' || p.type === 'portfolio') ? p.type : 'product',
       category_id: categoryId,
       description: p.description || '',
       price: p.price || 'Sob consulta',
