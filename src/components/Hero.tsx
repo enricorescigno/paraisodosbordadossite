@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -152,7 +151,7 @@ const Hero = () => {
               initial="hidden"
               animate="visible"
               variants={titleVariants}
-              className="text-4xl md:text-5xl font-serif mb-6 font-medium text-red-600 lg:text-6xl"
+              className="text-4xl md:text-5xl font-sans mb-6 font-medium text-red-600 lg:text-6xl tracking-tight"
             >
               Paraíso dos Bordados
             </motion.h1>

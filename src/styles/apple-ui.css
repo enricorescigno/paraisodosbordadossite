@@ -8,17 +8,17 @@
     font-feature-settings: "kern";
   }
 
-  /* Modern Heading Styles */
+  /* Modern Heading Styles with consistent font family */
   h1 {
-    @apply text-3xl md:text-4xl lg:text-5xl font-serif tracking-tight;
+    @apply text-3xl md:text-4xl lg:text-5xl font-sans tracking-tight font-medium;
   }
   
   h2 {
-    @apply text-2xl md:text-3xl lg:text-4xl font-serif tracking-tight;
+    @apply text-2xl md:text-3xl lg:text-4xl font-sans tracking-tight font-medium;
   }
   
   h3 {
-    @apply text-xl md:text-2xl font-serif tracking-tight;
+    @apply text-xl md:text-2xl font-sans tracking-tight font-medium;
   }
 }
 
@@ -118,6 +118,20 @@
     @apply w-full py-2.5 pl-4 pr-10 border border-gray-300 rounded-full
     focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red
     text-base transition-all duration-200;
+  }
+  
+  /* Section title styles - consistent with brand typography */
+  .section-title {
+    @apply text-3xl md:text-4xl font-sans font-medium tracking-tight text-brand-dark mb-6;
+  }
+  
+  /* Heading styles for about us page and similar sections */
+  .page-heading {
+    @apply font-sans text-3xl md:text-4xl font-medium tracking-tight text-brand-dark mb-4;
+  }
+  
+  .section-heading {
+    @apply font-sans text-2xl md:text-3xl font-medium tracking-tight text-brand-red mb-5;
   }
 }
 
