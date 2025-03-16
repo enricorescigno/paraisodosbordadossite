@@ -9,52 +9,98 @@ import { useIsMobile } from '../hooks/use-mobile';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import { allProducts } from '../utils/productUtils';
+import { Product } from '../types/product';
 import { motion } from 'framer-motion';
-import { useProducts } from '../hooks/useProducts';
-import { useMainCategories, useSubcategories } from '../hooks/useCategories';
-import { Category } from '../types/database';
+
+// Portfolio categories mapping
+const PORTFOLIO_CATEGORIES = {
+  'Bordado em Boné': 'bordado-bone',
+  'Bordado em Necessaire': 'bordado-necessaire',
+  'Bordado em Bolsa': 'bordado-bolsa',
+  'Bordado em Jaleco': 'bordado-jaleco',
+  'Bordado Infantis': 'bordado-infantis',
+  'Bordado em Toalha de Banho': 'bordado-toalha-banho',
+  'Bonés Bordados': 'bordado-bone',
+  'Camisetas': 'vestuario',
+  'Camisas Polo': 'vestuario',
+  'Jalecos': 'bordado-jaleco',
+  'Pantufas': 'vestuario',
+  'Roupões Infantis': 'bordado-infantis',
+  'Toalhas Infantis': 'bordado-toalha-banho'
+};
 
 const AllPortfolioPage = () => {
+  const [loading, setLoading] = useState(true);
+  const [allPortfolioItems, setAllPortfolioItems] = useState<Product[]>([]);
+  const [filteredItems, setFilteredItems] = useState<Product[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   
-  // Fetch all portfolio items
-  const { data: portfolioItems = [], isLoading } = useProducts('portfolio');
-  
-  // Fetch main categories
-  const { data: mainCategories = [] } = useMainCategories('portfolio');
-  
-  // State for filtered items
-  const [filteredItems, setFilteredItems] = useState<any[]>([]);
-  
-  // Filter items based on category
   useEffect(() => {
-    if (portfolioItems.length > 0) {
-      let result = [...portfolioItems];
-      
-      // Apply category filter
-      if (activeCategory !== 'all') {
-        result = portfolioItems.filter(item => {
-          const category = mainCategories.find((cat: Category) => cat.id === item.category_id);
-          
-          if (category) {
-            return category.slug === activeCategory;
-          }
-          
-          return false;
-        });
-      }
-      
-      setFilteredItems(result);
-    }
-  }, [activeCategory, portfolioItems, mainCategories]);
+    // Simular carregamento para melhorar UX
+    setLoading(true);
+    setTimeout(() => {
+      // Usar os produtos do nosso arquivo productUtils.ts
+      const portfolioItems = allProducts.filter(product => 
+        product.type === 'product' && product.category in PORTFOLIO_CATEGORIES
+      );
+      setAllPortfolioItems(portfolioItems);
+      setFilteredItems(portfolioItems);
+      setLoading(false);
+    }, 300);
+  }, []);
 
-  // Prepare categories for filtering
-  const categories = [
-    { id: 'all', name: 'Todos', slug: 'all' },
-    ...mainCategories
-  ];
+  // Filtrar itens com base na categoria
+  useEffect(() => {
+    let result = [...allPortfolioItems];
+    
+    // Aplicar filtro de categoria
+    if (activeCategory !== 'all') {
+      result = result.filter(item => {
+        // Mapear categoria do produto para o slug da rota
+        const categorySlug = PORTFOLIO_CATEGORIES[item.category as keyof typeof PORTFOLIO_CATEGORIES];
+        return categorySlug === activeCategory;
+      });
+    }
+    
+    setFilteredItems(result);
+  }, [activeCategory, allPortfolioItems]);
+
+  // Extrair categorias únicas para filtros
+  const getUniqueCategories = () => {
+    const categories = ['all'];
+    const uniqueSlugs = new Set();
+    
+    allPortfolioItems.forEach(item => {
+      const categorySlug = PORTFOLIO_CATEGORIES[item.category as keyof typeof PORTFOLIO_CATEGORIES];
+      if (categorySlug && !uniqueSlugs.has(categorySlug)) {
+        uniqueSlugs.add(categorySlug);
+        categories.push(categorySlug);
+      }
+    });
+    
+    return categories;
+  };
+
+  const categories = getUniqueCategories();
+
+  // Função para obter nome de exibição da categoria
+  const getCategoryDisplayName = (category: string) => {
+    const categoryMap: Record<string, string> = {
+      'all': 'Todos',
+      'bordado-bone': 'Bordado em Boné',
+      'bordado-necessaire': 'Bordado em Necessaire',
+      'bordado-bolsa': 'Bordado em Bolsa',
+      'bordado-jaleco': 'Bordado em Jaleco',
+      'bordado-infantis': 'Bordado Infantil',
+      'bordado-toalha-banho': 'Bordado em Toalha',
+      'vestuario': 'Vestuário'
+    };
+    
+    return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
+  };
 
   return (
     <div className="min-h-screen bg-white">
@@ -76,18 +122,18 @@ const AllPortfolioPage = () => {
             <TabsList className="bg-white rounded-full shadow-sm overflow-x-auto py-1 px-1 w-auto flex flex-nowrap">
               {categories.map((category) => (
                 <TabsTrigger 
-                  key={category.id}
-                  value={category.slug}
-                  onClick={() => setActiveCategory(category.slug)}
+                  key={category}
+                  value={category}
+                  onClick={() => setActiveCategory(category)}
                   className="px-4 py-2 rounded-full data-[state=active]:bg-brand-red data-[state=active]:text-white"
                 >
-                  {category.name}
+                  {getCategoryDisplayName(category)}
                 </TabsTrigger>
               ))}
             </TabsList>
           </Tabs>
           
-          {isLoading ? (
+          {loading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
             </div>
@@ -106,7 +152,7 @@ const AllPortfolioPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={item.images?.[0]} 
+                              src={item.imageUrl || (item.images && item.images[0])} 
                               alt={item.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                               onError={(e) => {
@@ -119,9 +165,11 @@ const AllPortfolioPage = () => {
                           
                           <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">{item.name}</h3>
                           
-                          {item.shortDescription && (
+                          {item.description && (
                             <p className="text-center text-gray-500 mb-6 max-w-md">
-                              {item.shortDescription}
+                              {item.description.length > 100 
+                                ? `${item.description.substring(0, 100)}...` 
+                                : item.description}
                             </p>
                           )}
                           

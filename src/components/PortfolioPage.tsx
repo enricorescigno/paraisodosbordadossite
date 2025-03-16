@@ -1,41 +1,74 @@
 
-import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { Button } from "@/components/ui/button";
+import { allProducts } from '../utils/productUtils';
+import { Product } from '../types/product';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { motion } from 'framer-motion';
-import { useProductsByCategory } from '../hooks/useProducts';
+
+// Portfolio categories mapping
+const PORTFOLIO_CATEGORIES: Record<string, string> = {
+  'bordado-bone': 'Bonés Bordados',
+  'bordado-necessaire': 'Bordado em Necessaire',
+  'bordado-bolsa': 'Bordado em Bolsa',
+  'bordado-jaleco': 'Jalecos',
+  'bordado-infantis': 'Roupões Infantis',
+  'bordado-toalha-banho': 'Toalhas Infantis'
+};
+
+// Category name translations for titles
+const categoryTitles: Record<string, string> = {
+  'bordado-bone': 'Bordado em Boné',
+  'bordado-necessaire': 'Bordado em Necessaire',
+  'bordado-bolsa': 'Bordado em Bolsa',
+  'bordado-jaleco': 'Bordado em Jaleco',
+  'bordado-infantis': 'Bordado Infantil',
+  'bordado-toalha-banho': 'Bordado em Toalha de Banho'
+};
 
 const PortfolioPage = () => {
-  const { categorySlug } = useParams<{ categorySlug: string }>();
-  const { data: items = [], isLoading } = useProductsByCategory(categorySlug);
+  const location = useLocation();
+  const [portfolioItems, setPortfolioItems] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filteredItems, setFilteredItems] = useState<Product[]>([]);
   const whatsappNumber = "+5581995970776";
   
-  // Format the category name for display
-  const formatCategoryName = (slug: string | undefined) => {
-    if (!slug) return '';
-    
-    // Add custom mapping for special cases
-    const categoryTitles: Record<string, string> = {
-      'bordado-bone': 'Bordado em Boné',
-      'bordado-necessaire': 'Bordado em Necessaire',
-      'bordado-bolsa': 'Bordado em Bolsa',
-      'bordado-jaleco': 'Bordado em Jaleco',
-      'bordado-infantis': 'Bordado Infantil',
-      'bordado-toalha-banho': 'Bordado em Toalha de Banho'
-    };
-    
-    return categoryTitles[slug as keyof typeof categoryTitles] || 
-      slug
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-  };
-  
-  const categoryTitle = formatCategoryName(categorySlug);
+  useEffect(() => {
+    // Extract the category from the URL path
+    const pathParts = location.pathname.split('/');
+    const categoryPath = pathParts[pathParts.length - 1];
+
+    // In a real application, this would be an API call
+    setLoading(true);
+    setTimeout(() => {
+      // Obter produtos do productUtils.ts que correspondem à categoria do portfólio
+      const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
+      let categoryItems: Product[] = [];
+      if (matchingCategory) {
+        // Filtra produtos que correspondem à categoria mapeada
+        categoryItems = allProducts.filter(product => product.type === 'portfolio' && product.category === matchingCategory);
+      }
+
+      // Se não encontrar itens de portfólio, buscar como produtos normais
+      if (categoryItems.length === 0) {
+        categoryItems = allProducts.filter(product => product.category === matchingCategory || product.category === categoryTitles[categoryPath]);
+      }
+      setPortfolioItems(categoryItems);
+      setFilteredItems(categoryItems);
+      setLoading(false);
+    }, 300); // Simulate network request
+  }, [location.pathname]);
+
+  // Extract the category from the URL path for title
+  const pathParts = location.pathname.split('/');
+  const categoryPath = pathParts[pathParts.length - 1];
+  const categoryTitle = categoryTitles[categoryPath] || categoryPath;
   
   return (
     <div className="min-h-screen bg-white">
@@ -52,15 +85,15 @@ const PortfolioPage = () => {
             </p>
           </div>
           
-          {isLoading ? (
+          {loading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
             </div>
-          ) : items.length > 0 ? (
+          ) : filteredItems.length > 0 ? (
             <div className="relative">
               <Carousel className="w-full">
                 <CarouselContent>
-                  {items.map((item) => (
+                  {filteredItems.map((item) => (
                     <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3">
                       <div className="p-4">
                         <motion.div 
@@ -71,7 +104,7 @@ const PortfolioPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={item.images?.[0]} 
+                              src={item.imageUrl || (item.images && item.images[0])} 
                               alt={item.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                               onError={(e) => {
@@ -84,9 +117,11 @@ const PortfolioPage = () => {
                           
                           <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">{item.name}</h3>
                           
-                          {item.shortDescription && (
+                          {item.description && (
                             <p className="text-center text-gray-500 mb-6 max-w-md">
-                              {item.shortDescription}
+                              {item.description.length > 100 
+                                ? `${item.description.substring(0, 100)}...` 
+                                : item.description}
                             </p>
                           )}
                           
