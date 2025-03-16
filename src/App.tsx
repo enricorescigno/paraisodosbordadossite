@@ -60,8 +60,6 @@ const App = () => (
           <Route path="/nossos-parceiros" element={<OurPartners />} />
           <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
           
-          <Route path="/login" element={<Index />} />
-          <Route path="/carrinho" element={<Index />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

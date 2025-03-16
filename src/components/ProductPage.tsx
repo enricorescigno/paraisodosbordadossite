@@ -82,11 +82,24 @@ const ProductPage = () => {
       const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
       
       // Filter products that match the category
-      const categoryProducts = allProducts.filter(product => 
+      let categoryProducts = allProducts.filter(product => 
         product.type === 'product' && 
         (product.category === categoryName || 
-         product.category.toLowerCase().includes(categoryName.toLowerCase()))
+         product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
+         categoryName.toLowerCase().includes(product.category.toLowerCase()))
       );
+      
+      // If still no products found, try partial matching
+      if (categoryProducts.length === 0) {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && (
+            categoryPath.includes(product.category.toLowerCase().replace(/\s+/g, '-')) ||
+            product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' '))
+          )
+        );
+      }
+      
+      console.log(`Category: ${categoryName}, Found products: ${categoryProducts.length}`);
       
       setProducts(categoryProducts);
       setFilteredProducts(categoryProducts);
@@ -152,7 +165,7 @@ const ProductPage = () => {
                   <Link to={`/produto/${product.id}`} className="block">
                     <AspectRatio ratio={1/1} className="relative bg-[#f5f5f7]">
                       <img 
-                        src={product.imageUrl || (product.images && product.images[0])} 
+                        src={product.imageUrl || (product.images && product.images[0]) || `https://via.placeholder.com/300x300?text=${encodeURIComponent(product.category)}`} 
                         alt={product.name}
                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                         onError={(e) => {
@@ -206,8 +219,8 @@ const ProductPage = () => {
           ) : (
             <div className="text-center py-20">
               <p className="text-lg text-gray-600">Nenhum produto encontrado nesta categoria.</p>
-              <Link to="/" className="inline-block mt-4 btn-primary">
-                Voltar para página inicial
+              <Link to="/produtos" className="inline-block mt-4 btn-primary">
+                Ver todos os produtos
               </Link>
             </div>
           )}
