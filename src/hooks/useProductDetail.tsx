@@ -16,12 +16,47 @@ export const useProductDetail = () => {
   const [currentImages, setCurrentImages] = useState<string[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  // For the specific jogo americano product
+  const colorToImageMap: Record<string, string[]> = {
+    "Branco": ["/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png"],
+    "Dourado": ["/lovable-uploads/a27a62b2-7cd7-4885-9237-e10a1a5af81c.png", "/lovable-uploads/daa147c3-5f33-4d21-9859-0f6e7394a707.png"],
+    "Bege": ["/lovable-uploads/4de7cea7-6ec7-40d7-805f-b6376c8ce332.png", "/lovable-uploads/5bf87248-7116-437f-a17f-0ebf349f5a7d.png"],
+    "Marrom": ["/lovable-uploads/a9039859-5fad-4bea-b70e-a421fc3a738e.png", "/lovable-uploads/ee1dd359-5e94-4d14-b056-54144ebfab02.png"],
+    "Rosa": ["/lovable-uploads/7623d992-a209-4aa0-9e9f-6e61dd923525.png", "/lovable-uploads/027486e9-199c-4df5-b55b-f63c8c204a67.png"],
+    "Verde": ["/lovable-uploads/a72a144c-bc6b-46e3-a186-c10371a08f4d.png", "/lovable-uploads/318328c5-e3a8-4a03-b50a-bbb8b83c0e6f.png"],
+    "Vinho": ["/lovable-uploads/8c188ba5-a757-4b69-92ae-3746ceee13e3.png", "/lovable-uploads/490a9441-5e41-4629-9053-3e9f9e087263.png", "/lovable-uploads/aff65b30-525f-4368-926c-3bb14c5b54a6.png"]
+  };
+
   useEffect(() => {
     setLoading(true);
     
     setTimeout(() => {
       if (productId) {
         let foundProduct = allProducts.find(p => p.id.toString() === productId);
+        
+        // If this is the specific jogo americano product (id 204 in this case), override with custom data
+        if (productId === "204") {
+          foundProduct = {
+            id: 204,
+            name: "Jogo Americano Requinte Ondulado",
+            type: "product",
+            category: "Mesa e Cozinha",
+            imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
+            description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
+            colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
+            sizes: [],
+            rating: 4.9,
+            isNew: true,
+            features: [
+              "Composição: 75% polipropileno e 25% poliéster", 
+              "Diâmetro: 38cm", 
+              "Conjunto com 4 unidades",
+              "Fácil lavagem e secagem rápida",
+              "Resistente para uso diário"
+            ],
+            keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
+          };
+        }
         
         if (foundProduct) {
           if (foundProduct.colors && foundProduct.colors.length > 0) {
@@ -39,7 +74,18 @@ export const useProductDetail = () => {
           
           setProduct(foundProduct);
           
-          initializeImages(foundProduct);
+          // For the specific jogo americano product
+          if (productId === "204") {
+            // Set initial images based on default color (first color)
+            const defaultColor = foundProduct.colors && foundProduct.colors.length > 0 ? foundProduct.colors[0] : '';
+            if (defaultColor && colorToImageMap[defaultColor]) {
+              setCurrentImages(colorToImageMap[defaultColor]);
+            } else {
+              setCurrentImages([foundProduct.imageUrl]);
+            }
+          } else {
+            initializeImages(foundProduct);
+          }
         } else {
           setProduct(null);
         }
@@ -71,8 +117,18 @@ export const useProductDetail = () => {
   };
 
   useEffect(() => {
-    if (!product || !selectedColor) return;
+    if (!product) return;
     
+    // Special handling for the jogo americano product
+    if (product.id.toString() === "204" && selectedColor) {
+      if (colorToImageMap[selectedColor]) {
+        setCurrentImages(colorToImageMap[selectedColor]);
+        setActiveImageIndex(0);
+        return;
+      }
+    }
+    
+    // Regular handling for other products
     if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
       const colorImages = product.images[selectedColor] || [];
       setCurrentImages(colorImages);

@@ -27,7 +27,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
       </div>
       
       <p className="text-gray-600 mb-6 leading-relaxed text-base">
-        {product.description || "Produto de alta qualidade da Paraíso dos Bordados."}
+        {product.description || "Eleve sua experiência à mesa com o jogo americano Requinte Ondulado. Com uma composição inteligente de 75% polipropileno e 25% poliéster, este jogo americano é sinônimo de resistência e praticidade. Sua durabilidade o torna perfeito para o uso diário, e a limpeza é simples, graças à sua fácil lavagem. Além disso, seca rapidamente, estando pronto para ser usado sempre que você precisar. Com um diâmetro de 38cm, o formato redondo complementa sua mesa de maneira elegante. Adicione estilo e conveniência à sua refeição com este elegante jogo americano."}
       </p>
     </>
   );
