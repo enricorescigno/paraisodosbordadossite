@@ -64,7 +64,12 @@ const ProductDetailPage = () => {
               />
               
               <div className="flex flex-col justify-center">
-                <ProductHeader product={product} />
+                <ProductHeader 
+                  product={{
+                    ...product,
+                    category: product.category_id.toString() // Add the category property expected by ProductHeader
+                  }} 
+                />
                 
                 <ProductFeatures features={product.features || []} />
                 
