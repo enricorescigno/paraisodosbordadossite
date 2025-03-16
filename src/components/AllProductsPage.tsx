@@ -6,6 +6,8 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { products } from '../utils/searchUtils';
+import { allProducts } from '../utils/productUtils';
+import { mesaCozinhaProducts } from '../utils/categoryProducts';
 import { useIsMobile } from '../hooks/use-mobile';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -14,7 +16,7 @@ import { motion } from 'framer-motion';
 
 const AllProductsPage = () => {
   const [loading, setLoading] = useState(true);
-  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [allProductsList, setAllProductsList] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const isMobile = useIsMobile();
@@ -25,8 +27,16 @@ const AllProductsPage = () => {
     setLoading(true);
     setTimeout(() => {
       // Filter only products (not portfolio items)
-      const productItems = products.filter(product => product.type === 'product');
-      setAllProducts(productItems);
+      let productItems = products.filter(product => product.type === 'product');
+      
+      // Make sure product 204 is included
+      const product204 = allProducts.find(p => p.id.toString() === "204");
+      
+      if (product204 && !productItems.some(p => p.id.toString() === "204")) {
+        productItems = [...productItems, product204];
+      }
+      
+      setAllProductsList(productItems);
       setFilteredProducts(productItems);
       setLoading(false);
     }, 300); // Simulate network request
@@ -34,18 +44,30 @@ const AllProductsPage = () => {
 
   // Filter products based on category
   useEffect(() => {
-    let result = [...allProducts];
+    let result = [...allProductsList];
     
     // Apply category filter
     if (activeCategory !== 'all') {
-      result = result.filter(product => product.category.toLowerCase().includes(activeCategory.toLowerCase()));
+      // Special handling for mesa-cozinha to ensure product 204 is included
+      if (activeCategory === 'mesa') {
+        const product204 = allProducts.find(p => p.id.toString() === "204");
+        const otherProducts = result.filter(product => 
+          product.category.toLowerCase().includes(activeCategory.toLowerCase())
+        );
+        
+        result = product204 ? [...otherProducts, product204] : otherProducts;
+      } else {
+        result = result.filter(product => 
+          product.category.toLowerCase().includes(activeCategory.toLowerCase())
+        );
+      }
     }
     
     setFilteredProducts(result);
-  }, [activeCategory, allProducts]);
+  }, [activeCategory, allProductsList]);
 
   // Extract unique categories for filtering
-  const categories = ['all', ...new Set(allProducts.map(product => product.category.split(',')[0].trim().toLowerCase()))];
+  const categories = ['all', ...new Set(allProductsList.map(product => product.category.split(',')[0].trim().toLowerCase()))];
 
   // Function to get category display name
   const getCategoryDisplayName = (category: string) => {

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
@@ -7,6 +8,7 @@ import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { Button } from "@/components/ui/button";
 import { allProducts } from '../utils/productUtils';
+import { mesaCozinhaProducts } from '../utils/categoryProducts';
 import { Product } from '../types/product';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { motion } from 'framer-motion';
@@ -78,6 +80,14 @@ const ProductPage = () => {
             product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' '))
           )
         );
+      }
+      
+      // Special handling for mesa-cozinha to ensure product 204 is included
+      if (categoryPath === 'mesa-cozinha') {
+        const product204 = allProducts.find(p => p.id.toString() === "204");
+        if (product204 && !categoryProducts.some(p => p.id.toString() === "204")) {
+          categoryProducts = [...categoryProducts, product204];
+        }
       }
       
       console.log(`Category: ${categoryName}, Found products: ${categoryProducts.length}`);
