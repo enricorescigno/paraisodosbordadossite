@@ -79,8 +79,8 @@ const Testimonials = () => {
     <section className="py-20 bg-brand-white">
       <div className="container-custom">
         <div className="text-center mb-12">
-          <h2 className="section-title">O Que Nossos Clientes Dizem</h2>
-          <p className="section-subtitle">
+          <h2 className="text-3xl md:text-4xl font-medium text-brand-dark tracking-tight font-sans mb-4">O Que Nossos Clientes Dizem</h2>
+          <p className="text-base text-brand-dark/80 font-light max-w-2xl mx-auto">
             A satisfação de nossos clientes é nossa maior recompensa. Confira alguns depoimentos.
           </p>
         </div>
@@ -108,7 +108,7 @@ const Testimonials = () => {
                       />
                     ))}
                   </div>
-                  <p className="text-gray-700 mb-6 italic">"{testimonial.content}"</p>
+                  <p className="text-gray-700 mb-6 italic font-light">&quot;{testimonial.content}&quot;</p>
                   <div className="flex items-center">
                     <img 
                       src={testimonial.image} 
@@ -116,8 +116,8 @@ const Testimonials = () => {
                       className="w-12 h-12 rounded-full object-cover mr-4"
                     />
                     <div>
-                      <h4 className="font-semibold">{testimonial.name}</h4>
-                      <p className="text-sm text-gray-600">{testimonial.role}</p>
+                      <h4 className="font-medium text-brand-dark">{testimonial.name}</h4>
+                      <p className="text-sm text-gray-600 font-light">{testimonial.role}</p>
                     </div>
                   </div>
                 </div>

@@ -31,10 +31,10 @@ const Newsletter = () => {
     <section className="py-20 bg-brand-red text-white">
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-serif font-semibold mb-4">
+          <h2 className="text-3xl md:text-4xl font-sans font-medium tracking-tight mb-4">
             Receba Nossas Novidades
           </h2>
-          <p className="text-white/90 mb-8 max-w-lg mx-auto">
+          <p className="text-white/90 mb-8 max-w-lg mx-auto font-light">
             Inscreva-se em nossa newsletter e fique por dentro das novidades, promoções exclusivas e dicas de bordado.
           </p>
           
@@ -46,7 +46,7 @@ const Newsletter = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isSubmitted || isLoading}
-                className="w-full py-3 px-4 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-80"
+                className="w-full py-3 px-4 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-white/20 disabled:opacity-80 font-light"
                 required
               />
             </div>
@@ -75,7 +75,7 @@ const Newsletter = () => {
             </button>
           </form>
           
-          <p className="text-white/75 text-sm mt-4">
+          <p className="text-white/75 text-sm mt-4 font-light">
             Não se preocupe, respeitamos sua privacidade e você pode cancelar a inscrição a qualquer momento.
           </p>
         </div>
