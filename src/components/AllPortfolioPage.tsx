@@ -1,16 +1,17 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Search, Star } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { useIsMobile } from '../hooks/use-mobile';
-import { Card, CardContent } from "@/components/ui/card";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { allProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
+import { motion } from 'framer-motion';
 
 // Portfolio categories mapping
 const PORTFOLIO_CATEGORIES = {
@@ -33,9 +34,9 @@ const AllPortfolioPage = () => {
   const [loading, setLoading] = useState(true);
   const [allPortfolioItems, setAllPortfolioItems] = useState<Product[]>([]);
   const [filteredItems, setFilteredItems] = useState<Product[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
   const isMobile = useIsMobile();
+  const whatsappNumber = "+5581995970776";
   
   useEffect(() => {
     // Simular carregamento para melhorar UX
@@ -51,17 +52,9 @@ const AllPortfolioPage = () => {
     }, 300);
   }, []);
 
-  // Filtrar itens com base na busca e categoria
+  // Filtrar itens com base na categoria
   useEffect(() => {
     let result = [...allPortfolioItems];
-    
-    // Aplicar filtro de busca
-    if (searchQuery) {
-      result = result.filter(item => 
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.category.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
     
     // Aplicar filtro de categoria
     if (activeCategory !== 'all') {
@@ -73,7 +66,7 @@ const AllPortfolioPage = () => {
     }
     
     setFilteredItems(result);
-  }, [searchQuery, activeCategory, allPortfolioItems]);
+  }, [activeCategory, allPortfolioItems]);
 
   // Extrair categorias únicas para filtros
   const getUniqueCategories = () => {
@@ -113,31 +106,19 @@ const AllPortfolioPage = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       
-      <section className={`py-10 md:py-16 bg-[#f5f5f7] ${isMobile ? 'pt-24' : 'pt-20'}`}>
+      <section className={`py-16 md:py-24 bg-[#f5f5f7] ${isMobile ? 'pt-24' : 'pt-20'}`}>
         <div className="container-custom">
-          <div className="mb-8 space-y-4">
-            <h1 className="text-3xl md:text-4xl font-bold text-center">Nosso Portfólio</h1>
-            <p className="text-center text-gray-500 max-w-2xl mx-auto">
+          <div className="mb-16 space-y-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans tracking-tight font-medium text-center">
+              Nosso Portfólio
+            </h1>
+            <p className="text-center text-gray-500 max-w-2xl mx-auto text-base md:text-lg font-normal">
               Conheça nossos trabalhos de bordado personalizados para diversas aplicações, feitos com qualidade e atenção aos detalhes.
             </p>
-            
-            {/* Search Bar - Apple Style */}
-            <div className="relative max-w-md mx-auto">
-              <input
-                type="text"
-                placeholder="Buscar no portfólio..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-300 
-                  focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red
-                  transition-all duration-200 bg-white/80 backdrop-blur-sm"
-              />
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            </div>
           </div>
           
           {/* Category Tabs - Apple Style */}
-          <Tabs defaultValue="all" className="mb-8 justify-center flex flex-col items-center">
+          <Tabs defaultValue="all" className="mb-16 justify-center flex flex-col items-center">
             <TabsList className="bg-white rounded-full shadow-sm overflow-x-auto py-1 px-1 w-auto flex flex-nowrap">
               {categories.map((category) => (
                 <TabsTrigger 
@@ -157,62 +138,89 @@ const AllPortfolioPage = () => {
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
             </div>
           ) : filteredItems.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 md:gap-8">
-              {filteredItems.map((item) => (
-                <Card 
-                  key={item.id} 
-                  className="rounded-xl overflow-hidden border-0 bg-white shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-1 hover:scale-[1.01]"
-                >
-                  <Link to={`/produto/${item.id}`} className="block">
-                    <AspectRatio ratio={1/1} className="relative bg-[#f5f5f7]">
-                      <img 
-                        src={item.imageUrl || (item.images && item.images[0])} 
-                        alt={item.name}
-                        className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.onerror = null;
-                          target.src = `https://via.placeholder.com/300x300?text=${encodeURIComponent(item.category)}`;
-                        }}
-                      />
-                      <div className="absolute top-2 left-2">
-                        <span className="bg-white/80 backdrop-blur-sm text-gray-800 text-xs px-2 py-1 rounded-full">
-                          {item.category}
-                        </span>
+            <div className="relative">
+              <Carousel className="w-full">
+                <CarouselContent>
+                  {filteredItems.map((item) => (
+                    <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3">
+                      <div className="p-4">
+                        <motion.div 
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5 }}
+                          className="flex flex-col items-center"
+                        >
+                          <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
+                            <img 
+                              src={item.imageUrl || (item.images && item.images[0])} 
+                              alt={item.name}
+                              className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.onerror = null;
+                                target.src = `https://via.placeholder.com/500x500?text=${encodeURIComponent(item.category)}`;
+                              }}
+                            />
+                          </div>
+                          
+                          <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">{item.name}</h3>
+                          
+                          {item.description && (
+                            <p className="text-center text-gray-500 mb-6 max-w-md">
+                              {item.description.length > 100 
+                                ? `${item.description.substring(0, 100)}...` 
+                                : item.description}
+                            </p>
+                          )}
+                          
+                          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
+                            <Link to={`/produto/${item.id}`}>
+                              <Button 
+                                variant="default" 
+                                size="lg" 
+                                className="rounded-full px-8"
+                              >
+                                Ver Detalhes
+                              </Button>
+                            </Link>
+                            
+                            <a href={`https://wa.me/${whatsappNumber}?text=Olá! Vi o produto ${item.name} no portfólio e gostaria de solicitar um orçamento.`} target="_blank" rel="noopener noreferrer">
+                              <Button 
+                                variant="outline" 
+                                size="lg" 
+                                className="rounded-full px-8"
+                              >
+                                Solicitar Orçamento
+                              </Button>
+                            </a>
+                          </div>
+                        </motion.div>
                       </div>
-                      {item.isNew && (
-                        <div className="absolute top-2 right-2">
-                          <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full">
-                            Novo
-                          </span>
-                        </div>
-                      )}
-                    </AspectRatio>
-                  </Link>
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-1 mb-1">
-                      <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                      <span className="text-xs text-gray-600">{item.rating || 4.8}</span>
-                    </div>
-                    <h3 className="font-semibold text-base md:text-lg mb-3 line-clamp-2">{item.name}</h3>
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs md:text-sm text-gray-600">Solicite um orçamento</span>
-                      <Link 
-                        to={`/produto/${item.id}`}
-                        className="text-brand-dark hover:text-brand-red transition-colors duration-300"
-                      >
-                        <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+                
+                <div className="absolute bottom-0 right-8 flex space-x-2 mt-8">
+                  <CarouselPrevious className="relative inset-0 translate-y-0 h-10 w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm hover:bg-white">
+                    <ChevronLeft className="h-5 w-5 text-gray-700" />
+                  </CarouselPrevious>
+                  <CarouselNext className="relative inset-0 translate-y-0 h-10 w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm hover:bg-white">
+                    <ChevronRight className="h-5 w-5 text-gray-700" />
+                  </CarouselNext>
+                </div>
+              </Carousel>
             </div>
           ) : (
             <div className="text-center py-20">
               <p className="text-lg text-gray-600">Nenhum item encontrado no portfólio.</p>
-              <Link to="/" className="inline-block mt-4 btn-primary">
-                Voltar para página inicial
+              <Link to="/" className="inline-block mt-4">
+                <Button 
+                  variant="default" 
+                  size="lg" 
+                  className="rounded-full px-8"
+                >
+                  Voltar para página inicial
+                </Button>
               </Link>
             </div>
           )}

@@ -2,18 +2,18 @@
 @layer components {
   /* Apple-style product card */
   .apple-product-card {
-    @apply rounded-xl overflow-hidden border-0 bg-white shadow-sm transition-all duration-300 
+    @apply rounded-2xl overflow-hidden border-0 bg-white shadow-sm transition-all duration-300 
       hover:shadow-md hover:-translate-y-1 hover:scale-[1.02] group;
   }
   
   /* Apple-style image container */
   .apple-product-image {
-    @apply relative bg-[#f8f8f8];
+    @apply relative bg-white p-6;
   }
   
   /* Apple-style image */
   .apple-product-image img {
-    @apply w-full h-full object-contain mix-blend-multiply p-4;
+    @apply w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105;
   }
   
   /* Apple-style tag */
@@ -142,6 +142,45 @@
   .apple-learn-more {
     @apply text-xs text-brand-red mt-2 flex items-center hover:underline;
   }
+  
+  /* Apple-style carousel navigation */
+  .apple-carousel-nav {
+    @apply h-10 w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm
+      flex items-center justify-center transition-all duration-300
+      hover:bg-white hover:shadow-sm;
+  }
+  
+  /* Apple-style product showcase */
+  .apple-product-showcase {
+    @apply flex flex-col items-center justify-center p-6;
+  }
+  
+  /* Apple-style product title */
+  .apple-product-title {
+    @apply text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2;
+  }
+  
+  /* Apple-style product description */
+  .apple-product-description {
+    @apply text-center text-gray-500 text-base md:text-lg font-normal max-w-md mx-auto mb-6;
+  }
+  
+  /* Apple-style action buttons container */
+  .apple-action-buttons {
+    @apply flex flex-col sm:flex-row gap-4 justify-center mt-4;
+  }
+  
+  /* Apple-style primary button */
+  .apple-primary-button {
+    @apply rounded-full px-8 bg-brand-red text-white hover:bg-brand-red/90 shadow-sm hover:shadow-md
+      transition-all duration-300 py-2.5 text-base font-normal;
+  }
+  
+  /* Apple-style secondary button */
+  .apple-secondary-button {
+    @apply rounded-full px-8 border border-brand-red text-brand-red bg-transparent hover:bg-brand-red/5
+      transition-all duration-300 py-2.5 text-base font-normal;
+  }
 }
 
 /* Mobile optimizations */
@@ -168,5 +207,10 @@
   
   .apple-benefit-icon {
     @apply h-6 w-6;
+  }
+  
+  .apple-primary-button,
+  .apple-secondary-button {
+    @apply text-sm py-2;
   }
 }
