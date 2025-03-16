@@ -14,6 +14,7 @@ import OurPartners from "./pages/OurPartners";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AllProductsPage from "./components/AllProductsPage";
 import AllPortfolioPage from "./components/AllPortfolioPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/produtos" element={<AllProductsPage />} />
