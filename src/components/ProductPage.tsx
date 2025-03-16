@@ -84,13 +84,15 @@ const ProductPage = () => {
       
       // Special handling for mesa-cozinha to ensure product 204 is included
       if (categoryPath === 'mesa-cozinha') {
-        const product204 = allProducts.find(p => p.id.toString() === "204");
-        if (product204 && !categoryProducts.some(p => p.id.toString() === "204")) {
+        // Get product 204 directly from mesaCozinhaProducts
+        const product204 = mesaCozinhaProducts.find(p => p.id === 204);
+        if (product204 && !categoryProducts.some(p => p.id === 204)) {
           categoryProducts = [...categoryProducts, product204];
         }
+        console.log("Adding product 204 to mesa-cozinha category");
       }
       
-      console.log(`Category: ${categoryName}, Found products: ${categoryProducts.length}`);
+      console.log(`Category: ${categoryName}, Found products: ${categoryProducts.length}, Product 204 included: ${categoryProducts.some(p => p.id === 204)}`);
       
       setProducts(categoryProducts);
       setFilteredProducts(categoryProducts);

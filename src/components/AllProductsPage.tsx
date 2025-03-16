@@ -29,16 +29,18 @@ const AllProductsPage = () => {
       // Filter only products (not portfolio items)
       let productItems = products.filter(product => product.type === 'product');
       
-      // Make sure product 204 is included
-      const product204 = allProducts.find(p => p.id.toString() === "204");
+      // Make sure product 204 is included - using direct product from mesaCozinhaProducts
+      const product204 = mesaCozinhaProducts.find(p => p.id === 204);
       
-      if (product204 && !productItems.some(p => p.id.toString() === "204")) {
+      if (product204 && !productItems.some(p => p.id === 204)) {
         productItems = [...productItems, product204];
       }
       
       setAllProductsList(productItems);
       setFilteredProducts(productItems);
       setLoading(false);
+      
+      console.log("Products loaded:", productItems.length, "Product 204 included:", productItems.some(p => Number(p.id) === 204));
     }, 300); // Simulate network request
   }, []);
 
@@ -48,19 +50,28 @@ const AllProductsPage = () => {
     
     // Apply category filter
     if (activeCategory !== 'all') {
-      // Special handling for mesa-cozinha to ensure product 204 is included
+      // Special handling for mesa to ensure product 204 is included
       if (activeCategory === 'mesa') {
-        const product204 = allProducts.find(p => p.id.toString() === "204");
+        // Get product 204 directly from mesaCozinhaProducts to ensure we have all properties
+        const product204 = mesaCozinhaProducts.find(p => p.id === 204);
         const otherProducts = result.filter(product => 
           product.category.toLowerCase().includes(activeCategory.toLowerCase())
         );
         
         result = product204 ? [...otherProducts, product204] : otherProducts;
+        console.log("Mesa category - Product 204 included:", result.some(p => Number(p.id) === 204));
       } else {
         result = result.filter(product => 
           product.category.toLowerCase().includes(activeCategory.toLowerCase())
         );
       }
+    } else {
+      // Make sure product 204 is always included in "all" category
+      const product204 = mesaCozinhaProducts.find(p => p.id === 204);
+      if (product204 && !result.some(p => Number(p.id) === 204)) {
+        result = [...result, product204];
+      }
+      console.log("All category - Product 204 included:", result.some(p => Number(p.id) === 204));
     }
     
     setFilteredProducts(result);
