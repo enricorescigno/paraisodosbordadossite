@@ -30,7 +30,7 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				brand: {
-					red: '#E30613',
+					red: '#E30613', // Mantendo a cor vermelha principal da marca
 					green: '#006400',
 					white: '#FFFFFF',
 					light: '#F8F8F8',
