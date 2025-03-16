@@ -21,26 +21,26 @@ const ProductImageGallery = ({
 }: ProductImageGalleryProps) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Reset active image index when color changes
+  // Reset active image index when color or images change
   useEffect(() => {
     setActiveImageIndex(0);
-  }, [selectedColor]);
+  }, [selectedColor, images]);
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
-          key={selectedColor} 
+          key={`${selectedColor}-${images.join(',')}`} 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
         >
           <Carousel className="w-full">
             <CarouselContent>
               {images.length > 0 ? (
                 images.map((img, index) => (
-                  <CarouselItem key={`${selectedColor}-${index}`}>
+                  <CarouselItem key={`${selectedColor}-${index}-${img}`}>
                     <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
                       <img 
                         src={img} 
