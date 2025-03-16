@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, MessageCircle, Star, Truck, RefreshCw, ShieldCheck, ChevronRight } from 'lucide-react';
@@ -7,280 +8,8 @@ import WhatsAppSupport from './WhatsAppSupport';
 import { AppleButton } from '@/components/ui/apple-button';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  category: string;
-  rating: number;
-  description?: string;
-  features?: string[];
-  colors?: string[];
-  sizes?: string[];
-  isNew?: boolean;
-  images?: string[];
-}
-
-interface PortfolioItem {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  category: string;
-}
-
-const allProducts: Record<string, Product[]> = {
-  'cama-mesa-banho': [
-    {
-      id: 101,
-      name: "Kit Bordado Cama, Mesa e Banho",
-      image: "https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=500&auto=format&fit=crop",
-      category: "Cama, Mesa e Banho",
-      rating: 4.9,
-      description: "Kit completo de bordados para cama, mesa e banho feito com materiais premium e acabamento impecável.",
-      features: ["100% Algodão", "Bordado à mão", "Lavável à máquina", "Kit com 6 peças"],
-      colors: ["Branco", "Bege", "Azul Claro"],
-      sizes: ["Único"]
-    },
-    {
-      id: 102,
-      name: "Toalha Bordada Decorativa",
-      image: "https://images.unsplash.com/photo-1579656450812-5b1bcd4a952e?q=80&w=500&auto=format&fit=crop",
-      category: "Cama, Mesa e Banho",
-      rating: 4.7,
-      description: "Toalha decorativa com bordados exclusivos, perfeita para dar um toque especial à sua mesa.",
-      features: ["Bordado artesanal", "Material de alta qualidade", "Fácil de lavar"],
-      colors: ["Branco", "Creme", "Rosa"],
-      sizes: ["Pequena (1,2m)", "Média (1,5m)", "Grande (2m)"]
-    }
-  ],
-  'infantil': [
-    {
-      id: 150,
-      name: "Kit Berço Bordado",
-      image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=500&auto=format&fit=crop",
-      category: "Infantil",
-      rating: 4.9,
-      description: "Kit completo para berço com bordados delicados, ideal para o quarto do bebê.",
-      features: ["100% Algodão", "Antialérgico", "Inclui protetor, lençol e fronha"],
-      colors: ["Azul", "Rosa", "Amarelo", "Verde"],
-      sizes: ["Berço Padrão"]
-    }
-  ],
-  'vestuario': [
-    {
-      id: 160,
-      name: "Camisa Bordada Social",
-      image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=500&auto=format&fit=crop",
-      category: "Vestuário",
-      rating: 4.7,
-      description: "Camisa social com bordados elegantes, perfeita para ocasiões especiais.",
-      features: ["Tecido nobre", "Bordado personalizado", "Confortável"],
-      colors: ["Branco", "Azul", "Preto"],
-      sizes: ["P", "M", "G", "GG"]
-    }
-  ],
-  'pantufas': [
-    {
-      id: 200,
-      name: "Pantufa Confort Clássica",
-      image: "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
-      images: [
-        "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
-        "/lovable-uploads/36a38d60-1eeb-4d00-a815-5b06d32171d7.png"
-      ],
-      category: "Pantufas",
-      rating: 4.8,
-      description: "Pantufa em tecido texturizado com forro macio e confortável, ideal para o uso diário.",
-      features: ["Material macio", "Sola antiderrapante", "Forro confortável", "Design moderno"],
-      colors: ["Cinza", "Branco"],
-      sizes: ["P", "M", "G"],
-      isNew: true
-    },
-    {
-      id: 201,
-      name: "Pantufa Pompom Delicada",
-      image: "/lovable-uploads/36ab88ca-5429-45cc-ba92-22c02f9e8814.png",
-      images: [
-        "/lovable-uploads/36ab88ca-5429-45cc-ba92-22c02f9e8814.png",
-        "/lovable-uploads/fbfe7b78-08bd-45c6-ae97-f62616c4a07a.png"
-      ],
-      category: "Pantufas",
-      rating: 4.9,
-      description: "Pantufa feminina com pompom decorativo, feita com tecido texturizado e interior aconchegante.",
-      features: ["Pompom decorativo", "Interior macio", "Exterior texturizado", "Base antiderrapante"],
-      colors: ["Rosa", "Bege"],
-      sizes: ["P", "M", "G"],
-      isNew: true
-    },
-    {
-      id: 202,
-      name: "Pantufa Soft Minimalista",
-      image: "/lovable-uploads/9dc9535d-7bb6-4271-9178-d812bb402441.png",
-      images: [
-        "/lovable-uploads/9dc9535d-7bb6-4271-9178-d812bb402441.png",
-        "/lovable-uploads/59ad10cb-885b-434c-ad24-0cf9f17f8381.png",
-        "/lovable-uploads/c838ec71-8c01-4583-8e31-576a4829181c.png"
-      ],
-      category: "Pantufas",
-      rating: 4.7,
-      description: "Pantufa minimalista com design simples e elegante, disponível em diversas cores.",
-      features: ["Design minimalista", "Ultraconfortável", "Material aveludado", "Leve e prática"],
-      colors: ["Azul", "Roxo", "Vermelho"],
-      sizes: ["P", "M", "G"],
-      isNew: true
-    },
-    {
-      id: 203,
-      name: "Pantufa Plush Premium",
-      image: "/lovable-uploads/97ec483a-beee-45ae-8a3a-773fc71c8368.png",
-      images: [
-        "/lovable-uploads/97ec483a-beee-45ae-8a3a-773fc71c8368.png",
-        "/lovable-uploads/828f06cf-6a82-40ff-b5e7-d105a447924d.png",
-        "/lovable-uploads/50986439-23d5-4069-8fa2-2556c20af5a6.png"
-      ],
-      category: "Pantufas",
-      rating: 4.9,
-      description: "Pantufa confeccionada em plush premium, oferecendo máximo conforto e durabilidade.",
-      features: ["Plush de alta qualidade", "Ultramacia", "Confortável", "Durável"],
-      colors: ["Preto", "Rosa", "Marrom"],
-      sizes: ["P", "M", "G", "GG"],
-      isNew: true
-    },
-    {
-      id: 204,
-      name: "Pantufa Essencial Lisa",
-      image: "/lovable-uploads/233f51ac-fe3a-472c-aad2-33238d2de3ef.png",
-      images: [
-        "/lovable-uploads/233f51ac-fe3a-472c-aad2-33238d2de3ef.png",
-        "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
-      ],
-      category: "Pantufas",
-      rating: 4.6,
-      description: "Pantufa essencial em design liso e clean, perfeita para o dia a dia com muito conforto.",
-      features: ["Design básico", "Extremamente macia", "Forrada internamente", "Versátil"],
-      colors: ["Branco", "Bege"],
-      sizes: ["P", "M", "G"],
-      isNew: true
-    }
-  ]
-};
-
-const allPortfolioItems: Record<string, PortfolioItem[]> = {
-  'bordado-bone': [
-    {
-      id: 301,
-      title: "Boné Personalizado Empresarial",
-      description: "Bordado com logotipo empresarial, feito com linha de alta durabilidade.",
-      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Boné"
-    },
-    {
-      id: 302,
-      title: "Boné Esportivo Bordado",
-      description: "Bordado com símbolos esportivos, perfeito para equipes e torcedores.",
-      image: "https://images.unsplash.com/photo-1580880783109-4d9daf311df5?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Boné"
-    }
-  ],
-  'bordado-necessaire': [
-    {
-      id: 310,
-      title: "Necessaire Floral Bordada",
-      description: "Bordado floral feito à mão, com detalhes em cores vibrantes.",
-      image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Necessaire"
-    },
-    {
-      id: 311,
-      title: "Necessaire com Monograma",
-      description: "Bordado elegante com monograma personalizado, ideal para presentes.",
-      image: "https://images.unsplash.com/photo-1502741126161-b048400d085d?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Necessaire"
-    }
-  ],
-  'bordado-bolsa': [
-    {
-      id: 320,
-      title: "Bolsa Tote com Bordado",
-      description: "Bolsa resistente com bordado personalizado, feita para o dia a dia.",
-      image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Bolsa"
-    },
-    {
-      id: 321,
-      title: "Bolsa de Praia Bordada",
-      description: "Bordado temático marinho, ideal para dias de sol e mar.",
-      image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Bolsa"
-    }
-  ],
-  'bordado-jaleco': [
-    {
-      id: 330,
-      title: "Jaleco Médico Personalizado",
-      description: "Bordado com nome e especialidade, feito com tecido antimicrobiano.",
-      image: "https://images.unsplash.com/photo-1624711478065-83f88a296aad?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Jaleco"
-    },
-    {
-      id: 331,
-      title: "Jaleco para Dentistas",
-      description: "Modelo exclusivo com bordado personalizado para profissionais da odontologia.",
-      image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Jaleco"
-    }
-  ],
-  'bordado-infantis': [
-    {
-      id: 340,
-      title: "Babador Bordado",
-      description: "Bordado temático infantil, feito com material hipoalergênico.",
-      image: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado Infantis"
-    },
-    {
-      id: 341,
-      title: "Manta Infantil Personalizada",
-      description: "Bordado com nome da criança, feito com algodão macio.",
-      image: "https://images.unsplash.com/photo-1616627561839-074385245934?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado Infantis"
-    }
-  ],
-  'bordado-toalha-banho': [
-    {
-      id: 350,
-      title: "Toalha de Banho Premium",
-      description: "Bordado elegante em toalha de alta absorção e durabilidade.",
-      image: "https://images.unsplash.com/photo-1600431521340-491eca880813?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Toalha de Banho"
-    },
-    {
-      id: 351,
-      title: "Kit Toalhas Personalizadas",
-      description: "Conjunto de toalhas com bordado uniforme, ideal para presentes.",
-      image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Toalha de Banho"
-    }
-  ]
-};
-
-const flattenedPortfolioItems: PortfolioItem[] = Object.values(allPortfolioItems).reduce(
-  (acc, items) => [...acc, ...items], 
-  []
-);
-
-const flattenedProducts: Product[] = Object.values(allProducts).reduce(
-  (acc, products) => [...acc, ...products], 
-  []
-);
-
-const portfolioDefaults = {
-  rating: 5.0,
-  colors: ["Personalizado", "Sob consulta"],
-  sizes: ["Único", "Personalizado"]
-};
+import { allProducts } from '../utils/productUtils';
+import { Product } from '../types/product';
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -298,41 +27,29 @@ const ProductDetailPage = () => {
     
     setTimeout(() => {
       if (productId) {
-        let foundProduct = flattenedProducts.find(p => p.id === parseInt(productId));
+        let foundProduct = allProducts.find(p => p.id.toString() === productId);
         
         if (foundProduct) {
-          setProduct(foundProduct);
-          setIsFromPortfolio(false);
-        } else {
-          const portfolioItem = flattenedPortfolioItems.find(p => p.id === parseInt(productId));
-          
-          if (portfolioItem) {
-            foundProduct = {
-              id: portfolioItem.id,
-              name: portfolioItem.title,
-              image: portfolioItem.image,
-              category: portfolioItem.category,
-              description: portfolioItem.description,
-              rating: portfolioDefaults.rating,
-              colors: portfolioDefaults.colors,
-              sizes: portfolioDefaults.sizes
-            };
-            
-            setProduct(foundProduct);
-            setIsFromPortfolio(true);
-          } else {
-            setProduct(null);
-          }
-        }
-        
-        if (foundProduct) {
+          // Configure the default selected values if the product has options
           if (foundProduct.colors && foundProduct.colors.length > 0) {
             setSelectedColor(foundProduct.colors[0]);
           }
           if (foundProduct.sizes && foundProduct.sizes.length > 0) {
             setSelectedSize(foundProduct.sizes[0]);
           }
+          
+          // Determine if this is a portfolio item
+          setIsFromPortfolio(foundProduct.type === 'portfolio');
+          
+          // Ensure product has all required fields
+          if (!foundProduct.rating) foundProduct.rating = 4.8;
+          if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
+          if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
+          
+          setProduct(foundProduct);
           setActiveImageIndex(0);
+        } else {
+          setProduct(null);
         }
       }
       setLoading(false);
@@ -342,7 +59,7 @@ const ProductDetailPage = () => {
   const getWhatsAppLink = () => {
     if (!product) return '';
     
-    let message = `Olá! Vi o ${product.name.toLowerCase()} e gostaria de fazer um orçamento!`;
+    let message = `Olá! Vi o ${product.name} e gostaria de fazer um orçamento!`;
     
     if (selectedColor) {
       message += ` Cor: ${selectedColor}.`;
@@ -369,24 +86,53 @@ const ProductDetailPage = () => {
     if (isFromPortfolio || location.pathname.includes('/portfolio')) {
       return '/portfolio';
     }
-    return '/';
+    
+    // Check if the product has a category and try to generate a category link
+    if (product && product.category) {
+      const category = product.category.toLowerCase().replace(/\s+/g, '-');
+      
+      // Common category mappings
+      const categoryMap: Record<string, string> = {
+        'cama': '/categoria/cama',
+        'mesa e cozinha': '/categoria/mesa-cozinha',
+        'banho': '/categoria/banho',
+        'infantil': '/categoria/infantil',
+        'vestuário': '/categoria/vestuario',
+        'jaleco': '/categoria/jaleco',
+        'pantufa': '/categoria/pantufa',
+        'bonés bordados': '/portfolio/bordado-bone',
+        'bordado em necessaire': '/portfolio/bordado-necessaire',
+        'bordado em bolsa': '/portfolio/bordado-bolsa',
+        'jalecos': '/portfolio/bordado-jaleco',
+        'roupões infantis': '/portfolio/bordado-infantis',
+        'toalhas infantis': '/portfolio/bordado-toalha-banho'
+      };
+      
+      return categoryMap[product.category.toLowerCase()] || '/produtos';
+    }
+    
+    return '/produtos';
   };
 
   const placeholder = (category: string) => {
     const placeholders: Record<string, string> = {
       'Cama, Mesa e Banho': '/images/placeholders/home-textile.jpg',
+      'Cama': '/images/placeholders/home-textile.jpg',
+      'Mesa e Cozinha': '/images/placeholders/home-textile.jpg',
+      'Banho': '/images/placeholders/towel.jpg',
       'Infantil': '/images/placeholders/kids.jpg',
       'Vestuário': '/images/placeholders/clothing.jpg',
-      'Bordado em Boné': '/images/placeholders/cap.jpg',
+      'Jaleco': '/images/placeholders/uniform.jpg',
+      'Pantufas': '/images/placeholders/slippers.jpg',
+      'Bonés Bordados': '/images/placeholders/cap.jpg',
       'Bordado em Necessaire': '/images/placeholders/necessaire.jpg',
       'Bordado em Bolsa': '/images/placeholders/bag.jpg',
-      'Bordado em Jaleco': '/images/placeholders/uniform.jpg',
-      'Bordado Infantis': '/images/placeholders/kids-embroidery.jpg',
-      'Bordado em Toalha de Banho': '/images/placeholders/towel.jpg',
-      'Pantufas': '/images/placeholders/default.jpg'
+      'Jalecos': '/images/placeholders/uniform.jpg',
+      'Roupões Infantis': '/images/placeholders/kids-embroidery.jpg',
+      'Toalhas Infantis': '/images/placeholders/towel.jpg'
     };
     
-    return placeholders[category] || '/images/placeholders/default.jpg';
+    return placeholders[category] || 'https://via.placeholder.com/500x500?text=Produto';
   };
 
   return (
@@ -427,7 +173,20 @@ const ProductDetailPage = () => {
                           </AspectRatio>
                         </CarouselItem>
                       ))
-                    ) : (
+                    ) : product.imageUrl ? (
+                      <CarouselItem>
+                        <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
+                          <img 
+                            src={product.imageUrl} 
+                            alt={product.name}
+                            className="w-full h-full object-contain mix-blend-multiply p-4"
+                            onError={(e) => {
+                              e.currentTarget.src = placeholder(product.category);
+                            }}
+                          />
+                        </AspectRatio>
+                      </CarouselItem>
+                    ) : product.image ? (
                       <CarouselItem>
                         <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
                           <img 
@@ -437,6 +196,16 @@ const ProductDetailPage = () => {
                             onError={(e) => {
                               e.currentTarget.src = placeholder(product.category);
                             }}
+                          />
+                        </AspectRatio>
+                      </CarouselItem>
+                    ) : (
+                      <CarouselItem>
+                        <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
+                          <img 
+                            src={placeholder(product.category)}
+                            alt={product.name}
+                            className="w-full h-full object-contain mix-blend-multiply p-4"
                           />
                         </AspectRatio>
                       </CarouselItem>
@@ -479,12 +248,12 @@ const ProductDetailPage = () => {
                   <span className="text-sm text-gray-500">{product.category}</span>
                   <div className="flex items-center gap-1">
                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                    <span className="text-sm text-gray-500">{product.rating.toFixed(1)}</span>
+                    <span className="text-sm text-gray-500">{(product.rating || 4.8).toFixed(1)}</span>
                   </div>
                 </div>
                 
                 <p className="text-gray-600 mb-6 leading-relaxed text-base">
-                  {product.description || "Descrição do produto não disponível."}
+                  {product.description || "Produto de alta qualidade da Paraíso dos Bordados."}
                 </p>
                 
                 {product.features && product.features.length > 0 && (

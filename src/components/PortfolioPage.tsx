@@ -72,8 +72,16 @@ const PortfolioPage = () => {
       if (matchingCategory) {
         // Filtra produtos que correspondem à categoria mapeada
         categoryItems = allProducts.filter(product => 
-          product.type === 'product' && 
+          product.type === 'portfolio' && 
           product.category === matchingCategory
+        );
+      }
+      
+      // Se não encontrar itens de portfólio, buscar como produtos normais
+      if (categoryItems.length === 0) {
+        categoryItems = allProducts.filter(product => 
+          product.category === matchingCategory || 
+          product.category === categoryTitles[categoryPath]
         );
       }
       

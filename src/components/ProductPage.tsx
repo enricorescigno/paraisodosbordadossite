@@ -1,293 +1,15 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ArrowRight, Star, Search, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowRight, Star, Search, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { Card, CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Button } from "@/components/ui/button";
-
-interface Product {
-  id: number;
-  name: string;
-  image: string;
-  category: string;
-  rating: number;
-}
-
-// Sample product data - in a real app this would come from an API
-const allProducts: Record<string, Product[]> = {
-  // Cama, Mesa e Banho
-  'cama-mesa-banho': [
-    {
-      id: 101,
-      name: "Kit Bordado Cama, Mesa e Banho",
-      image: "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop",
-      category: "Cama, Mesa e Banho",
-      rating: 4.9
-    },
-    {
-      id: 102,
-      name: "Toalha Bordada Decorativa",
-      image: "https://images.unsplash.com/photo-1600431521340-491eca880813?q=80&w=500&auto=format&fit=crop",
-      category: "Cama, Mesa e Banho",
-      rating: 4.7
-    }
-  ],
-  
-  // Subcategorias de Cama, Mesa e Banho
-  'cama': [
-    {
-      id: 110,
-      name: "Kit Cama Bordado Tradicional",
-      image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=500&auto=format&fit=crop",
-      category: "Cama",
-      rating: 4.8
-    },
-    {
-      id: 111,
-      name: "Jogo de Lençol Bordado",
-      image: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=500&auto=format&fit=crop",
-      category: "Cama",
-      rating: 4.9
-    }
-  ],
-  'mesa-cozinha': [
-    {
-      id: 120,
-      name: "Toalha de Mesa Bordada",
-      image: "https://images.unsplash.com/photo-1623393945964-5f6bb1ed6c21?q=80&w=500&auto=format&fit=crop",
-      category: "Mesa e Cozinha",
-      rating: 4.7
-    },
-    {
-      id: 121,
-      name: "Guardanapos Bordados Kit 12 Peças",
-      image: "https://images.unsplash.com/photo-1615368711218-100435dbcc19?q=80&w=500&auto=format&fit=crop",
-      category: "Mesa e Cozinha",
-      rating: 4.6
-    }
-  ],
-  'tapete-cortinas': [
-    {
-      id: 130,
-      name: "Tapete Artesanal Bordado",
-      image: "https://images.unsplash.com/photo-1600166898405-da9535204843?q=80&w=500&auto=format&fit=crop",
-      category: "Tapete e Cortinas",
-      rating: 4.9
-    },
-    {
-      id: 131,
-      name: "Cortina Bordada 2,80m",
-      image: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?q=80&w=500&auto=format&fit=crop",
-      category: "Tapete e Cortinas",
-      rating: 4.8
-    }
-  ],
-  'banho': [
-    {
-      id: 140,
-      name: "Toalha de Banho Bordada",
-      image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
-      category: "Banho",
-      rating: 4.9
-    },
-    {
-      id: 141,
-      name: "Kit Toalhas Bordadas 4 Peças",
-      image: "https://images.unsplash.com/photo-1616710562269-8f36ed494c9c?q=80&w=500&auto=format&fit=crop",
-      category: "Banho",
-      rating: 4.7
-    }
-  ],
-  
-  // Infantil
-  'infantil': [
-    {
-      id: 150,
-      name: "Kit Berço Bordado",
-      image: "https://images.unsplash.com/photo-1519689680058-324335c77eba?q=80&w=500&auto=format&fit=crop",
-      category: "Infantil",
-      rating: 4.9
-    },
-    {
-      id: 151,
-      name: "Toalha Infantil Personalizada",
-      image: "https://images.unsplash.com/photo-1596045986621-1587b7a54b1a?q=80&w=500&auto=format&fit=crop",
-      category: "Infantil",
-      rating: 4.8
-    }
-  ],
-  
-  // Vestuário
-  'vestuario': [
-    {
-      id: 160,
-      name: "Camisa Bordada Social",
-      image: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?q=80&w=500&auto=format&fit=crop",
-      category: "Vestuário",
-      rating: 4.7
-    },
-    {
-      id: 161,
-      name: "Jaleco Bordado Profissional",
-      image: "https://images.unsplash.com/photo-1624711478065-83f88a296aad?q=80&w=500&auto=format&fit=crop",
-      category: "Vestuário",
-      rating: 4.8
-    }
-  ],
-  
-  // Subcategorias de Vestuário
-  'camisa': [
-    {
-      id: 170,
-      name: "Camisa Bordada Masculina",
-      image: "https://images.unsplash.com/photo-1604695573706-53170668f6a6?q=80&w=500&auto=format&fit=crop",
-      category: "Camisa",
-      rating: 4.6
-    },
-    {
-      id: 171,
-      name: "Camisa Bordada Feminina",
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=500&auto=format&fit=crop",
-      category: "Camisa",
-      rating: 4.7
-    }
-  ],
-  'jaleco': [
-    {
-      id: 180,
-      name: "Jaleco Bordado Medicina",
-      image: "https://images.unsplash.com/photo-1624711478065-83f88a296aad?q=80&w=500&auto=format&fit=crop",
-      category: "Jaleco",
-      rating: 4.9
-    },
-    {
-      id: 181,
-      name: "Jaleco Bordado Enfermagem",
-      image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=500&auto=format&fit=crop",
-      category: "Jaleco",
-      rating: 4.8
-    }
-  ],
-  'pantufa': [
-    {
-      id: 190,
-      name: "Pantufa Bordada Adulto",
-      image: "https://images.unsplash.com/photo-1543673195-fa05a1c3ab53?q=80&w=500&auto=format&fit=crop",
-      category: "Pantufa",
-      rating: 4.7
-    },
-    {
-      id: 191,
-      name: "Pantufa Bordada Infantil",
-      image: "https://images.unsplash.com/photo-1588117756507-ee41ec34f06b?q=80&w=500&auto=format&fit=crop",
-      category: "Pantufa",
-      rating: 4.6
-    }
-  ],
-  
-  // Portfolio pages
-  'bordado-bone': [
-    {
-      id: 201,
-      name: "Boné Bordado Personalizado",
-      image: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Boné",
-      rating: 4.8
-    },
-    {
-      id: 202,
-      name: "Boné Bordado Empresarial",
-      image: "https://images.unsplash.com/photo-1575428652377-a2d80e2277fc?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Boné",
-      rating: 4.7
-    }
-  ],
-  'bordado-necessaire': [
-    {
-      id: 210,
-      name: "Necessaire Bordada Flores",
-      image: "https://images.unsplash.com/photo-1596266651066-9d0033df4afd?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Necessaire",
-      rating: 4.9
-    },
-    {
-      id: 211,
-      name: "Necessaire Bordada Personalizada",
-      image: "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Necessaire",
-      rating: 4.8
-    }
-  ],
-  'bordado-bolsa': [
-    {
-      id: 220,
-      name: "Bolsa Bordada Tradicional",
-      image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Bolsa",
-      rating: 4.9
-    },
-    {
-      id: 221,
-      name: "Bolsa Bordada Praia",
-      image: "https://images.unsplash.com/photo-1605100804763-247f67b3557e?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Bolsa",
-      rating: 4.7
-    }
-  ],
-  'bordado-jaleco': [
-    {
-      id: 230,
-      name: "Jaleco Bordado Premium",
-      image: "https://images.unsplash.com/photo-1624711478065-83f88a296aad?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Jaleco",
-      rating: 5.0
-    },
-    {
-      id: 231,
-      name: "Jaleco Bordado Odontologia",
-      image: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Jaleco",
-      rating: 4.8
-    }
-  ],
-  'bordado-infantis': [
-    {
-      id: 240,
-      name: "Roupão Infantil Bordado",
-      image: "https://images.unsplash.com/photo-1596461202276-9e6d59e4a416?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado Infantis",
-      rating: 4.9
-    },
-    {
-      id: 241,
-      name: "Toalha Infantil Bordada",
-      image: "https://images.unsplash.com/photo-1583334648584-6c2ba5035246?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado Infantis",
-      rating: 4.8
-    }
-  ],
-  'bordado-toalha-banho': [
-    {
-      id: 250,
-      name: "Toalha de Banho Bordada Premium",
-      image: "https://images.unsplash.com/photo-1600431521340-491eca880813?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Toalha de Banho",
-      rating: 5.0
-    },
-    {
-      id: 251,
-      name: "Kit Toalhas Bordadas Casal",
-      image: "https://images.unsplash.com/photo-1563291074-2bf8677ac0e7?q=80&w=500&auto=format&fit=crop",
-      category: "Bordado em Toalha de Banho",
-      rating: 4.9
-    }
-  ]
-};
+import { allProducts } from '../utils/productUtils';
+import { Product } from '../types/product';
 
 // Category name translations for titles
 const categoryTitles: Record<string, string> = {
@@ -305,8 +27,39 @@ const categoryTitles: Record<string, string> = {
   'bordado-necessaire': 'Bordado em Necessaire',
   'bordado-bolsa': 'Bordado em Bolsa',
   'bordado-jaleco': 'Bordado em Jaleco',
-  'bordado-infantis': 'Bordado Infantis',
+  'bordado-infantis': 'Bordado Infantil',
   'bordado-toalha-banho': 'Bordado em Toalha de Banho'
+};
+
+// Mapping from URL paths to product categories
+const CATEGORY_MAPPINGS: Record<string, string> = {
+  'cama-mesa-banho': 'Cama, Mesa e Banho',
+  'cama': 'Cama',
+  'mesa-cozinha': 'Mesa e Cozinha',
+  'tapete-cortinas': 'Tapete e Cortinas',
+  'banho': 'Banho',
+  'infantil': 'Infantil',
+  'vestuario': 'Vestuário',
+  'camisa': 'Camisa',
+  'jaleco': 'Jaleco',
+  'pantufa': 'Pantufa',
+};
+
+// Gerador de mensagens personalizadas para WhatsApp
+const generateWhatsAppMessage = (productName: string, colors?: string[], sizes?: string[]): string => {
+  let message = `Olá! Vi o produto ${productName} e gostaria de fazer um orçamento!`;
+  
+  if (colors && colors.length > 0) {
+    message += `\nCor: ${colors.join(', ')}.`;
+  }
+  
+  if (sizes && sizes.length > 0) {
+    message += `\nTamanho: ${sizes.join(', ')}.`;
+  }
+  
+  message += "\nQuantidade: [campo para preencher]";
+  
+  return encodeURIComponent(message);
 };
 
 const ProductPage = () => {
@@ -315,6 +68,7 @@ const ProductPage = () => {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const whatsappNumber = "+5581995970776";
   
   useEffect(() => {
     // Extract the category from the URL path
@@ -324,7 +78,16 @@ const ProductPage = () => {
     // In a real application, this would be an API call
     setLoading(true);
     setTimeout(() => {
-      const categoryProducts = allProducts[categoryPath] || [];
+      // Get the corresponding category name from the URL path
+      const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
+      
+      // Filter products that match the category
+      const categoryProducts = allProducts.filter(product => 
+        product.type === 'product' && 
+        (product.category === categoryName || 
+         product.category.toLowerCase().includes(categoryName.toLowerCase()))
+      );
+      
       setProducts(categoryProducts);
       setFilteredProducts(categoryProducts);
       setLoading(false);
@@ -338,7 +101,8 @@ const ProductPage = () => {
     } else {
       const filtered = products.filter(product => 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchQuery.toLowerCase())
+        product.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (product.description && product.description.toLowerCase().includes(searchQuery.toLowerCase()))
       );
       setFilteredProducts(filtered);
     }
@@ -388,7 +152,7 @@ const ProductPage = () => {
                   <Link to={`/produto/${product.id}`} className="block">
                     <AspectRatio ratio={1/1} className="relative bg-[#f5f5f7]">
                       <img 
-                        src={product.image} 
+                        src={product.imageUrl || (product.images && product.images[0]) || product.image} 
                         alt={product.name}
                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                         onError={(e) => {
@@ -403,16 +167,31 @@ const ProductPage = () => {
                           {product.category}
                         </span>
                       </div>
+                      {product.isNew && (
+                        <div className="absolute top-2 right-2">
+                          <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full">
+                            Novo
+                          </span>
+                        </div>
+                      )}
                     </AspectRatio>
                   </Link>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-1 mb-1">
                       <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
-                      <span className="text-xs text-gray-600">{product.rating.toFixed(1)}</span>
+                      <span className="text-xs text-gray-600">{product.rating?.toFixed(1) || "4.8"}</span>
                     </div>
                     <h3 className="font-semibold text-base md:text-lg mb-3 line-clamp-2">{product.name}</h3>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs md:text-sm text-gray-600">Solicite um orçamento</span>
+                      <a 
+                        href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(product.name, product.colors, product.sizes)}`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-xs md:text-sm text-gray-600 hover:text-brand-red flex items-center gap-1 transition-all"
+                      >
+                        <MessageCircle className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                        <span>Solicitar orçamento</span>
+                      </a>
                       <Link 
                         to={`/produto/${product.id}`}
                         className="text-brand-dark hover:text-brand-red transition-colors duration-300"
@@ -430,26 +209,6 @@ const ProductPage = () => {
               <Link to="/" className="inline-block mt-4 btn-primary">
                 Voltar para página inicial
               </Link>
-            </div>
-          )}
-          
-          {/* Navigation arrows (for carousel on desktop) */}
-          {filteredProducts.length > 4 && (
-            <div className="hidden lg:flex justify-between mt-8">
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white"
-              >
-                <ChevronLeft className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="rounded-full bg-white/80 backdrop-blur-sm border-gray-200 hover:bg-white"
-              >
-                <ChevronRight className="h-5 w-5" />
-              </Button>
             </div>
           )}
         </div>
