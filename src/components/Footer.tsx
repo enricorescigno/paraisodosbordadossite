@@ -30,7 +30,7 @@ const Footer = () => {
             
             {/* Institutional */}
             <div>
-              <h3 className="text-xl mb-6 text-brand-red font-thin">Institucional</h3>
+              <h3 className="text-xl mb-6 text-brand-red font-normal">Institucional</h3>
               <ul className="space-y-3">
                 <li>
                   <a href="https://wa.me/5581995970776" className="text-gray-600 hover:text-brand-red transition-colors duration-200">
@@ -57,7 +57,7 @@ const Footer = () => {
             
             {/* Contact */}
             <div>
-              <h3 className="mb-6 text-brand-red text-xl font-thin">Atendimento</h3>
+              <h3 className="mb-6 text-brand-red text-xl font-normal">Atendimento</h3>
               <ul className="space-y-3">
                 <li className="flex items-center gap-2">
                   <Phone className="h-4 w-4 text-gray-700" />
@@ -81,7 +81,7 @@ const Footer = () => {
                 </li>
                 
                 <li className="pt-4">
-                  <p className="mb-0 text-left text-red-600 text-lg font-normal">Horário de Atendimento</p>
+                  <p className="mb-0 text-left text-red-600 text-xl font-normal">Horário de Atendimento</p>
                   <p className="text-gray-600">Seg - Sex - 09h às 18h | Sáb. 09h às 15h</p>
                   <div className="flex items-start gap-2 mt-2">
                     <MapPin className="h-5 w-5 text-brand-red flex-shrink-0 mt-0.5" />
@@ -93,7 +93,7 @@ const Footer = () => {
             
             {/* Social Media */}
             <div>
-              <h3 className="text-xl mb-6 text-brand-red font-thin">Acompanhe nas Redes</h3>
+              <h3 className="text-xl mb-6 text-brand-red font-normal">Acompanhe nas Redes</h3>
               <div className="flex gap-4">
                 <a href="https://www.instagram.com/lojaparaisodosbordados/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:opacity-80 transition-opacity">
                   <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16" className="text-gray-700 hover:text-brand-red transition-colors duration-200">

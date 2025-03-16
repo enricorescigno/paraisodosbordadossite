@@ -56,8 +56,8 @@ const Features = () => {
               <div className="w-16 h-16 flex items-center justify-center rounded-full bg-red-50 text-brand-red mb-5">
                 <Icon size={30} />
               </div>
-              <h3 className="text-brand-dark mb-3 font-thin text-xl">{feature.title}</h3>
-              <p className="text-gray-600 text-center text-sm">{feature.description}</p>
+              <h3 className="text-brand-dark mb-3 text-xl font-normal">{feature.title}</h3>
+              <p className="text-gray-600 text-center text-sm font-light">{feature.description}</p>
             </>;
           const cardClass = "flex flex-col items-center text-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 px-[5px] py-[5px]";
           return <motion.div key={index} initial={{
