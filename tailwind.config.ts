@@ -138,8 +138,28 @@ export default {
 				'pulse-soft': 'pulse-soft 3s ease-in-out infinite'
 			},
 			fontFamily: {
-				sans: ['"Inter"', 'sans-serif'],
-				serif: ['"Playfair Display"', 'serif']
+				sans: [
+					'Inter',
+					'system-ui',
+					'-apple-system',
+					'BlinkMacSystemFont',
+					'Segoe UI',
+					'Roboto',
+					'Helvetica Neue',
+					'Arial',
+					'sans-serif'
+				],
+				serif: ['"Playfair Display"', 'Georgia', 'Cambria', 'serif']
+			},
+			letterSpacing: {
+				tighter: '-0.025em',
+				tight: '-0.015em',
+			},
+			fontWeight: {
+				light: '300',
+				normal: '400',
+				medium: '500',
+				semibold: '600',
 			}
 		}
 	},
