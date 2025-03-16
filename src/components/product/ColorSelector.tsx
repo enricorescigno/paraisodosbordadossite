@@ -29,6 +29,7 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
     "Dourado": "#d4af37",
     "Vinho": "#722f37",
     "Cobre": "#b87333",
+    "Champagne": "#f7e7ce",
     "Personalizado": "#f5f5f7",
     "Sob consulta": "#f5f5f7",
   };
@@ -51,6 +52,7 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
               }`}
               title={color}
               aria-label={`Selecionar cor ${color}`}
+              data-testid={`color-button-${color.toLowerCase().replace(/\s+/g, '-')}`}
             >
               <span 
                 className="absolute inset-0 rounded-full border border-gray-200"
@@ -70,6 +72,9 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
             </motion.button>
           );
         })}
+      </div>
+      <div className="mt-2 text-sm text-gray-500">
+        {selectedColor && <span>Selecionado: {selectedColor}</span>}
       </div>
     </div>
   );
