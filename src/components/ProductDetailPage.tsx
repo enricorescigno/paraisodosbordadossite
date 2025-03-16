@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, MessageCircle, Star, Truck, RefreshCw, ShieldCheck, ChevronRight } from 'lucide-react';
@@ -10,6 +9,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { allProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -21,6 +21,7 @@ const ProductDetailPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [isFromPortfolio, setIsFromPortfolio] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [currentImages, setCurrentImages] = useState<string[]>([]);
 
   useEffect(() => {
     setLoading(true);
@@ -44,7 +45,8 @@ const ProductDetailPage = () => {
           if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
           
           setProduct(foundProduct);
-          setActiveImageIndex(0);
+          
+          initializeImages(foundProduct);
         } else {
           setProduct(null);
         }
@@ -52,6 +54,38 @@ const ProductDetailPage = () => {
       setLoading(false);
     }, 500);
   }, [productId]);
+
+  const initializeImages = (product: Product) => {
+    if (!product) return;
+    
+    if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
+      const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
+      const colorImages = defaultColor && product.images[defaultColor] ? product.images[defaultColor] : [];
+      setCurrentImages(colorImages);
+      setActiveImageIndex(0);
+    } 
+    else if (product.images && Array.isArray(product.images)) {
+      setCurrentImages(product.images);
+      setActiveImageIndex(0);
+    } 
+    else if (product.imageUrl) {
+      setCurrentImages([product.imageUrl]);
+      setActiveImageIndex(0);
+    } 
+    else {
+      setCurrentImages([]);
+    }
+  };
+
+  useEffect(() => {
+    if (!product || !selectedColor) return;
+    
+    if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
+      const colorImages = product.images[selectedColor] || [];
+      setCurrentImages(colorImages);
+      setActiveImageIndex(0);
+    }
+  }, [selectedColor, product]);
 
   const getWhatsAppLink = () => {
     if (!product) return '';
@@ -151,70 +185,67 @@ const ProductDetailPage = () => {
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
               <div className="bg-white rounded-2xl overflow-hidden">
-                <Carousel className="w-full">
-                  <CarouselContent>
-                    {product.images && product.images.length > 0 ? (
-                      product.images.map((img, index) => (
-                        <CarouselItem key={index}>
-                          <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
-                            <img 
-                              src={img} 
-                              alt={`${product.name} - Imagem ${index + 1}`}
-                              className="w-full h-full object-contain mix-blend-multiply p-4"
-                              onError={(e) => {
-                                e.currentTarget.src = placeholder(product.category);
-                              }}
-                            />
-                          </AspectRatio>
-                        </CarouselItem>
-                      ))
-                    ) : product.imageUrl ? (
-                      <CarouselItem>
-                        <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
-                          <img 
-                            src={product.imageUrl} 
-                            alt={product.name}
-                            className="w-full h-full object-contain mix-blend-multiply p-4"
-                            onError={(e) => {
-                              e.currentTarget.src = placeholder(product.category);
-                            }}
-                          />
-                        </AspectRatio>
-                      </CarouselItem>
-                    ) : (
-                      <CarouselItem>
-                        <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
-                          <img 
-                            src={placeholder(product.category)}
-                            alt={product.name}
-                            className="w-full h-full object-contain mix-blend-multiply p-4"
-                          />
-                        </AspectRatio>
-                      </CarouselItem>
-                    )}
-                  </CarouselContent>
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={selectedColor} 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                  >
+                    <Carousel className="w-full">
+                      <CarouselContent>
+                        {currentImages.length > 0 ? (
+                          currentImages.map((img, index) => (
+                            <CarouselItem key={index}>
+                              <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
+                                <img 
+                                  src={img} 
+                                  alt={`${product.name} - ${selectedColor} - Imagem ${index + 1}`}
+                                  className="w-full h-full object-contain mix-blend-multiply p-4"
+                                  onError={(e) => {
+                                    e.currentTarget.src = placeholder(product.category);
+                                  }}
+                                />
+                              </AspectRatio>
+                            </CarouselItem>
+                          ))
+                        ) : (
+                          <CarouselItem>
+                            <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
+                              <img 
+                                src={placeholder(product.category)}
+                                alt={product.name}
+                                className="w-full h-full object-contain mix-blend-multiply p-4"
+                              />
+                            </AspectRatio>
+                          </CarouselItem>
+                        )}
+                      </CarouselContent>
 
-                  {product.images && product.images.length > 1 && (
-                    <>
-                      <CarouselPrevious className="left-2" />
-                      <CarouselNext className="right-2" />
-                    </>
-                  )}
-                  
-                  {product.images && product.images.length > 1 && (
-                    <div className="flex justify-center gap-2 mt-4">
-                      {product.images.map((_, index) => (
-                        <div 
-                          key={index} 
-                          className={`h-2 w-2 rounded-full cursor-pointer transition-colors ${
-                            index === activeImageIndex ? 'bg-brand-red' : 'bg-gray-300'
-                          }`}
-                          onClick={() => setActiveImageIndex(index)}
-                        ></div>
-                      ))}
-                    </div>
-                  )}
-                </Carousel>
+                      {currentImages.length > 1 && (
+                        <>
+                          <CarouselPrevious className="left-2" />
+                          <CarouselNext className="right-2" />
+                        </>
+                      )}
+                      
+                      {currentImages.length > 1 && (
+                        <div className="flex justify-center gap-2 mt-4">
+                          {currentImages.map((_, index) => (
+                            <div 
+                              key={index} 
+                              className={`h-2 w-2 rounded-full cursor-pointer transition-colors ${
+                                index === activeImageIndex ? 'bg-brand-red' : 'bg-gray-300'
+                              }`}
+                              onClick={() => setActiveImageIndex(index)}
+                            ></div>
+                          ))}
+                        </div>
+                      )}
+                    </Carousel>
+                  </motion.div>
+                </AnimatePresence>
               </div>
               
               <div className="flex flex-col justify-center">
@@ -264,7 +295,7 @@ const ProductDetailPage = () => {
                           "Azul Claro": "#66a3ff",
                           "Verde": "#4cd964",
                           "Vermelho": "#ff3b30",
-                          "Rosa": "#ff2d55",
+                          "Rosa": "#ff9eb6",
                           "Amarelo": "#ffcc00",
                           "Laranja": "#ff9500",
                           "Roxo": "#5856d6",
@@ -272,6 +303,9 @@ const ProductDetailPage = () => {
                           "Bege": "#e6d2b5",
                           "Marrom": "#8b4513",
                           "Creme": "#fffdd0",
+                          "Dourado": "#d4af37",
+                          "Vinho": "#722f37",
+                          "Cobre": "#b87333",
                           "Personalizado": "#f5f5f7",
                           "Sob consulta": "#f5f5f7",
                         };

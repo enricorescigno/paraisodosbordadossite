@@ -14,5 +14,5 @@ export interface Product {
   features?: string[];
   keywords?: string[];
   slug?: string;
-  images?: string[];
+  images?: string[] | Record<string, string[]>; // Pode ser um array ou um objeto com chaves de cores
 }

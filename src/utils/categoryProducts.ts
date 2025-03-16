@@ -100,22 +100,28 @@ export const mesaCozinhaProducts: Product[] = [
     name: "Jogo Americano Bordado",
     type: "product",
     category: "Mesa e Cozinha",
-    imageUrl: "/lovable-uploads/7258c407-8a22-427b-a486-5e2bc2170d5f.png",
+    imageUrl: "/lovable-uploads/35fdd01b-0132-458d-983c-615b03832503.png",
     description: "Jogo americano com bordado elegante, conjunto com 4 unidades. Confeccionado em tecido durável e fácil de limpar, protege sua mesa com estilo.",
     price: "Sob consulta",
-    colors: ["Branco", "Bege", "Cinza"],
+    colors: ["Branco", "Dourado", "Cobre", "Rosa", "Verde", "Vinho", "Marrom"],
     sizes: ["35cm x 45cm"],
     rating: 4.7,
     isNew: true,
     features: [
-      "Conjunto com 4 unidades",
-      "Bordado fino e detalhado",
-      "Tecido resistente a manchas",
-      "Fácil manutenção"
+      "Confeccionado em tecido durável e fácil de limpar",
+      "Bordado delicado e elegante",
+      "Ideal para compor a mesa com charme e sofisticação",
+      "Conjunto com 4 unidades"
     ],
-    images: [
-      "/lovable-uploads/7258c407-8a22-427b-a486-5e2bc2170d5f.png"
-    ]
+    images: {
+      "Branco": ["/lovable-uploads/35fdd01b-0132-458d-983c-615b03832503.png"],
+      "Dourado": ["/lovable-uploads/979b2ce8-93f3-4b1a-afee-992dd0bbabc4.png"],
+      "Cobre": ["/lovable-uploads/c5ba1f95-4bce-46db-9fbf-e403106ae1b3.png"],
+      "Rosa": ["/lovable-uploads/351861e8-db18-467f-bc8f-3a9156b226ee.png"],
+      "Verde": ["/lovable-uploads/42ee978a-3e1b-471e-b5c8-eb0daa01dc6d.png"],
+      "Vinho": ["/lovable-uploads/a2fe6aac-000d-496d-89fa-a7945525cd07.png"],
+      "Marrom": ["/lovable-uploads/6d267af2-7362-4b77-b80f-2b3d8c1c053f.png"]
+    }
   },
   {
     id: 203,
