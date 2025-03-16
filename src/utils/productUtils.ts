@@ -1,4 +1,14 @@
+
 import { Product } from '../types/product';
+import { 
+  camaProducts,
+  mesaCozinhaProducts,
+  tapeteCortinasProducts,
+  banhoProducts,
+  infantilProducts,
+  vestuarioProducts,
+  allCategoryProducts
+} from './categoryProducts';
 
 // Pantufas Collection
 export const pantufaProducts: Product[] = [
@@ -1044,5 +1054,6 @@ export const allProducts: Product[] = [
   ...camisasPoloProducts.map(product => ({ ...product, type: 'product' })),
   ...jalecosProducts.map(product => ({ ...product, type: 'product' })),
   ...roupoesProducts.map(product => ({ ...product, type: 'product' })),
-  ...toalhasProducts.map(product => ({ ...product, type: 'product' }))
+  ...toalhasProducts.map(product => ({ ...product, type: 'product' })),
+  ...allCategoryProducts.map(product => ({ ...product, type: 'product' }))
 ];
