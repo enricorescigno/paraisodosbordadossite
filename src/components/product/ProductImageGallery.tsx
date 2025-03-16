@@ -8,8 +8,8 @@ interface ProductImageGalleryProps {
   images: string[];
   productName: string;
   selectedColor: string;
-  placeholder: (categoryId: number) => string;
-  category: number;
+  placeholder: (category: string) => string;
+  category: string;
 }
 
 const ProductImageGallery = ({ 

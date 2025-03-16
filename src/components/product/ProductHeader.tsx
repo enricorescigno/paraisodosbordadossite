@@ -4,21 +4,7 @@ import { Star } from 'lucide-react';
 import { Product } from '@/types/product';
 
 interface ProductHeaderProps {
-  product: Product | {
-    id: number;
-    name: string;
-    type: 'product' | 'portfolio';
-    category: string;
-    description?: string;
-    price?: string;
-    colors?: string[];
-    sizes?: string[];
-    rating?: number;
-    isNew?: boolean;
-    features?: string[];
-    keywords?: string[];
-    slug?: string;
-  };
+  product: Product;
 }
 
 const ProductHeader = ({ product }: ProductHeaderProps) => {

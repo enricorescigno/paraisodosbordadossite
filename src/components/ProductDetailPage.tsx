@@ -8,7 +8,7 @@ import { AppleButton } from '@/components/ui/apple-button';
 import { motion } from 'framer-motion';
 import { useProductDetail } from '@/hooks/useProductDetail';
 
-// Importing our components
+// Importing our new components
 import ProductImageGallery from './product/ProductImageGallery';
 import ProductFeatures from './product/ProductFeatures';
 import ColorSelector from './product/ColorSelector';
@@ -60,16 +60,11 @@ const ProductDetailPage = () => {
                 productName={product.name} 
                 selectedColor={selectedColor}
                 placeholder={placeholder}
-                category={product.category_id}
+                category={product.category}
               />
               
               <div className="flex flex-col justify-center">
-                <ProductHeader 
-                  product={{
-                    ...product,
-                    category: product.category_id.toString() // Add the category property expected by ProductHeader
-                  }} 
-                />
+                <ProductHeader product={product} />
                 
                 <ProductFeatures features={product.features || []} />
                 
