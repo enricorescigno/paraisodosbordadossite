@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { Product } from '../types/product';
@@ -16,7 +15,6 @@ export const useProductDetail = () => {
   const [currentImages, setCurrentImages] = useState<string[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Updated color to image mapping based on the new uploaded images
   const colorToImageMap: Record<string, string[]> = {
     "Branco": ["/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png"],
     "Dourado": ["/lovable-uploads/7df18d21-e4ed-468f-b727-826aa9641c3b.png"],
@@ -24,8 +22,7 @@ export const useProductDetail = () => {
     "Marrom": ["/lovable-uploads/3bb94c02-6771-46d8-8e2f-efe9b267c391.png"],
     "Rosa": ["/lovable-uploads/0f23a8fc-2cfb-4961-a2d3-47b09c4ec29c.png"],
     "Verde": ["/lovable-uploads/3bda6c77-533b-4d79-9a50-fbd946f1cbd6.png"],
-    "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"],
-    "Cobre": ["/lovable-uploads/97ec483a-beee-45ae-8a3a-773fc71c8368.png", "/lovable-uploads/fbfe7b78-08bd-45c6-ae97-f62616c4a07a.png"]
+    "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"]
   };
 
   useEffect(() => {
@@ -43,7 +40,7 @@ export const useProductDetail = () => {
             category: "Mesa e Cozinha",
             imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
             description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
-            colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho", "Cobre"],
+            colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
             sizes: [],
             rating: 4.9,
             isNew: true,
@@ -229,4 +226,3 @@ export const useProductDetail = () => {
     placeholder
   };
 };
-
