@@ -5,62 +5,73 @@ import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { products } from '../utils/searchUtils';
 import { useIsMobile } from '../hooks/use-mobile';
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { motion } from 'framer-motion';
+import { useProducts } from '@/hooks/useProducts';
+import { useCategories } from '@/hooks/useCategories';
+import { initializeDatabase } from '@/services/localDatabaseService';
 
 const AllProductsPage = () => {
-  const [loading, setLoading] = useState(true);
-  const [allProducts, setAllProducts] = useState<any[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState('all');
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   
+  // Initialize the database when the component mounts
   useEffect(() => {
-    // In a real app, this would fetch from an API
-    setLoading(true);
-    setTimeout(() => {
-      // Filter only products (not portfolio items)
-      const productItems = products.filter(product => product.type === 'product');
-      setAllProducts(productItems);
-      setFilteredProducts(productItems);
-      setLoading(false);
-    }, 300); // Simulate network request
+    initializeDatabase();
   }, []);
-
+  
+  // Fetch products using React Query
+  const { products, isLoading } = useProducts('product');
+  
+  // Fetch categories using React Query
+  const { categories } = useCategories();
+  
   // Filter products based on category
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  
   useEffect(() => {
-    let result = [...allProducts];
+    if (!products) return;
+    
+    let result = [...products];
     
     // Apply category filter
     if (activeCategory !== 'all') {
-      result = result.filter(product => product.category.toLowerCase().includes(activeCategory.toLowerCase()));
+      const category = categories.find(c => c.slug === activeCategory);
+      
+      if (category) {
+        result = result.filter(product => product.category_id === category.id);
+      } else {
+        // If no exact match, try finding a category that contains the active category in its name
+        result = result.filter(product => {
+          const productCategory = categories.find(c => c.id === product.category_id);
+          return productCategory && 
+                 (productCategory.name.toLowerCase().includes(activeCategory) || 
+                  activeCategory.includes(productCategory.name.toLowerCase()));
+        });
+      }
     }
     
     setFilteredProducts(result);
-  }, [activeCategory, allProducts]);
+  }, [activeCategory, products, categories]);
 
   // Extract unique categories for filtering
-  const categories = ['all', ...new Set(allProducts.map(product => product.category.split(',')[0].trim().toLowerCase()))];
+  const uniqueCategories = categories
+    .filter(cat => cat.type === 'product' && cat.parent_id !== null)
+    .map(cat => cat.slug);
+  
+  // Add 'all' category
+  const filterCategories = ['all', ...uniqueCategories];
 
   // Function to get category display name
-  const getCategoryDisplayName = (category: string) => {
-    const categoryMap: Record<string, string> = {
-      'all': 'Todos',
-      'cama': 'Cama',
-      'mesa': 'Mesa',
-      'banho': 'Banho',
-      'infantil': 'Infantil',
-      'vestuário': 'Vestuário',
-      'bordado': 'Bordado',
-      'pantufas': 'Pantufas',
-      'roupões': 'Roupões'
-    };
-    return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
+  const getCategoryDisplayName = (slug: string) => {
+    if (slug === 'all') return 'Todos';
+    
+    const category = categories.find(c => c.slug === slug);
+    return category ? category.name : slug.charAt(0).toUpperCase() + slug.slice(1);
   };
   
   return (
@@ -81,7 +92,7 @@ const AllProductsPage = () => {
           {/* Category Tabs - Apple Style */}
           <Tabs defaultValue="all" className="mb-16 justify-center flex flex-col items-center">
             <TabsList className="bg-white rounded-full shadow-sm overflow-x-auto py-1 px-1 w-auto flex flex-nowrap">
-              {categories.map((category) => (
+              {filterCategories.map((category) => (
                 <TabsTrigger 
                   key={category}
                   value={category}
@@ -94,7 +105,7 @@ const AllProductsPage = () => {
             </TabsList>
           </Tabs>
           
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
             </div>
@@ -116,6 +127,11 @@ const AllProductsPage = () => {
                               src={product.imageUrl || "https://via.placeholder.com/500x500?text=Sem+Imagem"} 
                               alt={product.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.onerror = null;
+                                target.src = `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.name)}`;
+                              }}
                             />
                             {product.isNew && (
                               <div className="absolute top-3 right-3">

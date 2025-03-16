@@ -1,14 +1,13 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { Product } from '../types/product';
-import { allProducts } from '../utils/productUtils';
+import { useProductById } from './useProducts';
+import { useProductColorVariants } from './useProductImages';
+import { useCategoryBySlug } from './useCategories';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
   const location = useLocation();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
@@ -16,49 +15,36 @@ export const useProductDetail = () => {
   const [currentImages, setCurrentImages] = useState<string[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  useEffect(() => {
-    setLoading(true);
-    
-    setTimeout(() => {
-      if (productId) {
-        let foundProduct = allProducts.find(p => p.id.toString() === productId);
-        
-        if (foundProduct) {
-          if (foundProduct.colors && foundProduct.colors.length > 0) {
-            setSelectedColor(foundProduct.colors[0]);
-          }
-          if (foundProduct.sizes && foundProduct.sizes.length > 0) {
-            setSelectedSize(foundProduct.sizes[0]);
-          }
-          
-          setIsFromPortfolio(foundProduct.type === 'portfolio');
-          
-          if (!foundProduct.rating) foundProduct.rating = 4.8;
-          if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
-          if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
-          
-          setProduct(foundProduct);
-          
-          initializeImages(foundProduct);
-        } else {
-          setProduct(null);
-        }
-      }
-      setLoading(false);
-    }, 500);
-  }, [productId]);
+  // Fetch product data using React Query
+  const { data: product, isLoading, error } = useProductById(productId || '0');
+  
+  // Fetch product color variants
+  const { data: colorVariants, isLoading: loadingColorVariants } = 
+    useProductColorVariants(product?.id || 0);
 
-  const initializeImages = (product: Product) => {
+  useEffect(() => {
+    if (product) {
+      if (product.colors && product.colors.length > 0) {
+        setSelectedColor(product.colors[0]);
+      }
+      
+      if (product.sizes && product.sizes.length > 0) {
+        setSelectedSize(product.sizes[0]);
+      }
+      
+      setIsFromPortfolio(product.type === 'portfolio');
+      
+      initializeImages();
+    }
+  }, [product, colorVariants]);
+
+  const initializeImages = () => {
     if (!product) return;
     
-    if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
+    if (colorVariants && Object.keys(colorVariants).length > 0) {
       const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
-      const colorImages = defaultColor && product.images[defaultColor] ? product.images[defaultColor] : [];
+      const colorImages = defaultColor && colorVariants[defaultColor] ? colorVariants[defaultColor] : [];
       setCurrentImages(colorImages);
-      setActiveImageIndex(0);
-    } 
-    else if (product.images && Array.isArray(product.images)) {
-      setCurrentImages(product.images);
       setActiveImageIndex(0);
     } 
     else if (product.imageUrl) {
@@ -71,14 +57,14 @@ export const useProductDetail = () => {
   };
 
   useEffect(() => {
-    if (!product || !selectedColor) return;
+    if (!product || !selectedColor || !colorVariants) return;
     
-    if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
-      const colorImages = product.images[selectedColor] || [];
+    if (colorVariants && Object.keys(colorVariants).length > 0) {
+      const colorImages = colorVariants[selectedColor] || [];
       setCurrentImages(colorImages);
       setActiveImageIndex(0);
     }
-  }, [selectedColor, product]);
+  }, [selectedColor, colorVariants, product]);
 
   const getWhatsAppLink = () => {
     if (!product) return '';
@@ -111,55 +97,54 @@ export const useProductDetail = () => {
       return '/portfolio';
     }
     
-    if (product && product.category) {
-      const category = product.category.toLowerCase().replace(/\s+/g, '-');
-      
+    if (product && product.category_id) {
       const categoryMap: Record<string, string> = {
-        'cama': '/categoria/cama',
-        'mesa e cozinha': '/categoria/mesa-cozinha',
-        'banho': '/categoria/banho',
-        'infantil': '/categoria/infantil',
-        'vestuário': '/categoria/vestuario',
-        'jaleco': '/categoria/jaleco',
-        'pantufa': '/categoria/pantufa',
-        'bonés bordados': '/portfolio/bordado-bone',
-        'bordado em necessaire': '/portfolio/bordado-necessaire',
-        'bordado em bolsa': '/portfolio/bordado-bolsa',
-        'jalecos': '/portfolio/bordado-jaleco',
-        'roupões infantis': '/portfolio/bordado-infantis',
-        'toalhas infantis': '/portfolio/bordado-toalha-banho'
+        2: '/categoria/cama',
+        3: '/categoria/mesa-cozinha',
+        4: '/categoria/banho',
+        5: '/categoria/infantil',
+        6: '/categoria/vestuario',
+        7: '/categoria/jaleco',
+        8: '/categoria/pantufa',
+        9: '/portfolio/bordado-bone',
+        10: '/portfolio/bordado-necessaire',
+        11: '/portfolio/bordado-bolsa',
+        12: '/portfolio/bordado-jaleco',
+        13: '/portfolio/bordado-infantis',
+        14: '/portfolio/bordado-toalha-banho'
       };
       
-      return categoryMap[product.category.toLowerCase()] || '/produtos';
+      return categoryMap[product.category_id] || '/produtos';
     }
     
     return '/produtos';
   };
 
-  const placeholder = (category: string) => {
-    const placeholders: Record<string, string> = {
-      'Cama, Mesa e Banho': '/images/placeholders/home-textile.jpg',
-      'Cama': '/images/placeholders/home-textile.jpg',
-      'Mesa e Cozinha': '/images/placeholders/home-textile.jpg',
-      'Banho': '/images/placeholders/towel.jpg',
-      'Infantil': '/images/placeholders/kids.jpg',
-      'Vestuário': '/images/placeholders/clothing.jpg',
-      'Jaleco': '/images/placeholders/uniform.jpg',
-      'Pantufas': '/images/placeholders/slippers.jpg',
-      'Bonés Bordados': '/images/placeholders/cap.jpg',
-      'Bordado em Necessaire': '/images/placeholders/necessaire.jpg',
-      'Bordado em Bolsa': '/images/placeholders/bag.jpg',
-      'Jalecos': '/images/placeholders/uniform.jpg',
-      'Roupões Infantis': '/images/placeholders/kids-embroidery.jpg',
-      'Toalhas Infantis': '/images/placeholders/towel.jpg'
+  const placeholder = (categoryId: number) => {
+    const placeholders: Record<number, string> = {
+      1: '/images/placeholders/home-textile.jpg',
+      2: '/images/placeholders/home-textile.jpg',
+      3: '/images/placeholders/home-textile.jpg',
+      4: '/images/placeholders/towel.jpg',
+      5: '/images/placeholders/kids.jpg',
+      6: '/images/placeholders/clothing.jpg',
+      7: '/images/placeholders/uniform.jpg',
+      8: '/images/placeholders/slippers.jpg',
+      9: '/images/placeholders/cap.jpg',
+      10: '/images/placeholders/necessaire.jpg',
+      11: '/images/placeholders/bag.jpg',
+      12: '/images/placeholders/uniform.jpg',
+      13: '/images/placeholders/kids-embroidery.jpg',
+      14: '/images/placeholders/towel.jpg'
     };
     
-    return placeholders[category] || 'https://via.placeholder.com/500x500?text=Produto';
+    return placeholders[categoryId] || 'https://via.placeholder.com/500x500?text=Produto';
   };
 
   return {
     product,
-    loading,
+    loading: isLoading || loadingColorVariants,
+    error,
     selectedColor,
     setSelectedColor,
     selectedSize,
@@ -170,6 +155,7 @@ export const useProductDetail = () => {
     isFromPortfolio,
     currentImages,
     activeImageIndex,
+    setActiveImageIndex,
     getWhatsAppLink,
     getBackLink,
     placeholder

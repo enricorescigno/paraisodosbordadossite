@@ -1,74 +1,33 @@
 
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { Button } from "@/components/ui/button";
-import { allProducts } from '../utils/productUtils';
-import { Product } from '../types/product';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { motion } from 'framer-motion';
-
-// Portfolio categories mapping
-const PORTFOLIO_CATEGORIES: Record<string, string> = {
-  'bordado-bone': 'Bonés Bordados',
-  'bordado-necessaire': 'Bordado em Necessaire',
-  'bordado-bolsa': 'Bordado em Bolsa',
-  'bordado-jaleco': 'Jalecos',
-  'bordado-infantis': 'Roupões Infantis',
-  'bordado-toalha-banho': 'Toalhas Infantis'
-};
-
-// Category name translations for titles
-const categoryTitles: Record<string, string> = {
-  'bordado-bone': 'Bordado em Boné',
-  'bordado-necessaire': 'Bordado em Necessaire',
-  'bordado-bolsa': 'Bordado em Bolsa',
-  'bordado-jaleco': 'Bordado em Jaleco',
-  'bordado-infantis': 'Bordado Infantil',
-  'bordado-toalha-banho': 'Bordado em Toalha de Banho'
-};
+import { useProductsByCategory } from '@/hooks/useProducts';
+import { useCategoryBySlug } from '@/hooks/useCategories';
 
 const PortfolioPage = () => {
   const location = useLocation();
-  const [portfolioItems, setPortfolioItems] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filteredItems, setFilteredItems] = useState<Product[]>([]);
+  const { categorySlug } = useParams<{ categorySlug: string }>();
   const whatsappNumber = "+5581995970776";
   
-  useEffect(() => {
-    // Extract the category from the URL path
-    const pathParts = location.pathname.split('/');
-    const categoryPath = pathParts[pathParts.length - 1];
+  // Get category by slug
+  const { data: category, isLoading: loadingCategory } = useCategoryBySlug(categorySlug || '');
+  
+  // Get products by category
+  const { data: portfolioItems, isLoading: loadingProducts } = 
+    useProductsByCategory(categorySlug || '');
+  
+  const isLoading = loadingCategory || loadingProducts;
 
-    // In a real application, this would be an API call
-    setLoading(true);
-    setTimeout(() => {
-      // Obter produtos do productUtils.ts que correspondem à categoria do portfólio
-      const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
-      let categoryItems: Product[] = [];
-      if (matchingCategory) {
-        // Filtra produtos que correspondem à categoria mapeada
-        categoryItems = allProducts.filter(product => product.type === 'portfolio' && product.category === matchingCategory);
-      }
-
-      // Se não encontrar itens de portfólio, buscar como produtos normais
-      if (categoryItems.length === 0) {
-        categoryItems = allProducts.filter(product => product.category === matchingCategory || product.category === categoryTitles[categoryPath]);
-      }
-      setPortfolioItems(categoryItems);
-      setFilteredItems(categoryItems);
-      setLoading(false);
-    }, 300); // Simulate network request
-  }, [location.pathname]);
-
-  // Extract the category from the URL path for title
-  const pathParts = location.pathname.split('/');
-  const categoryPath = pathParts[pathParts.length - 1];
-  const categoryTitle = categoryTitles[categoryPath] || categoryPath;
+  // Extract the category name for title display
+  const categoryTitle = category?.name || categorySlug || '';
   
   return (
     <div className="min-h-screen bg-white">
@@ -85,15 +44,15 @@ const PortfolioPage = () => {
             </p>
           </div>
           
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
             </div>
-          ) : filteredItems.length > 0 ? (
+          ) : portfolioItems && portfolioItems.length > 0 ? (
             <div className="relative">
               <Carousel className="w-full">
                 <CarouselContent>
-                  {filteredItems.map((item) => (
+                  {portfolioItems.map((item) => (
                     <CarouselItem key={item.id} className="md:basis-1/2 lg:basis-1/3">
                       <div className="p-4">
                         <motion.div 
@@ -104,13 +63,13 @@ const PortfolioPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={item.imageUrl || (item.images && item.images[0])} 
+                              src={item.imageUrl || "https://via.placeholder.com/500x500?text=Sem+Imagem"} 
                               alt={item.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.onerror = null;
-                                target.src = `https://via.placeholder.com/500x500?text=${encodeURIComponent(item.category)}`;
+                                target.src = `https://via.placeholder.com/500x500?text=${encodeURIComponent(item.name)}`;
                               }}
                             />
                           </div>

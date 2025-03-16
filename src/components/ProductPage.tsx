@@ -1,97 +1,31 @@
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+
+import { useState, useEffect } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { Button } from "@/components/ui/button";
-import { allProducts } from '../utils/productUtils';
-import { Product } from '../types/product';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { motion } from 'framer-motion';
-
-// Category name translations for titles
-const categoryTitles: Record<string, string> = {
-  'cama-mesa-banho': 'Cama, Mesa e Banho',
-  'cama': 'Cama',
-  'mesa-cozinha': 'Mesa e Cozinha',
-  'tapete-cortinas': 'Tapete e Cortinas',
-  'banho': 'Banho',
-  'infantil': 'Infantil',
-  'vestuario': 'Vestuário',
-  'camisa': 'Camisa',
-  'jaleco': 'Jaleco',
-  'pantufa': 'Pantufa',
-  'bordado-bone': 'Bordado em Boné',
-  'bordado-necessaire': 'Bordado em Necessaire',
-  'bordado-bolsa': 'Bordado em Bolsa',
-  'bordado-jaleco': 'Bordado em Jaleco',
-  'bordado-infantis': 'Bordado Infantil',
-  'bordado-toalha-banho': 'Bordado em Toalha de Banho'
-};
-
-// Mapping from URL paths to product categories
-const CATEGORY_MAPPINGS: Record<string, string> = {
-  'cama-mesa-banho': 'Cama, Mesa e Banho',
-  'cama': 'Cama',
-  'mesa-cozinha': 'Mesa e Cozinha',
-  'tapete-cortinas': 'Tapete e Cortinas',
-  'banho': 'Banho',
-  'infantil': 'Infantil',
-  'vestuario': 'Vestuário',
-  'camisa': 'Camisa',
-  'jaleco': 'Jaleco',
-  'pantufa': 'Pantufa',
-};
+import { useProductsByCategory } from '@/hooks/useProducts';
+import { useCategoryBySlug } from '@/hooks/useCategories';
 
 const ProductPage = () => {
-  const location = useLocation();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const { categorySlug } = useParams<{ categorySlug: string }>();
   
-  useEffect(() => {
-    // Extract the category from the URL path
-    const pathParts = location.pathname.split('/');
-    const categoryPath = pathParts[pathParts.length - 1];
-    
-    // In a real application, this would be an API call
-    setLoading(true);
-    setTimeout(() => {
-      // Get the corresponding category name from the URL path
-      const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
-      
-      // Filter products that match the category
-      let categoryProducts = allProducts.filter(product => 
-        product.type === 'product' && 
-        (product.category === categoryName || 
-         product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
-         categoryName.toLowerCase().includes(product.category.toLowerCase()))
-      );
-      
-      // If still no products found, try partial matching
-      if (categoryProducts.length === 0) {
-        categoryProducts = allProducts.filter(product => 
-          product.type === 'product' && (
-            categoryPath.includes(product.category.toLowerCase().replace(/\s+/g, '-')) ||
-            product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' '))
-          )
-        );
-      }
-      
-      console.log(`Category: ${categoryName}, Found products: ${categoryProducts.length}`);
-      
-      setProducts(categoryProducts);
-      setFilteredProducts(categoryProducts);
-      setLoading(false);
-    }, 500); // Simulate network request
-  }, [location.pathname]);
+  // Get category by slug
+  const { data: category, isLoading: loadingCategory } = useCategoryBySlug(categorySlug || '');
   
-  // Extract the category from the URL path for title
-  const pathParts = location.pathname.split('/');
-  const categoryPath = pathParts[pathParts.length - 1];
-  const categoryTitle = categoryTitles[categoryPath] || categoryPath;
+  // Get products by category
+  const { data: products, isLoading: loadingProducts } = 
+    useProductsByCategory(categorySlug || '');
+  
+  const isLoading = loadingCategory || loadingProducts;
+
+  // Extract the category name for title
+  const categoryTitle = category?.name || '';
 
   return (
     <div className="min-h-screen bg-white">
@@ -108,15 +42,15 @@ const ProductPage = () => {
             </p>
           </div>
           
-          {loading ? (
+          {isLoading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
             </div>
-          ) : filteredProducts.length > 0 ? (
+          ) : products && products.length > 0 ? (
             <div className="relative">
               <Carousel className="w-full">
                 <CarouselContent>
-                  {filteredProducts.map((product) => (
+                  {products.map((product) => (
                     <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
                       <div className="p-4">
                         <motion.div 
@@ -127,15 +61,22 @@ const ProductPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={product.imageUrl || (product.images && Array.isArray(product.images) ? product.images[0] : null) || `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.category)}`} 
+                              src={product.imageUrl || "https://via.placeholder.com/500x500?text=Sem+Imagem"} 
                               alt={product.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.onerror = null;
-                                target.src = `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.category)}`;
+                                target.src = `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.name)}`;
                               }}
                             />
+                            {product.isNew && (
+                              <div className="absolute top-3 right-3">
+                                <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
+                                  Novo
+                                </span>
+                              </div>
+                            )}
                           </div>
                           
                           <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">{product.name}</h3>
