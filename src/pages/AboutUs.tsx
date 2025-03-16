@@ -42,8 +42,8 @@ const AboutUs = () => {
                     <Award className="h-10 w-10 text-brand-red" />
                     <div>
                       <p className="font-medium text-brand-dark">Mais de</p>
-                      <p className="font-serif text-2xl font-bold text-brand-red">20 Anos</p>
-                      <p className="text-sm text-gray-600">de experiência</p>
+                      <p className="font-sans text-2xl font-bold text-brand-red">20 Anos</p>
+                      <p className="text-sm text-gray-600 font-semibold">de experiência</p>
                     </div>
                   </div>
                 </div>
