@@ -215,6 +215,121 @@ export const bonesProducts: Product[] = [
       "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png"
     ],
     keywords: ["boné", "bordado", "logomarca", "geométrico", "exclusivo"]
+  },
+  {
+    id: 304,
+    name: "Boné Bordado Premium",
+    type: "product",
+    category: "Bonés Bordados",
+    imageUrl: "/lovable-uploads/f3372ecb-c7c5-4bea-a52d-959ab9019e56.png",
+    description: "Boné personalizado com bordado de alta definição, ideal para empresas e eventos promocionais. Confortável e durável para uso diário.",
+    price: "Sob consulta",
+    colors: ["Preto", "Branco", "Azul"],
+    sizes: ["Único"],
+    rating: 4.8,
+    isNew: true,
+    features: [
+      "Tecido algodão com ajuste regulável",
+      "Bordado personalizado incluso",
+      "Alta durabilidade",
+      "Design moderno"
+    ],
+    images: [
+      "/lovable-uploads/f3372ecb-c7c5-4bea-a52d-959ab9019e56.png"
+    ],
+    keywords: ["boné", "bordado", "premium", "personalizado", "promocional"]
+  },
+  {
+    id: 305,
+    name: "Boné Bordado Corporativo",
+    type: "product",
+    category: "Bonés Bordados",
+    imageUrl: "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png",
+    description: "Boné corporativo com bordado de logomarca, perfeito para uniformizar equipes e criar identidade visual para sua empresa.",
+    price: "Sob consulta",
+    colors: ["Azul Marinho", "Cinza", "Vermelho", "Preto"],
+    sizes: ["Único"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Bordado de logomarca em alta definição",
+      "Material premium resistente",
+      "Fecho ajustável tipo snapback",
+      "Aba reta ou curvada à escolha"
+    ],
+    images: [
+      "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png"
+    ],
+    keywords: ["boné", "bordado", "corporativo", "empresa", "uniforme"]
+  },
+  {
+    id: 306,
+    name: "Boné Bordado Esportivo",
+    type: "product",
+    category: "Bonés Bordados",
+    imageUrl: "/lovable-uploads/5e83b50f-c3b6-435c-92cd-21f6ea1fbb17.png",
+    description: "Boné esportivo com bordado personalizado, confeccionado com tecido leve e respirável, ideal para atividades físicas e práticas esportivas.",
+    price: "Sob consulta",
+    colors: ["Verde", "Azul Claro", "Preto", "Branco"],
+    sizes: ["Único"],
+    rating: 4.7,
+    isNew: true,
+    features: [
+      "Tecido respirável e leve",
+      "Bordado personalizado durável",
+      "Ajuste traseiro confortável",
+      "Design esportivo moderno"
+    ],
+    images: [
+      "/lovable-uploads/5e83b50f-c3b6-435c-92cd-21f6ea1fbb17.png"
+    ],
+    keywords: ["boné", "bordado", "esportivo", "academia", "treino"]
+  },
+  {
+    id: 307,
+    name: "Boné Bordado Casual",
+    type: "product",
+    category: "Bonés Bordados",
+    imageUrl: "/lovable-uploads/f0f584d1-07fa-4152-8258-c4eceeebfdff.png",
+    description: "Boné casual com bordado estilizado, perfeito para compor looks modernos e descontraídos. Confortável para uso no dia a dia.",
+    price: "Sob consulta",
+    colors: ["Bege", "Azul Claro", "Rosa", "Preto"],
+    sizes: ["Único"],
+    rating: 4.8,
+    isNew: true,
+    features: [
+      "Material confortável misto",
+      "Bordado estilizado exclusivo",
+      "Ajuste regulável na parte traseira",
+      "Estilo urbano contemporâneo"
+    ],
+    images: [
+      "/lovable-uploads/f0f584d1-07fa-4152-8258-c4eceeebfdff.png"
+    ],
+    keywords: ["boné", "bordado", "casual", "moda", "estilo"]
+  },
+  {
+    id: 308,
+    name: "Boné Bordado Personalizado",
+    type: "product",
+    category: "Bonés Bordados",
+    imageUrl: "/lovable-uploads/2aa701f2-b251-4978-8c91-3437b96b8629.png",
+    description: "Boné com bordado totalmente personalizado, crie seu design exclusivo com frases, nomes ou logomarcas. Perfeito para presentes e eventos especiais.",
+    price: "Sob consulta",
+    colors: ["Amarelo", "Verde", "Vermelho", "Branco", "Preto", "Azul"],
+    sizes: ["Único"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Personalização 100% exclusiva",
+      "Bordado em alta qualidade",
+      "Diversos tipos de bonés disponíveis",
+      "Ajuste perfeito para todos os tamanhos"
+    ],
+    images: [
+      "/lovable-uploads/2aa701f2-b251-4978-8c91-3437b96b8629.png"
+    ],
+    keywords: ["boné", "bordado", "personalizado", "exclusivo", "presente"]
   }
 ];
 
@@ -330,6 +445,126 @@ export const jalecosProducts: Product[] = [
       "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"
     ],
     keywords: ["jaleco", "masculino", "médico", "saúde", "profissional", "bordado"]
+  },
+  {
+    id: 602,
+    name: "Jaleco Bordado Premium",
+    type: "product",
+    category: "Jalecos",
+    imageUrl: "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png",
+    description: "Jaleco premium com bordado personalizado, ideal para profissionais da saúde que valorizam elegância e qualidade em seu ambiente de trabalho.",
+    price: "Sob consulta",
+    colors: ["Branco"],
+    sizes: ["P", "M", "G", "GG", "XG"],
+    rating: 5.0,
+    isNew: true,
+    features: [
+      "Tecido premium anti-microbiano",
+      "Bordado personalizado em alta definição",
+      "Acabamento superior com costuras reforçadas",
+      "Design moderno e profissional",
+      "Bolsos amplos e funcionais"
+    ],
+    images: [
+      "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png"
+    ],
+    keywords: ["jaleco", "bordado", "premium", "saúde", "médico", "dentista"]
+  },
+  {
+    id: 603,
+    name: "Jaleco Bordado Executivo",
+    type: "product",
+    category: "Jalecos",
+    imageUrl: "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png",
+    description: "Jaleco executivo com bordado personalizado, projetado para profissionais que buscam sofisticação e conforto em um único produto.",
+    price: "Sob consulta",
+    colors: ["Branco", "Off-White"],
+    sizes: ["P", "M", "G", "GG", "XG"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Tecido de alta qualidade com caimento perfeito",
+      "Bordado personalizado na região do peito e manga",
+      "Design slim fit elegante",
+      "Botões embutidos para visual clean",
+      "Bolsos estrategicamente posicionados"
+    ],
+    images: [
+      "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"
+    ],
+    keywords: ["jaleco", "bordado", "executivo", "profissional", "elegante"]
+  },
+  {
+    id: 604,
+    name: "Jaleco Bordado Acadêmico",
+    type: "product",
+    category: "Jalecos",
+    imageUrl: "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png",
+    description: "Jaleco acadêmico com bordado personalizado, perfeito para estudantes da área da saúde. Confeccionado com material durável e confortável para o uso diário.",
+    price: "Sob consulta",
+    colors: ["Branco"],
+    sizes: ["PP", "P", "M", "G", "GG"],
+    rating: 4.8,
+    isNew: true,
+    features: [
+      "Bordado personalizado com curso e instituição",
+      "Material resistente a diversas lavagens",
+      "Corte unissex adaptável",
+      "Bolsos práticos para instrumentos",
+      "Comprimento ideal conforme normas acadêmicas"
+    ],
+    images: [
+      "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png"
+    ],
+    keywords: ["jaleco", "bordado", "acadêmico", "estudante", "universitário"]
+  },
+  {
+    id: 605,
+    name: "Jaleco Bordado Colorido",
+    type: "product",
+    category: "Jalecos",
+    imageUrl: "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png",
+    description: "Jaleco com opções de cores e bordado personalizado, ideal para pediatria, odontopediatria e profissionais que desejam um ambiente mais leve e acolhedor.",
+    price: "Sob consulta",
+    colors: ["Azul Claro", "Rosa", "Verde Claro", "Lilás"],
+    sizes: ["P", "M", "G", "GG"],
+    rating: 4.7,
+    isNew: true,
+    features: [
+      "Tecido colorido de alta qualidade",
+      "Bordado personalizado temático",
+      "Design alegre e acolhedor",
+      "Bolsos funcionais e espaçosos",
+      "Ideal para ambiente infantil"
+    ],
+    images: [
+      "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"
+    ],
+    keywords: ["jaleco", "bordado", "colorido", "pediatria", "odontopediatria"]
+  },
+  {
+    id: 606,
+    name: "Jaleco Bordado Gourmet",
+    type: "product",
+    category: "Jalecos",
+    imageUrl: "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png",
+    description: "Jaleco gourmet com bordado personalizado, desenvolvido especialmente para chefs, cozinheiros e profissionais da gastronomia que valorizam a apresentação pessoal.",
+    price: "Sob consulta",
+    colors: ["Branco", "Preto", "Bordô"],
+    sizes: ["P", "M", "G", "GG", "XG"],
+    rating: 4.8,
+    isNew: true,
+    features: [
+      "Tecido resistente a manchas e alta temperatura",
+      "Bordado personalizado com nome e especialidade",
+      "Design moderno com botões resistentes",
+      "Bolsos amplos para utensílios",
+      "Acabamento premium para ambiente gourmet"
+    ],
+    images: [
+      "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png"
+    ],
+    keywords: ["jaleco", "bordado", "chef", "gastronomia", "cozinha", "gourmet"]
   }
 ];
 
@@ -382,6 +617,126 @@ export const roupoesProducts: Product[] = [
       "/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png"
     ],
     keywords: ["roupão", "infantil", "princesas", "banho", "meninas"]
+  },
+  {
+    id: 702,
+    name: "Roupão Infantil Bordado Safari",
+    type: "product",
+    category: "Roupões Infantis",
+    imageUrl: "/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png",
+    description: "Roupão infantil com bordado de animais safari, confeccionado com material macio e aconchegante. Perfeito para manter os pequenos aquecidos após o banho.",
+    price: "Sob consulta",
+    colors: ["Verde Claro", "Bege", "Azul Claro"],
+    sizes: ["P (1-2 anos)", "M (3-5 anos)", "G (6-8 anos)"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Tecido felpudo e super macio",
+      "Bordado exclusivo temático safari",
+      "Capuz aconchegante com detalhes de animais",
+      "Bolsos laterais práticos",
+      "Cinto ajustável para maior conforto"
+    ],
+    images: [
+      "/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png"
+    ],
+    keywords: ["roupão", "infantil", "bordado", "safari", "banho", "crianças"]
+  },
+  {
+    id: 703,
+    name: "Roupão Infantil Bordado Super Heróis",
+    type: "product",
+    category: "Roupões Infantis",
+    imageUrl: "/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png",
+    description: "Roupão infantil com bordado de super heróis, feito com material absorvente e confortável. Transforma a hora do banho em uma aventura divertida para os pequenos.",
+    price: "Sob consulta",
+    colors: ["Azul", "Vermelho", "Preto"],
+    sizes: ["P (1-2 anos)", "M (3-5 anos)", "G (6-8 anos)"],
+    rating: 4.8,
+    isNew: true,
+    features: [
+      "Material 100% algodão felpudo",
+      "Bordados de personagens de super heróis",
+      "Capuz com detalhes temáticos",
+      "Bolsos frontais divertidos",
+      "Cinto integrado para ajuste"
+    ],
+    images: [
+      "/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png"
+    ],
+    keywords: ["roupão", "infantil", "bordado", "super heróis", "banho", "meninos"]
+  },
+  {
+    id: 704,
+    name: "Roupão Infantil Bordado Fadas",
+    type: "product",
+    category: "Roupões Infantis",
+    imageUrl: "/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png",
+    description: "Roupão infantil com bordado de fadas e elementos mágicos, confeccionado com tecido macio e absorvente. Transforma o momento do banho em uma experiência encantada.",
+    price: "Sob consulta",
+    colors: ["Rosa", "Lilás", "Azul Claro"],
+    sizes: ["P (1-2 anos)", "M (3-5 anos)", "G (6-8 anos)"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Tecido suave e aconchegante",
+      "Bordados delicados de fadas e elementos mágicos",
+      "Capuz decorado com detalhes encantadores",
+      "Acabamento premium com brilhos",
+      "Toque macio para peles sensíveis"
+    ],
+    images: [
+      "/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png"
+    ],
+    keywords: ["roupão", "infantil", "bordado", "fadas", "banho", "meninas"]
+  },
+  {
+    id: 705,
+    name: "Roupão Infantil Bordado Espaço",
+    type: "product",
+    category: "Roupões Infantis",
+    imageUrl: "/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png",
+    description: "Roupão infantil com bordado temático espacial, com planetas, estrelas e astronautas. Ideal para crianças curiosas que sonham com aventuras no espaço sideral.",
+    price: "Sob consulta",
+    colors: ["Azul Marinho", "Preto", "Branco"],
+    sizes: ["P (1-2 anos)", "M (3-5 anos)", "G (6-8 anos)"],
+    rating: 4.8,
+    isNew: true,
+    features: [
+      "Material felpudo de alta qualidade",
+      "Bordados detalhados do sistema solar",
+      "Capuz com detalhe de astronauta",
+      "Brilha no escuro para experiência espacial",
+      "Super absorvente e confortável"
+    ],
+    images: [
+      "/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png"
+    ],
+    keywords: ["roupão", "infantil", "bordado", "espaço", "planetas", "banho"]
+  },
+  {
+    id: 706,
+    name: "Roupão Infantil Bordado Personalizado",
+    type: "product",
+    category: "Roupões Infantis",
+    imageUrl: "/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png",
+    description: "Roupão infantil com bordado totalmente personalizado, permitindo adicionar o nome da criança e temas de sua preferência. Um presente único e especial.",
+    price: "Sob consulta",
+    colors: ["Rosa", "Azul", "Verde", "Amarelo", "Branco"],
+    sizes: ["P (1-2 anos)", "M (3-5 anos)", "G (6-8 anos)"],
+    rating: 5.0,
+    isNew: true,
+    features: [
+      "Personalização completa com nome e tema",
+      "Material premium super macio",
+      "Design exclusivo para cada criança",
+      "Opções de capuz temático coordenado",
+      "Embalagem especial para presente"
+    ],
+    images: [
+      "/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png"
+    ],
+    keywords: ["roupão", "infantil", "bordado", "personalizado", "presente", "banho"]
   }
 ];
 
@@ -558,6 +913,126 @@ export const toalhasProducts: Product[] = [
       "/lovable-uploads/8bb673d8-4fd4-48cc-b6c5-3d94217ac846.png"
     ],
     keywords: ["toalha", "banho", "fadas", "kit", "infantil", "bordado"]
+  },
+  {
+    id: 807,
+    name: "Toalha de Banho Bordado Floral",
+    type: "product",
+    category: "Toalhas Infantis",
+    imageUrl: "/lovable-uploads/d2fc000c-904f-4a72-974e-e6aa5ad89b79.png",
+    description: "Toalha de banho com delicado bordado floral, confeccionada em material premium de alta absorção. Adiciona um toque de elegância ao seu banheiro.",
+    price: "Sob consulta",
+    colors: ["Branco", "Bege", "Rosa Claro", "Azul Claro"],
+    sizes: ["M (70x140cm)", "G (80x150cm)"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Tecido 100% algodão egípcio",
+      "Bordado floral artesanal detalhado",
+      "Alta capacidade de absorção",
+      "Acabamento premium com barra decorativa",
+      "Toque macio e aveludado"
+    ],
+    images: [
+      "/lovable-uploads/d2fc000c-904f-4a72-974e-e6aa5ad89b79.png"
+    ],
+    keywords: ["toalha", "banho", "bordado", "floral", "algodão", "absorvente"]
+  },
+  {
+    id: 808,
+    name: "Toalha de Banho Bordado Monograma",
+    type: "product",
+    category: "Toalhas Infantis",
+    imageUrl: "/lovable-uploads/16ec485a-1a80-474e-a14b-c0e40d3b0780.png",
+    description: "Toalha de banho premium com bordado de monograma personalizado, ideal para presentear em ocasiões especiais ou para uso em hotéis e spas.",
+    price: "Sob consulta",
+    colors: ["Branco", "Cinza", "Azul Marinho", "Bordô"],
+    sizes: ["M (70x140cm)", "G (80x150cm)", "GG (100x180cm)"],
+    rating: 5.0,
+    isNew: true,
+    features: [
+      "Material nobre com gramatura superior",
+      "Bordado personalizado com iniciais ou nome completo",
+      "Design elegante e sofisticado",
+      "Acabamento com barrado especial",
+      "Absorção rápida e secagem eficiente"
+    ],
+    images: [
+      "/lovable-uploads/16ec485a-1a80-474e-a14b-c0e40d3b0780.png"
+    ],
+    keywords: ["toalha", "banho", "bordado", "monograma", "personalizada", "premium"]
+  },
+  {
+    id: 809,
+    name: "Kit Toalhas Bordado Casal",
+    type: "product",
+    category: "Toalhas Infantis",
+    imageUrl: "/lovable-uploads/047eeb2e-65e3-4785-bb08-584cd60156f5.png",
+    description: "Kit de toalhas para casal com bordado personalizado, contendo 4 peças: 2 toalhas de banho e 2 toalhas de rosto combinando. Presente perfeito para noivos.",
+    price: "Sob consulta",
+    colors: ["Branco", "Bege", "Cinza", "Azul"],
+    sizes: ["Único - Banho (70x140cm) e Rosto (50x80cm)"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Kit completo com 4 toalhas combinando",
+      "Bordado personalizado para Ele e Ela",
+      "Material premium de alta durabilidade",
+      "Embalagem especial para presente",
+      "Pode ser personalizado com nomes ou iniciais"
+    ],
+    images: [
+      "/lovable-uploads/047eeb2e-65e3-4785-bb08-584cd60156f5.png"
+    ],
+    keywords: ["toalha", "kit", "casal", "bordado", "presente", "noivos"]
+  },
+  {
+    id: 810,
+    name: "Toalha de Banho Bordado Spa",
+    type: "product",
+    category: "Toalhas Infantis",
+    imageUrl: "/lovable-uploads/af659db1-b127-4e66-b7f7-7f90fbea444c.png",
+    description: "Toalha de banho com bordado spa, desenvolvida com tecido especial de algodão egípcio para proporcionar uma experiência de spa em casa. Extra macia e absorvente.",
+    price: "Sob consulta",
+    colors: ["Branco", "Off-White", "Verde Água"],
+    sizes: ["G (80x150cm)", "GG (100x180cm)"],
+    rating: 4.8,
+    isNew: true,
+    features: [
+      "Tecido premium com gramatura superior a 500g/m²",
+      "Bordado sofisticado com motivos de spa",
+      "Toque ultra macio para relaxamento",
+      "Absorção superior com secagem rápida",
+      "Durabilidade excepcional mesmo após várias lavagens"
+    ],
+    images: [
+      "/lovable-uploads/af659db1-b127-4e66-b7f7-7f90fbea444c.png"
+    ],
+    keywords: ["toalha", "banho", "bordado", "spa", "premium", "algodão"]
+  },
+  {
+    id: 811,
+    name: "Toalha de Banho Bordado Corporativo",
+    type: "product",
+    category: "Toalhas Infantis",
+    imageUrl: "/lovable-uploads/71292974-89b5-4b63-91e3-db0427e19486.png",
+    description: "Toalha de banho com bordado corporativo, ideal para hotéis, spas, academias e empresas que desejam oferecer produtos premium com sua marca. Elegante e durável.",
+    price: "Sob consulta",
+    colors: ["Branco", "Cinza", "Azul Marinho"],
+    sizes: ["M (70x140cm)", "G (80x150cm)"],
+    rating: 4.7,
+    isNew: true,
+    features: [
+      "Bordado corporativo com logomarca",
+      "Material resistente para uso intensivo",
+      "Acabamento profissional de alta qualidade",
+      "Possibilidade de compra em grandes quantidades",
+      "Personalização conforme necessidades da empresa"
+    ],
+    images: [
+      "/lovable-uploads/71292974-89b5-4b63-91e3-db0427e19486.png"
+    ],
+    keywords: ["toalha", "banho", "bordado", "corporativo", "hotel", "empresa"]
   }
 ];
 
@@ -571,4 +1046,3 @@ export const allProducts: Product[] = [
   ...roupoesProducts.map(product => ({ ...product, type: 'product' })),
   ...toalhasProducts.map(product => ({ ...product, type: 'product' }))
 ];
-

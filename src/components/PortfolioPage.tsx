@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ArrowRight, Star, Search } from 'lucide-react';
+import { ArrowRight, Star, Search, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -31,12 +31,30 @@ const categoryTitles: Record<string, string> = {
   'bordado-toalha-banho': 'Bordado em Toalha de Banho'
 };
 
+// Gerador de mensagens personalizadas para WhatsApp
+const generateWhatsAppMessage = (productName: string, colors?: string[], sizes?: string[]): string => {
+  let message = `Olá! Vi o produto ${productName} e gostaria de fazer um orçamento!`;
+  
+  if (colors && colors.length > 0) {
+    message += `\nCor: ${colors.join(', ')}.`;
+  }
+  
+  if (sizes && sizes.length > 0) {
+    message += `\nTamanho: ${sizes.join(', ')}.`;
+  }
+  
+  message += "\nQuantidade: [campo para preencher]";
+  
+  return encodeURIComponent(message);
+};
+
 const PortfolioPage = () => {
   const location = useLocation();
   const [portfolioItems, setPortfolioItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredItems, setFilteredItems] = useState<Product[]>([]);
+  const whatsappNumber = "+5581995970776";
   
   useEffect(() => {
     // Extract the category from the URL path
@@ -153,7 +171,15 @@ const PortfolioPage = () => {
                     </div>
                     <h3 className="font-semibold text-base md:text-lg mb-3 line-clamp-2">{item.name}</h3>
                     <div className="flex items-center justify-between">
-                      <span className="text-xs md:text-sm text-gray-600">Solicite um orçamento</span>
+                      <a 
+                        href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(item.name, item.colors, item.sizes)}`}
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-xs md:text-sm text-gray-600 hover:text-brand-red flex items-center gap-1 transition-all"
+                      >
+                        <MessageCircle className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                        <span>Solicitar orçamento</span>
+                      </a>
                       <Link 
                         to={`/produto/${item.id}`}
                         className="text-brand-dark hover:text-brand-red transition-colors duration-300"
