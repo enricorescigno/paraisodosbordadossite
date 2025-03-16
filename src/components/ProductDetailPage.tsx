@@ -29,7 +29,6 @@ const ProductDetailPage = () => {
         let foundProduct = allProducts.find(p => p.id.toString() === productId);
         
         if (foundProduct) {
-          // Configure the default selected values if the product has options
           if (foundProduct.colors && foundProduct.colors.length > 0) {
             setSelectedColor(foundProduct.colors[0]);
           }
@@ -37,10 +36,8 @@ const ProductDetailPage = () => {
             setSelectedSize(foundProduct.sizes[0]);
           }
           
-          // Determine if this is a portfolio item
           setIsFromPortfolio(foundProduct.type === 'portfolio');
           
-          // Ensure product has all required fields
           if (!foundProduct.rating) foundProduct.rating = 4.8;
           if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
           if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
@@ -86,11 +83,9 @@ const ProductDetailPage = () => {
       return '/portfolio';
     }
     
-    // Check if the product has a category and try to generate a category link
     if (product && product.category) {
       const category = product.category.toLowerCase().replace(/\s+/g, '-');
       
-      // Common category mappings
       const categoryMap: Record<string, string> = {
         'cama': '/categoria/cama',
         'mesa e cozinha': '/categoria/mesa-cozinha',
@@ -177,19 +172,6 @@ const ProductDetailPage = () => {
                         <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
                           <img 
                             src={product.imageUrl} 
-                            alt={product.name}
-                            className="w-full h-full object-contain mix-blend-multiply p-4"
-                            onError={(e) => {
-                              e.currentTarget.src = placeholder(product.category);
-                            }}
-                          />
-                        </AspectRatio>
-                      </CarouselItem>
-                    ) : product.image ? (
-                      <CarouselItem>
-                        <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
-                          <img 
-                            src={product.image} 
                             alt={product.name}
                             className="w-full h-full object-contain mix-blend-multiply p-4"
                             onError={(e) => {
