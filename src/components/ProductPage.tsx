@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowRight, Star, Search, MessageCircle } from 'lucide-react';
