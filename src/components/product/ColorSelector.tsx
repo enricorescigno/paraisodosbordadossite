@@ -1,5 +1,6 @@
 
 import React from 'react';
+import { motion } from 'framer-motion';
 
 interface ColorSelectorProps {
   colors: string[];
@@ -38,21 +39,35 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
       <div className="flex flex-wrap gap-3">
         {colors.map((color) => {
           const bgColor = colorMap[color] || "#f5f5f7";
+          const isSelected = selectedColor === color;
           
           return (
-            <button
+            <motion.button
               key={color}
               onClick={() => onColorChange(color)}
-              className={`relative h-9 w-9 rounded-full transition-all duration-200
-                ${selectedColor === color ? 'ring-2 ring-offset-2 ring-brand-red' : ''}
-              `}
+              whileTap={{ scale: 0.95 }}
+              className={`relative h-10 w-10 rounded-full transition-all duration-300 ${
+                isSelected ? 'ring-2 ring-offset-2 ring-brand-red' : 'hover:ring-1 hover:ring-gray-300 hover:ring-offset-1'
+              }`}
               title={color}
+              aria-label={`Selecionar cor ${color}`}
             >
               <span 
                 className="absolute inset-0 rounded-full border border-gray-200"
                 style={{ backgroundColor: bgColor }}
-              ></span>
-            </button>
+              />
+              
+              {isSelected && (
+                <motion.span 
+                  className="absolute inset-0 flex items-center justify-center"
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", duration: 0.3 }}
+                >
+                  <span className={`w-2 h-2 rounded-full ${bgColor === '#ffffff' ? 'bg-gray-800' : 'bg-white'}`} />
+                </motion.span>
+              )}
+            </motion.button>
           );
         })}
       </div>

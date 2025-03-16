@@ -101,7 +101,7 @@ export const mesaCozinhaProducts: Product[] = [
     type: "product",
     category: "Mesa e Cozinha",
     imageUrl: "/lovable-uploads/71c6178b-1439-499f-9354-f8bd6d43c514.png",
-    description: "Jogo americano com bordado elegante, conjunto com 4 unidades. Confeccionado em tecido durável e fácil de limpar, protege sua mesa com estilo.",
+    description: "Eleve sua experiência à mesa com o jogo americano Tessi. Com uma composição inteligente de 75% polipropileno e 25% poliéster, este jogo americano é sinônimo de resistência e praticidade. Sua durabilidade o torna perfeito para o uso diário, e a limpeza é simples, graças à sua fácil lavagem. Além disso, seca rapidamente, estando pronto para ser usado sempre que você precisar. Com um diâmetro de 38cm, o formato redondo complementa sua mesa de maneira elegante. Adicione estilo e conveniência à sua refeição com o jogo americano Tessi.",
     price: "Sob consulta",
     colors: ["Branco", "Dourado", "Cobre", "Rosa", "Verde", "Vinho", "Marrom"],
     sizes: ["38cm (diâmetro)"],
@@ -114,13 +114,13 @@ export const mesaCozinhaProducts: Product[] = [
       "Conjunto com 4 unidades"
     ],
     images: {
-      "Branco": ["/lovable-uploads/71c6178b-1439-499f-9354-f8bd6d43c514.png"],
-      "Dourado": ["/lovable-uploads/55ee7159-6ba2-4ea8-ba47-fe26c718040d.png"],
-      "Cobre": ["/lovable-uploads/e8fbdabd-3ce9-4d51-bbcf-0ecf9bed4a44.png"],
-      "Rosa": ["/lovable-uploads/901b9c40-ca3f-48a8-9135-38facf09b3da.png"],
-      "Verde": ["/lovable-uploads/f28c69c5-853f-469b-afba-91b8202120d0.png"],
-      "Vinho": ["/lovable-uploads/1bb354e7-598f-421d-9f97-f716da838757.png"],
-      "Marrom": ["/lovable-uploads/b8507f62-379e-42ba-b9c4-e08ff04db821.png"]
+      "Branco": ["/lovable-uploads/71c6178b-1439-499f-9354-f8bd6d43c514.png", "/lovable-uploads/c7b9448d-b4d0-4cd8-9bf3-74d9694e5f1c.png"],
+      "Dourado": ["/lovable-uploads/55ee7159-6ba2-4ea8-ba47-fe26c718040d.png", "/lovable-uploads/dd9ced21-2cf3-4c5b-af78-8859edfebb2d.png"],
+      "Cobre": ["/lovable-uploads/e8fbdabd-3ce9-4d51-bbcf-0ecf9bed4a44.png", "/lovable-uploads/9abff6f1-4ffa-4049-9055-1a34b0c4ccb9.png"],
+      "Rosa": ["/lovable-uploads/901b9c40-ca3f-48a8-9135-38facf09b3da.png", "/lovable-uploads/8277533f-4870-4627-896d-ba16fc386d29.png"],
+      "Verde": ["/lovable-uploads/f28c69c5-853f-469b-afba-91b8202120d0.png", "/lovable-uploads/ad0cfed6-c98f-401b-9c50-a554468342e6.png"],
+      "Vinho": ["/lovable-uploads/1bb354e7-598f-421d-9f97-f716da838757.png", "/lovable-uploads/d797a77e-cf02-4711-9ecc-d409cc56157a.png"],
+      "Marrom": ["/lovable-uploads/b8507f62-379e-42ba-b9c4-e08ff04db821.png", "/lovable-uploads/1f1315c2-0f15-4525-9fdb-6c6574d95634.png"]
     }
   },
   {

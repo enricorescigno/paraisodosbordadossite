@@ -21,6 +21,11 @@ const ProductImageGallery = ({
 }: ProductImageGalleryProps) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
+  // Reset active image index when color changes
+  useEffect(() => {
+    setActiveImageIndex(0);
+  }, [selectedColor]);
+
   return (
     <div className="bg-white rounded-2xl overflow-hidden">
       <AnimatePresence mode="wait">
@@ -35,7 +40,7 @@ const ProductImageGallery = ({
             <CarouselContent>
               {images.length > 0 ? (
                 images.map((img, index) => (
-                  <CarouselItem key={index}>
+                  <CarouselItem key={`${selectedColor}-${index}`}>
                     <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
                       <img 
                         src={img} 
