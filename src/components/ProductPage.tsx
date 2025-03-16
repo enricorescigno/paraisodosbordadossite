@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowRight, Star, Search, MessageCircle } from 'lucide-react';
@@ -152,7 +151,7 @@ const ProductPage = () => {
                   <Link to={`/produto/${product.id}`} className="block">
                     <AspectRatio ratio={1/1} className="relative bg-[#f5f5f7]">
                       <img 
-                        src={product.imageUrl || (product.images && product.images[0]) || product.image} 
+                        src={product.imageUrl || (product.images && product.images[0])} 
                         alt={product.name}
                         className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                         onError={(e) => {
