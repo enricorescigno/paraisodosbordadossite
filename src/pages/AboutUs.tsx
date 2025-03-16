@@ -11,7 +11,7 @@ const AboutUs = () => {
         <section className="bg-brand-light py-16 md:py-20">
           <div className="container-custom">
             <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-serif text-4xl md:text-5xl font-bold text-brand-dark mb-6">Sobre Nós</h1>
+              <h1 className="font-sans text-4xl md:text-5xl font-bold text-brand-dark mb-6">Sobre Nós</h1>
               <p className="text-lg text-gray-600 font-normal">
                 Conheça a nossa história, missão e valores
               </p>
@@ -24,7 +24,7 @@ const AboutUs = () => {
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div className="order-2 lg:order-1">
-                <h2 className="font-serif text-3xl font-bold mb-6 text-brand-red">Bem-Vindo a Paraíso dos Bordados</h2>
+                <h2 className="font-sans text-3xl font-bold mb-6 text-brand-red">Bem-Vindo a Paraíso dos Bordados</h2>
                 <p className="text-gray-700 mb-5">
                   Bem-vindo à Paraíso dos Bordados, a sua loja de referência em Recife, PE! Há mais de 20 anos no mercado, somos apaixonados por transformar ideias em peças únicas e especiais. Especializados em bordados personalizados, trabalhamos com precisão e criatividade para adicionar um toque exclusivo a cada produto, tornando-o verdadeiramente único. Seja para presentear alguém especial ou renovar os itens do seu lar, nossos bordados refletem cuidado, estilo e sofisticação.
                 </p>
@@ -55,7 +55,7 @@ const AboutUs = () => {
         {/* What We Offer */}
         <section className="py-16 bg-brand-light">
           <div className="container-custom">
-            <h2 className="font-serif text-3xl text-center font-bold mb-12 text-brand-red">O que Oferecemos</h2>
+            <h2 className="font-sans\n text-3xl text-center font-bold mb-12 text-brand-red">O que Oferecemos</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="bg-white p-8 rounded-lg shadow-md transition-transform hover:scale-105">
@@ -105,7 +105,7 @@ const AboutUs = () => {
           <div className="container-custom">
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-12">
               <div className="lg:col-span-3">
-                <h2 className="font-serif text-3xl font-bold mb-6 text-brand-red">Nosso compromisso</h2>
+                <h2 className="font-sans text-3xl font-bold mb-6 text-brand-red">Nosso compromisso</h2>
                 <p className="text-gray-700 mb-5">
                   Nosso compromisso vai além da qualidade dos produtos. Priorizamos um atendimento excepcional, garantindo que cada cliente tenha uma experiência única em nossa loja. Oferecemos um serviço ágil e personalizado, com destaque para a possibilidade de realizar pedidos e personalizações diretamente pelo nosso WhatsApp, com a mesma atenção e cuidado que você merece. Além disso, para serviços específicos, garantimos um prazo mínimo de entrega de até 1 hora, mostrando nossa eficiência e dedicação.
                 </p>
