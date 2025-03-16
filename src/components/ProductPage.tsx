@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowRight, ChevronRight, ChevronLeft } from 'lucide-react';

@@ -96,7 +96,7 @@ export const mesaCozinhaProducts: Product[] = [
     ]
   },
   {
-    id: 202,
+    id: 204, // Changed ID from 202 to 204 to avoid conflict with other product
     name: "Jogo Americano Requinte Ondulado",
     type: "product",
     category: "Mesa e Cozinha",
