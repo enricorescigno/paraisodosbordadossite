@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { Product } from '../types/product';
 import { allProducts } from '../utils/productUtils';
+import { toast } from 'sonner';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -30,9 +32,11 @@ export const useProductDetail = () => {
     
     setTimeout(() => {
       if (productId) {
+        console.log("Looking for product with ID:", productId);
         let foundProduct = allProducts.find(p => p.id.toString() === productId);
         
         if (productId === "204") {
+          console.log("Special case for product 204");
           foundProduct = {
             id: 204,
             name: "Jogo Americano Requinte Ondulado",
@@ -56,6 +60,7 @@ export const useProductDetail = () => {
         }
         
         if (foundProduct) {
+          console.log("Found product:", foundProduct.name);
           if (foundProduct.colors && foundProduct.colors.length > 0) {
             setSelectedColor(foundProduct.colors[0]);
           }
@@ -82,7 +87,9 @@ export const useProductDetail = () => {
             initializeImages(foundProduct);
           }
         } else {
+          console.log("Product not found for ID:", productId);
           setProduct(null);
+          toast.error("Produto não encontrado");
         }
       }
       setLoading(false);
