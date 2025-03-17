@@ -6,6 +6,7 @@ import { useScrollToTop } from '../hooks/useScrollToTop';
  * sempre que uma navegação ocorre.
  */
 const ScrollToTop = () => {
+  // Usando hook personalizado para resetar scroll
   useScrollToTop();
   return null;
 };

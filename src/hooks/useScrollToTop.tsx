@@ -6,6 +6,7 @@ export function useScrollToTop() {
   const location = useLocation();
   
   useEffect(() => {
+    // Usando behavior: 'instant' para evitar animação de scroll que pode causar problemas de UX
     window.scrollTo({
       top: 0,
       behavior: 'instant'
