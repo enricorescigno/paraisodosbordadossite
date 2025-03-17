@@ -2,6 +2,7 @@
 import React from 'react';
 import { Star } from 'lucide-react';
 import { Product } from '@/types/product';
+import { motion } from 'framer-motion';
 
 interface ProductHeaderProps {
   product: Product;
@@ -9,7 +10,11 @@ interface ProductHeaderProps {
 
 const ProductHeader = ({ product }: ProductHeaderProps) => {
   return (
-    <>
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
       {product.isNew && (
         <span className="inline-block bg-[#C32E2E]/10 text-[#C32E2E] px-3 py-1 rounded-full text-xs font-medium mb-3">
           Novo
@@ -29,7 +34,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
       <p className="text-lg text-gray-700 mb-8 leading-relaxed">
         {product.description || "Eleve sua experiência à mesa com este jogo americano de alta qualidade. Com design elegante e materiais premium, é perfeito para todas as ocasiões, do dia a dia às celebrações especiais."}
       </p>
-    </>
+    </motion.div>
   );
 };
 

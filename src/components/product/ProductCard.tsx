@@ -74,7 +74,7 @@ const ProductCard = ({
         </h3>
         
         {description && (
-          <p className="text-center text-gray-500 mb-4 max-w-md px-4 text-sm md:text-base line-clamp-2">
+          <p className="text-center text-gray-500 mb-4 max-w-md px-4 text-sm md:text-base line-clamp-2 h-[2.5rem] overflow-hidden">
             {description}
           </p>
         )}
@@ -86,6 +86,7 @@ const ProductCard = ({
             variant="default" 
             size="lg" 
             className="rounded-full px-8 w-full min-h-[48px]"
+            aria-label={`Ver detalhes de ${name}`}
           >
             {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
           </Button>

@@ -28,7 +28,15 @@ const SizeSelector = ({ sizes, selectedSize, onSizeChange }: SizeSelectorProps) 
             aria-label={`Selecionar tamanho ${size}`}
             data-testid={`size-button-${size.toLowerCase().replace(/\s+/g, '-')}`}
           >
-            {size}
+            {/* Format multiline labels if needed */}
+            {size.includes(' ') 
+              ? size.split(' ').map((word, index, array) => (
+                  <React.Fragment key={index}>
+                    {word}
+                    {index < array.length - 1 && <br />}
+                  </React.Fragment>
+                ))
+              : size}
           </motion.button>
         ))}
       </div>

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -24,6 +24,7 @@ const ProductImageGallery = ({
   const [imageError, setImageError] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
 
   // Reset active image index when color or images change
   useEffect(() => {
@@ -39,7 +40,15 @@ const ProductImageGallery = ({
   };
 
   const handleImageClick = (index: number) => {
-    setActiveImageIndex(index);
+    if (index === activeImageIndex && !isLightboxOpen) {
+      setIsLightboxOpen(true);
+    } else {
+      setActiveImageIndex(index);
+    }
+  };
+
+  const closeLightbox = () => {
+    setIsLightboxOpen(false);
   };
 
   const imageStyle = isZoomed ? {
@@ -93,6 +102,11 @@ const ProductImageGallery = ({
               </AspectRatio>
             )}
             
+            {/* Zoom indicator for desktop */}
+            <div className="absolute bottom-3 right-3 bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm hidden md:flex items-center justify-center">
+              <ZoomIn className="h-4 w-4 text-gray-600" />
+            </div>
+            
             {/* Navigation Arrows */}
             {images.length > 1 && !imageError && (
               <>
@@ -126,6 +140,7 @@ const ProductImageGallery = ({
                   className={`relative h-16 w-16 rounded-md overflow-hidden border ${
                     index === activeImageIndex ? 'border-[#C32E2E] shadow-sm' : 'border-gray-200'
                   }`}
+                  aria-label={`Ver imagem ${index + 1}`}
                 >
                   <img 
                     src={img} 
@@ -137,6 +152,40 @@ const ProductImageGallery = ({
             </div>
           )}
         </motion.div>
+      </AnimatePresence>
+      
+      {/* Lightbox for zoomed view */}
+      <AnimatePresence>
+        {isLightboxOpen && images.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+            onClick={closeLightbox}
+          >
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0.9 }}
+              className="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img 
+                src={images[activeImageIndex]}
+                alt={`${productName} - Vista ampliada`}
+                className="max-w-full max-h-[90vh] object-contain"
+              />
+              <button
+                onClick={closeLightbox}
+                className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2"
+                aria-label="Fechar visualização ampliada"
+              >
+                <span className="text-white text-2xl">&times;</span>
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
     </div>
   );

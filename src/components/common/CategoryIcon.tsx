@@ -11,10 +11,10 @@ interface CategoryIconProps {
 }
 
 const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconProps) => {
-  // Function to add line breaks at the right spots in category names
+  // Function to format category names with line breaks
   const formatCategoryName = (name: string) => {
     // Words that should trigger a line break after them
-    const breakAfterWords = ['em', 'e', 'de'];
+    const breakAfterWords = ['em', 'e', 'de', 'Mesa'];
     
     const words = name.split(' ');
     
@@ -26,7 +26,7 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
     // Check if any of the words should trigger a line break
     for (let i = 0; i < words.length - 1; i++) {
       const lowerCaseWord = words[i].toLowerCase();
-      if (breakAfterWords.includes(lowerCaseWord)) {
+      if (breakAfterWords.includes(lowerCaseWord) || breakAfterWords.includes(words[i])) {
         // Return the first part + line break + second part
         return (
           <>
@@ -52,7 +52,7 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
   
   return (
     <motion.div 
-      className="flex flex-col items-center justify-center gap-1 cursor-pointer min-w-[80px] md:min-w-[85px]"
+      className="flex flex-col items-center justify-center gap-1 cursor-pointer min-w-[75px] md:min-w-[85px]"
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
