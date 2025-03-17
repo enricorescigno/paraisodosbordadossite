@@ -11,6 +11,7 @@ import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
 import { useScrollToTop } from '../hooks/useScrollToTop';
+import BrowseByCategory from './common/BrowseByCategory';
 
 // Portfolio categories mapping
 const PORTFOLIO_CATEGORIES: Record<string, string> = {
@@ -96,6 +97,12 @@ const PortfolioPage = () => {
           <PageHeader 
             title={categoryTitle}
             description={`Explore nossos trabalhos de ${categoryTitle.toLowerCase()} feitos com qualidade e atenção aos detalhes.`}
+          />
+          
+          {/* Show only the portfolio categories */}
+          <BrowseByCategory
+            activeCategory={categoryPath}
+            showOnlyPortfolio={true}
           />
           
           {loading ? (

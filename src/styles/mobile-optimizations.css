@@ -231,6 +231,21 @@
   .bottom-safe-area {
     @apply pb-20;
   }
+  
+  /* Category scrollable menu - new Apple-inspired styling */
+  .category-menu {
+    @apply w-full flex justify-center overflow-x-auto pb-6 pt-2 hide-scrollbar;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .category-menu-inner {
+    @apply flex space-x-4 px-4;
+  }
+  
+  .category-menu-item {
+    @apply flex flex-col items-center justify-center;
+    scroll-snap-align: center;
+  }
 }
 
 /* Minimum width support for very small screens */

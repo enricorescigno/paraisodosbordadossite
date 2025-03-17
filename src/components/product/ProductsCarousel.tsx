@@ -57,8 +57,8 @@ const ProductsCarousel = ({ products, whatsappNumber, isPortfolio = false }: Pro
         </div>
       </Carousel>
       
-      {/* Adicionar espaço extra para evitar sobreposição com o botão de WhatsApp no mobile */}
-      {isMobile && <div className="h-20"></div>}
+      {/* Add extra bottom spacing to avoid overlap with WhatsApp button */}
+      <div className="bottom-safe-area"></div>
     </motion.div>
   );
 };

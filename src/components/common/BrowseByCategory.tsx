@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bed, Bath, ChefHat, Shirt, Paintbrush, BookOpenCheck, Baby, Briefcase, ShoppingBag } from 'lucide-react';
+import { Bed, Bath, ChefHat, Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CategoryIcon from './CategoryIcon';
 
@@ -10,43 +10,73 @@ interface Category {
   name: string;
   icon: React.ReactNode;
   path: string;
+  type: 'product' | 'portfolio';
 }
 
-const categories: Category[] = [
-  { id: 'cama', name: 'Cama', icon: <Bed className="w-8 h-8 text-gray-700" />, path: '/categoria/cama' },
-  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <ChefHat className="w-8 h-8 text-gray-700" />, path: '/categoria/mesa-cozinha' },
-  { id: 'banho', name: 'Banho', icon: <Bath className="w-8 h-8 text-gray-700" />, path: '/categoria/banho' },
-  { id: 'bordado-bone', name: 'Bordado em Boné', icon: <Shirt className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-bone' },
-  { id: 'bordado-toalha-banho', name: 'Bordado em Toalha', icon: <Paintbrush className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-toalha-banho' },
-  { id: 'bordado-jaleco', name: 'Bordado em Jaleco', icon: <BookOpenCheck className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-jaleco' },
-  { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-infantis' },
-  { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-necessaire' },
-  { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-bolsa' },
+// Combined list of all categories
+const allCategories: Category[] = [
+  // Product categories
+  { id: 'cama', name: 'Cama', icon: <Bed className="w-8 h-8 text-gray-700" />, path: '/categoria/cama', type: 'product' },
+  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <ChefHat className="w-8 h-8 text-gray-700" />, path: '/categoria/mesa-cozinha', type: 'product' },
+  { id: 'banho', name: 'Banho', icon: <Bath className="w-8 h-8 text-gray-700" />, path: '/categoria/banho', type: 'product' },
+  { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-8 h-8 text-gray-700" />, path: '/categoria/pantufa', type: 'product' },
+  
+  // Portfolio categories
+  { id: 'all', name: 'Todos', icon: <Paintbrush className="w-8 h-8 text-gray-700" />, path: '/portfolio', type: 'portfolio' },
+  { id: 'bordado-bone', name: 'Bordado em Boné', icon: <Shirt className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-bone', type: 'portfolio' },
+  { id: 'bordado-jaleco', name: 'Bordado em Jaleco', icon: <Shirt className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-jaleco', type: 'portfolio' },
+  { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-infantis', type: 'portfolio' },
+  { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-bolsa', type: 'portfolio' },
+  { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' },
+  { id: 'bordado-toalha-banho', name: 'Bordado em Toalha', icon: <Bath className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-toalha-banho', type: 'portfolio' }
 ];
 
 interface BrowseByCategoryProps {
   activeCategory?: string;
+  onCategoryChange?: (categoryId: string) => void;
+  showOnlyProducts?: boolean;
+  showOnlyPortfolio?: boolean;
 }
 
-const BrowseByCategory = ({ activeCategory }: BrowseByCategoryProps) => {
+const BrowseByCategory = ({ 
+  activeCategory, 
+  onCategoryChange,
+  showOnlyProducts = false,
+  showOnlyPortfolio = false
+}: BrowseByCategoryProps) => {
   const navigate = useNavigate();
+
+  // Filter categories based on the showOnly props
+  const filteredCategories = allCategories.filter(category => {
+    if (showOnlyProducts) return category.type === 'product';
+    if (showOnlyPortfolio) return category.type === 'portfolio';
+    return true;
+  });
+
+  const handleCategoryClick = (category: Category) => {
+    if (onCategoryChange) {
+      onCategoryChange(category.id);
+    } else {
+      navigate(category.path);
+    }
+  };
 
   return (
     <div className="w-full mb-8 md:mb-12">
-      <div className="overflow-x-auto hide-scrollbar pb-4">
+      <div className="category-menu">
         <motion.div 
-          className="flex space-x-4 md:space-x-6 px-4"
+          className="category-menu-inner"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {categories.map((category) => (
+          {filteredCategories.map((category) => (
             <CategoryIcon
               key={category.id}
               name={category.name}
               icon={category.icon}
               isActive={activeCategory === category.id}
-              onClick={() => navigate(category.path)}
+              onClick={() => handleCategoryClick(category)}
             />
           ))}
         </motion.div>

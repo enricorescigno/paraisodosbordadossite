@@ -12,6 +12,7 @@ import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
+import BrowseByCategory from './common/BrowseByCategory';
 
 // Category name translations for titles
 const categoryTitles: Record<string, string> = {
@@ -124,6 +125,12 @@ const ProductPage = () => {
           <PageHeader 
             title={categoryTitle}
             description={`Explore nossa coleção de ${categoryTitle.toLowerCase()} feitos com qualidade e atenção aos detalhes.`}
+          />
+          
+          {/* Show only the product categories */}
+          <BrowseByCategory 
+            activeCategory={categoryPath}
+            showOnlyProducts={true}
           />
           
           {loading ? (

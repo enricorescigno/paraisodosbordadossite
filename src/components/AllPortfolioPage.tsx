@@ -7,11 +7,10 @@ import { useIsMobile } from '../hooks/use-mobile';
 import { allProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
-import CategoryTabs from './common/CategoryTabs';
 import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
-import BrowseNavigation from './common/BrowseNavigation';
+import BrowseByCategory from './common/BrowseByCategory';
 
 // Portfolio categories mapping
 const PORTFOLIO_CATEGORIES = {
@@ -80,41 +79,6 @@ const AllPortfolioPage = () => {
     setFilteredItems(result);
   }, [activeCategory, allPortfolioItems]);
 
-  // Extrair categorias únicas para filtros
-  const getUniqueCategories = () => {
-    const categories = ['all'];
-    const uniqueSlugs = new Set();
-    
-    allPortfolioItems.forEach(item => {
-      const categoryName = item.category || '';
-      const categorySlug = PORTFOLIO_CATEGORIES[categoryName as keyof typeof PORTFOLIO_CATEGORIES];
-      if (categorySlug && !uniqueSlugs.has(categorySlug)) {
-        uniqueSlugs.add(categorySlug);
-        categories.push(categorySlug);
-      }
-    });
-    
-    return categories;
-  };
-
-  const categories = getUniqueCategories();
-
-  // Função para obter nome de exibição da categoria
-  const getCategoryDisplayName = (category: string) => {
-    const categoryMap: Record<string, string> = {
-      'all': 'Todos',
-      'bordado-bone': 'Bordado em Boné',
-      'bordado-necessaire': 'Bordado em Necessaire',
-      'bordado-bolsa': 'Bordado em Bolsa',
-      'bordado-jaleco': 'Bordado em Jaleco',
-      'bordado-infantis': 'Bordado Infantil',
-      'bordado-toalha-banho': 'Bordado em Toalha',
-      'vestuario': 'Vestuário'
-    };
-    
-    return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
-  };
-
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
@@ -122,17 +86,15 @@ const AllPortfolioPage = () => {
       <section className={`py-16 md:py-24 bg-[#f5f5f7] ${isMobile ? 'pt-24' : 'pt-20'}`}>
         <div className="container-custom">
           <PageHeader 
-            title="Nosso Portfólio"
+            title="Nosso Portfólio de Bordados"
             description="Conheça nossos trabalhos de bordado personalizados para diversas aplicações, feitos com qualidade e atenção aos detalhes."
           />
           
-          <BrowseNavigation />
-          
-          <CategoryTabs 
-            categories={categories}
+          {/* Using only the category icons menu with portfolio specific icons */}
+          <BrowseByCategory 
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
-            getCategoryDisplayName={getCategoryDisplayName}
+            showOnlyPortfolio={true}
           />
           
           {loading ? (

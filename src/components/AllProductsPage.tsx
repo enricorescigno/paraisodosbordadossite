@@ -7,11 +7,10 @@ import { useIsMobile } from '../hooks/use-mobile';
 import { products } from '../utils/searchUtils';
 import { mesaCozinhaProducts } from '../utils/categoryProducts';
 import PageHeader from './common/PageHeader';
-import CategoryTabs from './common/CategoryTabs';
 import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
-import BrowseNavigation from './common/BrowseNavigation';
+import BrowseByCategory from './common/BrowseByCategory';
 
 const AllProductsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -20,22 +19,6 @@ const AllProductsPage = () => {
   const [activeCategory, setActiveCategory] = useState('mesa-cozinha');  // Default to mesa-cozinha
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
-  
-  // Extract unique categories for filtering - excluding "all"
-  const categories = [...new Set(['banho', 'jaleco', 'infantil', 'cama', 'mesa-cozinha', 'pantufas'])];
-
-  // Function to get category display name
-  const getCategoryDisplayName = (category: string) => {
-    const categoryMap: Record<string, string> = {
-      'cama': 'Cama',
-      'mesa-cozinha': 'Mesa-cozinha',
-      'banho': 'Banho',
-      'infantil': 'Infantil',
-      'pantufas': 'Pantufas',
-      'jaleco': 'Jaleco'
-    };
-    return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
-  };
   
   // Load all products
   useEffect(() => {
@@ -102,13 +85,11 @@ const AllProductsPage = () => {
             description="Explore nossa coleção de produtos feitos com qualidade e atenção aos detalhes."
           />
           
-          <BrowseNavigation activeCategory={activeCategory} />
-          
-          <CategoryTabs 
-            categories={categories}
+          {/* Using only the category icons menu */}
+          <BrowseByCategory 
             activeCategory={activeCategory}
             onCategoryChange={setActiveCategory}
-            getCategoryDisplayName={getCategoryDisplayName}
+            showOnlyProducts={true}
           />
           
           {loading ? (
