@@ -136,7 +136,7 @@ const Hero = () => {
               </AppleButton>
               
               <AppleButton variant="outline" size="lg" className="w-full sm:w-auto">
-                <Link to="/portfolio">
+                <Link to="/portfolio" className="my-0 py-[12px]">
                   Ver Portfólio de Bordados
                 </Link>
               </AppleButton>
