@@ -234,60 +234,15 @@
   
   /* Category scrollable menu - new Apple-inspired styling */
   .category-menu {
-    @apply w-full flex justify-center overflow-x-auto pb-6 pt-2 hide-scrollbar;
-    scroll-snap-type: x mandatory;
+    @apply px-4 md:px-0 py-2 mx-auto max-w-full;
   }
-  
-  .category-menu-inner {
-    @apply flex space-x-4 px-4;
-  }
-  
-  .category-menu-item {
-    @apply flex flex-col items-center justify-center;
-    scroll-snap-align: center;
+
+  .scroll-snap-align-start {
+    scroll-snap-align: start;
   }
 }
 
 /* Minimum width support for very small screens */
 @media (max-width: 320px) {
-  .container {
-    @apply px-3;
-  }
-  
-  .product-color-option {
-    @apply h-10 w-10;
-  }
-  
-  .product-card {
-    @apply w-[95%];
-  }
-  
-  h1 {
-    @apply text-xl;
-  }
-  
-  h2 {
-    @apply text-lg;
-  }
-  
-  h3 {
-    @apply text-base;
-  }
-  
-  .btn-primary, .btn-secondary {
-    @apply text-xs py-2 px-3;
-  }
-  
-  .section-title {
-    @apply text-lg;
-  }
-  
-  /* Smaller category icons for very small screens */
-  .category-icon {
-    @apply min-w-[70px];
-  }
-  
-  .apple-tab {
-    @apply px-3 py-1.5 text-xs;
-  }
+  /* ... keep existing code (minimum width support) */
 }

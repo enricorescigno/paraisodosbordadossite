@@ -50,11 +50,12 @@ const ProductPage = () => {
   const whatsappNumber = "+5581995970776";
   useScrollToTop();
   
+  // Extract the category from the URL path for title and active category
+  const pathParts = location.pathname.split('/');
+  const categoryPath = pathParts[pathParts.length - 1];
+  const categoryTitle = categoryTitles[categoryPath] || categoryPath;
+  
   useEffect(() => {
-    // Extract the category from the URL path
-    const pathParts = location.pathname.split('/');
-    const categoryPath = pathParts[pathParts.length - 1];
-    
     setLoading(true);
     setTimeout(() => {
       let categoryProducts: Product[] = [];
@@ -109,12 +110,7 @@ const ProductPage = () => {
       setFilteredProducts(categoryProducts);
       setLoading(false);
     }, 500);
-  }, [location.pathname]);
-  
-  // Extract the category from the URL path for title
-  const pathParts = location.pathname.split('/');
-  const categoryPath = pathParts[pathParts.length - 1];
-  const categoryTitle = categoryTitles[categoryPath] || categoryPath;
+  }, [location.pathname, categoryPath]);
 
   return (
     <div className="min-h-screen bg-white">

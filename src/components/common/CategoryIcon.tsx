@@ -13,7 +13,7 @@ interface CategoryIconProps {
 const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconProps) => {
   return (
     <motion.div 
-      className="flex flex-col items-center justify-center gap-2 cursor-pointer category-menu-item"
+      className="flex flex-col items-center justify-center gap-2 cursor-pointer"
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}

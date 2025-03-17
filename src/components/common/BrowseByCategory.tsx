@@ -63,21 +63,32 @@ const BrowseByCategory = ({
 
   return (
     <div className="w-full mb-8 md:mb-12">
-      <div className="category-menu">
+      <div className="flex justify-center">
         <motion.div 
-          className="category-menu-inner"
+          className="category-menu overflow-x-auto flex gap-4 md:gap-6 pb-4 hide-scrollbar md:flex-wrap md:justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
+          style={{ 
+            scrollSnapType: 'x mandatory',
+            WebkitOverflowScrolling: 'touch',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none'
+          }}
         >
           {filteredCategories.map((category) => (
-            <CategoryIcon
-              key={category.id}
-              name={category.name}
-              icon={category.icon}
-              isActive={activeCategory === category.id}
-              onClick={() => handleCategoryClick(category)}
-            />
+            <div 
+              key={category.id} 
+              className="flex-shrink-0 scroll-snap-align-start"
+              style={{ scrollSnapAlign: 'start' }}
+            >
+              <CategoryIcon
+                name={category.name}
+                icon={category.icon}
+                isActive={activeCategory === category.id}
+                onClick={() => handleCategoryClick(category)}
+              />
+            </div>
           ))}
         </motion.div>
       </div>
