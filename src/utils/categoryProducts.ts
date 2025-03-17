@@ -1,3 +1,4 @@
+
 import { Product } from '../types/product';
 
 // Cama Collection
@@ -142,6 +143,95 @@ export const mesaCozinhaProducts: Product[] = [
     ],
     images: [
       "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png"
+    ]
+  },
+  // Adicionando os 4 novos produtos
+  {
+    id: 205,
+    name: "Jogo Americano Requinte Oval Tessi",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/0b560816-3cb6-4239-8d40-3e679698bd08.png",
+    description: "Jogo americano de formato oval, marca Hiper Têxtil, código SCB2SJLWP. Possui dimensões ideais para sua mesa e é feito com material durável e fácil de limpar. Disponível em diferentes cores para combinar com sua decoração.",
+    price: "R$ 9,99",
+    colors: ["Vinho", "Bege"],
+    sizes: ["Oval"],
+    rating: 4.7,
+    isNew: true,
+    features: [
+      "Material durável",
+      "Formato oval elegante",
+      "Fácil de limpar",
+      "Conjunto com 4 unidades"
+    ],
+    images: [
+      "/lovable-uploads/0b560816-3cb6-4239-8d40-3e679698bd08.png"
+    ]
+  },
+  {
+    id: 206,
+    name: "Jogo Americano PVC Folhas 4 Peças",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/a929d547-e8ae-4eb4-9a37-286f520221a9.png",
+    description: "Jogo americano em PVC com design exclusivo de folhas. Conjunto com 4 peças da marca Niazitex, código SZYSRDWWC. Elegante e funcional para sua mesa de jantar ou café da manhã.",
+    price: "R$ 48,00",
+    colors: ["Preto", "Branco", "Rosa", "Dourado", "Vermelho"],
+    sizes: ["Único"],
+    rating: 4.8,
+    isNew: true,
+    features: [
+      "Material em PVC resistente",
+      "Design exclusivo em formato de folhas",
+      "Fácil limpeza",
+      "Conjunto com 4 peças"
+    ],
+    images: [
+      "/lovable-uploads/a929d547-e8ae-4eb4-9a37-286f520221a9.png"
+    ]
+  },
+  {
+    id: 207,
+    name: "Jogo Americano Requinte Mescla",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/75dd2442-7f72-473a-9ab7-6666d1b4796a.png",
+    description: "Jogo americano com design mescla espiral, marca Hiper Têxtil, código BUFMLZ3CF. Um toque de elegância e originalidade para sua mesa, com padrão espiral em cores mesclas.",
+    price: "R$ 14,00",
+    colors: ["Rosa", "Cinza", "Bege"],
+    sizes: ["Único"],
+    rating: 4.6,
+    isNew: true,
+    features: [
+      "Design espiral mescla",
+      "Material resistente",
+      "Fácil manutenção",
+      "Conjunto com 4 unidades"
+    ],
+    images: [
+      "/lovable-uploads/75dd2442-7f72-473a-9ab7-6666d1b4796a.png"
+    ]
+  },
+  {
+    id: 208,
+    name: "Jogo Americano Requinte Redondo",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/947632ee-ba9b-43d9-abcc-cdb1ab5ec539.png",
+    description: "Jogo americano redondo da marca Hiper Têxtil, código A7KD48QEV. Elegante e prático, adiciona um toque de sofisticação à sua mesa com seu formato circular perfeito.",
+    price: "R$ 11,99",
+    colors: ["Bege", "Preto", "Azul", "Dourado", "Cinza"],
+    sizes: ["Único"],
+    rating: 4.7,
+    isNew: true,
+    features: [
+      "Formato redondo clássico",
+      "Material durável",
+      "Resistente a manchas",
+      "Conjunto com 4 unidades"
+    ],
+    images: [
+      "/lovable-uploads/947632ee-ba9b-43d9-abcc-cdb1ab5ec539.png"
     ]
   }
 ];

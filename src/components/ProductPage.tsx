@@ -63,31 +63,21 @@ const ProductPage = () => {
     setTimeout(() => {
       console.log("Current category path:", categoryPath);
       
-      // Get the corresponding category name from the URL path
-      const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
-      
       let categoryProducts: Product[] = [];
       
-      // Special handling for mesa-cozinha category
+      // Special handling for mesa-cozinha category to ensure all products are included
       if (categoryPath === 'mesa-cozinha') {
         console.log("Processing mesa-cozinha category");
         
-        // Get regular products for this category
-        const regularProducts = allProducts.filter(product => 
-          product.type === 'product' && 
-          (product.category.toLowerCase().includes('mesa') || 
-           product.category.toLowerCase().includes('cozinha'))
-        );
-        
-        // Get product 204 directly from mesaCozinhaProducts
-        const product204 = mesaCozinhaProducts.find(p => Number(p.id) === 204);
-        
-        // Combine products with product 204 at the beginning
-        categoryProducts = product204 ? [product204, ...regularProducts] : regularProducts;
+        // Use mesaCozinhaProducts directly since they're already correctly configured
+        categoryProducts = [...mesaCozinhaProducts];
         
         console.log("Mesa-cozinha category - Products count:", categoryProducts.length);
-        console.log("Mesa-cozinha - Product 204 included:", categoryProducts.some(p => Number(p.id) === 204));
+        console.log("Products IDs:", categoryProducts.map(p => p.id).join(', '));
       } else {
+        // Get the corresponding category name from the URL path
+        const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
+        
         // For other categories, filter normally
         categoryProducts = allProducts.filter(product => 
           product.type === 'product' && 
@@ -133,10 +123,11 @@ const ProductPage = () => {
             </p>
           </div>
           
-          {/* Debug info - remove once issue is resolved */}
+          {/* Debug info - for development purpose */}
           {categoryPath === 'mesa-cozinha' && !loading && (
             <div className="mb-4 text-center text-sm text-gray-500">
               <p>Mostrando {filteredProducts.length} produtos na categoria Mesa-cozinha</p>
+              <p className="text-xs">IDs: {filteredProducts.map(p => p.id).join(', ')}</p>
             </div>
           )}
           
@@ -160,9 +151,9 @@ const ProductPage = () => {
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden relative">
                             <img 
                               src={
-                                // For product 204, we need special handling for its images
-                                Number(product.id) === 204 && product.images && typeof product.images === 'object' && !Array.isArray(product.images) 
-                                  ? product.images["Branco"]?.[0] // Use first image of default color
+                                // Special handling for object-based images
+                                product.images && typeof product.images === 'object' && !Array.isArray(product.images) 
+                                  ? product.images[product.colors?.[0] || "Branco"]?.[0] || product.imageUrl // Use first image of first color
                                   : (
                                     product.imageUrl || 
                                     (Array.isArray(product.images) ? product.images[0] : null) || 
@@ -179,7 +170,7 @@ const ProductPage = () => {
                             />
                             
                             {/* Display "Novo" badge for new products */}
-                            {(product.isNew || Number(product.id) === 204) && (
+                            {product.isNew && (
                               <div className="absolute top-3 right-3">
                                 <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
                                   Novo
