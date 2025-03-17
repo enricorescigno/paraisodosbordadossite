@@ -29,12 +29,20 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           react: ['react', 'react-dom'],
           router: ['react-router-dom'],
+          framer: ['framer-motion'],
           ui: ['@radix-ui/react-slot', '@radix-ui/react-separator']
         }
       }
-    }
+    },
+    target: 'es2020',
+    assetsInlineLimit: 4096, // 4kb
+    chunkSizeWarningLimit: 1000, // 1000kb
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom']
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion']
+  },
+  preview: {
+    port: 8080,
+    host: true,
   }
 }));

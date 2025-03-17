@@ -37,6 +37,9 @@ const ProductCard = ({
       (Array.isArray(images) ? images[0] : null) || 
       "https://via.placeholder.com/500x500?text=Sem+Imagem";
   };
+  
+  // Get optimized image URL
+  const optimizedImageUrl = getImageUrl();
 
   return (
     <motion.div 
@@ -48,7 +51,7 @@ const ProductCard = ({
     >
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
         <motion.img 
-          src={getImageUrl()}
+          src={optimizedImageUrl}
           alt={`Produto: ${name}`}
           className="w-full h-full object-contain mix-blend-multiply"
           loading="lazy"

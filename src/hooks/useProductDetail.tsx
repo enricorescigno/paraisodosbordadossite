@@ -1,7 +1,10 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { Product } from '../types/product';
-import { allProducts } from '../utils/productUtils';
+import { toast } from 'sonner';
+import { Product } from '@/types/product';
+import { allProducts } from '@/utils/productUtils';
+import { useProductImageManager } from './useProductImageManager';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -12,125 +15,90 @@ export const useProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [isFromPortfolio, setIsFromPortfolio] = useState(false);
-  const [currentImages, setCurrentImages] = useState<string[]>([]);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-
-  const colorToImageMap: Record<string, string[]> = {
-    "Branco": ["/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png"],
-    "Dourado": ["/lovable-uploads/7df18d21-e4ed-468f-b727-826aa9641c3b.png"],
-    "Bege": ["/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png"],
-    "Marrom": ["/lovable-uploads/3bb94c02-6771-46d8-8e2f-efe9b267c391.png"],
-    "Rosa": ["/lovable-uploads/0f23a8fc-2cfb-4961-a2d3-47b09c4ec29c.png"],
-    "Verde": ["/lovable-uploads/3bda6c77-533b-4d79-9a50-fbd946f1cbd6.png"],
-    "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"]
-  };
-
+  
+  // Initialize product and check if special product 204
   useEffect(() => {
     setLoading(true);
     
-    setTimeout(() => {
+    const timer = setTimeout(() => {
       if (productId) {
-        let foundProduct = allProducts.find(p => p.id.toString() === productId);
-        
-        if (productId === "204") {
-          foundProduct = {
-            id: 204,
-            name: "Jogo Americano Requinte Ondulado",
-            type: "product",
-            category: "Mesa e Cozinha",
-            imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
-            description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
-            colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
-            sizes: [],
-            rating: 4.9,
-            isNew: true,
-            features: [
-              "Composição: 75% polipropileno e 25% poliéster", 
-              "Diâmetro: 38cm", 
-              "Conjunto com 4 unidades",
-              "Fácil lavagem e secagem rápida",
-              "Resistente para uso diário"
-            ],
-            keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
-          };
-        }
-        
-        if (foundProduct) {
-          if (foundProduct.colors && foundProduct.colors.length > 0) {
-            setSelectedColor(foundProduct.colors[0]);
-          }
-          if (foundProduct.sizes && foundProduct.sizes.length > 0) {
-            setSelectedSize(foundProduct.sizes[0]);
-          }
+        try {
+          let foundProduct = allProducts.find(p => p.id.toString() === productId);
           
-          setIsFromPortfolio(foundProduct.type === 'portfolio');
-          
-          if (!foundProduct.rating) foundProduct.rating = 4.8;
-          if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
-          if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
-          
-          setProduct(foundProduct);
-          
+          // Special case for product 204
           if (productId === "204") {
-            const defaultColor = foundProduct.colors && foundProduct.colors.length > 0 ? foundProduct.colors[0] : '';
-            if (defaultColor && colorToImageMap[defaultColor]) {
-              setCurrentImages(colorToImageMap[defaultColor]);
-            } else {
-              setCurrentImages([foundProduct.imageUrl]);
-            }
-          } else {
-            initializeImages(foundProduct);
+            foundProduct = {
+              id: 204,
+              name: "Jogo Americano Requinte Ondulado",
+              type: "product",
+              category: "Mesa e Cozinha",
+              imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
+              description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
+              colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
+              sizes: [],
+              rating: 4.9,
+              isNew: true,
+              features: [
+                "Composição: 75% polipropileno e 25% poliéster", 
+                "Diâmetro: 38cm", 
+                "Conjunto com 4 unidades",
+                "Fácil lavagem e secagem rápida",
+                "Resistente para uso diário"
+              ],
+              keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
+            };
           }
-        } else {
+          
+          if (foundProduct) {
+            if (foundProduct.colors && foundProduct.colors.length > 0) {
+              setSelectedColor(foundProduct.colors[0]);
+            }
+            if (foundProduct.sizes && foundProduct.sizes.length > 0) {
+              setSelectedSize(foundProduct.sizes[0]);
+            }
+            
+            setIsFromPortfolio(foundProduct.type === 'portfolio');
+            
+            // Ensure default values for better UX
+            if (!foundProduct.rating) foundProduct.rating = 4.8;
+            if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
+            if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
+            
+            setProduct(foundProduct);
+          } else {
+            setProduct(null);
+            toast.error("Produto não encontrado.");
+          }
+        } catch (error) {
+          console.error("Erro ao carregar produto:", error);
+          toast.error("Erro ao carregar o produto. Tente novamente mais tarde.");
           setProduct(null);
         }
       }
       setLoading(false);
     }, 500);
+    
+    return () => clearTimeout(timer);
   }, [productId]);
 
-  const initializeImages = (product: Product) => {
-    if (!product) return;
-    
-    if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
-      const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
-      const colorImages = defaultColor && product.images[defaultColor] ? product.images[defaultColor] : [];
-      setCurrentImages(colorImages);
-      setActiveImageIndex(0);
-    } 
-    else if (product.images && Array.isArray(product.images)) {
-      setCurrentImages(product.images);
-      setActiveImageIndex(0);
-    } 
-    else if (product.imageUrl) {
-      setCurrentImages([product.imageUrl]);
-      setActiveImageIndex(0);
-    } 
-    else {
-      setCurrentImages([]);
-    }
+  // Use product image manager for handling color and images
+  const { 
+    currentImages, 
+    activeImageIndex, 
+    setActiveImageIndex,
+    getPlaceholder 
+  } = useProductImageManager(product, selectedColor);
+
+  // Functions to control quantity
+  const incrementQuantity = () => {
+    setQuantity(prev => prev + 1);
   };
 
-  useEffect(() => {
-    if (!product) return;
-    
-    if (product.id.toString() === "204" && selectedColor) {
-      console.log("Mudando para cor:", selectedColor);
-      if (colorToImageMap[selectedColor]) {
-        console.log("Imagens para esta cor:", colorToImageMap[selectedColor]);
-        setCurrentImages(colorToImageMap[selectedColor]);
-        setActiveImageIndex(0);
-        return;
-      }
-    }
-    
-    if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
-      const colorImages = product.images[selectedColor] || [];
-      setCurrentImages(colorImages);
-      setActiveImageIndex(0);
-    }
-  }, [selectedColor, product]);
+  const decrementQuantity = () => {
+    setQuantity(prev => (prev > 1 ? prev - 1 : 1));
+  };
 
+  // Generate WhatsApp link with product details
   const getWhatsAppLink = () => {
     if (!product) return '';
     
@@ -149,14 +117,7 @@ export const useProductDetail = () => {
     return `https://wa.me/5581995970776?text=${encodeURIComponent(message)}`;
   };
 
-  const incrementQuantity = () => {
-    setQuantity(prev => prev + 1);
-  };
-
-  const decrementQuantity = () => {
-    setQuantity(prev => (prev > 1 ? prev - 1 : 1));
-  };
-
+  // Get back link based on product type and category
   const getBackLink = () => {
     if (isFromPortfolio || location.pathname.includes('/portfolio')) {
       return '/portfolio';
@@ -187,27 +148,6 @@ export const useProductDetail = () => {
     return '/produtos';
   };
 
-  const placeholder = (category: string) => {
-    const placeholders: Record<string, string> = {
-      'Cama, Mesa e Banho': '/images/placeholders/home-textile.jpg',
-      'Cama': '/images/placeholders/home-textile.jpg',
-      'Mesa e Cozinha': '/images/placeholders/home-textile.jpg',
-      'Banho': '/images/placeholders/towel.jpg',
-      'Infantil': '/images/placeholders/kids.jpg',
-      'Vestuário': '/images/placeholders/clothing.jpg',
-      'Jaleco': '/images/placeholders/uniform.jpg',
-      'Pantufas': '/images/placeholders/slippers.jpg',
-      'Bonés Bordados': '/images/placeholders/cap.jpg',
-      'Bordado em Necessaire': '/images/placeholders/necessaire.jpg',
-      'Bordado em Bolsa': '/images/placeholders/bag.jpg',
-      'Jalecos': '/images/placeholders/uniform.jpg',
-      'Roupões Infantis': '/images/placeholders/kids-embroidery.jpg',
-      'Toalhas Infantis': '/images/placeholders/towel.jpg'
-    };
-    
-    return placeholders[category] || 'https://via.placeholder.com/500x500?text=Produto';
-  };
-
   return {
     product,
     loading,
@@ -221,8 +161,9 @@ export const useProductDetail = () => {
     isFromPortfolio,
     currentImages,
     activeImageIndex,
+    setActiveImageIndex,
     getWhatsAppLink,
     getBackLink,
-    placeholder
+    placeholder: getPlaceholder
   };
 };

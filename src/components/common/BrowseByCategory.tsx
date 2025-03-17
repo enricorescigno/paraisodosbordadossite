@@ -16,19 +16,19 @@ interface Category {
 // Combined list of all categories
 const allCategories: Category[] = [
   // Product categories
-  { id: 'cama', name: 'Cama', icon: <Bed className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/categoria/cama', type: 'product' },
-  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <ChefHat className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/categoria/mesa-cozinha', type: 'product' },
-  { id: 'banho', name: 'Banho', icon: <Bath className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/categoria/banho', type: 'product' },
-  { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/categoria/pantufa', type: 'product' },
+  { id: 'cama', name: 'Cama', icon: <Bed className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/cama', type: 'product' },
+  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <ChefHat className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/mesa-cozinha', type: 'product' },
+  { id: 'banho', name: 'Banho', icon: <Bath className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/banho', type: 'product' },
+  { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/pantufa', type: 'product' },
   
   // Portfolio categories
-  { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/portfolio', type: 'portfolio' },
-  { id: 'bordado-bone', name: 'Bordado em Boné', icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/portfolio/bordado-bone', type: 'portfolio' },
-  { id: 'bordado-jaleco', name: 'Bordado em Jaleco', icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/portfolio/bordado-jaleco', type: 'portfolio' },
-  { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/portfolio/bordado-infantis', type: 'portfolio' },
-  { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/portfolio/bordado-bolsa', type: 'portfolio' },
-  { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' },
-  { id: 'bordado-toalha-banho', name: 'Bordado em Toalha', icon: <Bath className="w-5 h-5 md:w-7 md:h-7 text-gray-700" />, path: '/portfolio/bordado-toalha-banho', type: 'portfolio' }
+  { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio', type: 'portfolio' },
+  { id: 'bordado-bone', name: 'Bordado em Boné', icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-bone', type: 'portfolio' },
+  { id: 'bordado-jaleco', name: 'Bordado em Jaleco', icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-jaleco', type: 'portfolio' },
+  { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-infantis', type: 'portfolio' },
+  { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-bolsa', type: 'portfolio' },
+  { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' },
+  { id: 'bordado-toalha-banho', name: 'Bordado em Toalha', icon: <Bath className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-toalha-banho', type: 'portfolio' }
 ];
 
 interface BrowseByCategoryProps {
@@ -61,8 +61,15 @@ const BrowseByCategory = ({
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent, category: Category) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCategoryClick(category);
+    }
+  };
+
   return (
-    <div className="w-full mb-8 md:mb-10" aria-label="Categorias de produtos">
+    <nav className="w-full mb-8 md:mb-10" aria-label="Categorias de produtos">
       <div className="flex justify-center">
         <motion.div 
           className="categories-wrapper flex gap-2 md:gap-6 pb-4 px-0.5 md:px-0 w-full overflow-x-auto hide-scrollbar md:flex-wrap md:justify-center"
@@ -75,15 +82,17 @@ const BrowseByCategory = ({
             msOverflowStyle: 'none',
             scrollbarWidth: 'none'
           }}
-          role="tablist"
         >
           {filteredCategories.map((category) => (
             <div 
               key={category.id} 
               className="category-item flex-shrink-0 px-0.5"
               style={{ scrollSnapAlign: 'start' }}
-              role="tab"
-              aria-selected={activeCategory === category.id}
+              role="button"
+              tabIndex={0}
+              aria-label={`Categoria ${category.name}`}
+              aria-pressed={activeCategory === category.id}
+              onKeyDown={(e) => handleKeyDown(e, category)}
             >
               <CategoryIcon
                 name={category.name}
@@ -95,7 +104,7 @@ const BrowseByCategory = ({
           ))}
         </motion.div>
       </div>
-    </div>
+    </nav>
   );
 };
 

@@ -35,7 +35,10 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
       
       <div className="flex items-center gap-3 mb-4">
         <span className="text-sm text-[#6E6E73]">{product.category}</span>
-        <div className="flex items-center gap-1" aria-label={`Avaliação ${(product.rating || 4.8).toFixed(1)} de 5 estrelas`}>
+        <div 
+          className="flex items-center gap-1" 
+          aria-label={`Avaliação ${(product.rating || 4.8).toFixed(1)} de 5 estrelas`}
+        >
           <Star className="h-4 w-4 fill-[#FFD700] text-[#FFD700]" aria-hidden="true" />
           <span className="text-sm text-[#6E6E73]">{(product.rating || 4.8).toFixed(1)}</span>
         </div>

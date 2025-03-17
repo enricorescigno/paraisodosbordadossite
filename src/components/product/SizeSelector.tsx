@@ -15,7 +15,11 @@ const SizeSelector = ({ sizes, selectedSize, onSizeChange }: SizeSelectorProps) 
   return (
     <div className="mb-8">
       <h3 className="font-semibold mb-4 text-gray-800 text-lg">Tamanho:</h3>
-      <div className="flex flex-wrap gap-3">
+      <div 
+        className="flex flex-wrap gap-3"
+        role="radiogroup"
+        aria-label="Selecione um tamanho"
+      >
         {sizes.map((size) => (
           <motion.button
             key={size}
@@ -29,6 +33,8 @@ const SizeSelector = ({ sizes, selectedSize, onSizeChange }: SizeSelectorProps) 
             )}
             aria-label={`Selecionar tamanho ${size}`}
             aria-pressed={selectedSize === size}
+            role="radio"
+            aria-checked={selectedSize === size}
             data-testid={`size-button-${size.toLowerCase().replace(/\s+/g, '-')}`}
           >
             {/* Format multiline labels if needed */}
