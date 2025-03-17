@@ -1,9 +1,12 @@
 
 /* Mobile navigation optimizations */
 @media (max-width: 768px) {
-  /* Navbar adjustments */
+  /* Navbar adjustments - fix overflow */
   .header-nav-links {
     @apply space-y-5;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: hidden;
   }
   
   /* Navigation arrows - improved size for touch */
@@ -12,19 +15,26 @@
     flex items-center justify-center border border-gray-200;
   }
   
-  /* Navigation carousel - Apple style */
+  /* Navigation carousel - Apple style with overflow fix */
   .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+    max-width: 100%;
+    width: 100%;
+    overflow-x: auto;
   }
   
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
   
-  /* Category navigation */
+  /* Category navigation with overflow control */
   .category-navigation {
-    @apply overflow-x-auto pb-2 -mx-2 px-2;
+    @apply overflow-x-auto pb-2 px-2;
+    width: 100%;
+    max-width: 100vw;
+    margin-left: 0;
+    margin-right: 0;
   }
   
   .category-icon {
@@ -34,6 +44,7 @@
   /* Apple-style tabs for portfolio/product navigation */
   .apple-tabs {
     @apply flex overflow-x-auto hide-scrollbar py-2 px-0;
+    max-width: 100%;
   }
   
   .apple-tab {
@@ -43,7 +54,9 @@
   
   /* Category scrollable menu - new Apple-inspired styling */
   .category-menu {
-    @apply px-1 md:px-0 py-1 mx-auto max-w-full;
+    @apply px-1 md:px-0 py-1 mx-auto;
+    max-width: 100%;
+    width: 100%;
   }
 
   /* Category item styling - tighter spacing for mobile */
@@ -54,6 +67,8 @@
   /* Categories wrapper for proper scrolling */
   .categories-wrapper {
     @apply flex overflow-x-auto gap-2 pb-4 px-1;
+    width: 100%;
+    max-width: 100%;
   }
   
   /* Enhanced link targets for footer */

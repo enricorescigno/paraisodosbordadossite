@@ -1,6 +1,23 @@
 
 /* Mobile layout adjustments */
 @media (max-width: 768px) {
+  /* Correção de overflow horizontal */
+  .container-custom, 
+  .section-container,
+  .product-container,
+  .hero-container,
+  .footer-container,
+  main,
+  header,
+  footer,
+  section,
+  [class*="container"] {
+    max-width: 100vw;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  
   /* General adjustments */
   .container-custom {
     @apply px-4;
@@ -24,6 +41,8 @@
   /* Fixed positioning elements */
   .fixed-bottom-button {
     @apply fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200 shadow-lg z-10;
+    width: 100%;
+    max-width: 100%;
   }
   
   .fixed-bottom-button button,
@@ -48,5 +67,14 @@
   /* Add padding at bottom to avoid WhatsApp button overlap */
   .bottom-safe-area {
     @apply pb-20;
+  }
+
+  /* Carousel containers to prevent overflow */
+  [class*="carousel"],
+  [class*="slider"],
+  .embla {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
   }
 }

@@ -24,10 +24,10 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className={cn("z-50 sticky top-0 left-0 right-0 w-full transition-all duration-300", 
+    <header className={cn("z-50 sticky top-0 left-0 right-0 w-full max-w-full overflow-x-hidden transition-all duration-300", 
       isScrolled ? "backdrop-blur-xl bg-white/90 shadow-sm" : "backdrop-blur-none bg-white")}>
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <nav className="h-16 flex items-center justify-between">
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 w-full">
+        <nav className="h-16 flex items-center justify-between w-full max-w-full">
           <div className="flex items-center space-x-6">
             <Link to="/" className="flex items-center">
               <img 
@@ -61,7 +61,7 @@ const Navbar = () => {
                     <Menu className="h-5 w-5 text-brand-dark" />
                   </button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-full h-full sm:w-[350px] p-4">
+                <SheetContent side="right" className="w-full h-full sm:w-[350px] p-4 max-w-full">
                   <div className="flex justify-end">
                     <SheetClose className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-100">
                       <X className="h-5 w-5 text-brand-dark" />
@@ -71,7 +71,7 @@ const Navbar = () => {
                     <div className="mb-4">
                       <SearchBox onClose={() => {}} showCloseButton={false} />
                     </div>
-                    <div className="space-y-5">
+                    <div className="space-y-5 max-w-full">
                       <Link 
                         to="/categoria/cama-mesa-banho" 
                         className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
@@ -130,7 +130,7 @@ const Navbar = () => {
                 animate={{ opacity: 1, y: 0 }} 
                 exit={{ opacity: 0, y: -10 }} 
                 transition={{ duration: 0.2 }} 
-                className="py-3"
+                className="py-3 max-w-full"
               >
                 <SearchBox onClose={() => setIsSearchOpen(false)} />
               </motion.div>
