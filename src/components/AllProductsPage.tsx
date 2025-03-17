@@ -32,7 +32,7 @@ const AllProductsPage = () => {
       // Make sure product 204 is included - using direct product from mesaCozinhaProducts
       const product204 = mesaCozinhaProducts.find(p => p.id === 204);
       
-      if (product204 && !productItems.some(p => p.id === 204)) {
+      if (product204 && !productItems.some(p => Number(p.id) === 204)) {
         productItems = [...productItems, product204];
       }
       
@@ -146,9 +146,14 @@ const AllProductsPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={product.imageUrl || "https://via.placeholder.com/500x500?text=Sem+Imagem"} 
+                              src={product.imageUrl || (product.images && Array.isArray(product.images) ? product.images[0] : null) || "https://via.placeholder.com/500x500?text=Sem+Imagem"} 
                               alt={product.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.onerror = null;
+                                target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
+                              }}
                             />
                             {product.isNew && (
                               <div className="absolute top-3 right-3">
