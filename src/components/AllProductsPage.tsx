@@ -18,7 +18,7 @@ const AllProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [allProductsList, setAllProductsList] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [activeCategory, setActiveCategory] = useState('mesa');  // Default to mesa instead of all
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   
@@ -29,69 +29,74 @@ const AllProductsPage = () => {
       // Filter only products (not portfolio items)
       let productItems = products.filter(product => product.type === 'product');
       
-      // Make sure product 204 is included - using direct product from mesaCozinhaProducts
+      // Add product 204 directly to overall product list
       const product204 = mesaCozinhaProducts.find(p => p.id === 204);
-      
-      if (product204 && !productItems.some(p => Number(p.id) === 204)) {
-        productItems = [...productItems, product204];
+      if (product204) {
+        productItems = [...productItems];
+        // Make sure we don't add duplicates
+        if (!productItems.some(p => Number(p.id) === 204)) {
+          productItems.push(product204);
+        }
       }
       
       setAllProductsList(productItems);
-      setFilteredProducts(productItems);
+      setFilteredProducts([]); // Will be set based on activeCategory in the next useEffect
       setLoading(false);
       
-      console.log("Products loaded:", productItems.length, "Product 204 included:", productItems.some(p => Number(p.id) === 204));
+      console.log("Total products loaded:", productItems.length);
+      console.log("Product 204:", product204);
     }, 300); // Simulate network request
   }, []);
 
   // Filter products based on category
   useEffect(() => {
-    let result = [...allProductsList];
+    if (allProductsList.length === 0) return;
     
-    // Apply category filter
-    if (activeCategory !== 'all') {
-      // Special handling for mesa to ensure product 204 is included
-      if (activeCategory === 'mesa') {
-        // Get product 204 directly from mesaCozinhaProducts to ensure we have all properties
-        const product204 = mesaCozinhaProducts.find(p => p.id === 204);
-        const otherProducts = result.filter(product => 
-          product.category.toLowerCase().includes(activeCategory.toLowerCase())
-        );
-        
-        result = product204 ? [...otherProducts, product204] : otherProducts;
-        console.log("Mesa category - Product 204 included:", result.some(p => Number(p.id) === 204));
-      } else {
-        result = result.filter(product => 
-          product.category.toLowerCase().includes(activeCategory.toLowerCase())
-        );
-      }
-    } else {
-      // Make sure product 204 is always included in "all" category
+    let result: any[] = [];
+    
+    // Always ensure product 204 is added to mesa category
+    if (activeCategory === 'mesa') {
+      // Get non-204 products for this category
+      const regularProducts = allProductsList.filter(product => 
+        product.category.toLowerCase().includes(activeCategory.toLowerCase()) &&
+        Number(product.id) !== 204
+      );
+      
+      // Get product 204 directly from source
       const product204 = mesaCozinhaProducts.find(p => p.id === 204);
-      if (product204 && !result.some(p => Number(p.id) === 204)) {
-        result = [...result, product204];
-      }
-      console.log("All category - Product 204 included:", result.some(p => Number(p.id) === 204));
+      
+      // Combine them, with product204 at the beginning for visibility
+      result = product204 ? [product204, ...regularProducts] : regularProducts;
+      
+      console.log("Mesa category - Products count:", result.length);
+      console.log("Mesa category - Product 204 included:", result.some(p => Number(p.id) === 204));
+    } else {
+      // For other categories, just filter normally
+      result = allProductsList.filter(product => 
+        product.category.toLowerCase().includes(activeCategory.toLowerCase())
+      );
     }
     
     setFilteredProducts(result);
   }, [activeCategory, allProductsList]);
 
-  // Extract unique categories for filtering
-  const categories = ['all', ...new Set(allProductsList.map(product => product.category.split(',')[0].trim().toLowerCase()))];
+  // Extract unique categories for filtering - excluding "all"
+  const categories = [...new Set(allProductsList
+    .map(product => product.category.split(',')[0].trim().toLowerCase())
+    .filter(category => category !== 'all'))];
 
   // Function to get category display name
   const getCategoryDisplayName = (category: string) => {
     const categoryMap: Record<string, string> = {
-      'all': 'Todos',
       'cama': 'Cama',
-      'mesa': 'Mesa',
+      'mesa': 'Mesa-cozinha',
       'banho': 'Banho',
       'infantil': 'Infantil',
       'vestuário': 'Vestuário',
       'bordado': 'Bordado',
       'pantufas': 'Pantufas',
-      'roupões': 'Roupões'
+      'roupões': 'Roupões',
+      'jaleco': 'Jaleco'
     };
     return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
   };
@@ -112,8 +117,9 @@ const AllProductsPage = () => {
           </div>
           
           {/* Category Tabs - Apple Style */}
-          <Tabs defaultValue="all" className="mb-16 justify-center flex flex-col items-center">
+          <Tabs defaultValue="mesa" className="mb-16 justify-center flex flex-col items-center">
             <TabsList className="bg-white rounded-full shadow-sm overflow-x-auto py-1 px-1 w-auto flex flex-nowrap">
+              {/* No longer including 'all' in the categories */}
               {categories.map((category) => (
                 <TabsTrigger 
                   key={category}
@@ -146,7 +152,16 @@ const AllProductsPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={product.imageUrl || (product.images && Array.isArray(product.images) ? product.images[0] : null) || "https://via.placeholder.com/500x500?text=Sem+Imagem"} 
+                              src={
+                                // For product 204, we need special handling for its images
+                                Number(product.id) === 204 && product.images && typeof product.images === 'object' && !Array.isArray(product.images) 
+                                  ? product.images["Branco"]?.[0] // Use first image of default color
+                                  : (
+                                    product.imageUrl || 
+                                    (Array.isArray(product.images) ? product.images[0] : null) || 
+                                    "https://via.placeholder.com/500x500?text=Sem+Imagem"
+                                  )
+                              }
                               alt={product.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                               onError={(e) => {
@@ -164,7 +179,10 @@ const AllProductsPage = () => {
                             )}
                           </div>
                           
-                          <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">{product.name}</h3>
+                          <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">
+                            {product.name}
+                            {Number(product.id) === 204 && " 🆕"}
+                          </h3>
                           
                           {product.description && (
                             <p className="text-center text-gray-500 mb-6 max-w-md">

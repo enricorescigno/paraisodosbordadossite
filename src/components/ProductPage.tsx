@@ -86,13 +86,25 @@ const ProductPage = () => {
       if (categoryPath === 'mesa-cozinha') {
         // Get product 204 directly from mesaCozinhaProducts
         const product204 = mesaCozinhaProducts.find(p => p.id === 204);
-        if (product204 && !categoryProducts.some(p => p.id === 204)) {
-          categoryProducts = [...categoryProducts, product204];
+        
+        // Only add if not already present
+        if (product204 && !categoryProducts.some(p => Number(p.id) === 204)) {
+          // Add product 204 at the beginning for visibility
+          categoryProducts = [product204, ...categoryProducts];
         }
-        console.log("Adding product 204 to mesa-cozinha category");
+        
+        console.log("Mesa-cozinha category - Products:", categoryProducts.length);
+        console.log("Mesa-cozinha - Product 204 included:", categoryProducts.some(p => Number(p.id) === 204));
+        
+        if (product204) {
+          console.log("Product 204 details:", {
+            id: product204.id,
+            name: product204.name,
+            imageUrl: product204.imageUrl,
+            images: product204.images
+          });
+        }
       }
-      
-      console.log(`Category: ${categoryName}, Found products: ${categoryProducts.length}, Product 204 included: ${categoryProducts.some(p => p.id === 204)}`);
       
       setProducts(categoryProducts);
       setFilteredProducts(categoryProducts);
@@ -139,7 +151,16 @@ const ProductPage = () => {
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
                             <img 
-                              src={product.imageUrl || (product.images && Array.isArray(product.images) ? product.images[0] : null) || `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.category)}`} 
+                              src={
+                                // For product 204, we need special handling for its images
+                                Number(product.id) === 204 && product.images && typeof product.images === 'object' && !Array.isArray(product.images) 
+                                  ? product.images["Branco"]?.[0] // Use first image of default color
+                                  : (
+                                    product.imageUrl || 
+                                    (Array.isArray(product.images) ? product.images[0] : null) || 
+                                    `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.category)}`
+                                  )
+                              }
                               alt={product.name}
                               className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
                               onError={(e) => {
@@ -150,7 +171,10 @@ const ProductPage = () => {
                             />
                           </div>
                           
-                          <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">{product.name}</h3>
+                          <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">
+                            {product.name}
+                            {Number(product.id) === 204 && " 🆕"}
+                          </h3>
                           
                           {product.description && (
                             <p className="text-center text-gray-500 mb-6 max-w-md">
