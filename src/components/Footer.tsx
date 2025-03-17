@@ -1,19 +1,14 @@
-
 import { Link } from 'react-router-dom';
 import { ArrowUp, Phone, MessageSquare, Mail, MapPin } from 'lucide-react';
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   };
-  
-  return (
-    <footer className="bg-white text-gray-700">
+  return <footer className="bg-white text-gray-700">
       <div className="py-16 md:py-16 py-10">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
@@ -84,7 +79,7 @@ const Footer = () => {
                 </li>
                 <li className="flex flex-col">
                   <span className="text-gray-700 mb-1">E-mail:</span>
-                  <a href="mailto:paraisodosbordados65@hotmail.com" className="text-gray-600 hover:text-brand-red transition-colors duration-200 ml-0 md:ml-6 mx-0 break-words text-sm md:text-base">
+                  <a href="mailto:paraisodosbordados65@hotmail.com" className="text-gray-600 hover:text-brand-red transition-colors duration-200 ml-0 md:ml- break-words text-sm md:text-base mx-0">
                     paraisodosbordados65@hotmail.com
                   </a>
                 </li>
@@ -131,17 +126,11 @@ const Footer = () => {
           <p className="text-xs md:text-sm text-slate-50 text-center md:text-left">
             Gj Bordados Gilvan Comercio de Confeccao - CNPJ: 19.979.908/0001-17 © Todos os direitos reservados. {currentYear}
           </p>
-          <button 
-            onClick={scrollToTop} 
-            className="flex items-center gap-2 mt-4 md:mt-0 hover:text-white/80 transition-colors duration-100 px-4 py-2" 
-            aria-label="Voltar ao topo"
-          >
+          <button onClick={scrollToTop} className="flex items-center gap-2 mt-4 md:mt-0 hover:text-white/80 transition-colors duration-100 px-4 py-2" aria-label="Voltar ao topo">
             Topo <ArrowUp className="h-4 w-4" />
           </button>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
