@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
@@ -85,10 +86,15 @@ const PortfolioPage = () => {
   }, [location.pathname, categoryPath]);
   
   return (
-    <div className="min-h-screen bg-white">
+    <motion.div 
+      className="min-h-screen bg-white"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Navbar />
       
-      <section className="py-16 md:py-24 bg-[#f5f5f7]">
+      <section className="py-12 md:py-20 bg-[#f5f5f7]">
         <div className="container-custom">
           <PageHeader 
             title={categoryTitle}
@@ -121,7 +127,7 @@ const PortfolioPage = () => {
       
       <Footer />
       <WhatsAppSupport />
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,16 +1,21 @@
 
+import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppSupport from "../components/WhatsAppSupport";
 import Partners from "../components/Partners";
-import { motion } from "framer-motion";
 
 const OurPartners = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <motion.div 
+      className="min-h-screen bg-white"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Navbar />
       
-      <main className="py-12">
+      <main className="py-12 md:py-20 bg-[#f5f5f7]">
         <div className="container mx-auto px-4">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
@@ -18,10 +23,10 @@ const OurPartners = () => {
             transition={{ duration: 0.5 }}
             className="max-w-4xl mx-auto"
           >
-            <h1 className="text-3xl font-bold text-center text-brand-dark mb-8">Nossos Parceiros</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-center text-brand-dark mb-8">Nossos Parceiros</h1>
             
             <div className="prose prose-lg max-w-none mb-12">
-              <p className="text-center text-lg mb-8">
+              <p className="text-center text-lg mb-8 text-gray-500">
                 Na Paraíso dos Bordados, temos orgulho de trabalhar com parceiros de confiança que compartilham nosso compromisso com a qualidade e excelência. 
                 Essas parcerias nos permitem oferecer os melhores produtos e serviços para nossos clientes.
               </p>
@@ -30,7 +35,7 @@ const OurPartners = () => {
             <Partners showTitle={false} fullPage={true} />
             
             <div className="mt-16 text-center">
-              <p className="text-lg mb-4">Quer se tornar um parceiro?</p>
+              <p className="text-lg mb-4 text-gray-700">Quer se tornar um parceiro?</p>
               <motion.a 
                 href="https://wa.me/5581995970776" 
                 target="_blank"
@@ -48,7 +53,7 @@ const OurPartners = () => {
       
       <Footer />
       <WhatsAppSupport />
-    </div>
+    </motion.div>
   );
 };
 

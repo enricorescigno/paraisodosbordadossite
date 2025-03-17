@@ -1,4 +1,5 @@
 
+import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import ProductShowcase from "../components/ProductShowcase";
@@ -11,7 +12,12 @@ import WhatsAppSupport from "../components/WhatsAppSupport";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <motion.div 
+      className="min-h-screen bg-white"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <Navbar />
       <Hero />
       <ProductShowcase />
@@ -21,7 +27,7 @@ const Index = () => {
       <Newsletter />
       <Footer />
       <WhatsAppSupport />
-    </div>
+    </motion.div>
   );
 };
 
