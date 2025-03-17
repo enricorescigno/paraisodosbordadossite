@@ -13,14 +13,14 @@ interface CategoryIconProps {
 const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconProps) => {
   return (
     <motion.div 
-      className="flex flex-col items-center justify-center gap-2 cursor-pointer min-w-[120px]"
+      className="flex flex-col items-center justify-center gap-2 cursor-pointer min-w-[100px]"
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
       <div 
         className={cn(
-          "w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center bg-white shadow-sm",
+          "w-14 h-14 md:w-20 md:h-20 rounded-full flex items-center justify-center bg-white shadow-sm",
           "transition-all duration-300 hover:shadow-md",
           isActive ? "ring-2 ring-brand-red bg-red-50" : "border border-gray-100"
         )}

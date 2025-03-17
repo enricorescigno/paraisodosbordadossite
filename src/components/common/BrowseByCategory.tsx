@@ -65,7 +65,7 @@ const BrowseByCategory = ({
     <div className="w-full mb-8 md:mb-12">
       <div className="flex justify-center">
         <motion.div 
-          className="categories-wrapper flex gap-4 md:gap-6 pb-4 px-4 md:px-0 w-full overflow-x-auto md:flex-wrap md:justify-center"
+          className="categories-wrapper flex gap-2 md:gap-6 pb-4 px-2 md:px-0 w-full overflow-x-auto md:flex-wrap md:justify-center"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}

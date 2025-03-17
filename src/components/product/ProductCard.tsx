@@ -44,7 +44,7 @@ const ProductCard = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="flex flex-col items-center w-full max-w-[90%] mx-auto"
+      className="flex flex-col items-center w-full max-w-[90%] mx-auto h-full"
     >
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
         <motion.img 
@@ -68,19 +68,21 @@ const ProductCard = ({
         )}
       </div>
       
-      <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2 px-4">
-        {name}
-      </h3>
+      <div className="flex flex-col flex-grow w-full">
+        <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2 px-4">
+          {name}
+        </h3>
+        
+        {description && (
+          <p className="text-center text-gray-500 mb-4 max-w-md px-4 text-sm md:text-base">
+            {description.length > 100 
+              ? `${description.substring(0, 100)}...` 
+              : description}
+          </p>
+        )}
+      </div>
       
-      {description && (
-        <p className="text-center text-gray-500 mb-4 max-w-md px-4 text-sm md:text-base">
-          {description.length > 100 
-            ? `${description.substring(0, 100)}...` 
-            : description}
-        </p>
-      )}
-      
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-2 w-full px-4">
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-auto w-full px-4">
         <Link to={`/produto/${id}`} className="w-full sm:w-auto">
           <Button 
             variant="default" 

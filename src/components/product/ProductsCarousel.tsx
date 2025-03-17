@@ -28,9 +28,9 @@ const ProductsCarousel = ({ products, whatsappNumber, isPortfolio = false }: Pro
           {products.map((product) => (
             <CarouselItem 
               key={product.id} 
-              className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3"
+              className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3 h-full"
             >
-              <div className="p-1 md:p-2">
+              <div className="p-1 md:p-2 h-full flex flex-col">
                 <ProductCard 
                   id={product.id}
                   name={product.name}
