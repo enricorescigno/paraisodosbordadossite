@@ -1,5 +1,6 @@
+
 import { useEffect, useState } from 'react';
-import { ArrowRight, Star, MessageCircle } from 'lucide-react';
+import { ArrowRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { Card, CardContent } from "@/components/ui/card";
@@ -44,10 +45,6 @@ const products: Product[] = [{
   rating: 5.0,
   portfolioType: "bordado-jaleco"
 }];
-
-const generateWhatsAppMessage = (productName: string): string => {
-  return encodeURIComponent(`Olá! Vi o produto ${productName.toLowerCase()} e gostaria de fazer um orçamento!`);
-};
 
 const ProductShowcase = () => {
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -125,7 +122,6 @@ const ProductShowcase = () => {
                 product={product}
                 index={index}
                 animateProducts={animateProducts}
-                whatsappNumber={whatsappNumber}
               />
             ))}
           </div>
@@ -140,7 +136,6 @@ const ProductShowcase = () => {
                     product={product}
                     index={index}
                     animateProducts={animateProducts}
-                    whatsappNumber={whatsappNumber}
                   />
                 </CarouselItem>
               ))}
@@ -170,17 +165,16 @@ const ProductShowcase = () => {
   );
 };
 
-const ProductCard = ({ product, index, animateProducts, whatsappNumber }: { 
+const ProductCard = ({ product, index, animateProducts }: { 
   product: Product; 
   index: number; 
   animateProducts: boolean;
-  whatsappNumber: string;
 }) => {
   return (
     <Card 
       className={`rounded-xl overflow-hidden border-0 bg-white shadow-sm transition-all duration-500 
         ${animateProducts ? 'translate-y-0 opacity-100 scale-100' : 'translate-y-8 opacity-0 scale-95'}
-        hover:shadow-md hover:-translate-y-1 hover:scale-[1.02] group`}
+        hover:shadow-md hover:-translate-y-1 hover:scale-[1.02] group h-full`}
       style={{
         transitionDelay: `${index * 100}ms`
       }}
@@ -204,29 +198,20 @@ const ProductCard = ({ product, index, animateProducts, whatsappNumber }: {
           </div>
         </AspectRatio>
       </Link>
-      <CardContent className="p-4">
+      <CardContent className="p-4 flex flex-col h-[calc(100%-100%)]">
         <div className="flex items-center gap-1 mb-2">
           <Star className="h-3.5 w-3.5 fill-yellow-400 text-yellow-400" />
           <span className="text-xs text-gray-600">{product.rating.toFixed(1)}</span>
         </div>
-        <h3 className="font-semibold text-base mb-3 line-clamp-2 md:text-lg">
+        <h3 className="font-semibold text-base mb-3 line-clamp-2 md:text-lg flex-grow">
           {product.name}
         </h3>
-        <div className="flex items-center justify-between">
-          <a 
-            href={`https://wa.me/${whatsappNumber}?text=${generateWhatsAppMessage(product.name)}`}
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-xs md:text-sm text-gray-600 hover:text-brand-red flex items-center gap-1 transition-all duration-300 group-hover:translate-x-1"
-          >
-            <MessageCircle className="h-3.5 w-3.5 md:h-4 md:w-4" />
-            <span>Solicitar orçamento</span>
-          </a>
+        <div className="flex justify-end mt-auto">
           <Link 
             to={`/produto/${product.id}`}
             className="text-brand-dark hover:text-brand-red transition-all duration-300 group-hover:translate-x-1"
           >
-            <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
+            <ArrowRight className="h-5 w-5" />
           </Link>
         </div>
       </CardContent>

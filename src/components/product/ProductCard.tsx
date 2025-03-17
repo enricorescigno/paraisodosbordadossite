@@ -82,7 +82,7 @@ const ProductCard = ({
         )}
       </div>
       
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-auto w-full px-4">
+      <div className="flex justify-center mt-auto w-full px-4">
         <Link to={`/produto/${id}`} className="w-full sm:w-auto">
           <Button 
             variant="default" 
@@ -92,21 +92,6 @@ const ProductCard = ({
             {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
           </Button>
         </Link>
-        
-        <a 
-          href={`https://wa.me/${whatsappNumber}?text=Olá! Vi o produto ${name} ${isPortfolio ? "no portfólio" : ""} e gostaria de ${isPortfolio ? "solicitar um orçamento" : "fazer um orçamento"}!`} 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="w-full sm:w-auto"
-        >
-          <Button 
-            variant="outline" 
-            size="lg" 
-            className="rounded-full px-8 w-full min-h-[48px]"
-          >
-            Solicitar Orçamento
-          </Button>
-        </a>
       </div>
     </motion.div>
   );

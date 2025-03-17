@@ -237,12 +237,12 @@
 
   /* Category item styling */
   .category-item {
-    @apply min-w-[100px];
+    @apply min-w-[85px];
   }
   
   /* Categories wrapper for proper scrolling */
   .categories-wrapper {
-    @apply flex overflow-x-auto gap-2 pb-4 px-2;
+    @apply flex overflow-x-auto gap-1 pb-4 px-1;
   }
 }
 
