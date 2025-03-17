@@ -1,3 +1,4 @@
+
 /* Mobile-specific optimizations */
 @media (max-width: 768px) {
   /* General adjustments */
@@ -84,15 +85,6 @@
   
   .footer-social-icon {
     @apply p-3;
-  }
-  
-  /* Footer contact icons alignment */
-  footer .flex.items-center {
-    @apply items-center;
-  }
-  
-  footer svg, footer .lucide {
-    @apply flex-shrink-0 self-center;
   }
   
   /* Adjust button sizes - improved for better touch targets */
