@@ -21,6 +21,7 @@ const PORTFOLIO_CATEGORIES = {
   'Bordado Infantis': 'bordado-infantis',
   'Bordado em Toalha de Banho': 'bordado-toalha-banho',
   'Bonés Bordados': 'bordado-bone',
+  'Bordado': 'bordado-bone',
   'Camisetas': 'vestuario',
   'Camisas Polo': 'vestuario',
   'Jalecos': 'bordado-jaleco',
@@ -43,10 +44,19 @@ const AllPortfolioPage = () => {
     setTimeout(() => {
       // Usar os produtos do nosso arquivo productUtils.ts
       const portfolioItems = allProducts.filter(product => 
-        product.type === 'product' && product.category in PORTFOLIO_CATEGORIES
+        // Include items explicitly marked as portfolio type
+        (product.type === 'portfolio') ||
+        // Or include items with category related to embroidery/bordado
+        (product.category && 
+         (product.category.toLowerCase().includes('bordado') || 
+          product.category.toLowerCase().includes('bonés')))
       );
-      setAllPortfolioItems(portfolioItems);
-      setFilteredItems(portfolioItems);
+      
+      // Filter out products that don't belong in the portfolio section, like 204
+      const filteredPortfolioItems = portfolioItems.filter(item => item.id !== 204);
+      
+      setAllPortfolioItems(filteredPortfolioItems);
+      setFilteredItems(filteredPortfolioItems);
       setLoading(false);
     }, 300);
   }, []);
@@ -59,7 +69,8 @@ const AllPortfolioPage = () => {
     if (activeCategory !== 'all') {
       result = result.filter(item => {
         // Mapear categoria do produto para o slug da rota
-        const categorySlug = PORTFOLIO_CATEGORIES[item.category as keyof typeof PORTFOLIO_CATEGORIES];
+        const categoryName = item.category || '';
+        const categorySlug = PORTFOLIO_CATEGORIES[categoryName as keyof typeof PORTFOLIO_CATEGORIES];
         return categorySlug === activeCategory;
       });
     }
@@ -73,7 +84,8 @@ const AllPortfolioPage = () => {
     const uniqueSlugs = new Set();
     
     allPortfolioItems.forEach(item => {
-      const categorySlug = PORTFOLIO_CATEGORIES[item.category as keyof typeof PORTFOLIO_CATEGORIES];
+      const categoryName = item.category || '';
+      const categorySlug = PORTFOLIO_CATEGORIES[categoryName as keyof typeof PORTFOLIO_CATEGORIES];
       if (categorySlug && !uniqueSlugs.has(categorySlug)) {
         uniqueSlugs.add(categorySlug);
         categories.push(categorySlug);

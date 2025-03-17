@@ -71,8 +71,12 @@ const ProductPage = () => {
       if (categoryPath === 'mesa-cozinha') {
         console.log("Processing mesa-cozinha category");
         
-        // Use mesaCozinhaProducts directly since they're already correctly configured
-        categoryProducts = [...mesaCozinhaProducts];
+        // Filter out portfolio products from mesaCozinhaProducts
+        categoryProducts = mesaCozinhaProducts.filter(p => 
+          p.type === 'product' && 
+          !p.category.toLowerCase().includes('bordado') && 
+          !p.category.toLowerCase().includes('bonés')
+        );
         
         console.log("Mesa-cozinha category - Products count:", categoryProducts.length);
         console.log("Products IDs:", categoryProducts.map(p => p.id).join(', '));
@@ -83,6 +87,8 @@ const ProductPage = () => {
         // For other categories, filter normally
         categoryProducts = allProducts.filter(product => 
           product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
           (product.category === categoryName || 
            product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
            categoryName.toLowerCase().includes(product.category.toLowerCase()))
@@ -91,10 +97,11 @@ const ProductPage = () => {
         // If still no products found, try partial matching
         if (categoryProducts.length === 0) {
           categoryProducts = allProducts.filter(product => 
-            product.type === 'product' && (
-              categoryPath.includes(product.category.toLowerCase().replace(/\s+/g, '-')) ||
-              product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' '))
-            )
+            product.type === 'product' && 
+            !product.category.toLowerCase().includes('bordado') && 
+            !product.category.toLowerCase().includes('bonés') &&
+            (categoryPath.includes(product.category.toLowerCase().replace(/\s+/g, '-')) ||
+             product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' ')))
           );
         }
       }
@@ -120,14 +127,6 @@ const ProductPage = () => {
             title={categoryTitle}
             description={`Explore nossa coleção de ${categoryTitle.toLowerCase()} feitos com qualidade e atenção aos detalhes.`}
           />
-          
-          {/* Debug info - for development purpose */}
-          {categoryPath === 'mesa-cozinha' && !loading && (
-            <div className="mb-4 text-center text-sm text-gray-500">
-              <p>Mostrando {filteredProducts.length} produtos na categoria Mesa-cozinha</p>
-              <p className="text-xs">IDs: {filteredProducts.map(p => p.id).join(', ')}</p>
-            </div>
-          )}
           
           {loading ? (
             <LoadingSpinner />

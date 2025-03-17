@@ -1,6 +1,5 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
@@ -42,7 +41,11 @@ const AllProductsPage = () => {
     setLoading(true);
     setTimeout(() => {
       // Get all products (excluding portfolio items)
-      let productItems = products.filter(product => product.type === 'product');
+      let productItems = products.filter(product => 
+        product.type === 'product' && 
+        !product.category.toLowerCase().includes('bordado') && 
+        !product.category.toLowerCase().includes('bonés')
+      );
       
       // We don't need to add product 204 here since we'll handle it in the category filtering
       setAllProductsList(productItems);
@@ -117,19 +120,10 @@ const AllProductsPage = () => {
           {loading ? (
             <LoadingSpinner />
           ) : filteredProducts.length > 0 ? (
-            <>
-              {/* Debug info - can be removed once issue is resolved */}
-              {activeCategory === 'mesa-cozinha' && (
-                <div className="mb-4 text-center text-sm text-gray-500">
-                  <p>Mostrando {filteredProducts.length} produtos na categoria Mesa-cozinha</p>
-                </div>
-              )}
-              
-              <ProductsCarousel 
-                products={filteredProducts} 
-                whatsappNumber={whatsappNumber} 
-              />
-            </>
+            <ProductsCarousel 
+              products={filteredProducts} 
+              whatsappNumber={whatsappNumber} 
+            />
           ) : (
             <EmptyState 
               message="Nenhum produto encontrado nesta categoria."

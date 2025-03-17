@@ -45,7 +45,7 @@ const ProductCard = ({
       transition={{ duration: 0.5 }}
       className="flex flex-col items-center"
     >
-      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden relative">
+      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative">
         <img 
           src={getImageUrl()}
           alt={name}
@@ -70,29 +70,34 @@ const ProductCard = ({
       </h3>
       
       {description && (
-        <p className="text-center text-gray-500 mb-6 max-w-md">
+        <p className="text-center text-gray-500 mb-4 max-w-md">
           {description.length > 100 
             ? `${description.substring(0, 100)}...` 
             : description}
         </p>
       )}
       
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
-        <Link to={`/produto/${id}`}>
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-2 w-full">
+        <Link to={`/produto/${id}`} className="w-full sm:w-auto">
           <Button 
             variant="default" 
             size="lg" 
-            className="rounded-full px-8"
+            className="rounded-full px-8 w-full sm:w-auto min-h-[44px]"
           >
             {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
           </Button>
         </Link>
         
-        <a href={`https://wa.me/${whatsappNumber}?text=Olá! Vi o produto ${name} ${isPortfolio ? "no portfólio" : ""} e gostaria de ${isPortfolio ? "solicitar um orçamento" : "fazer um orçamento"}!`} target="_blank" rel="noopener noreferrer">
+        <a 
+          href={`https://wa.me/${whatsappNumber}?text=Olá! Vi o produto ${name} ${isPortfolio ? "no portfólio" : ""} e gostaria de ${isPortfolio ? "solicitar um orçamento" : "fazer um orçamento"}!`} 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="w-full sm:w-auto"
+        >
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-full px-8"
+            className="rounded-full px-8 w-full sm:w-auto min-h-[44px]"
           >
             Solicitar Orçamento
           </Button>
