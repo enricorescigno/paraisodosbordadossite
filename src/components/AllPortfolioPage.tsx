@@ -39,24 +39,25 @@ const AllPortfolioPage = () => {
   const whatsappNumber = "+5581995970776";
   
   useEffect(() => {
-    // Simular carregamento para melhorar UX
     setLoading(true);
     setTimeout(() => {
       // Usar os produtos do nosso arquivo productUtils.ts
+      // Estritamente filtrar apenas itens de portfólio
       const portfolioItems = allProducts.filter(product => 
-        // Include items explicitly marked as portfolio type
-        (product.type === 'portfolio') ||
-        // Or include items with category related to embroidery/bordado
-        (product.category && 
-         (product.category.toLowerCase().includes('bordado') || 
-          product.category.toLowerCase().includes('bonés')))
+        // Exclui explicitamente o produto 204
+        Number(product.id) !== 204 && 
+        (
+          // Include items explicitly marked as portfolio type
+          (product.type === 'portfolio') ||
+          // Or include items with category related to embroidery/bordado
+          (product.category && 
+           (product.category.toLowerCase().includes('bordado') || 
+            product.category.toLowerCase().includes('bonés')))
+        )
       );
       
-      // Filter out products that don't belong in the portfolio section, like 204
-      const filteredPortfolioItems = portfolioItems.filter(item => item.id !== 204);
-      
-      setAllPortfolioItems(filteredPortfolioItems);
-      setFilteredItems(filteredPortfolioItems);
+      setAllPortfolioItems(portfolioItems);
+      setFilteredItems(portfolioItems);
       setLoading(false);
     }, 300);
   }, []);

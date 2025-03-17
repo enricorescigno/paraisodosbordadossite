@@ -20,10 +20,12 @@ const ProductImageGallery = ({
   category
 }: ProductImageGalleryProps) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [imageError, setImageError] = useState(false);
 
   // Reset active image index when color or images change
   useEffect(() => {
     setActiveImageIndex(0);
+    setImageError(false);
   }, [selectedColor, images]);
 
   return (
@@ -38,7 +40,7 @@ const ProductImageGallery = ({
         >
           <Carousel className="w-full">
             <CarouselContent>
-              {images.length > 0 ? (
+              {images.length > 0 && !imageError ? (
                 images.map((img, index) => (
                   <CarouselItem key={`${selectedColor}-${index}-${img}`}>
                     <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
@@ -46,7 +48,10 @@ const ProductImageGallery = ({
                         src={img} 
                         alt={`${productName} - ${selectedColor} - Imagem ${index + 1}`}
                         className="w-full h-full object-contain mix-blend-multiply p-4"
+                        loading="lazy"
                         onError={(e) => {
+                          console.log("Image error for:", img);
+                          setImageError(true);
                           e.currentTarget.src = placeholder(category);
                         }}
                       />
@@ -66,14 +71,14 @@ const ProductImageGallery = ({
               )}
             </CarouselContent>
 
-            {images.length > 1 && (
+            {images.length > 1 && !imageError && (
               <>
                 <CarouselPrevious className="left-2 h-11 w-11 md:h-10 md:w-10" />
                 <CarouselNext className="right-2 h-11 w-11 md:h-10 md:w-10" />
               </>
             )}
             
-            {images.length > 1 && (
+            {images.length > 1 && !imageError && (
               <div className="flex justify-center gap-2 mt-4">
                 {images.map((_, index) => (
                   <div 

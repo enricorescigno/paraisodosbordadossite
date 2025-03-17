@@ -24,13 +24,7 @@ const categoryTitles: Record<string, string> = {
   'vestuario': 'Vestuário',
   'camisa': 'Camisa',
   'jaleco': 'Jaleco',
-  'pantufa': 'Pantufa',
-  'bordado-bone': 'Bordado em Boné',
-  'bordado-necessaire': 'Bordado em Necessaire',
-  'bordado-bolsa': 'Bordado em Bolsa',
-  'bordado-jaleco': 'Bordado em Jaleco',
-  'bordado-infantis': 'Bordado Infantil',
-  'bordado-toalha-banho': 'Bordado em Toalha de Banho'
+  'pantufa': 'Pantufa'
 };
 
 // Mapping from URL paths to product categories
@@ -60,31 +54,35 @@ const ProductPage = () => {
     const pathParts = location.pathname.split('/');
     const categoryPath = pathParts[pathParts.length - 1];
     
-    // In a real application, this would be an API call
     setLoading(true);
     setTimeout(() => {
-      console.log("Current category path:", categoryPath);
-      
       let categoryProducts: Product[] = [];
       
-      // Special handling for mesa-cozinha category to ensure all products are included
+      // Special handling for mesa-cozinha category to ensure product 204 is included
       if (categoryPath === 'mesa-cozinha') {
-        console.log("Processing mesa-cozinha category");
-        
-        // Filter out portfolio products from mesaCozinhaProducts
-        categoryProducts = mesaCozinhaProducts.filter(p => 
+        // Certifique-se de incluir apenas produtos reais, não de portfólio
+        let regularProducts = allProducts.filter(p => 
           p.type === 'product' && 
           !p.category.toLowerCase().includes('bordado') && 
-          !p.category.toLowerCase().includes('bonés')
+          !p.category.toLowerCase().includes('bonés') &&
+          (p.category.toLowerCase().includes('mesa') || 
+           p.category.toLowerCase().includes('cozinha')) && 
+          Number(p.id) !== 204
         );
         
-        console.log("Mesa-cozinha category - Products count:", categoryProducts.length);
-        console.log("Products IDs:", categoryProducts.map(p => p.id).join(', '));
+        // Obter o produto 204 do array mesaCozinhaProducts
+        const product204 = mesaCozinhaProducts.find(p => Number(p.id) === 204);
+        
+        if (product204) {
+          categoryProducts = [product204, ...regularProducts];
+        } else {
+          categoryProducts = regularProducts;
+        }
       } else {
         // Get the corresponding category name from the URL path
         const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
         
-        // For other categories, filter normally
+        // For other categories, filter normally, excluding portfolio items
         categoryProducts = allProducts.filter(product => 
           product.type === 'product' && 
           !product.category.toLowerCase().includes('bordado') && 

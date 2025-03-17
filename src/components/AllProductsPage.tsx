@@ -47,11 +47,8 @@ const AllProductsPage = () => {
         !product.category.toLowerCase().includes('bonés')
       );
       
-      // We don't need to add product 204 here since we'll handle it in the category filtering
       setAllProductsList(productItems);
       setLoading(false);
-      
-      console.log("Total products loaded:", productItems.length);
     }, 300);
   }, []);
 
@@ -59,31 +56,26 @@ const AllProductsPage = () => {
   useEffect(() => {
     if (allProductsList.length === 0) return;
     
-    console.log("Filtering products for category:", activeCategory);
     let result: any[] = [];
     
     // Special handling for mesa-cozinha to ensure product 204 is included
     if (activeCategory === 'mesa-cozinha') {
-      console.log("Mesa-cozinha category selected");
-      
       // Get products for this category (excluding product 204)
       const regularProducts = allProductsList.filter(product => 
-        product.category.toLowerCase().includes('mesa') || 
-        product.category.toLowerCase().includes('cozinha')
+        (product.category.toLowerCase().includes('mesa') || 
+        product.category.toLowerCase().includes('cozinha')) &&
+        Number(product.id) !== 204
       );
       
       // Get product 204 directly from mesaCozinhaProducts
       const product204 = mesaCozinhaProducts.find(p => Number(p.id) === 204);
       
       if (product204) {
-        console.log("Product 204 found, adding to results");
         // Put product 204 at the beginning
         result = [product204, ...regularProducts];
       } else {
-        console.log("Product 204 not found in mesaCozinhaProducts");
         result = regularProducts;
       }
-      
     } else {
       // For other categories, filter normally
       result = allProductsList.filter(product => {
@@ -95,7 +87,6 @@ const AllProductsPage = () => {
       });
     }
     
-    console.log(`Found ${result.length} products for category ${activeCategory}`);
     setFilteredProducts(result);
   }, [activeCategory, allProductsList]);
   

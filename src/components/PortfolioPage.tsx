@@ -10,6 +10,7 @@ import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 // Portfolio categories mapping
 const PORTFOLIO_CATEGORIES: Record<string, string> = {
@@ -37,31 +38,48 @@ const PortfolioPage = () => {
   const [loading, setLoading] = useState(true);
   const [filteredItems, setFilteredItems] = useState<Product[]>([]);
   const whatsappNumber = "+5581995970776";
+  useScrollToTop();
   
   useEffect(() => {
     // Extract the category from the URL path
     const pathParts = location.pathname.split('/');
     const categoryPath = pathParts[pathParts.length - 1];
 
-    // In a real application, this would be an API call
     setLoading(true);
     setTimeout(() => {
       // Obter produtos do productUtils.ts que correspondem à categoria do portfólio
       const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
       let categoryItems: Product[] = [];
+      
       if (matchingCategory) {
         // Filtra produtos que correspondem à categoria mapeada
-        categoryItems = allProducts.filter(product => product.type === 'portfolio' && product.category === matchingCategory);
+        categoryItems = allProducts.filter(product => 
+          // Excluir produto 204 explicitamente
+          Number(product.id) !== 204 && 
+          // Incluir apenas produtos de portfólio ou com categorias de bordado
+          ((product.type === 'portfolio') || 
+           (product.category.toLowerCase().includes('bordado') || 
+           product.category.toLowerCase().includes('bonés'))) && 
+          (product.category === matchingCategory || 
+           product.category.toLowerCase().includes(matchingCategory.toLowerCase()))
+        );
       }
 
-      // Se não encontrar itens de portfólio, buscar como produtos normais
+      // Se não encontrar itens de portfólio, buscar como produtos normais relacionados a bordado
       if (categoryItems.length === 0) {
-        categoryItems = allProducts.filter(product => product.category === matchingCategory || product.category === categoryTitles[categoryPath]);
+        categoryItems = allProducts.filter(product => 
+          Number(product.id) !== 204 &&
+          (product.category.toLowerCase().includes('bordado') || 
+           product.category.toLowerCase().includes('bonés')) &&
+          (product.category === categoryTitles[categoryPath] || 
+           product.category.toLowerCase().includes(categoryTitles[categoryPath]?.toLowerCase() || ''))
+        );
       }
+
       setPortfolioItems(categoryItems);
       setFilteredItems(categoryItems);
       setLoading(false);
-    }, 300); // Simulate network request
+    }, 300);
   }, [location.pathname]);
 
   // Extract the category from the URL path for title
