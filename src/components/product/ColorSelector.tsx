@@ -47,7 +47,7 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
               key={color}
               onClick={() => onColorChange(color)}
               whileTap={{ scale: 0.95 }}
-              className={`relative h-10 w-10 rounded-full transition-all duration-300 ${
+              className={`relative h-11 w-11 md:h-10 md:w-10 rounded-full transition-all duration-100 ${
                 isSelected ? 'ring-2 ring-offset-2 ring-brand-red' : 'hover:ring-1 hover:ring-gray-300 hover:ring-offset-1'
               }`}
               title={color}

@@ -12,6 +12,7 @@ import { mesaCozinhaProducts } from '../utils/categoryProducts';
 import { Product } from '../types/product';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { motion } from 'framer-motion';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 // Category name translations for titles
 const categoryTitles: Record<string, string> = {
@@ -52,6 +53,7 @@ const ProductPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  useScrollToTop();
   
   useEffect(() => {
     // Extract the category from the URL path
@@ -113,12 +115,12 @@ const ProductPage = () => {
       <Navbar />
       
       <section className="py-16 md:py-24 bg-[#f5f5f7]">
-        <div className="container-custom">
+        <div className="container-custom px-4">
           <div className="mb-16 space-y-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-sans tracking-tight font-medium text-center">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-sans tracking-tight font-medium text-center">
               {categoryTitle}
             </h1>
-            <p className="text-center text-gray-500 max-w-2xl mx-auto text-base md:text-lg font-normal">
+            <p className="text-center text-gray-500 max-w-2xl mx-auto text-base md:text-lg font-normal px-4">
               Explore nossa coleção de {categoryTitle.toLowerCase()} feitos com qualidade e atenção aos detalhes.
             </p>
           </div>
@@ -140,13 +142,13 @@ const ProductPage = () => {
               <Carousel className="w-full">
                 <CarouselContent>
                   {filteredProducts.map((product) => (
-                    <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3">
-                      <div className="p-4">
+                    <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/3 w-full">
+                      <div className="p-4 flex justify-center">
                         <motion.div 
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5 }}
-                          className="flex flex-col items-center"
+                          className="flex flex-col items-center w-[90%] mx-auto"
                         >
                           <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden relative">
                             <img 
@@ -191,12 +193,12 @@ const ProductPage = () => {
                             </p>
                           )}
                           
-                          <div className="flex flex-col sm:flex-row gap-4 justify-center mt-4">
-                            <Link to={`/produto/${product.id}`}>
+                          <div className="flex flex-col w-full gap-3 justify-center mt-4">
+                            <Link to={`/produto/${product.id}`} className="w-full">
                               <Button 
                                 variant="default" 
                                 size="lg" 
-                                className="rounded-full px-8"
+                                className="rounded-full px-8 w-full"
                               >
                                 Saiba Mais
                               </Button>
@@ -209,10 +211,10 @@ const ProductPage = () => {
                 </CarouselContent>
                 
                 <div className="absolute bottom-0 right-8 flex space-x-2 mt-8">
-                  <CarouselPrevious className="relative inset-0 translate-y-0 h-10 w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm hover:bg-white">
+                  <CarouselPrevious className="relative inset-0 translate-y-0 h-11 w-11 md:h-10 md:w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm hover:bg-white">
                     <ChevronLeft className="h-5 w-5 text-gray-700" />
                   </CarouselPrevious>
-                  <CarouselNext className="relative inset-0 translate-y-0 h-10 w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm hover:bg-white">
+                  <CarouselNext className="relative inset-0 translate-y-0 h-11 w-11 md:h-10 md:w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm hover:bg-white">
                     <ChevronRight className="h-5 w-5 text-gray-700" />
                   </CarouselNext>
                 </div>

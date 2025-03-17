@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, ShoppingCart, Menu, X } from 'lucide-react';
@@ -6,12 +7,14 @@ import SearchBox from './SearchBox';
 import { useIsMobile } from '../hooks/use-mobile';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const isMobile = useIsMobile();
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -19,81 +22,124 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  return <header className={cn("z-50 sticky top-0 left-0 right-0 w-full transition-all duration-300", isScrolled ? "backdrop-blur-xl bg-white/90 shadow-sm" : "backdrop-blur-none bg-white")}>
+
+  return (
+    <header className={cn("z-50 sticky top-0 left-0 right-0 w-full transition-all duration-300", 
+      isScrolled ? "backdrop-blur-xl bg-white/90 shadow-sm" : "backdrop-blur-none bg-white")}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <nav className="h-16 flex items-center justify-between">
           <div className="flex items-center space-x-6">
             <Link to="/" className="flex items-center">
-              <img src="/lovable-uploads/1b6b8029-a368-4270-a444-57d4aab3676e.png" alt="Paraíso dos Bordados" className="h-14 w-auto" />
+              <img 
+                src="/lovable-uploads/1b6b8029-a368-4270-a444-57d4aab3676e.png" 
+                alt="Paraíso dos Bordados" 
+                className="h-14 w-auto" 
+              />
             </Link>
             
             {!isMobile && <MenubarNav />}
           </div>
 
           <div className="flex items-center gap-4">
-            {!isMobile && <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300" aria-label="Buscar">
+            {!isMobile && (
+              <button 
+                onClick={() => setIsSearchOpen(!isSearchOpen)} 
+                className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300" 
+                aria-label="Buscar"
+              >
                 <Search className="h-5 w-5 text-brand-dark" />
-              </button>}
+              </button>
+            )}
             
-            
-
-            {isMobile && <Sheet>
+            {isMobile && (
+              <Sheet>
                 <SheetTrigger asChild>
-                  <button className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300" aria-label="Menu">
+                  <button 
+                    className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-100" 
+                    aria-label="Menu"
+                  >
                     <Menu className="h-5 w-5 text-brand-dark" />
                   </button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[280px] sm:w-[350px]">
-                  <div className="flex flex-col gap-6 mt-6">
+                <SheetContent side="right" className="w-full h-full sm:w-[350px] p-4">
+                  <div className="flex justify-end">
+                    <SheetClose className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-100">
+                      <X className="h-5 w-5 text-brand-dark" />
+                    </SheetClose>
+                  </div>
+                  <div className="flex flex-col gap-6 mt-2">
                     <div className="mb-4">
                       <SearchBox onClose={() => {}} showCloseButton={false} />
                     </div>
-                    <div className="space-y-4">
-                      <Link to="/categoria/cama-mesa-banho" className="block py-2 px-4 hover:bg-gray-100 rounded-md font-medium">
+                    <div className="space-y-5">
+                      <Link 
+                        to="/categoria/cama-mesa-banho" 
+                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
+                      >
                         Cama, Mesa e Banho
                       </Link>
-                      <Link to="/categoria/infantil" className="block py-2 px-4 hover:bg-gray-100 rounded-md font-medium">
+                      <Link 
+                        to="/categoria/infantil" 
+                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
+                      >
                         Infantil
                       </Link>
-                      <Link to="/categoria/vestuario" className="block py-2 px-4 hover:bg-gray-100 rounded-md font-medium">
+                      <Link 
+                        to="/categoria/vestuario" 
+                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
+                      >
                         Vestuário
                       </Link>
-                      <Link to="/produtos" className="block py-2 px-4 hover:bg-gray-100 rounded-md font-medium">
+                      <Link 
+                        to="/produtos" 
+                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
+                      >
                         Todos os Produtos
                       </Link>
-                      <Link to="/portfolio" className="block py-2 px-4 hover:bg-brand-red hover:text-white rounded-md font-medium">
+                      <Link 
+                        to="/portfolio" 
+                        className="block py-3 px-4 hover:bg-brand-red hover:text-white rounded-md font-medium"
+                      >
                         Portfólio
                       </Link>
-                      <Link to="/sobre" className="block py-2 px-4 hover:bg-gray-100 rounded-md font-medium">
+                      <Link 
+                        to="/sobre" 
+                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
+                      >
                         Sobre Nós
                       </Link>
-                      <Link to="/nossos-parceiros" className="block py-2 px-4 hover:bg-gray-100 rounded-md font-medium">
+                      <Link 
+                        to="/nossos-parceiros" 
+                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
+                      >
                         Parceiros
                       </Link>
                     </div>
                   </div>
                 </SheetContent>
-              </Sheet>}
+              </Sheet>
+            )}
           </div>
         </nav>
         
-        {!isMobile && <AnimatePresence>
-            {isSearchOpen && <motion.div initial={{
-          opacity: 0,
-          y: -10
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} exit={{
-          opacity: 0,
-          y: -10
-        }} transition={{
-          duration: 0.2
-        }} className="py-3">
+        {!isMobile && (
+          <AnimatePresence>
+            {isSearchOpen && (
+              <motion.div 
+                initial={{ opacity: 0, y: -10 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                exit={{ opacity: 0, y: -10 }} 
+                transition={{ duration: 0.2 }} 
+                className="py-3"
+              >
                 <SearchBox onClose={() => setIsSearchOpen(false)} />
-              </motion.div>}
-          </AnimatePresence>}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        )}
       </div>
-    </header>;
+    </header>
+  );
 };
+
 export default Navbar;

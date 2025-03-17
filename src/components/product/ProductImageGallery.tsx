@@ -34,7 +34,7 @@ const ProductImageGallery = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: 0.5 }}
         >
           <Carousel className="w-full">
             <CarouselContent>
@@ -68,8 +68,8 @@ const ProductImageGallery = ({
 
             {images.length > 1 && (
               <>
-                <CarouselPrevious className="left-2" />
-                <CarouselNext className="right-2" />
+                <CarouselPrevious className="left-2 h-11 w-11 md:h-10 md:w-10" />
+                <CarouselNext className="right-2 h-11 w-11 md:h-10 md:w-10" />
               </>
             )}
             

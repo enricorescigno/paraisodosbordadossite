@@ -1,0 +1,159 @@
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  /* General adjustments */
+  .container-custom {
+    @apply px-4;
+  }
+  
+  /* Navbar adjustments */
+  .header-nav-links {
+    @apply space-y-5;
+  }
+  
+  /* Banner/hero adjustments */
+  .hero-title {
+    @apply text-3xl;
+  }
+  
+  .hero-subtitle {
+    @apply text-base;
+  }
+  
+  .hero-cta-wrapper {
+    @apply flex flex-col items-center;
+  }
+  
+  .hero-cta {
+    @apply w-4/5 mx-auto text-center;
+  }
+  
+  /* Product card adjustments */
+  .product-card {
+    @apply w-[90%] mx-auto;
+  }
+  
+  /* Portfolio carousel */
+  .portfolio-categories {
+    @apply flex overflow-x-auto pb-4 hide-scrollbar;
+  }
+  
+  .portfolio-category-item {
+    @apply min-w-max px-4;
+  }
+  
+  /* Hide scrollbar but allow scrolling */
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Product detail page */
+  .product-detail-section {
+    @apply px-4;
+  }
+  
+  .product-color-selector {
+    @apply flex flex-wrap gap-3;
+  }
+  
+  .product-color-option {
+    @apply h-11 w-11;
+  }
+  
+  /* Call to action */
+  .cta-button {
+    @apply w-full;
+  }
+  
+  /* Footer */
+  .footer-heading {
+    @apply text-lg;
+  }
+  
+  .footer-text {
+    @apply text-xs;
+  }
+  
+  .footer-social {
+    @apply flex justify-center gap-4;
+  }
+  
+  .footer-social-icon {
+    @apply p-3;
+  }
+  
+  /* Adjust button sizes */
+  .mobile-btn-large {
+    @apply w-4/5 py-3 text-center mx-auto;
+  }
+  
+  /* Adjust headings */
+  .mobile-heading {
+    @apply text-2xl;
+  }
+  
+  /* Quick access buttons */
+  .fixed-bottom-button {
+    @apply fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200 shadow-lg z-10;
+  }
+  
+  .fixed-bottom-button button,
+  .fixed-bottom-button a {
+    @apply w-[90%] mx-auto h-14 flex items-center justify-center;
+  }
+  
+  /* Touch targets */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Animation adjustments */
+  .mobile-fade {
+    transition: opacity 0.5s ease;
+  }
+  
+  /* Navigation arrows */
+  .nav-arrow {
+    @apply h-11 w-11;
+  }
+  
+  /* Spacing */
+  .mobile-section-spacing {
+    @apply py-10;
+  }
+  
+  /* Text alignment */
+  .mobile-text-center {
+    @apply text-center;
+  }
+  
+  /* Buttons */
+  .btn-primary, .btn-secondary {
+    @apply transition-all duration-100;
+  }
+  
+  /* Button click feedback */
+  button, a {
+    @apply active:scale-[0.98] transition-transform duration-100;
+  }
+}
+
+/* Minimum width support for very small screens */
+@media (max-width: 320px) {
+  .container {
+    @apply px-3;
+  }
+  
+  .product-color-option {
+    @apply h-10 w-10;
+  }
+  
+  .product-card {
+    @apply w-[95%];
+  }
+}

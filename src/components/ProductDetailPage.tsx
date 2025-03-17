@@ -1,4 +1,5 @@
 
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
 import Navbar from './Navbar';
@@ -7,6 +8,8 @@ import WhatsAppSupport from './WhatsAppSupport';
 import { AppleButton } from '@/components/ui/apple-button';
 import { motion } from 'framer-motion';
 import { useProductDetail } from '@/hooks/useProductDetail';
+import { useIsMobile } from '../hooks/use-mobile';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 
 // Importing our new components
 import ProductImageGallery from './product/ProductImageGallery';
@@ -34,12 +37,15 @@ const ProductDetailPage = () => {
     getBackLink,
     placeholder
   } = useProductDetail();
-
+  
+  const isMobile = useIsMobile();
+  useScrollToTop();
+  
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
       
-      <div className="container-custom pt-24 pb-16">
+      <div className="container-custom pt-24 pb-24 md:pb-16 px-4">
         {loading ? (
           <div className="flex justify-center items-center py-40">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
@@ -86,21 +92,6 @@ const ProductDetailPage = () => {
                   onDecrement={decrementQuantity} 
                 />
                 
-                <a 
-                  href={getWhatsAppLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mb-10"
-                >
-                  <AppleButton 
-                    size="lg" 
-                    className="w-full rounded-lg flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red/90"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    Solicitar Orçamento
-                  </AppleButton>
-                </a>
-                
                 <ProductBenefits />
               </div>
             </div>
@@ -109,6 +100,42 @@ const ProductDetailPage = () => {
           <ProductNotFound />
         )}
       </div>
+      
+      {isMobile && product && (
+        <div className="fixed bottom-0 left-0 right-0 p-3 bg-white border-t border-gray-200 shadow-lg z-10">
+          <a 
+            href={getWhatsAppLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full"
+          >
+            <AppleButton 
+              size="lg" 
+              className="w-[90%] mx-auto h-14 rounded-lg flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red/90"
+            >
+              <MessageCircle className="w-5 h-5" />
+              Solicitar Orçamento
+            </AppleButton>
+          </a>
+        </div>
+      )}
+      
+      {!isMobile && product && (
+        <a 
+          href={getWhatsAppLink()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mb-10"
+        >
+          <AppleButton 
+            size="lg" 
+            className="w-full rounded-lg flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-red/90"
+          >
+            <MessageCircle className="w-5 h-5" />
+            Solicitar Orçamento
+          </AppleButton>
+        </a>
+      )}
       
       <Footer />
       <WhatsAppSupport />
