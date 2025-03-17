@@ -16,19 +16,19 @@ interface Category {
 // Combined list of all categories
 const allCategories: Category[] = [
   // Product categories
-  { id: 'cama', name: 'Cama', icon: <Bed className="w-8 h-8 text-gray-700" />, path: '/categoria/cama', type: 'product' },
-  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <ChefHat className="w-8 h-8 text-gray-700" />, path: '/categoria/mesa-cozinha', type: 'product' },
-  { id: 'banho', name: 'Banho', icon: <Bath className="w-8 h-8 text-gray-700" />, path: '/categoria/banho', type: 'product' },
-  { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-8 h-8 text-gray-700" />, path: '/categoria/pantufa', type: 'product' },
+  { id: 'cama', name: 'Cama', icon: <Bed className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/categoria/cama', type: 'product' },
+  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <ChefHat className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/categoria/mesa-cozinha', type: 'product' },
+  { id: 'banho', name: 'Banho', icon: <Bath className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/categoria/banho', type: 'product' },
+  { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/categoria/pantufa', type: 'product' },
   
   // Portfolio categories
-  { id: 'all', name: 'Todos', icon: <Paintbrush className="w-8 h-8 text-gray-700" />, path: '/portfolio', type: 'portfolio' },
-  { id: 'bordado-bone', name: 'Bordado em Boné', icon: <Shirt className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-bone', type: 'portfolio' },
-  { id: 'bordado-jaleco', name: 'Bordado em Jaleco', icon: <Shirt className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-jaleco', type: 'portfolio' },
-  { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-infantis', type: 'portfolio' },
-  { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-bolsa', type: 'portfolio' },
-  { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' },
-  { id: 'bordado-toalha-banho', name: 'Bordado em Toalha', icon: <Bath className="w-8 h-8 text-gray-700" />, path: '/portfolio/bordado-toalha-banho', type: 'portfolio' }
+  { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/portfolio', type: 'portfolio' },
+  { id: 'bordado-bone', name: 'Bordado em Boné', icon: <Shirt className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/portfolio/bordado-bone', type: 'portfolio' },
+  { id: 'bordado-jaleco', name: 'Bordado em Jaleco', icon: <Shirt className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/portfolio/bordado-jaleco', type: 'portfolio' },
+  { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/portfolio/bordado-infantis', type: 'portfolio' },
+  { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/portfolio/bordado-bolsa', type: 'portfolio' },
+  { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' },
+  { id: 'bordado-toalha-banho', name: 'Bordado em Toalha', icon: <Bath className="w-5 h-5 md:w-8 md:h-8 text-gray-700" />, path: '/portfolio/bordado-toalha-banho', type: 'portfolio' }
 ];
 
 interface BrowseByCategoryProps {

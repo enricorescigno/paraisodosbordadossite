@@ -49,7 +49,7 @@
   }
   
   .category-icon {
-    @apply min-w-[80px] flex flex-col items-center;
+    @apply min-w-[70px] flex flex-col items-center;
   }
   
   /* Product detail page */
@@ -232,17 +232,17 @@
   
   /* Category scrollable menu - new Apple-inspired styling */
   .category-menu {
-    @apply px-4 md:px-0 py-2 mx-auto max-w-full;
+    @apply px-1 md:px-0 py-1 mx-auto max-w-full;
   }
 
-  /* Category item styling */
+  /* Category item styling - tighter spacing for mobile */
   .category-item {
-    @apply min-w-[85px];
+    @apply min-w-[70px] mx-0.5;
   }
   
   /* Categories wrapper for proper scrolling */
   .categories-wrapper {
-    @apply flex overflow-x-auto gap-1 pb-4 px-1;
+    @apply flex overflow-x-auto gap-0.5 pb-4 px-1;
   }
 }
 

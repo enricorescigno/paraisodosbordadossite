@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { ArrowRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -16,35 +15,37 @@ interface Product {
   portfolioType: string;
 }
 
-const products: Product[] = [{
-  id: 301,
-  name: "Boné Personalizado Empresarial",
-  image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop",
-  category: "Bordado em Boné",
-  rating: 4.8,
-  portfolioType: "bordado-bone"
-}, {
-  id: 310,
-  name: "Necessaire Floral Bordada",
-  image: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png",
-  category: "Bordado em Necessaire",
-  rating: 4.9,
-  portfolioType: "bordado-necessaire"
-}, {
-  id: 320,
-  name: "Bolsa Tote com Bordado",
-  image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
-  category: "Bordado em Bolsa",
-  rating: 4.7,
-  portfolioType: "bordado-bolsa"
-}, {
-  id: 330,
-  name: "Jaleco Médico Personalizado",
-  image: "https://images.unsplash.com/photo-1524901548305-08eeddc35080?q=80&w=500&auto=format&fit=crop",
-  category: "Bordado em Jaleco",
-  rating: 5.0,
-  portfolioType: "bordado-jaleco"
-}];
+const products: Product[] = [
+  {
+    id: 301,
+    name: "Boné Personalizado Empresarial",
+    image: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop",
+    category: "Bordado em Boné",
+    rating: 4.8,
+    portfolioType: "bordado-bone"
+  }, {
+    id: 310,
+    name: "Necessaire Floral Bordada",
+    image: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png",
+    category: "Bordado em Necessaire",
+    rating: 4.9,
+    portfolioType: "bordado-necessaire"
+  }, {
+    id: 320,
+    name: "Bolsa Tote com Bordado",
+    image: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
+    category: "Bordado em Bolsa",
+    rating: 4.7,
+    portfolioType: "bordado-bolsa"
+  }, {
+    id: 330,
+    name: "Jaleco Médico Personalizado",
+    image: "https://images.unsplash.com/photo-1524901548305-08eeddc35080?q=80&w=500&auto=format&fit=crop",
+    category: "Bordado em Jaleco",
+    rating: 5.0,
+    portfolioType: "bordado-jaleco"
+  }
+];
 
 const ProductShowcase = () => {
   const [activeTab, setActiveTab] = useState<string>("all");
