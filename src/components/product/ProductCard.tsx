@@ -49,10 +49,11 @@ const ProductCard = ({
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
         <motion.img 
           src={getImageUrl()}
-          alt={name}
+          alt={`Imagem do produto: ${name}`}
           className="w-full h-full object-contain mix-blend-multiply"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
+          loading="lazy"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.onerror = null;
@@ -81,7 +82,7 @@ const ProductCard = ({
       </div>
       
       <div className="flex justify-center mt-auto w-full px-4">
-        <Link to={`/produto/${id}`} className="w-full sm:w-auto">
+        <Link to={`/produto/${id}`} className="w-full sm:w-auto" aria-label={`Ver detalhes de ${name}`}>
           <Button 
             variant="default" 
             size="lg" 

@@ -25,14 +25,14 @@ const Navbar = () => {
 
   return (
     <header className={cn("z-50 sticky top-0 left-0 right-0 w-full transition-all duration-300", 
-      isScrolled ? "backdrop-blur-xl bg-white/90 shadow-sm" : "backdrop-blur-none bg-white")}>
+      isScrolled ? "backdrop-blur-xl bg-white/95 shadow-sm" : "backdrop-blur-none bg-white")}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
         <nav className="h-16 flex items-center justify-between">
           <div className="flex items-center space-x-6">
             <Link to="/" className="flex items-center">
               <img 
                 src="/lovable-uploads/1b6b8029-a368-4270-a444-57d4aab3676e.png" 
-                alt="Paraíso dos Bordados" 
+                alt="Paraíso dos Bordados - Logo" 
                 className="h-14 w-auto" 
               />
             </Link>

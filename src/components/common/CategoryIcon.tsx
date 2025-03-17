@@ -52,14 +52,14 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
   
   return (
     <motion.div 
-      className="flex flex-col items-center justify-center gap-1 cursor-pointer min-w-[80px] md:min-w-[85px]"
+      className="flex flex-col items-center justify-center gap-1 cursor-pointer min-w-[70px] md:min-w-[85px]"
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
       <div 
         className={cn(
-          "w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-white shadow-sm",
+          "w-9 h-9 md:w-16 md:h-16 rounded-full flex items-center justify-center bg-white shadow-sm",
           "transition-all duration-300 hover:shadow-md",
           isActive ? "ring-2 ring-brand-red bg-red-50" : "border border-gray-100"
         )}

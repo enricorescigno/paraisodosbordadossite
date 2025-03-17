@@ -49,7 +49,7 @@
   }
   
   .category-icon {
-    @apply min-w-[70px] flex flex-col items-center;
+    @apply min-w-[65px] flex flex-col items-center;
   }
   
   /* Product detail page */
@@ -237,12 +237,18 @@
 
   /* Category item styling - tighter spacing for mobile */
   .category-item {
-    @apply min-w-[70px] mx-0.5;
+    @apply min-w-[65px] mx-0;
   }
   
   /* Categories wrapper for proper scrolling */
   .categories-wrapper {
-    @apply flex overflow-x-auto gap-0.5 pb-4 px-1;
+    @apply flex overflow-x-auto gap-0 pb-4 px-0.5;
+  }
+  
+  /* Back to top button - fixed position */
+  .back-to-top {
+    @apply fixed bottom-20 right-4 w-10 h-10 bg-white shadow-md rounded-full 
+    flex items-center justify-center z-30 border border-gray-200;
   }
 }
 
