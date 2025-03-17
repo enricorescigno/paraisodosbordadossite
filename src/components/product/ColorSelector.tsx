@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface ColorSelectorProps {
   colors: string[];
@@ -41,15 +42,17 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
         {colors.map((color) => {
           const bgColor = colorMap[color] || "#f5f5f7";
           const isSelected = selectedColor === color;
+          const isDarkColor = ['Preto', 'Azul', 'Verde', 'Vermelho', 'Roxo', 'Vinho', 'Marrom'].includes(color);
           
           return (
             <motion.button
               key={color}
               onClick={() => onColorChange(color)}
               whileTap={{ scale: 0.95 }}
-              className={`relative h-11 w-11 md:h-10 md:w-10 rounded-full transition-all duration-100 ${
-                isSelected ? 'ring-2 ring-offset-2 ring-[#0071E3]' : 'hover:ring-1 hover:ring-gray-300 hover:ring-offset-1'
-              }`}
+              className={cn(
+                "relative h-11 w-11 md:h-10 md:w-10 rounded-full transition-all duration-200",
+                isSelected ? "ring-2 ring-offset-2 ring-[#0071E3]" : "hover:ring-1 hover:ring-gray-300 hover:ring-offset-1"
+              )}
               title={color}
               aria-label={`Selecionar cor ${color}`}
               data-testid={`color-button-${color.toLowerCase().replace(/\s+/g, '-')}`}
@@ -66,7 +69,10 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", duration: 0.3 }}
                 >
-                  <span className={`w-2 h-2 rounded-full ${bgColor === '#ffffff' ? 'bg-gray-800' : 'bg-white'}`} />
+                  <span className={cn(
+                    "w-2 h-2 rounded-full", 
+                    isDarkColor ? "bg-white" : "bg-gray-800"
+                  )} />
                 </motion.span>
               )}
             </motion.button>

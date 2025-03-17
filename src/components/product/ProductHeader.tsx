@@ -3,6 +3,7 @@ import React from 'react';
 import { Star } from 'lucide-react';
 import { Product } from '@/types/product';
 import { motion } from 'framer-motion';
+import { cn } from '@/lib/utils';
 
 interface ProductHeaderProps {
   product: Product;
@@ -25,7 +26,10 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
         </span>
       )}
       
-      <h1 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight text-[#1D1D1F]">
+      <h1 className={cn(
+        "text-3xl md:text-4xl font-semibold mb-3 tracking-tight text-[#1D1D1F]",
+        "leading-tight"
+      )}>
         {product.name}
       </h1>
       
@@ -37,7 +41,7 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
         </div>
       </div>
       
-      <p className="text-lg text-[#1D1D1F]/90 mb-8 leading-relaxed">
+      <p className="text-lg text-[#1D1D1F]/90 mb-8 leading-relaxed max-w-[95%]">
         {product.description || "Eleve sua experiência à mesa com este jogo americano de alta qualidade. Com design elegante e materiais premium, é perfeito para todas as ocasiões, do dia a dia às celebrações especiais."}
       </p>
     </motion.div>

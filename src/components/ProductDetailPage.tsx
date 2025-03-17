@@ -44,7 +44,7 @@ const ProductDetailPage = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       
-      <div className="container-custom pt-24 pb-24 md:pb-16 px-4">
+      <div className="container-custom pt-24 pb-24 md:pb-16 px-3 md:px-4 max-w-7xl mx-auto">
         {loading ? (
           <div className="flex justify-center items-center py-40">
             <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#0071E3]"></div>
@@ -64,7 +64,7 @@ const ProductDetailPage = () => {
               {product.type === 'portfolio' ? 'Voltar para o portfólio' : 'Voltar para a loja'}
             </Link>
             
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-start">
               {/* Mobile: Image gallery on top */}
               {isMobile && (
                 <ProductImageGallery 
@@ -137,7 +137,7 @@ const ProductDetailPage = () => {
             {product.description && (
               <div className="mt-12 border-t border-gray-200 pt-8">
                 <h2 className="text-2xl font-semibold mb-4 text-[#1D1D1F]">Descrição</h2>
-                <p className="text-lg text-[#1D1D1F]/80">{product.description}</p>
+                <p className="text-lg text-[#1D1D1F]/80 max-w-[95%]">{product.description}</p>
               </div>
             )}
           </motion.div>
@@ -157,7 +157,7 @@ const ProductDetailPage = () => {
           >
             <AppleButton 
               size="lg" 
-              className="w-[90%] mx-auto h-14 rounded-lg flex items-center justify-center gap-2 bg-[#C00] hover:bg-[#B00] transition-colors"
+              className="w-[95%] mx-auto h-14 rounded-lg flex items-center justify-center gap-2 bg-[#C00] hover:bg-[#B00] transition-colors"
             >
               <MessageCircle className="w-5 h-5" />
               Solicitar Orçamento

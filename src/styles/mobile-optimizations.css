@@ -30,7 +30,7 @@
   
   /* Product card adjustments */
   .product-card {
-    @apply w-[90%] mx-auto;
+    @apply w-[95%] mx-auto;
   }
   
   /* Navigation carousel - Apple style */
@@ -54,15 +54,15 @@
   
   /* Product detail page */
   .product-detail-section {
-    @apply px-4;
+    @apply px-3;
   }
   
   .product-color-selector {
-    @apply flex flex-wrap gap-3;
+    @apply flex flex-wrap gap-2;
   }
   
   .product-color-option {
-    @apply h-11 w-11;
+    @apply h-10 w-10;
   }
   
   /* Call to action */
@@ -93,12 +93,12 @@
   }
   
   .btn-primary, .btn-secondary, .apple-button {
-    @apply text-base py-3 px-6 min-h-[48px];
+    @apply text-base py-3 px-5 min-h-[48px];
   }
   
   /* Make buttons more touchable on mobile */
   button, a {
-    @apply min-h-[48px] active:scale-[0.98] transition-transform duration-100;
+    @apply min-h-[44px] active:scale-[0.98] transition-transform duration-100;
   }
   
   /* New classes for better button control */
@@ -107,7 +107,7 @@
   }
   
   .mobile-btn-fixed {
-    @apply w-[90%] mx-auto h-14 shadow-lg;
+    @apply w-[95%] mx-auto h-14 shadow-lg;
   }
   
   /* Adjust headings - improved readability and scaling */
@@ -138,22 +138,22 @@
   
   .fixed-bottom-button button,
   .fixed-bottom-button a {
-    @apply w-[90%] mx-auto h-14 flex items-center justify-center;
+    @apply w-[95%] mx-auto h-14 flex items-center justify-center;
   }
   
   /* Touch targets - enhanced for better accessibility */
   .touch-target {
-    @apply min-h-[48px] min-w-[48px];
+    @apply min-h-[44px] min-w-[44px];
   }
   
   /* Animation adjustments */
   .mobile-fade {
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease;
   }
   
   /* Navigation arrows - improved size for touch */
   .nav-arrow {
-    @apply h-11 w-11 bg-white/80 backdrop-blur-sm shadow-sm rounded-full 
+    @apply h-10 w-10 bg-white/80 backdrop-blur-sm shadow-sm rounded-full 
     flex items-center justify-center border border-gray-200;
   }
   
@@ -182,7 +182,7 @@
   
   /* Card layouts */
   .mobile-card {
-    @apply w-[90%] mx-auto rounded-xl p-4;
+    @apply w-[95%] mx-auto rounded-xl p-4;
   }
   
   /* Image containers */
@@ -192,7 +192,7 @@
   
   /* Form controls for better mobile experience */
   input, select, textarea {
-    @apply min-h-[48px] text-base;
+    @apply min-h-[44px] text-base;
   }
   
   /* Enhanced link targets for footer */
@@ -237,19 +237,19 @@
 
   /* Category item styling - tighter spacing for mobile */
   .category-item {
-    @apply min-w-[70px] mx-0.5;
+    @apply min-w-[72px] mx-0.5;
   }
   
   /* Categories wrapper for proper scrolling */
   .categories-wrapper {
-    @apply flex overflow-x-auto gap-0.5 pb-4 px-1;
+    @apply flex overflow-x-auto gap-2 pb-4 px-1;
   }
 }
 
 /* Minimum width support for very small screens */
 @media (max-width: 320px) {
   .category-item {
-    @apply min-w-[60px];
+    @apply min-w-[65px];
   }
   
   .btn-primary, .btn-secondary, .apple-button {

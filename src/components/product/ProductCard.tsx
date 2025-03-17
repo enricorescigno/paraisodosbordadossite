@@ -44,7 +44,7 @@ const ProductCard = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       whileHover={{ y: -5, transition: { duration: 0.2 } }}
-      className="flex flex-col items-center w-full max-w-[90%] mx-auto h-full"
+      className="flex flex-col h-full w-full"
     >
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
         <motion.img 
@@ -70,23 +70,23 @@ const ProductCard = ({
       </div>
       
       <div className="flex flex-col flex-grow w-full">
-        <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2 px-4">
+        <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">
           {name}
         </h3>
         
         {description && (
-          <p className="text-center text-gray-500 mb-4 max-w-md px-4 text-sm md:text-base line-clamp-2 h-[2.5rem] overflow-hidden">
+          <p className="text-center text-gray-500 mb-4 text-sm md:text-base line-clamp-2 h-[2.5rem] overflow-hidden mx-auto max-w-[90%]">
             {description}
           </p>
         )}
       </div>
       
-      <div className="flex justify-center mt-auto w-full px-4">
-        <Link to={`/produto/${id}`} className="w-full sm:w-auto">
+      <div className="flex justify-center mt-auto w-full">
+        <Link to={`/produto/${id}`} className="w-full sm:w-auto flex justify-center">
           <Button 
             variant="default" 
             size="lg" 
-            className="rounded-full px-8 w-full min-h-[48px]"
+            className="rounded-full px-8 w-full max-w-[200px] min-h-[48px]"
             aria-label={`Ver detalhes de ${name}`}
           >
             {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}

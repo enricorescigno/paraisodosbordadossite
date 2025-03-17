@@ -14,7 +14,7 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
   // Function to format category names with line breaks
   const formatCategoryName = (name: string) => {
     // Words that should trigger a line break after them
-    const breakAfterWords = ['em', 'e', 'de', 'Mesa'];
+    const breakAfterWords = ['em', 'e', 'de', 'Mesa', 'para'];
     
     const words = name.split(' ');
     
@@ -52,7 +52,10 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
   
   return (
     <motion.div 
-      className="flex flex-col items-center justify-center gap-1 cursor-pointer min-w-[75px] md:min-w-[85px]"
+      className={cn(
+        "flex flex-col items-center justify-center gap-1 cursor-pointer",
+        "min-w-[75px] md:min-w-[85px] px-1 transition-all duration-200"
+      )}
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -77,8 +80,8 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
         {icon}
       </div>
       <span className={cn(
-        "text-xs md:text-sm text-center font-medium mt-1 w-full px-1",
-        "whitespace-normal break-words leading-tight",
+        "text-xs md:text-sm text-center font-medium mt-1.5 w-full",
+        "whitespace-normal break-words leading-tight min-h-[2.5em] flex items-center justify-center",
         isActive ? "text-brand-red" : "text-gray-700"
       )}>
         {formatCategoryName(name)}
