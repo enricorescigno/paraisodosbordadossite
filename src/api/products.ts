@@ -21,8 +21,15 @@ export const fetchProductById = async (id: string | number) => {
   // This would normally fetch from the database
   // When integration is activated, this will be updated
   
+  // Normalize the ID to string for comparison
+  const normalizedId = id.toString();
+  
   // Find the product in our mock data
-  const mockProduct = allProducts.find(product => product.id.toString() === id.toString());
+  const mockProduct = allProducts.find(product => product.id.toString() === normalizedId);
+  
+  // Add debugging logs
+  console.log(`Fetching product with ID: ${normalizedId}`);
+  console.log(`Product found: ${mockProduct ? 'Yes - ' + mockProduct.name : 'No'}`);
   
   return {
     message: 'Using mock data (MySQL integration is prepared but not activated)',

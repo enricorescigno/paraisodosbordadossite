@@ -82,7 +82,7 @@ const ProductCard = ({
       </div>
       
       <div className="flex justify-center mt-auto w-full px-4">
-        <Link to={`/produto/${id}`} className="w-full sm:w-auto" aria-label={`Ver detalhes de ${name}`}>
+        <Link to={`/produto/${id.toString()}`} className="w-full sm:w-auto" aria-label={`Ver detalhes de ${name}`}>
           <Button 
             variant="default" 
             size="lg" 
