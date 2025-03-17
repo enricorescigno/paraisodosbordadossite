@@ -61,55 +61,56 @@ const ProductPage = () => {
     // In a real application, this would be an API call
     setLoading(true);
     setTimeout(() => {
+      console.log("Current category path:", categoryPath);
+      
       // Get the corresponding category name from the URL path
       const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
       
-      // Filter products that match the category
-      let categoryProducts = allProducts.filter(product => 
-        product.type === 'product' && 
-        (product.category === categoryName || 
-         product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
-         categoryName.toLowerCase().includes(product.category.toLowerCase()))
-      );
+      let categoryProducts: Product[] = [];
       
-      // If still no products found, try partial matching
-      if (categoryProducts.length === 0) {
-        categoryProducts = allProducts.filter(product => 
-          product.type === 'product' && (
-            categoryPath.includes(product.category.toLowerCase().replace(/\s+/g, '-')) ||
-            product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' '))
-          )
-        );
-      }
-      
-      // Special handling for mesa-cozinha to ensure product 204 is included
+      // Special handling for mesa-cozinha category
       if (categoryPath === 'mesa-cozinha') {
+        console.log("Processing mesa-cozinha category");
+        
+        // Get regular products for this category
+        const regularProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          (product.category.toLowerCase().includes('mesa') || 
+           product.category.toLowerCase().includes('cozinha'))
+        );
+        
         // Get product 204 directly from mesaCozinhaProducts
-        const product204 = mesaCozinhaProducts.find(p => p.id === 204);
+        const product204 = mesaCozinhaProducts.find(p => Number(p.id) === 204);
         
-        // Only add if not already present
-        if (product204 && !categoryProducts.some(p => Number(p.id) === 204)) {
-          // Add product 204 at the beginning for visibility
-          categoryProducts = [product204, ...categoryProducts];
-        }
+        // Combine products with product 204 at the beginning
+        categoryProducts = product204 ? [product204, ...regularProducts] : regularProducts;
         
-        console.log("Mesa-cozinha category - Products:", categoryProducts.length);
+        console.log("Mesa-cozinha category - Products count:", categoryProducts.length);
         console.log("Mesa-cozinha - Product 204 included:", categoryProducts.some(p => Number(p.id) === 204));
+      } else {
+        // For other categories, filter normally
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          (product.category === categoryName || 
+           product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
+           categoryName.toLowerCase().includes(product.category.toLowerCase()))
+        );
         
-        if (product204) {
-          console.log("Product 204 details:", {
-            id: product204.id,
-            name: product204.name,
-            imageUrl: product204.imageUrl,
-            images: product204.images
-          });
+        // If still no products found, try partial matching
+        if (categoryProducts.length === 0) {
+          categoryProducts = allProducts.filter(product => 
+            product.type === 'product' && (
+              categoryPath.includes(product.category.toLowerCase().replace(/\s+/g, '-')) ||
+              product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' '))
+            )
+          );
         }
       }
       
       setProducts(categoryProducts);
       setFilteredProducts(categoryProducts);
       setLoading(false);
-    }, 500); // Simulate network request
+    }, 500);
   }, [location.pathname]);
   
   // Extract the category from the URL path for title
@@ -132,6 +133,13 @@ const ProductPage = () => {
             </p>
           </div>
           
+          {/* Debug info - remove once issue is resolved */}
+          {categoryPath === 'mesa-cozinha' && !loading && (
+            <div className="mb-4 text-center text-sm text-gray-500">
+              <p>Mostrando {filteredProducts.length} produtos na categoria Mesa-cozinha</p>
+            </div>
+          )}
+          
           {loading ? (
             <div className="flex justify-center items-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
@@ -149,7 +157,7 @@ const ProductPage = () => {
                           transition={{ duration: 0.5 }}
                           className="flex flex-col items-center"
                         >
-                          <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
+                          <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden relative">
                             <img 
                               src={
                                 // For product 204, we need special handling for its images
@@ -169,11 +177,19 @@ const ProductPage = () => {
                                 target.src = `https://via.placeholder.com/500x500?text=${encodeURIComponent(product.category)}`;
                               }}
                             />
+                            
+                            {/* Display "Novo" badge for new products */}
+                            {(product.isNew || Number(product.id) === 204) && (
+                              <div className="absolute top-3 right-3">
+                                <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
+                                  Novo
+                                </span>
+                              </div>
+                            )}
                           </div>
                           
                           <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">
                             {product.name}
-                            {Number(product.id) === 204 && " 🆕"}
                           </h3>
                           
                           {product.description && (

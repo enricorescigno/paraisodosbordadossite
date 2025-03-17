@@ -18,84 +18,83 @@ const AllProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [allProductsList, setAllProductsList] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-  const [activeCategory, setActiveCategory] = useState('mesa');  // Default to mesa instead of all
+  const [activeCategory, setActiveCategory] = useState('mesa-cozinha');  // Default to mesa-cozinha
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   
+  // Load all products
   useEffect(() => {
-    // In a real app, this would fetch from an API
     setLoading(true);
     setTimeout(() => {
-      // Filter only products (not portfolio items)
+      // Get all products (excluding portfolio items)
       let productItems = products.filter(product => product.type === 'product');
       
-      // Add product 204 directly to overall product list
-      const product204 = mesaCozinhaProducts.find(p => p.id === 204);
-      if (product204) {
-        productItems = [...productItems];
-        // Make sure we don't add duplicates
-        if (!productItems.some(p => Number(p.id) === 204)) {
-          productItems.push(product204);
-        }
-      }
-      
+      // We don't need to add product 204 here since we'll handle it in the category filtering
       setAllProductsList(productItems);
-      setFilteredProducts([]); // Will be set based on activeCategory in the next useEffect
       setLoading(false);
       
       console.log("Total products loaded:", productItems.length);
-      console.log("Product 204:", product204);
-    }, 300); // Simulate network request
+    }, 300);
   }, []);
 
-  // Filter products based on category
+  // Filter products based on active category with special handling for mesa-cozinha
   useEffect(() => {
     if (allProductsList.length === 0) return;
     
+    console.log("Filtering products for category:", activeCategory);
     let result: any[] = [];
     
-    // Always ensure product 204 is added to mesa category
-    if (activeCategory === 'mesa') {
-      // Get non-204 products for this category
+    // Special handling for mesa-cozinha to ensure product 204 is included
+    if (activeCategory === 'mesa-cozinha') {
+      console.log("Mesa-cozinha category selected");
+      
+      // Get products for this category (excluding product 204)
       const regularProducts = allProductsList.filter(product => 
-        product.category.toLowerCase().includes(activeCategory.toLowerCase()) &&
-        Number(product.id) !== 204
+        product.category.toLowerCase().includes('mesa') || 
+        product.category.toLowerCase().includes('cozinha')
       );
       
-      // Get product 204 directly from source
-      const product204 = mesaCozinhaProducts.find(p => p.id === 204);
+      // Get product 204 directly from mesaCozinhaProducts
+      const product204 = mesaCozinhaProducts.find(p => Number(p.id) === 204);
       
-      // Combine them, with product204 at the beginning for visibility
-      result = product204 ? [product204, ...regularProducts] : regularProducts;
+      if (product204) {
+        console.log("Product 204 found, adding to results");
+        // Put product 204 at the beginning
+        result = [product204, ...regularProducts];
+      } else {
+        console.log("Product 204 not found in mesaCozinhaProducts");
+        result = regularProducts;
+      }
       
-      console.log("Mesa category - Products count:", result.length);
-      console.log("Mesa category - Product 204 included:", result.some(p => Number(p.id) === 204));
+      // Double-check if product 204 is in results
+      console.log("Product 204 included in results:", result.some(p => Number(p.id) === 204));
+      
     } else {
-      // For other categories, just filter normally
-      result = allProductsList.filter(product => 
-        product.category.toLowerCase().includes(activeCategory.toLowerCase())
-      );
+      // For other categories, filter normally
+      result = allProductsList.filter(product => {
+        const productCategory = product.category.toLowerCase();
+        const searchCategory = activeCategory.toLowerCase();
+        
+        return productCategory.includes(searchCategory) || 
+               searchCategory.includes(productCategory);
+      });
     }
     
+    console.log(`Found ${result.length} products for category ${activeCategory}`);
     setFilteredProducts(result);
   }, [activeCategory, allProductsList]);
 
   // Extract unique categories for filtering - excluding "all"
-  const categories = [...new Set(allProductsList
-    .map(product => product.category.split(',')[0].trim().toLowerCase())
-    .filter(category => category !== 'all'))];
+  const categories = [...new Set(['banho', 'jaleco', 'infantil', 'cama', 'mesa-cozinha', 'pantufas'])];
 
   // Function to get category display name
   const getCategoryDisplayName = (category: string) => {
     const categoryMap: Record<string, string> = {
       'cama': 'Cama',
-      'mesa': 'Mesa-cozinha',
+      'mesa-cozinha': 'Mesa-cozinha',
       'banho': 'Banho',
       'infantil': 'Infantil',
-      'vestuário': 'Vestuário',
-      'bordado': 'Bordado',
       'pantufas': 'Pantufas',
-      'roupões': 'Roupões',
       'jaleco': 'Jaleco'
     };
     return categoryMap[category] || category.charAt(0).toUpperCase() + category.slice(1);
@@ -116,22 +115,26 @@ const AllProductsPage = () => {
             </p>
           </div>
           
-          {/* Category Tabs - Apple Style */}
-          <Tabs defaultValue="mesa" className="mb-16 justify-center flex flex-col items-center">
-            <TabsList className="bg-white rounded-full shadow-sm overflow-x-auto py-1 px-1 w-auto flex flex-nowrap">
-              {/* No longer including 'all' in the categories */}
-              {categories.map((category) => (
-                <TabsTrigger 
-                  key={category}
-                  value={category}
-                  onClick={() => setActiveCategory(category)}
-                  className="px-4 py-2 rounded-full data-[state=active]:bg-brand-red data-[state=active]:text-white"
-                >
-                  {getCategoryDisplayName(category)}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </Tabs>
+          {/* Category Tabs - More visible and prominent */}
+          <div className="mb-16 justify-center flex flex-col items-center">
+            <Tabs 
+              value={activeCategory} 
+              onValueChange={setActiveCategory}
+              className="w-full max-w-3xl"
+            >
+              <TabsList className="bg-white rounded-full shadow-sm overflow-x-auto py-1 px-1 w-auto flex flex-nowrap justify-center">
+                {categories.map((category) => (
+                  <TabsTrigger 
+                    key={category}
+                    value={category}
+                    className="px-6 py-2 rounded-full data-[state=active]:bg-brand-red data-[state=active]:text-white text-base whitespace-nowrap"
+                  >
+                    {getCategoryDisplayName(category)}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </Tabs>
+          </div>
           
           {loading ? (
             <div className="flex justify-center items-center py-20">
@@ -139,6 +142,13 @@ const AllProductsPage = () => {
             </div>
           ) : filteredProducts.length > 0 ? (
             <div className="relative">
+              {/* Debug info - can be removed once issue is resolved */}
+              <div className="mb-4 text-center text-sm text-gray-500">
+                {activeCategory === 'mesa-cozinha' && (
+                  <p>Mostrando {filteredProducts.length} produtos na categoria Mesa-cozinha</p>
+                )}
+              </div>
+              
               <Carousel className="w-full">
                 <CarouselContent>
                   {filteredProducts.map((product) => (
@@ -150,10 +160,10 @@ const AllProductsPage = () => {
                           transition={{ duration: 0.5 }}
                           className="flex flex-col items-center"
                         >
-                          <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden">
+                          <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-6 overflow-hidden relative">
                             <img 
                               src={
-                                // For product 204, we need special handling for its images
+                                // For product 204, special handling for images
                                 Number(product.id) === 204 && product.images && typeof product.images === 'object' && !Array.isArray(product.images) 
                                   ? product.images["Branco"]?.[0] // Use first image of default color
                                   : (
@@ -170,7 +180,7 @@ const AllProductsPage = () => {
                                 target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
                               }}
                             />
-                            {product.isNew && (
+                            {(product.isNew || Number(product.id) === 204) && (
                               <div className="absolute top-3 right-3">
                                 <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
                                   Novo
@@ -181,7 +191,6 @@ const AllProductsPage = () => {
                           
                           <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">
                             {product.name}
-                            {Number(product.id) === 204 && " 🆕"}
                           </h3>
                           
                           {product.description && (
@@ -231,7 +240,7 @@ const AllProductsPage = () => {
             </div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-lg text-gray-600">Nenhum produto encontrado.</p>
+              <p className="text-lg text-gray-600">Nenhum produto encontrado nesta categoria.</p>
               <Link to="/" className="inline-block mt-4">
                 <Button 
                   variant="default" 
