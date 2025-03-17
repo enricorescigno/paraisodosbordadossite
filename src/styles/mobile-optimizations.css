@@ -218,12 +218,10 @@
   /* Apple-style tabs for portfolio/product navigation */
   .apple-tabs {
     @apply flex overflow-x-auto hide-scrollbar py-2 px-0;
-    scroll-snap-type: x mandatory;
   }
   
   .apple-tab {
     @apply min-w-max px-4 py-2 mx-1 rounded-full text-sm font-medium;
-    scroll-snap-align: start;
     flex: 0 0 auto;
   }
   
@@ -237,8 +235,14 @@
     @apply px-4 md:px-0 py-2 mx-auto max-w-full;
   }
 
-  .scroll-snap-align-start {
-    scroll-snap-align: start;
+  /* Category item styling */
+  .category-item {
+    @apply min-w-[120px];
+  }
+  
+  /* Categories wrapper for proper scrolling */
+  .categories-wrapper {
+    @apply flex overflow-x-auto gap-4 pb-4 px-4;
   }
 }
 

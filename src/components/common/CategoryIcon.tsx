@@ -13,7 +13,7 @@ interface CategoryIconProps {
 const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconProps) => {
   return (
     <motion.div 
-      className="flex flex-col items-center justify-center gap-2 cursor-pointer"
+      className="flex flex-col items-center justify-center gap-2 cursor-pointer min-w-[120px]"
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
@@ -28,7 +28,8 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
         {icon}
       </div>
       <span className={cn(
-        "text-xs md:text-sm text-center font-medium mt-1 max-w-[80px] truncate",
+        "text-sm md:text-sm text-center font-medium mt-1 w-full px-1",
+        "whitespace-normal break-words",
         isActive ? "text-brand-red" : "text-gray-700"
       )}>
         {name}
