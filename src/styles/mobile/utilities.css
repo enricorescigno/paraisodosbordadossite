@@ -1,0 +1,8 @@
+
+/* Mobile utility classes */
+@media (max-width: 768px) {
+  /* Animation adjustments */
+  .mobile-fade {
+    transition: opacity 0.4s ease;
+  }
+}

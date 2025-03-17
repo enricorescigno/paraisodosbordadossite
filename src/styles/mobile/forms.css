@@ -1,0 +1,8 @@
+
+/* Mobile form optimizations */
+@media (max-width: 768px) {
+  /* Form controls for better mobile experience */
+  input, select, textarea {
+    @apply min-h-[44px] text-base;
+  }
+}

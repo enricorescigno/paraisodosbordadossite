@@ -1,0 +1,26 @@
+
+/* Mobile card and product component optimizations */
+@media (max-width: 768px) {
+  /* Product card adjustments */
+  .product-card {
+    @apply w-[95%] mx-auto;
+  }
+  
+  /* Product detail page */
+  .product-detail-section {
+    @apply px-3;
+  }
+  
+  .product-color-selector {
+    @apply flex flex-wrap gap-2;
+  }
+  
+  .product-color-option {
+    @apply h-10 w-10;
+  }
+  
+  /* Card layouts */
+  .mobile-card {
+    @apply w-[95%] mx-auto rounded-xl p-4;
+  }
+}

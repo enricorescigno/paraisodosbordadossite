@@ -1,0 +1,63 @@
+
+/* Mobile navigation optimizations */
+@media (max-width: 768px) {
+  /* Navbar adjustments */
+  .header-nav-links {
+    @apply space-y-5;
+  }
+  
+  /* Navigation arrows - improved size for touch */
+  .nav-arrow {
+    @apply h-10 w-10 bg-white/80 backdrop-blur-sm shadow-sm rounded-full 
+    flex items-center justify-center border border-gray-200;
+  }
+  
+  /* Navigation carousel - Apple style */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Category navigation */
+  .category-navigation {
+    @apply overflow-x-auto pb-2 -mx-2 px-2;
+  }
+  
+  .category-icon {
+    @apply min-w-[70px] flex flex-col items-center;
+  }
+  
+  /* Apple-style tabs for portfolio/product navigation */
+  .apple-tabs {
+    @apply flex overflow-x-auto hide-scrollbar py-2 px-0;
+  }
+  
+  .apple-tab {
+    @apply min-w-max px-4 py-2 mx-1 rounded-full text-sm font-medium;
+    flex: 0 0 auto;
+  }
+  
+  /* Category scrollable menu - new Apple-inspired styling */
+  .category-menu {
+    @apply px-1 md:px-0 py-1 mx-auto max-w-full;
+  }
+
+  /* Category item styling - tighter spacing for mobile */
+  .category-item {
+    @apply min-w-[72px] mx-0.5;
+  }
+  
+  /* Categories wrapper for proper scrolling */
+  .categories-wrapper {
+    @apply flex overflow-x-auto gap-2 pb-4 px-1;
+  }
+  
+  /* Enhanced link targets for footer */
+  .footer-link {
+    @apply py-2 block;
+  }
+}

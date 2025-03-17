@@ -1,0 +1,38 @@
+
+/* Importação de todos os arquivos de estilos mobile */
+@import './layout.css';
+@import './typography.css';
+@import './navigation.css';
+@import './buttons.css';
+@import './cards.css';
+@import './forms.css';
+@import './footer.css';
+@import './utilities.css';
+@import './animations.css';
+
+/* Media query para telas muito pequenas - mantém a consistência entre arquivos */
+@media (max-width: 320px) {
+  .category-item {
+    @apply min-w-[65px];
+  }
+  
+  .btn-primary, .btn-secondary, .apple-button {
+    @apply text-sm px-4;
+  }
+  
+  h1 {
+    @apply text-xl;
+  }
+  
+  h2 {
+    @apply text-lg;
+  }
+  
+  h3 {
+    @apply text-base;
+  }
+  
+  .product-card h3 {
+    @apply text-sm;
+  }
+}

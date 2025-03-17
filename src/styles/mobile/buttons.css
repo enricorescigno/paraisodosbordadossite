@@ -1,0 +1,45 @@
+
+/* Mobile button optimizations */
+@media (max-width: 768px) {
+  /* Adjust button sizes - improved for better touch targets */
+  .mobile-btn-large {
+    @apply w-full py-3 text-center mx-auto;
+  }
+  
+  .btn-primary, .btn-secondary, .apple-button {
+    @apply text-base py-3 px-5 min-h-[48px];
+  }
+  
+  /* Make buttons more touchable on mobile */
+  button, a {
+    @apply min-h-[44px] active:scale-[0.98] transition-transform duration-100;
+  }
+  
+  /* New classes for better button control */
+  .mobile-btn-full {
+    @apply w-full py-3;
+  }
+  
+  .mobile-btn-fixed {
+    @apply w-[95%] mx-auto h-14 shadow-lg;
+  }
+  
+  /* Touch targets - enhanced for better accessibility */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Hero CTA button adjustments */
+  .hero-cta-wrapper {
+    @apply flex flex-col items-center gap-4;
+  }
+  
+  .hero-cta {
+    @apply w-4/5 mx-auto text-center;
+  }
+  
+  /* Call to action */
+  .cta-button {
+    @apply w-full;
+  }
+}
