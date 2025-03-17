@@ -1,9 +1,8 @@
 
 import { useState, useEffect } from 'react';
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -53,7 +52,7 @@ const ProductImageGallery = ({
 
   const imageStyle = isZoomed ? {
     transformOrigin: `${mousePosition.x * 100}% ${mousePosition.y * 100}%`,
-    transform: 'scale(1.5)',
+    transform: 'scale(1.7)',
     cursor: 'zoom-out'
   } : {
     cursor: 'zoom-in'
@@ -72,7 +71,7 @@ const ProductImageGallery = ({
         >
           {/* Main Image */}
           <div 
-            className="relative overflow-hidden bg-[#f8f8f8] rounded-lg"
+            className="relative overflow-hidden bg-[#FAFAFA] rounded-lg"
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsZoomed(true)}
             onMouseLeave={() => setIsZoomed(false)}
@@ -138,14 +137,15 @@ const ProductImageGallery = ({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={`relative h-16 w-16 rounded-md overflow-hidden border ${
-                    index === activeImageIndex ? 'border-[#C32E2E] shadow-sm' : 'border-gray-200'
+                    index === activeImageIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
                   }`}
                   aria-label={`Ver imagem ${index + 1}`}
                 >
                   <img 
                     src={img} 
                     alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
-                    className="h-full w-full object-contain bg-[#f8f8f8] mix-blend-multiply p-1"
+                    className="h-full w-full object-contain bg-[#FAFAFA] mix-blend-multiply p-1"
+                    loading="lazy"
                   />
                 </motion.button>
               ))}

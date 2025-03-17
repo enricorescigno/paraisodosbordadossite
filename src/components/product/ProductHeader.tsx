@@ -18,26 +18,26 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
     >
       {product.isNew && (
         <span 
-          className="inline-block bg-[#C32E2E]/10 text-[#C32E2E] px-3 py-1 rounded-full text-xs font-medium mb-3"
+          className="inline-block bg-red-600/10 text-red-600 px-3 py-1 rounded-full text-xs font-medium mb-3"
           aria-label="Produto novo"
         >
           Novo
         </span>
       )}
       
-      <h1 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight">
+      <h1 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight text-[#1D1D1F]">
         {product.name}
       </h1>
       
       <div className="flex items-center gap-3 mb-4">
-        <span className="text-sm text-gray-500">{product.category}</span>
+        <span className="text-sm text-[#6E6E73]">{product.category}</span>
         <div className="flex items-center gap-1" aria-label={`Avaliação ${(product.rating || 4.8).toFixed(1)} de 5 estrelas`}>
-          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" aria-hidden="true" />
-          <span className="text-sm text-gray-500">{(product.rating || 4.8).toFixed(1)}</span>
+          <Star className="h-4 w-4 fill-[#FFD700] text-[#FFD700]" aria-hidden="true" />
+          <span className="text-sm text-[#6E6E73]">{(product.rating || 4.8).toFixed(1)}</span>
         </div>
       </div>
       
-      <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+      <p className="text-lg text-[#1D1D1F]/90 mb-8 leading-relaxed">
         {product.description || "Eleve sua experiência à mesa com este jogo americano de alta qualidade. Com design elegante e materiais premium, é perfeito para todas as ocasiões, do dia a dia às celebrações especiais."}
       </p>
     </motion.div>

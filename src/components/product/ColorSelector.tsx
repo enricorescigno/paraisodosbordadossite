@@ -36,7 +36,7 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
   
   return (
     <div className="mb-6">
-      <h3 className="font-semibold mb-3 text-gray-800">Cor:</h3>
+      <h3 className="font-semibold mb-3 text-[#1D1D1F]">Cor:</h3>
       <div className="flex flex-wrap gap-3">
         {colors.map((color) => {
           const bgColor = colorMap[color] || "#f5f5f7";
@@ -48,7 +48,7 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
               onClick={() => onColorChange(color)}
               whileTap={{ scale: 0.95 }}
               className={`relative h-11 w-11 md:h-10 md:w-10 rounded-full transition-all duration-100 ${
-                isSelected ? 'ring-2 ring-offset-2 ring-brand-red' : 'hover:ring-1 hover:ring-gray-300 hover:ring-offset-1'
+                isSelected ? 'ring-2 ring-offset-2 ring-[#0071E3]' : 'hover:ring-1 hover:ring-gray-300 hover:ring-offset-1'
               }`}
               title={color}
               aria-label={`Selecionar cor ${color}`}
@@ -73,7 +73,7 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
           );
         })}
       </div>
-      <div className="mt-2 text-sm text-gray-500">
+      <div className="mt-2 text-sm text-[#6E6E73]">
         {selectedColor && <span>Selecionado: {selectedColor}</span>}
       </div>
     </div>

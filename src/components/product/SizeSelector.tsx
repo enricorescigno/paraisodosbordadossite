@@ -22,7 +22,7 @@ const SizeSelector = ({ sizes, selectedSize, onSizeChange }: SizeSelectorProps) 
             whileTap={{ scale: 0.95 }}
             className={`px-5 py-3 border rounded-lg transition-all duration-200 min-w-[60px] ${
               selectedSize === size 
-                ? 'border-[#C32E2E] bg-[#C32E2E]/5 text-[#C32E2E] font-medium' 
+                ? 'border-[#0071E3] bg-[#0071E3]/5 text-[#0071E3] font-medium' 
                 : 'border-gray-300 text-gray-600 hover:border-gray-400'
             }`}
             aria-label={`Selecionar tamanho ${size}`}

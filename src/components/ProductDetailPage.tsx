@@ -47,7 +47,7 @@ const ProductDetailPage = () => {
       <div className="container-custom pt-24 pb-24 md:pb-16 px-4">
         {loading ? (
           <div className="flex justify-center items-center py-40">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-red"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#0071E3]"></div>
           </div>
         ) : product ? (
           <motion.div 
@@ -58,7 +58,7 @@ const ProductDetailPage = () => {
           >
             <Link 
               to={getBackLink()} 
-              className="inline-flex items-center text-gray-600 hover:text-brand-red mb-6 transition-colors"
+              className="inline-flex items-center text-[#1D1D1F]/80 hover:text-[#0071E3] mb-6 transition-colors"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               {product.type === 'portfolio' ? 'Voltar para o portfólio' : 'Voltar para a loja'}
@@ -80,8 +80,6 @@ const ProductDetailPage = () => {
               <div className="flex flex-col">
                 <ProductHeader product={product} />
                 
-                <ProductFeatures features={product.features || []} />
-                
                 <ColorSelector 
                   colors={product.colors || []} 
                   selectedColor={selectedColor} 
@@ -100,6 +98,8 @@ const ProductDetailPage = () => {
                   onDecrement={decrementQuantity} 
                 />
                 
+                <ProductFeatures features={product.features || []} />
+                
                 {/* CTA Button - Desktop */}
                 {!isMobile && (
                   <div className="mt-6 mb-10">
@@ -111,7 +111,7 @@ const ProductDetailPage = () => {
                     >
                       <AppleButton 
                         size="lg" 
-                        className="w-full h-14 rounded-lg flex items-center justify-center gap-2 bg-[#C32E2E] hover:bg-[#990000] transition-colors"
+                        className="w-full h-14 rounded-lg flex items-center justify-center gap-2 bg-[#C00] hover:bg-[#B00] transition-colors"
                       >
                         <MessageCircle className="w-5 h-5" />
                         Solicitar Orçamento
@@ -136,8 +136,8 @@ const ProductDetailPage = () => {
             {/* Product Description - Full width below */}
             {product.description && (
               <div className="mt-12 border-t border-gray-200 pt-8">
-                <h2 className="text-2xl font-semibold mb-4">Descrição</h2>
-                <p className="text-lg text-gray-700">{product.description}</p>
+                <h2 className="text-2xl font-semibold mb-4 text-[#1D1D1F]">Descrição</h2>
+                <p className="text-lg text-[#1D1D1F]/80">{product.description}</p>
               </div>
             )}
           </motion.div>
@@ -157,7 +157,7 @@ const ProductDetailPage = () => {
           >
             <AppleButton 
               size="lg" 
-              className="w-[90%] mx-auto h-14 rounded-lg flex items-center justify-center gap-2 bg-[#C32E2E] hover:bg-[#990000] transition-colors"
+              className="w-[90%] mx-auto h-14 rounded-lg flex items-center justify-center gap-2 bg-[#C00] hover:bg-[#B00] transition-colors"
             >
               <MessageCircle className="w-5 h-5" />
               Solicitar Orçamento
