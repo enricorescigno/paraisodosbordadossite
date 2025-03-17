@@ -56,6 +56,15 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
       onClick={onClick}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
+      role="button"
+      aria-pressed={isActive}
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick?.();
+          e.preventDefault();
+        }
+      }}
     >
       <div 
         className={cn(
@@ -63,6 +72,7 @@ const CategoryIcon = ({ name, icon, isActive = false, onClick }: CategoryIconPro
           "transition-all duration-300 hover:shadow-md",
           isActive ? "ring-2 ring-brand-red bg-red-50" : "border border-gray-100"
         )}
+        aria-hidden="true"
       >
         {icon}
       </div>

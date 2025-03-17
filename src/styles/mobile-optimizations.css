@@ -45,7 +45,7 @@
   
   /* Category navigation */
   .category-navigation {
-    @apply overflow-x-auto pb-4 -mx-2 px-2;
+    @apply overflow-x-auto pb-2 -mx-2 px-2;
   }
   
   .category-icon {
@@ -248,5 +248,27 @@
 
 /* Minimum width support for very small screens */
 @media (max-width: 320px) {
-  /* ... keep existing code (minimum width support) */
+  .category-item {
+    @apply min-w-[60px];
+  }
+  
+  .btn-primary, .btn-secondary, .apple-button {
+    @apply text-sm px-4;
+  }
+  
+  h1 {
+    @apply text-xl;
+  }
+  
+  h2 {
+    @apply text-lg;
+  }
+  
+  h3 {
+    @apply text-base;
+  }
+  
+  .product-card h3 {
+    @apply text-sm;
+  }
 }

@@ -14,19 +14,25 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
+      className="product-header"
     >
       {product.isNew && (
-        <span className="inline-block bg-[#C32E2E]/10 text-[#C32E2E] px-3 py-1 rounded-full text-xs font-medium mb-3">
+        <span 
+          className="inline-block bg-[#C32E2E]/10 text-[#C32E2E] px-3 py-1 rounded-full text-xs font-medium mb-3"
+          aria-label="Produto novo"
+        >
           Novo
         </span>
       )}
       
-      <h1 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight">{product.name}</h1>
+      <h1 className="text-3xl md:text-4xl font-semibold mb-3 tracking-tight">
+        {product.name}
+      </h1>
       
       <div className="flex items-center gap-3 mb-4">
         <span className="text-sm text-gray-500">{product.category}</span>
-        <div className="flex items-center gap-1">
-          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+        <div className="flex items-center gap-1" aria-label={`Avaliação ${(product.rating || 4.8).toFixed(1)} de 5 estrelas`}>
+          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" aria-hidden="true" />
           <span className="text-sm text-gray-500">{(product.rating || 4.8).toFixed(1)}</span>
         </div>
       </div>

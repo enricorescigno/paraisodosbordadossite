@@ -26,6 +26,7 @@ const SizeSelector = ({ sizes, selectedSize, onSizeChange }: SizeSelectorProps) 
                 : 'border-gray-300 text-gray-600 hover:border-gray-400'
             }`}
             aria-label={`Selecionar tamanho ${size}`}
+            aria-pressed={selectedSize === size}
             data-testid={`size-button-${size.toLowerCase().replace(/\s+/g, '-')}`}
           >
             {/* Format multiline labels if needed */}

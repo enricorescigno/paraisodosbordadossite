@@ -62,7 +62,7 @@ const BrowseByCategory = ({
   };
 
   return (
-    <div className="w-full mb-8 md:mb-12">
+    <div className="w-full mb-8 md:mb-12" aria-label="Categorias de produtos">
       <div className="flex justify-center">
         <motion.div 
           className="categories-wrapper flex gap-0.5 md:gap-6 pb-4 px-0.5 md:px-0 w-full overflow-x-auto hide-scrollbar md:flex-wrap md:justify-center"
@@ -75,12 +75,15 @@ const BrowseByCategory = ({
             msOverflowStyle: 'none',
             scrollbarWidth: 'none'
           }}
+          role="tablist"
         >
           {filteredCategories.map((category) => (
             <div 
               key={category.id} 
               className="category-item flex-shrink-0 px-0.5"
               style={{ scrollSnapAlign: 'start' }}
+              role="tab"
+              aria-selected={activeCategory === category.id}
             >
               <CategoryIcon
                 name={category.name}
