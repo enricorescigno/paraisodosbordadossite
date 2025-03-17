@@ -51,7 +51,7 @@ const ProductsCarousel = ({
           ))}
         </CarouselContent>
         
-        <div className="absolute -bottom-16 right-0 flex space-x-2 mt-8">
+        <div className={`absolute ${isMobile ? 'bottom-0 right-4' : '-bottom-16 right-8'} flex space-x-2 mt-8`}>
           <CarouselPrevious className="h-10 w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm hover:bg-white touch-target">
             <ChevronLeft className="h-5 w-5 text-gray-700" />
           </CarouselPrevious>

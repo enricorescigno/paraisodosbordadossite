@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { ArrowRight, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -181,7 +180,7 @@ const ProductCard = ({ product, index, animateProducts }: {
         transitionDelay: `${index * 100}ms`
       }}
     >
-      <Link to={`/produto/${product.id.toString()}`} className="block">
+      <Link to={`/produto/${product.id}`} className="block">
         <AspectRatio ratio={1/1} className="relative bg-[#f8f8f8]">
           <img 
             src={product.image}
@@ -210,7 +209,7 @@ const ProductCard = ({ product, index, animateProducts }: {
         </h3>
         <div className="flex justify-end mt-auto">
           <Link 
-            to={`/produto/${product.id.toString()}`}
+            to={`/produto/${product.id}`}
             className="text-brand-dark hover:text-brand-red transition-all duration-300 group-hover:translate-x-1"
           >
             <ArrowRight className="h-5 w-5" />

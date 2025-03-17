@@ -28,7 +28,7 @@
   
   /* Apple-style color swatch */
   .apple-color-swatch {
-    @apply w-12 h-12 rounded-full border border-gray-200 transition-all duration-200;
+    @apply w-8 h-8 rounded-full border border-gray-200 transition-all duration-200;
   }
   
   /* Apple-style selected color swatch */
@@ -38,7 +38,7 @@
   
   /* Apple-style size button */
   .apple-size-button {
-    @apply min-w-[60px] px-4 py-3 border-2 rounded-lg transition-all duration-200;
+    @apply px-4 py-2 border rounded-lg transition-all duration-200;
   }
   
   /* Apple-style selected size button */
@@ -58,87 +58,64 @@
   
   /* Apple-style quantity button */
   .apple-quantity-button {
-    @apply h-12 w-12 flex items-center justify-center border border-gray-300 hover:bg-gray-50 transition-colors;
+    @apply border border-gray-300 hover:border-gray-400 px-4 py-2 transition-colors;
   }
   
   /* Apple-style quantity display */
   .apple-quantity-display {
-    @apply h-12 flex-1 flex items-center justify-center border-t border-b border-gray-300 bg-gray-50 font-medium text-gray-800;
+    @apply border-t border-b border-gray-300 px-6 py-2 flex items-center justify-center min-w-[60px] bg-gray-50;
   }
   
-  /* Apple-style CTA button */
-  .apple-cta-button {
-    @apply w-full h-14 rounded-lg flex items-center justify-center gap-2 bg-brand-red hover:bg-[#990000] text-white font-medium text-base transition-colors shadow-sm;
+  /* Apple-style category tabs */
+  .apple-category-tabs {
+    @apply bg-white/80 backdrop-blur-sm p-1 rounded-full shadow-sm;
   }
   
-  /* Apple-style product gallery */
-  .apple-product-gallery {
-    @apply space-y-4;
+  /* Apple-style category tab */
+  .apple-category-tab {
+    @apply px-4 py-2 whitespace-nowrap rounded-full transition-all duration-300;
   }
   
-  /* Apple-style main image container */
-  .apple-main-image-container {
-    @apply relative overflow-hidden rounded-2xl bg-[#f8f8f8] aspect-square;
+  /* Apple-style selected category tab */
+  .apple-category-tab-selected {
+    @apply bg-brand-red text-white shadow-md;
   }
   
-  /* Apple-style thumbnails container */
-  .apple-thumbnails-container {
-    @apply flex flex-wrap gap-2 justify-center;
+  /* Apple-style unselected category tab */
+  .apple-category-tab-unselected {
+    @apply bg-transparent text-brand-dark hover:bg-brand-red/10;
   }
   
-  /* Apple-style thumbnail */
-  .apple-thumbnail {
-    @apply w-16 h-16 md:w-20 md:h-20 border-2 rounded-lg overflow-hidden transition-all duration-200;
+  /* Apple-style search bar */
+  .apple-search-bar {
+    @apply w-full pl-10 pr-4 py-2.5 rounded-full border border-gray-300 
+      focus:outline-none focus:ring-2 focus:ring-brand-red/20 focus:border-brand-red
+      transition-all duration-200 bg-white/80 backdrop-blur-sm;
   }
   
-  /* Apple-style selected thumbnail */
-  .apple-thumbnail-selected {
-    @apply border-brand-red shadow-sm scale-105;
+  /* Apple-style pagination dots */
+  .apple-pagination-dots {
+    @apply flex justify-center gap-2 mt-6;
   }
   
-  /* Apple-style unselected thumbnail */
-  .apple-thumbnail-unselected {
-    @apply border-gray-200 opacity-70 hover:opacity-100;
+  /* Apple-style pagination dot */
+  .apple-pagination-dot {
+    @apply h-2 w-2 rounded-full transition-all duration-300;
   }
   
-  /* Apple-style product info section */
-  .apple-product-info {
-    @apply space-y-6;
+  /* Apple-style active pagination dot */
+  .apple-pagination-dot-active {
+    @apply bg-brand-red;
   }
   
-  /* Apple-style product title */
-  .apple-product-title {
-    @apply text-3xl md:text-4xl font-semibold mb-3 tracking-tight;
+  /* Apple-style inactive pagination dot */
+  .apple-pagination-dot-inactive {
+    @apply bg-gray-300;
   }
   
-  /* Apple-style product description */
-  .apple-product-description {
-    @apply text-gray-700 mb-6 leading-relaxed text-lg;
-  }
-  
-  /* Apple-style product description section */
-  .apple-description-section {
-    @apply mt-8 space-y-8;
-  }
-  
-  /* Apple-style section title */
-  .apple-section-title {
-    @apply text-xl font-semibold mb-4 text-gray-800;
-  }
-  
-  /* Apple-style feature list */
-  .apple-feature-list {
-    @apply space-y-2;
-  }
-  
-  /* Apple-style feature item */
-  .apple-feature-item {
-    @apply flex items-start gap-2;
-  }
-  
-  /* Apple-style benefits grid */
-  .apple-benefits-grid {
-    @apply grid grid-cols-1 md:grid-cols-3 gap-8 pt-8 border-t border-gray-200;
+  /* Apple-style benefits section */
+  .apple-benefits-section {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-gray-200 pt-8;
   }
   
   /* Apple-style benefit item */
@@ -148,58 +125,92 @@
   
   /* Apple-style benefit icon */
   .apple-benefit-icon {
-    @apply h-12 w-12 rounded-full bg-brand-red/10 flex items-center justify-center mb-3;
+    @apply h-8 w-8 text-brand-red mb-2;
+  }
+  
+  /* Apple-style benefit title */
+  .apple-benefit-title {
+    @apply font-medium text-sm mb-1;
+  }
+  
+  /* Apple-style benefit description */
+  .apple-benefit-description {
+    @apply text-xs text-gray-500;
+  }
+  
+  /* Apple-style 'learn more' link */
+  .apple-learn-more {
+    @apply text-xs text-brand-red mt-2 flex items-center hover:underline;
+  }
+  
+  /* Apple-style carousel navigation */
+  .apple-carousel-nav {
+    @apply h-10 w-10 rounded-full border border-gray-200 bg-white/80 backdrop-blur-sm
+      flex items-center justify-center transition-all duration-300
+      hover:bg-white hover:shadow-sm;
+  }
+  
+  /* Apple-style product showcase */
+  .apple-product-showcase {
+    @apply flex flex-col items-center justify-center p-6;
+  }
+  
+  /* Apple-style product title */
+  .apple-product-title {
+    @apply text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2;
+  }
+  
+  /* Apple-style product description */
+  .apple-product-description {
+    @apply text-center text-gray-500 text-base md:text-lg font-normal max-w-md mx-auto mb-6;
+  }
+  
+  /* Apple-style action buttons container */
+  .apple-action-buttons {
+    @apply flex flex-col sm:flex-row gap-4 justify-center mt-4;
+  }
+  
+  /* Apple-style primary button */
+  .apple-primary-button {
+    @apply rounded-full px-8 bg-brand-red text-white hover:bg-brand-red/90 shadow-sm hover:shadow-md
+      transition-all duration-300 py-2.5 text-base font-normal;
+  }
+  
+  /* Apple-style secondary button */
+  .apple-secondary-button {
+    @apply rounded-full px-8 border border-brand-red text-brand-red bg-transparent hover:bg-brand-red/5
+      transition-all duration-300 py-2.5 text-base font-normal;
   }
 }
 
 /* Mobile optimizations */
 @media (max-width: 768px) {
-  .apple-product-title {
-    @apply text-2xl;
-  }
-  
-  .apple-product-description {
+  .apple-product-card h3 {
     @apply text-base;
   }
   
   .apple-color-swatch {
-    @apply w-10 h-10;
+    @apply w-6 h-6;
   }
   
   .apple-size-button {
-    @apply px-3 py-2;
+    @apply px-3 py-1.5 text-sm;
   }
   
-  .apple-quantity-button,
-  .apple-quantity-display {
-    @apply h-10;
+  .apple-category-tab {
+    @apply px-3 py-1.5 text-sm;
   }
   
   .apple-benefit-item {
     @apply mb-4 pb-4 border-b border-gray-100 md:border-b-0 md:mb-0 md:pb-0;
   }
   
-  .apple-section-title {
-    @apply text-lg;
+  .apple-benefit-icon {
+    @apply h-6 w-6;
   }
   
-  .apple-cta-button {
-    @apply h-12 text-sm;
-  }
-}
-
-/* Animation classes */
-.animate-scale-in {
-  animation: scaleIn 0.3s ease-out forwards;
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
+  .apple-primary-button,
+  .apple-secondary-button {
+    @apply text-sm py-2;
   }
 }

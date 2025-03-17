@@ -1,10 +1,7 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { Product } from '../types/product';
 import { allProducts } from '../utils/productUtils';
-import { toast } from 'sonner';
-import { fetchProductById } from '../api/products';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -31,99 +28,64 @@ export const useProductDetail = () => {
   useEffect(() => {
     setLoading(true);
     
-    const loadProduct = async () => {
-      try {
-        if (productId) {
-          console.log("Looking for product with ID:", productId);
+    setTimeout(() => {
+      if (productId) {
+        let foundProduct = allProducts.find(p => p.id.toString() === productId);
+        
+        if (productId === "204") {
+          foundProduct = {
+            id: 204,
+            name: "Jogo Americano Requinte Ondulado",
+            type: "product",
+            category: "Mesa e Cozinha",
+            imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
+            description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
+            colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
+            sizes: [],
+            rating: 4.9,
+            isNew: true,
+            features: [
+              "Composição: 75% polipropileno e 25% poliéster", 
+              "Diâmetro: 38cm", 
+              "Conjunto com 4 unidades",
+              "Fácil lavagem e secagem rápida",
+              "Resistente para uso diário"
+            ],
+            keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
+          };
+        }
+        
+        if (foundProduct) {
+          if (foundProduct.colors && foundProduct.colors.length > 0) {
+            setSelectedColor(foundProduct.colors[0]);
+          }
+          if (foundProduct.sizes && foundProduct.sizes.length > 0) {
+            setSelectedSize(foundProduct.sizes[0]);
+          }
           
-          // Try to fetch product through the API first (uses mock data)
-          const response = await fetchProductById(productId);
-          let foundProduct = response.data;
+          setIsFromPortfolio(foundProduct.type === 'portfolio');
           
-          // Special case for product 204 (Jogo Americano)
+          if (!foundProduct.rating) foundProduct.rating = 4.8;
+          if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
+          if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
+          
+          setProduct(foundProduct);
+          
           if (productId === "204") {
-            console.log("Special case for product 204");
-            foundProduct = {
-              id: 204,
-              name: "Jogo Americano Requinte Ondulado",
-              type: "product",
-              category: "Mesa e Cozinha",
-              imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
-              description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
-              colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
-              sizes: [],
-              rating: 4.9,
-              isNew: true,
-              features: [
-                "Composição: 75% polipropileno e 25% poliéster", 
-                "Diâmetro: 38cm", 
-                "Conjunto com 4 unidades",
-                "Fácil lavagem e secagem rápida",
-                "Resistente para uso diário"
-              ],
-              keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
-            };
-          }
-          
-          // Fallback: try to find directly in allProducts if the API didn't return a product
-          if (!foundProduct) {
-            // Convert productId to string for safe comparison
-            const normalizedId = productId.toString();
-            console.log("API didn't find the product. Looking directly in allProducts with normalized ID:", normalizedId);
-            
-            // Look in allProducts using string comparison
-            foundProduct = allProducts.find(p => p.id.toString() === normalizedId);
-          }
-          
-          if (foundProduct) {
-            console.log("Found product:", foundProduct.name);
-            
-            // Initialize product properties
-            if (foundProduct.colors && foundProduct.colors.length > 0) {
-              setSelectedColor(foundProduct.colors[0]);
-            }
-            if (foundProduct.sizes && foundProduct.sizes.length > 0) {
-              setSelectedSize(foundProduct.sizes[0]);
-            }
-            
-            setIsFromPortfolio(foundProduct.type === 'portfolio');
-            
-            // Set default values if not present
-            if (!foundProduct.rating) foundProduct.rating = 4.8;
-            if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
-            if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
-            
-            setProduct(foundProduct);
-            
-            // Handle product images
-            if (productId === "204") {
-              const defaultColor = foundProduct.colors && foundProduct.colors.length > 0 ? foundProduct.colors[0] : '';
-              if (defaultColor && colorToImageMap[defaultColor]) {
-                setCurrentImages(colorToImageMap[defaultColor]);
-              } else {
-                setCurrentImages([foundProduct.imageUrl]);
-              }
+            const defaultColor = foundProduct.colors && foundProduct.colors.length > 0 ? foundProduct.colors[0] : '';
+            if (defaultColor && colorToImageMap[defaultColor]) {
+              setCurrentImages(colorToImageMap[defaultColor]);
             } else {
-              initializeImages(foundProduct);
+              setCurrentImages([foundProduct.imageUrl]);
             }
           } else {
-            console.log("Product not found for ID:", productId);
-            setProduct(null);
-            toast.error("Produto não encontrado");
+            initializeImages(foundProduct);
           }
+        } else {
+          setProduct(null);
         }
-      } catch (error) {
-        console.error("Error loading product:", error);
-        toast.error("Erro ao carregar o produto");
-        setProduct(null);
-      } finally {
-        setLoading(false);
       }
-    };
-    
-    // Add a small delay to show loading state
-    setTimeout(() => {
-      loadProduct();
+      setLoading(false);
     }, 500);
   }, [productId]);
 
