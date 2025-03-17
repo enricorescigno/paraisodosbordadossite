@@ -33,23 +33,23 @@
     @apply w-[90%] mx-auto;
   }
   
-  /* Portfolio carousel */
-  .portfolio-categories {
-    @apply flex overflow-x-auto pb-4 hide-scrollbar;
+  /* Navigation carousel - Apple style */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
   
-  .portfolio-category-item {
-    @apply min-w-max px-4;
-  }
-  
-  /* Hide scrollbar but allow scrolling */
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
   
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  /* Category navigation */
+  .category-navigation {
+    @apply overflow-x-auto pb-4 -mx-2 px-2;
+  }
+  
+  .category-icon {
+    @apply min-w-[80px] flex flex-col items-center;
   }
   
   /* Product detail page */
@@ -89,11 +89,16 @@
   
   /* Adjust button sizes - improved for better touch targets */
   .mobile-btn-large {
-    @apply w-4/5 py-3 text-center mx-auto;
+    @apply w-full py-3 text-center mx-auto;
   }
   
   .btn-primary, .btn-secondary, .apple-button {
-    @apply text-sm py-3 px-4 min-h-[44px];
+    @apply text-base py-3 px-6 min-h-[48px];
+  }
+  
+  /* Make buttons more touchable on mobile */
+  button, a {
+    @apply min-h-[48px] active:scale-[0.98] transition-transform duration-100;
   }
   
   /* New classes for better button control */
@@ -138,7 +143,7 @@
   
   /* Touch targets - enhanced for better accessibility */
   .touch-target {
-    @apply min-h-[44px] min-w-[44px];
+    @apply min-h-[48px] min-w-[48px];
   }
   
   /* Animation adjustments */
@@ -168,21 +173,11 @@
   
   /* Text sizing for better readability */
   .mobile-text-base {
-    @apply text-sm leading-relaxed;
+    @apply text-base leading-relaxed;
   }
   
   .mobile-text-lg {
-    @apply text-base;
-  }
-  
-  /* Buttons */
-  .btn-primary, .btn-secondary, button[type="submit"] {
-    @apply transition-all duration-100 active:scale-[0.98];
-  }
-  
-  /* Button click feedback - more responsive */
-  button, a {
-    @apply active:scale-[0.98] transition-transform duration-100;
+    @apply text-lg;
   }
   
   /* Card layouts */
@@ -197,7 +192,7 @@
   
   /* Form controls for better mobile experience */
   input, select, textarea {
-    @apply min-h-[44px] text-base;
+    @apply min-h-[48px] text-base;
   }
   
   /* Enhanced link targets for footer */
@@ -217,7 +212,24 @@
   
   /* Product grid optimization */
   .product-grid {
-    @apply grid grid-cols-1 gap-4;
+    @apply grid grid-cols-1 gap-6;
+  }
+  
+  /* Apple-style tabs for portfolio/product navigation */
+  .apple-tabs {
+    @apply flex overflow-x-auto hide-scrollbar py-2 px-0;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .apple-tab {
+    @apply min-w-max px-4 py-2 mx-1 rounded-full text-sm font-medium 
+    scroll-snap-align: start;
+    flex: 0 0 auto;
+  }
+  
+  /* Add padding at bottom to avoid WhatsApp button overlap */
+  .bottom-safe-area {
+    @apply pb-20;
   }
 }
 
@@ -253,5 +265,14 @@
   
   .section-title {
     @apply text-lg;
+  }
+  
+  /* Smaller category icons for very small screens */
+  .category-icon {
+    @apply min-w-[70px];
+  }
+  
+  .apple-tab {
+    @apply px-3 py-1.5 text-xs;
   }
 }

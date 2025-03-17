@@ -29,7 +29,7 @@ const ProductImageGallery = ({
   }, [selectedColor, images]);
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden">
+    <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
       <AnimatePresence mode="wait">
         <motion.div
           key={`${selectedColor}-${images.join(',')}`} 
@@ -44,11 +44,13 @@ const ProductImageGallery = ({
                 images.map((img, index) => (
                   <CarouselItem key={`${selectedColor}-${index}-${img}`}>
                     <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
-                      <img 
+                      <motion.img 
                         src={img} 
                         alt={`${productName} - ${selectedColor} - Imagem ${index + 1}`}
                         className="w-full h-full object-contain mix-blend-multiply p-4"
                         loading="lazy"
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.3 }}
                         onError={(e) => {
                           console.log("Image error for:", img);
                           setImageError(true);
@@ -73,21 +75,23 @@ const ProductImageGallery = ({
 
             {images.length > 1 && !imageError && (
               <>
-                <CarouselPrevious className="left-2 h-11 w-11 md:h-10 md:w-10" />
-                <CarouselNext className="right-2 h-11 w-11 md:h-10 md:w-10" />
+                <CarouselPrevious className="left-2 h-11 w-11 md:h-10 md:w-10 bg-white/80 backdrop-blur-sm border border-gray-200" />
+                <CarouselNext className="right-2 h-11 w-11 md:h-10 md:w-10 bg-white/80 backdrop-blur-sm border border-gray-200" />
               </>
             )}
             
             {images.length > 1 && !imageError && (
-              <div className="flex justify-center gap-2 mt-4">
+              <div className="flex justify-center gap-2 mt-4 pb-4">
                 {images.map((_, index) => (
-                  <div 
+                  <motion.div 
                     key={index} 
                     className={`h-2 w-2 rounded-full cursor-pointer transition-colors ${
                       index === activeImageIndex ? 'bg-brand-red' : 'bg-gray-300'
                     }`}
                     onClick={() => setActiveImageIndex(index)}
-                  ></div>
+                    whileHover={{ scale: 1.2 }}
+                    whileTap={{ scale: 0.9 }}
+                  />
                 ))}
               </div>
             )}

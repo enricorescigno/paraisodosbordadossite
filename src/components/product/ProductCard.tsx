@@ -43,13 +43,16 @@ const ProductCard = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col items-center"
+      whileHover={{ y: -5, transition: { duration: 0.2 } }}
+      className="flex flex-col items-center w-full max-w-[90%] mx-auto"
     >
-      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative">
-        <img 
+      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
+        <motion.img 
           src={getImageUrl()}
           alt={name}
-          className="w-full h-full object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
+          className="w-full h-full object-contain mix-blend-multiply"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
             target.onerror = null;
@@ -65,24 +68,24 @@ const ProductCard = ({
         )}
       </div>
       
-      <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">
+      <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2 px-4">
         {name}
       </h3>
       
       {description && (
-        <p className="text-center text-gray-500 mb-4 max-w-md">
+        <p className="text-center text-gray-500 mb-4 max-w-md px-4 text-sm md:text-base">
           {description.length > 100 
             ? `${description.substring(0, 100)}...` 
             : description}
         </p>
       )}
       
-      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-2 w-full">
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mt-2 w-full px-4">
         <Link to={`/produto/${id}`} className="w-full sm:w-auto">
           <Button 
             variant="default" 
             size="lg" 
-            className="rounded-full px-8 w-full sm:w-auto min-h-[44px]"
+            className="rounded-full px-8 w-full min-h-[48px]"
           >
             {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
           </Button>
@@ -97,7 +100,7 @@ const ProductCard = ({
           <Button 
             variant="outline" 
             size="lg" 
-            className="rounded-full px-8 w-full sm:w-auto min-h-[44px]"
+            className="rounded-full px-8 w-full min-h-[48px]"
           >
             Solicitar Orçamento
           </Button>

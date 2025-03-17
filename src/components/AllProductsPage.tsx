@@ -11,6 +11,7 @@ import CategoryTabs from './common/CategoryTabs';
 import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
+import BrowseNavigation from './common/BrowseNavigation';
 
 const AllProductsPage = () => {
   const [loading, setLoading] = useState(true);
@@ -100,6 +101,8 @@ const AllProductsPage = () => {
             title="Nossos Produtos"
             description="Explore nossa coleção de produtos feitos com qualidade e atenção aos detalhes."
           />
+          
+          <BrowseNavigation activeCategory={activeCategory} />
           
           <CategoryTabs 
             categories={categories}

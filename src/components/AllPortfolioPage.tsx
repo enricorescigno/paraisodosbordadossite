@@ -11,6 +11,7 @@ import CategoryTabs from './common/CategoryTabs';
 import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
+import BrowseNavigation from './common/BrowseNavigation';
 
 // Portfolio categories mapping
 const PORTFOLIO_CATEGORIES = {
@@ -124,6 +125,8 @@ const AllPortfolioPage = () => {
             title="Nosso Portfólio"
             description="Conheça nossos trabalhos de bordado personalizados para diversas aplicações, feitos com qualidade e atenção aos detalhes."
           />
+          
+          <BrowseNavigation />
           
           <CategoryTabs 
             categories={categories}
