@@ -1,5 +1,7 @@
 
 import React from 'react';
+import { Minus, Plus } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface QuantitySelectorProps {
   quantity: number;
@@ -9,24 +11,31 @@ interface QuantitySelectorProps {
 
 const QuantitySelector = ({ quantity, onIncrement, onDecrement }: QuantitySelectorProps) => {
   return (
-    <div className="mb-8">
-      <h3 className="font-semibold mb-3 text-gray-800">Quantidade:</h3>
-      <div className="flex w-full max-w-[180px]">
-        <button 
+    <div className="space-y-4">
+      <h3 className="font-semibold text-gray-800 text-lg">Quantidade</h3>
+      <div className="flex max-w-[180px]">
+        <motion.button
           onClick={onDecrement}
-          className="border border-gray-300 hover:border-gray-400 px-4 py-2 rounded-l-lg transition-colors"
+          whileTap={{ scale: 0.95 }}
+          className="h-12 w-12 flex items-center justify-center border border-gray-300 rounded-l-lg hover:bg-gray-50 transition-colors"
+          disabled={quantity <= 1}
+          aria-label="Diminuir quantidade"
         >
-          -
-        </button>
-        <div className="border-t border-b border-gray-300 px-6 py-2 flex items-center justify-center min-w-[60px] bg-gray-50">
+          <Minus className="h-4 w-4 text-gray-700" />
+        </motion.button>
+        
+        <div className="h-12 flex-1 flex items-center justify-center border-t border-b border-gray-300 bg-gray-50 font-medium text-gray-800">
           {quantity}
         </div>
-        <button 
+        
+        <motion.button
           onClick={onIncrement}
-          className="border border-gray-300 hover:border-gray-400 px-4 py-2 rounded-r-lg transition-colors"
+          whileTap={{ scale: 0.95 }}
+          className="h-12 w-12 flex items-center justify-center border border-gray-300 rounded-r-lg hover:bg-gray-50 transition-colors"
+          aria-label="Aumentar quantidade"
         >
-          +
-        </button>
+          <Plus className="h-4 w-4 text-gray-700" />
+        </motion.button>
       </div>
     </div>
   );
