@@ -87,6 +87,15 @@
     @apply p-3;
   }
   
+  /* Footer contact icons alignment fix */
+  .footer-contact-item {
+    @apply flex items-center gap-2;
+  }
+  
+  .footer-contact-icon {
+    @apply flex-shrink-0 self-center;
+  }
+  
   /* Adjust button sizes - improved for better touch targets */
   .mobile-btn-large {
     @apply w-full py-3 text-center mx-auto;
