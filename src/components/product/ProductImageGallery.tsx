@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -21,6 +22,8 @@ const ProductImageGallery = ({
 }: ProductImageGalleryProps) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Reset active image index when color or images change
   useEffect(() => {
@@ -28,74 +31,111 @@ const ProductImageGallery = ({
     setImageError(false);
   }, [selectedColor, images]);
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - left) / width;
+    const y = (e.clientY - top) / height;
+    setMousePosition({ x, y });
+  };
+
+  const handleImageClick = (index: number) => {
+    setActiveImageIndex(index);
+  };
+
+  const imageStyle = isZoomed ? {
+    transformOrigin: `${mousePosition.x * 100}% ${mousePosition.y * 100}%`,
+    transform: 'scale(1.5)',
+    cursor: 'zoom-out'
+  } : {
+    cursor: 'zoom-in'
+  };
+
   return (
-    <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+    <div className="bg-white rounded-2xl overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${selectedColor}-${images.join(',')}`} 
+          key={`${selectedColor}-${activeImageIndex}`} 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.3 }}
+          className="relative"
         >
-          <Carousel className="w-full">
-            <CarouselContent>
-              {images.length > 0 && !imageError ? (
-                images.map((img, index) => (
-                  <CarouselItem key={`${selectedColor}-${index}-${img}`}>
-                    <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
-                      <motion.img 
-                        src={img} 
-                        alt={`${productName} - ${selectedColor} - Imagem ${index + 1}`}
-                        className="w-full h-full object-contain mix-blend-multiply p-4"
-                        loading="lazy"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.3 }}
-                        onError={(e) => {
-                          console.log("Image error for:", img);
-                          setImageError(true);
-                          e.currentTarget.src = placeholder(category);
-                        }}
-                      />
-                    </AspectRatio>
-                  </CarouselItem>
-                ))
-              ) : (
-                <CarouselItem>
-                  <AspectRatio ratio={1/1} className="bg-[#f8f8f8]">
-                    <img 
-                      src={placeholder(category)}
-                      alt={productName}
-                      className="w-full h-full object-contain mix-blend-multiply p-4"
-                    />
-                  </AspectRatio>
-                </CarouselItem>
-              )}
-            </CarouselContent>
-
-            {images.length > 1 && !imageError && (
-              <>
-                <CarouselPrevious className="left-2 h-11 w-11 md:h-10 md:w-10 bg-white/80 backdrop-blur-sm border border-gray-200" />
-                <CarouselNext className="right-2 h-11 w-11 md:h-10 md:w-10 bg-white/80 backdrop-blur-sm border border-gray-200" />
-              </>
+          {/* Main Image */}
+          <div 
+            className="relative overflow-hidden bg-[#f8f8f8] rounded-lg"
+            onMouseMove={handleMouseMove}
+            onMouseEnter={() => setIsZoomed(true)}
+            onMouseLeave={() => setIsZoomed(false)}
+          >
+            {images.length > 0 && !imageError ? (
+              <AspectRatio ratio={1/1}>
+                <motion.img 
+                  src={images[activeImageIndex]} 
+                  alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
+                  className="w-full h-full object-contain mix-blend-multiply p-4 transition-transform duration-200"
+                  style={imageStyle}
+                  loading="lazy"
+                  onError={(e) => {
+                    console.log("Image error for:", images[activeImageIndex]);
+                    setImageError(true);
+                    e.currentTarget.src = placeholder(category);
+                  }}
+                />
+              </AspectRatio>
+            ) : (
+              <AspectRatio ratio={1/1}>
+                <img 
+                  src={placeholder(category)}
+                  alt={productName}
+                  className="w-full h-full object-contain mix-blend-multiply p-4"
+                />
+              </AspectRatio>
             )}
             
+            {/* Navigation Arrows */}
             {images.length > 1 && !imageError && (
-              <div className="flex justify-center gap-2 mt-4 pb-4">
-                {images.map((_, index) => (
-                  <motion.div 
-                    key={index} 
-                    className={`h-2 w-2 rounded-full cursor-pointer transition-colors ${
-                      index === activeImageIndex ? 'bg-brand-red' : 'bg-gray-300'
-                    }`}
-                    onClick={() => setActiveImageIndex(index)}
-                    whileHover={{ scale: 1.2 }}
-                    whileTap={{ scale: 0.9 }}
-                  />
-                ))}
-              </div>
+              <>
+                <button 
+                  onClick={() => setActiveImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1)}
+                  className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                  aria-label="Imagem anterior"
+                >
+                  <ChevronLeft className="h-5 w-5 text-gray-700" />
+                </button>
+                <button 
+                  onClick={() => setActiveImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1)}
+                  className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
+                  aria-label="Próxima imagem"
+                >
+                  <ChevronRight className="h-5 w-5 text-gray-700" />
+                </button>
+              </>
             )}
-          </Carousel>
+          </div>
+          
+          {/* Thumbnails */}
+          {images.length > 1 && !imageError && (
+            <div className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar">
+              {images.map((img, index) => (
+                <motion.button
+                  key={`thumb-${index}`}
+                  onClick={() => handleImageClick(index)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`relative h-16 w-16 rounded-md overflow-hidden border ${
+                    index === activeImageIndex ? 'border-[#C32E2E] shadow-sm' : 'border-gray-200'
+                  }`}
+                >
+                  <img 
+                    src={img} 
+                    alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
+                    className="h-full w-full object-contain bg-[#f8f8f8] mix-blend-multiply p-1"
+                  />
+                </motion.button>
+              ))}
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>
