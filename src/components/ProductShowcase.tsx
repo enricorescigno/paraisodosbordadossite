@@ -45,20 +45,8 @@ const portfolioProducts: Product[] = [
   }
 ];
 
-// Mapeamento entre categorias de portfólio e rotas
-const PORTFOLIO_CATEGORIES: Record<string, string> = {
-  'all': '/portfolio',
-  'bordado-bone': '/portfolio/bordado-bone',
-  'bordado-necessaire': '/portfolio/bordado-necessaire',
-  'bordado-bolsa': '/portfolio/bordado-bolsa',
-  'bordado-jaleco': '/portfolio/bordado-jaleco',
-  'bordado-infantis': '/portfolio/bordado-infantis',
-  'bordado-toalha-banho': '/portfolio/bordado-toalha-banho'
-};
-
 const ProductShowcase = () => {
   const [activeCategory, setActiveCategory] = useState<string>("all");
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(portfolioProducts);
   const whatsappNumber = "+5581995970776";
   
   const {
@@ -68,17 +56,6 @@ const ProductShowcase = () => {
     triggerOnce: true,
     threshold: 0.1
   });
-
-  // Filtrar produtos por categoria
-  useEffect(() => {
-    // Implementação do filtro quando as categorias estiverem definidas completamente
-    // Por enquanto mostra todos os produtos
-    setFilteredProducts(portfolioProducts);
-  }, [activeCategory]);
-
-  const handleCategoryChange = (categoryId: string) => {
-    setActiveCategory(categoryId);
-  };
 
   return (
     <section 
@@ -93,19 +70,19 @@ const ProductShowcase = () => {
           </p>
         </div>
         
-        {/* Componente BrowseByCategory unificado */}
+        {/* BrowseByCategory configurado para redirecionamento */}
         <div className={`transform transition-all duration-700 delay-100 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <BrowseByCategory
             activeCategory={activeCategory}
-            onCategoryChange={handleCategoryChange}
             showOnlyPortfolio={true}
+            // Removemos onCategoryChange para utilizar o comportamento de navegação padrão
           />
         </div>
         
-        {/* Carrossel de produtos unificado */}
+        {/* Carrossel de produtos */}
         <div className={`transform transition-all duration-700 delay-200 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <ProductsCarousel 
-            products={filteredProducts}
+            products={portfolioProducts}
             whatsappNumber={whatsappNumber}
             isPortfolio={true}
           />

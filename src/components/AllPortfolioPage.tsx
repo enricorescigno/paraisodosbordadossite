@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
@@ -32,8 +33,6 @@ const PORTFOLIO_CATEGORIES = {
 const AllPortfolioPage = () => {
   const [loading, setLoading] = useState(true);
   const [allPortfolioItems, setAllPortfolioItems] = useState<Product[]>([]);
-  const [filteredItems, setFilteredItems] = useState<Product[]>([]);
-  const [activeCategory, setActiveCategory] = useState('all');
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   
@@ -56,27 +55,9 @@ const AllPortfolioPage = () => {
       );
       
       setAllPortfolioItems(portfolioItems);
-      setFilteredItems(portfolioItems);
       setLoading(false);
     }, 300);
   }, []);
-
-  // Filtrar itens com base na categoria
-  useEffect(() => {
-    let result = [...allPortfolioItems];
-    
-    // Aplicar filtro de categoria
-    if (activeCategory !== 'all') {
-      result = result.filter(item => {
-        // Mapear categoria do produto para o slug da rota
-        const categoryName = item.category || '';
-        const categorySlug = PORTFOLIO_CATEGORIES[categoryName as keyof typeof PORTFOLIO_CATEGORIES];
-        return categorySlug === activeCategory;
-      });
-    }
-    
-    setFilteredItems(result);
-  }, [activeCategory, allPortfolioItems]);
 
   return (
     <motion.div 
@@ -94,16 +75,15 @@ const AllPortfolioPage = () => {
           
           {/* Using only the category icons menu with portfolio specific icons */}
           <BrowseByCategory 
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
+            activeCategory="all"
             showOnlyPortfolio={true}
           />
           
           {loading ? (
             <LoadingSpinner />
-          ) : filteredItems.length > 0 ? (
+          ) : allPortfolioItems.length > 0 ? (
             <ProductsCarousel 
-              products={filteredItems}
+              products={allPortfolioItems}
               whatsappNumber={whatsappNumber}
               isPortfolio={true}
             />

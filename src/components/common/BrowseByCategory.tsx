@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Bed, Bath, ChefHat, Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CategoryIcon from './CategoryIcon';
@@ -45,6 +44,15 @@ const BrowseByCategory = ({
   showOnlyPortfolio = false
 }: BrowseByCategoryProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Determine activeCategory from URL if not provided
+  const derivedActiveCategory = activeCategory || (() => {
+    const path = location.pathname;
+    // Find category ID based on current path
+    const category = allCategories.find(cat => cat.path === path);
+    return category ? category.id : 'all';
+  })();
 
   // Filter categories based on the showOnly props
   const filteredCategories = allCategories.filter(category => {
@@ -55,8 +63,10 @@ const BrowseByCategory = ({
 
   const handleCategoryClick = (category: Category) => {
     if (onCategoryChange) {
+      // If onCategoryChange is provided, use it (for local filtering)
       onCategoryChange(category.id);
     } else {
+      // Otherwise, navigate to the category page
       navigate(category.path);
     }
   };
@@ -91,14 +101,14 @@ const BrowseByCategory = ({
               role="button"
               tabIndex={0}
               aria-label={`Categoria ${category.name}`}
-              aria-pressed={activeCategory === category.id}
+              aria-pressed={derivedActiveCategory === category.id}
               onKeyDown={(e) => handleKeyDown(e, category)}
+              onClick={() => handleCategoryClick(category)}
             >
               <CategoryIcon
                 name={category.name}
                 icon={category.icon}
-                isActive={activeCategory === category.id}
-                onClick={() => handleCategoryClick(category)}
+                isActive={derivedActiveCategory === category.id}
               />
             </div>
           ))}
