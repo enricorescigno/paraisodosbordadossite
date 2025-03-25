@@ -14,6 +14,7 @@ interface ProductCardProps {
   isNew?: boolean;
   whatsappNumber: string;
   isPortfolio?: boolean;
+  showActionButton?: boolean;
 }
 
 const ProductCard = ({ 
@@ -25,7 +26,8 @@ const ProductCard = ({
   colors, 
   isNew, 
   whatsappNumber,
-  isPortfolio = false
+  isPortfolio = false,
+  showActionButton = true // Adicionado parâmetro para controlar a exibição do botão
 }: ProductCardProps) => {
   // Function to get the proper image
   const getImageUrl = () => {
@@ -84,18 +86,21 @@ const ProductCard = ({
         )}
       </div>
       
-      <div className="flex justify-center mt-auto w-full">
-        <Link to={`/produto/${id}`} className="w-full sm:w-auto flex justify-center">
-          <Button 
-            variant="default" 
-            size="lg" 
-            className="rounded-full px-8 w-full max-w-[200px] min-h-[48px]"
-            aria-label={`Ver detalhes de ${name}`}
-          >
-            {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
-          </Button>
-        </Link>
-      </div>
+      {/* Renderizar o botão apenas se showActionButton for true */}
+      {showActionButton && (
+        <div className="flex justify-center mt-auto w-full">
+          <Link to={`/produto/${id}`} className="w-full sm:w-auto flex justify-center">
+            <Button 
+              variant="default" 
+              size="lg" 
+              className="rounded-full px-8 w-full max-w-[200px] min-h-[48px]"
+              aria-label={`Ver detalhes de ${name}`}
+            >
+              {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
+            </Button>
+          </Link>
+        </div>
+      )}
     </motion.div>
   );
 };

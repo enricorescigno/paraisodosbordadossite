@@ -47,6 +47,7 @@ const ProductsCarousel = ({
                   isNew={product.isNew}
                   whatsappNumber={whatsappNumber}
                   isPortfolio={isPortfolio}
+                  showActionButton={false} // Não exibe o botão dentro do card
                 />
                 
                 {/* Botão Saiba Mais abaixo de cada produto */}
@@ -58,7 +59,7 @@ const ProductsCarousel = ({
                     variant="outline" 
                     className="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-800 font-medium rounded-lg py-2"
                   >
-                    Saiba Mais
+                    {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
                   </Button>
                 </Link>
               </div>
