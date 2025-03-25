@@ -16,6 +16,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AllProductsPage from "./components/AllProductsPage";
 import AllPortfolioPage from "./components/AllPortfolioPage";
 import ScrollToTop from "./components/ScrollToTop";
+import "./styles/dropdown-fix.css";
 
 const queryClient = new QueryClient();
 
