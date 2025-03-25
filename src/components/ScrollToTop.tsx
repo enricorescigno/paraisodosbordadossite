@@ -1,13 +1,19 @@
 
-import { useScrollToTop } from '../hooks/useScrollToTop';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-/**
- * Componente utilitário que reseta a posição de rolagem para o topo 
- * sempre que uma navegação ocorre.
- */
+// Este componente garante que o scroll volta ao topo quando a navegação ocorre
 const ScrollToTop = () => {
-  // Usando hook personalizado para resetar scroll
-  useScrollToTop();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    // Rola a página para o topo com behavior instant para melhor UX
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
+  }, [pathname]);
+
   return null;
 };
 
