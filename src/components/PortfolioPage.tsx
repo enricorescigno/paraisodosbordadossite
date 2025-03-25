@@ -1,8 +1,6 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { allProducts } from '../utils/productUtils';
@@ -92,8 +90,6 @@ const PortfolioPage = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Navbar />
-      
       <section className="py-12 md:py-20 bg-[#f5f5f7]">
         <div className="container-custom">
           <PageHeader 

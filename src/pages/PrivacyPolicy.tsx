@@ -1,5 +1,3 @@
-
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppSupport from "../components/WhatsAppSupport";
 import { motion } from "framer-motion";
@@ -7,8 +5,6 @@ import { motion } from "framer-motion";
 const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
-      
       <main className="py-12">
         <div className="container mx-auto px-4 max-w-4xl">
           <motion.div 

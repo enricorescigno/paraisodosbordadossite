@@ -1,6 +1,5 @@
 
 import { motion } from "framer-motion";
-import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import ProductShowcase from "../components/ProductShowcase";
 import Features from "../components/Features";
@@ -18,7 +17,6 @@ const Index = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Navbar />
       <Hero />
       <ProductShowcase />
       <Features />

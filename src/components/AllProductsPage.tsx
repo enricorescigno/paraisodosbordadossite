@@ -1,6 +1,4 @@
-
 import { useState, useEffect } from 'react';
-import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { useIsMobile } from '../hooks/use-mobile';
@@ -76,8 +74,6 @@ const AllProductsPage = () => {
   
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
-      
       <section className={`py-16 md:py-24 bg-[#f5f5f7] ${isMobile ? 'pt-24' : 'pt-20'}`}>
         <div className="container-custom">
           <PageHeader 

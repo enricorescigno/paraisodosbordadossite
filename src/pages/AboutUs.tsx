@@ -1,11 +1,10 @@
+
 import { MapPin, Phone, Mail, Clock, Heart, Award, Zap, ShoppingBag, Check, Gift } from 'lucide-react';
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppSupport from "../components/WhatsAppSupport";
+
 const AboutUs = () => {
   return <div className="min-h-screen bg-white">
-      <Navbar />
-      
       <main className="pt-24 pb-16 py-0">
         {/* Hero Section */}
         <section className="bg-brand-light py-16 md:py-20">
@@ -187,4 +186,5 @@ const AboutUs = () => {
       <WhatsAppSupport />
     </div>;
 };
+
 export default AboutUs;

@@ -1,7 +1,5 @@
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { useIsMobile } from '../hooks/use-mobile';
@@ -87,8 +85,6 @@ const AllPortfolioPage = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Navbar />
-      
       <section className={`py-12 md:py-20 bg-[#f5f5f7] ${isMobile ? 'pt-24' : 'pt-20'}`}>
         <div className="container-custom">
           <PageHeader 

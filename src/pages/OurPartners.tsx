@@ -1,6 +1,5 @@
 
 import { motion } from "framer-motion";
-import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import WhatsAppSupport from "../components/WhatsAppSupport";
 import Partners from "../components/Partners";
@@ -13,8 +12,6 @@ const OurPartners = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Navbar />
-      
       <main className="py-12 md:py-20 bg-[#f5f5f7]">
         <div className="container mx-auto px-4">
           <motion.div 
