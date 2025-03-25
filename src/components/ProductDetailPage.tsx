@@ -1,7 +1,6 @@
 
 import { Link } from 'react-router-dom';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
-import Navbar from './Navbar';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { AppleButton } from '@/components/ui/apple-button';
@@ -46,7 +45,6 @@ const ProductDetailPage = () => {
   
   return (
     <div className="min-h-screen bg-white">
-      <Navbar />
       <Toaster position="top-center" />
       
       <main className="container-custom pt-24 pb-24 md:pb-16 px-3 md:px-4 max-w-7xl mx-auto">
