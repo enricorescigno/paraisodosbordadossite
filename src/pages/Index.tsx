@@ -13,7 +13,7 @@ import WhatsAppSupport from "../components/WhatsAppSupport";
 const Index = () => {
   return (
     <motion.div 
-      className="min-h-screen bg-white w-full max-w-full overflow-x-hidden"
+      className="min-h-screen bg-white"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}

@@ -22,19 +22,19 @@ const ProductsCarousel = ({
   
   return (
     <motion.div 
-      className="relative max-w-full w-full overflow-hidden"
+      className="relative"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <Carousel className="w-full max-w-full">
-        <CarouselContent className="-ml-4 md:-ml-6 max-w-full">
+      <Carousel className="w-full">
+        <CarouselContent className="-ml-4 md:-ml-6">
           {products.map((product) => (
             <CarouselItem 
               key={product.id} 
-              className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3 h-full max-w-full"
+              className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3 h-full"
             >
-              <div className="p-1 md:p-2 h-full flex flex-col max-w-full">
+              <div className="p-1 md:p-2 h-full flex flex-col">
                 <ProductCard 
                   id={product.id}
                   name={product.name}
