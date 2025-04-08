@@ -1,60 +1,66 @@
+const API_BASE_URL = "http://sgps.sgsistemas.com.br:8201";
+const AUTH = {
+  usuario: "homologacao",
+  senha: "iVMfwV1q4y-&?c&p~6ei"
+};
 
+/**
+ * Função para buscar o estoque completo da empresa
+ */
 export const buscarEstoque = async () => {
   try {
-    // Faça a chamada ao seu endpoint para buscar dados do estoque
-    const response = await fetch("http://sgps.sgsistemas.com.br:8201/api/estoque", {
+    const response = await fetch(`${API_BASE_URL}/api/estoque`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        usuario: "homologacao",
-        senha: "iVMfwV1q4y-&?c&p~6ei",
-      }),
+        usuario: AUTH.usuario,
+        senha: AUTH.senha
+      })
     });
 
     const data = await response.json();
-    console.log("Estoque recebido:", data);
+
+    if (!response.ok) {
+      throw new Error(data.mensagem || "Erro ao buscar o estoque");
+    }
+
     return data;
-  } catch (error) {
-    console.error("Erro ao buscar estoque:", error);
-    throw error; // Propaga o erro para tratamento adequado no componente
+  } catch (error: any) {
+    console.error("Erro ao buscar estoque:", error.message);
+    return null;
   }
 };
 
+/**
+ * Função para enviar os dados do estoque para o n8n
+ */
 export const enviarEstoqueParaN8n = async () => {
   try {
-    // Faça a chamada ao seu endpoint para buscar dados do estoque
-    const response = await fetch("http://sgps.sgsistemas.com.br:8201/api/estoque", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        usuario: "homologacao",
-        senha: "iVMfwV1q4y-&?c&p~6ei",
-      }),
-    });
+    // Chamar o endpoint para buscar os dados do estoque
+    const data = await buscarEstoque();
 
-    const data = await response.json();
-    console.log("Estoque recebido:", data);
+    if (data && data.dados) {
+      // Enviar os dados para o n8n
+      const envioResponse = await fetch(
+        "https://enrico-paraiso.app.n8n.cloud/webhook/7b6c6b7e-a532-4f94-b01d-6c66d43dd061", 
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data.dados) // Enviar os dados do estoque
+        }
+      );
 
-    // Enviar para o n8n
-    const envioResponse = await fetch(
-      "https://enrico-paraiso.app.n8n.cloud/webhook/7b6c6b7e-a532-4f94-b01d-6c66d43dd061", 
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data) // Enviando o estoque para o n8n
-      }
-    );
-
-    const envioData = await envioResponse.json();
-    console.log("Dados enviados ao n8n:", envioData);
-    return envioData;
-  } catch (error) {
+      const envioData = await envioResponse.json();
+      console.log("Dados enviados ao n8n:", envioData);
+      return envioData;
+    } else {
+      throw new Error("Dados de estoque inválidos.");
+    }
+  } catch (error: any) {
     console.error("Erro ao enviar dados para o n8n:", error);
     return false;
   }
