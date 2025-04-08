@@ -133,214 +133,90 @@ export const pantufaProducts: Product[] = [
 
 // Bonés Collection
 export const bonesProducts: Product[] = [
-  {
-    id: 300,
-    name: "Boné Bordado Respira",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/f3372ecb-c7c5-4bea-a52d-959ab9019e56.png",
-    description: "Boné casual com bordado 'respira', confeccionado em tecido macio e ajuste regulável.",
-    price: "Sob consulta",
-    colors: ["Amarelo", "Verde", "Rosa", "Branco", "Vermelho", "Azul Claro"],
-    sizes: ["Único"],
-    rating: 4.8,
-    isNew: true,
-    features: [
-      "Bordado de alta qualidade",
-      "Tecido durável",
-      "Ajuste traseiro",
-      "Design moderno"
-    ],
-    images: [
-      "/lovable-uploads/f3372ecb-c7c5-4bea-a52d-959ab9019e56.png",
-      "/lovable-uploads/2aa701f2-b251-4978-8c91-3437b96b8629.png"
-    ],
-    keywords: ["boné", "bordado", "respira", "casual", "acessório"]
-  },
-  {
-    id: 301,
-    name: "Boné Bordado Umbigo Para Dentro",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/f0f584d1-07fa-4152-8258-c4eceeebfdff.png",
-    description: "Boné casual com bordado 'umbigo para dentro', feito com material resistente e fecho ajustável.",
-    price: "Sob consulta",
-    colors: ["Azul Claro"],
-    sizes: ["Único"],
-    rating: 4.7,
-    isNew: true,
-    features: [
-      "Bordado exclusivo",
-      "Material confortável",
-      "Aba curvada",
-      "Fechamento regulável"
-    ],
-    images: [
-      "/lovable-uploads/f0f584d1-07fa-4152-8258-c4eceeebfdff.png"
-    ],
-    keywords: ["boné", "bordado", "umbigo para dentro", "casual", "acessório"]
-  },
-  {
-    id: 302,
-    name: "Boné Bordado Santosh Pilates",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/5e83b50f-c3b6-435c-92cd-21f6ea1fbb17.png",
-    description: "Boné esportivo com bordado 'Santosh Pilates', ideal para praticantes de pilates e atividades ao ar livre.",
-    price: "Sob consulta",
-    colors: ["Verde Oliva"],
-    sizes: ["Único"],
-    rating: 4.6,
-    isNew: true,
-    features: [
-      "Bordado nítido e durável",
-      "Tecido respirável",
-      "Ajuste confortável",
-      "Acabamento premium"
-    ],
-    images: [
-      "/lovable-uploads/5e83b50f-c3b6-435c-92cd-21f6ea1fbb17.png"
-    ],
-    keywords: ["boné", "bordado", "pilates", "esportivo", "santosh"]
-  },
-  {
-    id: 303,
-    name: "Boné Bordado Logomarca Geométrica",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png",
-    description: "Boné com bordado de logomarca geométrica, design exclusivo e diferenciado com estilo contemporâneo.",
-    price: "Sob consulta",
-    colors: ["Vermelho", "Rosa", "Amarelo", "Verde", "Branco"],
-    sizes: ["Único"],
-    rating: 4.8,
-    isNew: true,
-    features: [
-      "Bordado geométrico exclusivo",
-      "Material premium",
-      "Aba reta ou curvada",
-      "Design moderno"
-    ],
-    images: [
-      "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png"
-    ],
-    keywords: ["boné", "bordado", "logomarca", "geométrico", "exclusivo"]
-  },
-  {
-    id: 304,
-    name: "Boné Bordado Premium",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/f3372ecb-c7c5-4bea-a52d-959ab9019e56.png",
-    description: "Boné personalizado com bordado de alta definição, ideal para empresas e eventos promocionais. Confortável e durável para uso diário.",
-    price: "Sob consulta",
-    colors: ["Preto", "Branco", "Azul"],
-    sizes: ["Único"],
-    rating: 4.8,
-    isNew: true,
-    features: [
-      "Tecido algodão com ajuste regulável",
-      "Bordado personalizado incluso",
-      "Alta durabilidade",
-      "Design moderno"
-    ],
-    images: [
-      "/lovable-uploads/f3372ecb-c7c5-4bea-a52d-959ab9019e56.png"
-    ],
-    keywords: ["boné", "bordado", "premium", "personalizado", "promocional"]
-  },
-  {
-    id: 305,
-    name: "Boné Bordado Corporativo",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png",
-    description: "Boné corporativo com bordado de logomarca, perfeito para uniformizar equipes e criar identidade visual para sua empresa.",
-    price: "Sob consulta",
-    colors: ["Azul Marinho", "Cinza", "Vermelho", "Preto"],
-    sizes: ["Único"],
-    rating: 4.9,
-    isNew: true,
-    features: [
-      "Bordado de logomarca em alta definição",
-      "Material premium resistente",
-      "Fecho ajustável tipo snapback",
-      "Aba reta ou curvada à escolha"
-    ],
-    images: [
-      "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png"
-    ],
-    keywords: ["boné", "bordado", "corporativo", "empresa", "uniforme"]
-  },
-  {
-    id: 306,
-    name: "Boné Bordado Esportivo",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/5e83b50f-c3b6-435c-92cd-21f6ea1fbb17.png",
-    description: "Boné esportivo com bordado personalizado, confeccionado com tecido leve e respirável, ideal para atividades físicas e práticas esportivas.",
-    price: "Sob consulta",
-    colors: ["Verde", "Azul Claro", "Preto", "Branco"],
-    sizes: ["Único"],
-    rating: 4.7,
-    isNew: true,
-    features: [
-      "Tecido respirável e leve",
-      "Bordado personalizado durável",
-      "Ajuste traseiro confortável",
-      "Design esportivo moderno"
-    ],
-    images: [
-      "/lovable-uploads/5e83b50f-c3b6-435c-92cd-21f6ea1fbb17.png"
-    ],
-    keywords: ["boné", "bordado", "esportivo", "academia", "treino"]
-  },
-  {
-    id: 307,
-    name: "Boné Bordado Casual",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/f0f584d1-07fa-4152-8258-c4eceeebfdff.png",
-    description: "Boné casual com bordado estilizado, perfeito para compor looks modernos e descontraídos. Confortável para uso no dia a dia.",
-    price: "Sob consulta",
-    colors: ["Bege", "Azul Claro", "Rosa", "Preto"],
-    sizes: ["Único"],
-    rating: 4.8,
-    isNew: true,
-    features: [
-      "Material confortável misto",
-      "Bordado estilizado exclusivo",
-      "Ajuste regulável na parte traseira",
-      "Estilo urbano contemporâneo"
-    ],
-    images: [
-      "/lovable-uploads/f0f584d1-07fa-4152-8258-c4eceeebfdff.png"
-    ],
-    keywords: ["boné", "bordado", "casual", "moda", "estilo"]
-  },
-  {
-    id: 308,
-    name: "Boné Bordado Personalizado",
-    type: "product",
-    category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/2aa701f2-b251-4978-8c91-3437b96b8629.png",
-    description: "Boné com bordado totalmente personalizado, crie seu design exclusivo com frases, nomes ou logomarcas. Perfeito para presentes e eventos especiais.",
-    price: "Sob consulta",
-    colors: ["Amarelo", "Verde", "Vermelho", "Branco", "Preto", "Azul"],
-    sizes: ["Único"],
-    rating: 4.9,
-    isNew: true,
-    features: [
-      "Personalização 100% exclusiva",
-      "Bordado em alta qualidade",
-      "Diversos tipos de bonés disponíveis",
-      "Ajuste perfeito para todos os tamanhos"
-    ],
-    images: [
-      "/lovable-uploads/2aa701f2-b251-4978-8c91-3437b96b8629.png"
-    ],
-    keywords: ["boné", "bordado", "personalizado", "exclusivo", "presente"]
-  }
+{
+  id: 9001,
+  name: "Boné Bordado Original",
+  type: "portfolio",
+  category: "Bonés Bordados",
+  imageUrl: "/images/portfolio/bordado-bone/bone-original.png",
+  description: "Boné com bordado 'Original', ideal para estilo casual com autenticidade.",
+  price: "Sob consulta",
+  colors: ["Preto"],
+  sizes: ["Único"],
+  rating: 4.9,
+  isNew: true,
+  features: [
+    "Design urbano",
+    "Bordado centralizado",
+    "Alta durabilidade",
+    "Ajustável"
+  ],
+  images: ["/images/portfolio/bordado-bone/bone-original.png"],
+  keywords: ["boné", "bordado", "original"]
+},
+{
+  id: 9002,
+  name: "Boné Bordado Paraíso",
+  type: "portfolio",
+  category: "Bonés Bordados",
+  imageUrl: "/images/portfolio/bordado-bone/bone-paraiso.png",
+  description: "Boné com a palavra 'Paraíso' bordada, representando elegância e identidade.",
+  price: "Sob consulta",
+  colors: ["Vermelho"],
+  sizes: ["Único"],
+  rating: 4.9,
+  isNew: true,
+  features: [
+    "Estilo diferenciado",
+    "Conforto premium",
+    "Tecido resistente",
+    "Bordado exclusivo"
+  ],
+  images: ["/images/portfolio/bordado-bone/bone-paraiso.png"],
+  keywords: ["boné", "bordado", "paraíso"]
+},
+{
+  id: 9003,
+  name: "Boné Bordado Vibes",
+  type: "portfolio",
+  category: "Bonés Bordados",
+  imageUrl: "/images/portfolio/bordado-bone/bone-vibes.png",
+  description: "Boné casual com bordado 'Vibes', perfeito para transmitir leveza e estilo.",
+  price: "Sob consulta",
+  colors: ["Azul Claro"],
+  sizes: ["Único"],
+  rating: 4.9,
+  isNew: true,
+  features: [
+    "Ideal para o verão",
+    "Tecido leve",
+    "Estampa bordada moderna",
+    "Visual jovem"
+  ],
+  images: ["/images/portfolio/bordado-bone/bone-vibes.png"],
+  keywords: ["boné", "bordado", "vibes"]
+},
+{
+  id: 9004,
+  name: "Boné Bordado Estilo",
+  type: "portfolio",
+  category: "Bonés Bordados",
+  imageUrl: "/images/portfolio/bordado-bone/bone-estilo.png",
+  description: "Boné com bordado 'Estilo', unindo simplicidade com autenticidade no visual.",
+  price: "Sob consulta",
+  colors: ["Branco"],
+  sizes: ["Único"],
+  rating: 4.9,
+  isNew: true,
+  features: [
+    "Visual clean",
+    "Alta definição no bordado",
+    "Design contemporâneo",
+    "Ajuste confortável"
+  ],
+  images: ["/images/portfolio/bordado-bone/bone-estilo.png"],
+  keywords: ["boné", "bordado", "estilo"]
+}
 ];
 
 // Camisetas Collection
