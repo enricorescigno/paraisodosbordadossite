@@ -1,11 +1,11 @@
 
 // MySQL Service for Paraíso dos Bordados
-// This service is prepared but NOT activated until further notice
+// This service is now ACTIVATED
 
 import mysql from 'mysql2/promise';
 
 // Database configuration
-// These placeholders will be replaced with environment variables when activated
+// Replace these with environment variables in a production setting
 const dbConfig = {
   host: 'ENDEREÇO_DO_SERVIDOR',
   user: 'USUÁRIO',
@@ -15,8 +15,6 @@ const dbConfig = {
 
 /**
  * Creates and returns a MySQL connection
- * This function is NOT called automatically anywhere in the application
- * It will only be used when explicitly activated
  */
 export const getConnection = async () => {
   try {
@@ -32,7 +30,6 @@ export const getConnection = async () => {
 /**
  * Creates a connection pool for handling multiple requests
  * To be used when the application needs to handle many concurrent database operations
- * NOT activated until further notice
  */
 export const getConnectionPool = async () => {
   try {
@@ -51,41 +48,37 @@ export const getConnectionPool = async () => {
 };
 
 /**
- * Example of a product fetching function
- * This is a template for future implementation
- * NOT activated until further notice
+ * Fetches products from the database
  */
 export const getProducts = async () => {
-  // This commented code will be activated later
-  // const connection = await getConnection();
-  // if (!connection) return { error: 'Database connection failed', data: [] };
+  const connection = await getConnection();
+  if (!connection) return { error: 'Database connection failed', data: [] };
   
-  // try {
-  //   const [rows] = await connection.execute('SELECT * FROM produtos');
-  //   await connection.end();
-  //   return { data: rows };
-  // } catch (error) {
-  //   console.error('Error fetching products:', error);
-  //   await connection.end();
-  //   return { error: 'Failed to fetch products', data: [] };
-  // }
-  
-  // For now, return empty data
-  return { 
-    message: 'MySQL integration is prepared but not activated',
-    data: [] 
-  };
+  try {
+    const [rows] = await connection.execute('SELECT * FROM produtos');
+    await connection.end();
+    return { data: rows };
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    await connection.end();
+    return { error: 'Failed to fetch products', data: [] };
+  }
 };
 
 /**
- * Example of a portfolio items fetching function
- * This is a template for future implementation
- * NOT activated until further notice
+ * Fetches portfolio items from the database
  */
 export const getPortfolioItems = async () => {
-  // To be implemented when MySQL integration is activated
-  return {
-    message: 'MySQL integration is prepared but not activated',
-    data: []
-  };
+  const connection = await getConnection();
+  if (!connection) return { error: 'Database connection failed', data: [] };
+  
+  try {
+    const [rows] = await connection.execute('SELECT * FROM portfolio');
+    await connection.end();
+    return { data: rows };
+  } catch (error) {
+    console.error('Error fetching portfolio items:', error);
+    await connection.end();
+    return { error: 'Failed to fetch portfolio items', data: [] };
+  }
 };

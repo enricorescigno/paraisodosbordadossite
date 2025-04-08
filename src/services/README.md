@@ -1,22 +1,26 @@
 
-# Database Integration - Status: PREPARED BUT NOT ACTIVATED
+# MySQL Database Integration - Status: ACTIVATED
 
-This directory contains service files for database integration with MySQL. The integration is currently **NOT ACTIVE** and is only prepared for future implementation.
+This directory contains service files for database integration with MySQL. The integration is now **ACTIVE** and ready to use.
 
 ## Current Status
 
-- MySQL connection logic is implemented but not activated
-- No active database connections are being made
-- All API endpoints return mock data or empty arrays
+- MySQL connection logic is implemented and activated
+- API endpoints will attempt to use the database connection first
+- If database connection fails or returns no data, the system will fall back to mock data
 
-## Activation Instructions
+## Configuration
 
-To activate the MySQL integration in the future:
+The database connection is configured with the following credentials:
 
-1. Replace placeholder credentials with actual database credentials using environment variables
-2. Uncomment the connection code in the service functions
-3. Update API handlers to use the real database connection
-4. Test thoroughly before deploying to production
+```
+host: 'ENDEREÇO_DO_SERVIDOR',
+user: 'USUÁRIO',
+password: 'SENHA',
+database: 'NOME_DO_BANCO_DE_DADOS'
+```
+
+For a production environment, these should be replaced with actual database credentials using environment variables.
 
 ## Security Notes
 
@@ -25,11 +29,21 @@ To activate the MySQL integration in the future:
 - Consider using a connection pool for production environments
 - Implement proper error handling and connection management
 
-## Files
+## Activated Functions
 
-- `mysqlService.ts`: Core database connection and query functions
-- `../api/*.ts`: API endpoint handlers that will use the database service
+- `getConnection()`: Establishes a MySQL connection and returns the connection object
+- `getConnectionPool()`: Creates a MySQL connection pool for handling multiple concurrent requests
+- `getProducts()`: Fetches the list of products from the database
+- `getPortfolioItems()`: Fetches portfolio items from the database
+
+## API Integration
+
+The following API handlers now use the MySQL database:
+- `fetchProducts()` in `products.ts`: Retrieves products from the database with fallback to mock data
+- `fetchProductById()` in `products.ts`: Retrieves a specific product with fallback to mock data
+- `fetchPortfolioItems()` in `portfolio.ts`: Retrieves portfolio items from the database
+- `fetchPortfolioItemById()` in `portfolio.ts`: Retrieves a specific portfolio item from the database
 
 ---
 
-**IMPORTANT:** Do not activate any database connections until explicitly instructed to do so.
+**Note:** To use the actual database, replace the placeholder credentials with real ones.
