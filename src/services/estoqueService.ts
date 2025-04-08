@@ -1,6 +1,7 @@
+
 // src/services/estoqueService.ts
 
-const API_BASE_URL = "https://sgps.sgsistemas.com.br:8201";
+const API_BASE_URL = "http://sgps.sgsistemas.com.br:8201";
 const AUTH = {
   usuario: "homologacao",
   senha: "iVMfwV1q4y-&?c&p~6ei"
