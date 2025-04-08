@@ -925,7 +925,7 @@ export const toalhasProducts: Product[] = [
 // Combine all products for export
 export const allProducts: Product[] = [
   ...pantufaProducts.map(product => ({ ...product, type: 'product' })),
-  ...bonesProducts.map(product => ({ ...product, type: 'product' })),
+  ...bonesProducts, // agora vai manter type original, incluindo os "portfolio"
   ...camisetasProducts.map(product => ({ ...product, type: 'product' })),
   ...camisasPoloProducts.map(product => ({ ...product, type: 'product' })),
   ...jalecosProducts.map(product => ({ ...product, type: 'product' })),
