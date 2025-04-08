@@ -49,6 +49,7 @@ const PedidosCompraStatusPage = () => {
   }, []);
 
   // Função para determinar a cor do badge com base no ID do status
+  // Modificada para usar apenas variantes suportadas pela Badge
   const getBadgeVariant = (id: number) => {
     switch(id) {
       case 1:
@@ -60,7 +61,7 @@ const PedidosCompraStatusPage = () => {
       case 4:
         return "destructive"; // Vermelho
       case 5:
-        return "success"; // Verde customizado
+        return "secondary"; // Substituído "success" por "secondary" para compatibilidade
       default:
         return "default";
     }
