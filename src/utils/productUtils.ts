@@ -135,13 +135,13 @@ export const pantufaProducts: Product[] = [
 export const bonesProducts: Product[] = [
   {
     id: 300,
-    name: "Boné Bordado Respira",
+    name: "Boné Bordado Paraíso",
     type: "product",
     category: "Bonés Bordados",
     imageUrl: "/lovable-uploads/2.png",
-    description: "Boné casual com bordado 'respira', confeccionado em tecido macio e ajuste regulável.",
+    description: "Boné casual com bordado, confeccionado em tecido macio e ajuste regulável.",
     price: "Sob consulta",
-    colors: ["Amarelo", "Verde", "Rosa", "Branco", "Vermelho", "Azul Claro"],
+    colors: ["Vermelho"],
     sizes: ["Único"],
     rating: 4.8,
     isNew: true,
@@ -152,8 +152,8 @@ export const bonesProducts: Product[] = [
       "Design moderno"
     ],
     images: [
-      "/lovable-uploads/f3372ecb-c7c5-4bea-a52d-959ab9019e56.png",
-      "/lovable-uploads/2aa701f2-b251-4978-8c91-3437b96b8629.png"
+      "/lovable-uploads/2.png",
+      "/lovable-uploads/2.png"
     ],
     keywords: ["boné", "bordado", "respira", "casual", "acessório"]
   },
