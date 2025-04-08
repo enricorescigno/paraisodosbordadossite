@@ -152,14 +152,13 @@ export const bonesProducts: Product[] = [
       "Design moderno"
     ],
     images: [
-      "/lovable-uploads/2.png",
       "/lovable-uploads/2.png"
     ],
     keywords: ["boné", "bordado", "respira", "casual", "acessório"]
   },
   {
     id: 301,
-    name: "Boné Bordado Umbigo Para Dentro",
+    name: "Boné Bordado Original",
     type: "product",
     category: "Bonés Bordados",
     imageUrl: "/lovable-uploads/f0f584d1-07fa-4152-8258-c4eceeebfdff.png",
