@@ -15,7 +15,9 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AllProductsPage from "./components/AllProductsPage";
 import AllPortfolioPage from "./components/AllPortfolioPage";
 import ScrollToTop from "./components/ScrollToTop";
-import EstoquePage from "./pages/EstoquePage"; // ✅ NOVO IMPORT
+import EstoquePage from "./pages/EstoquePage";
+import TributacoesPage from "./pages/TributacoesPage";
+import VendasPage from "./pages/VendasPage";
 
 import "./styles/typography.css";
 
@@ -67,8 +69,10 @@ function App() {
               <Route path="/nossos-parceiros" element={<OurPartners />} />
               <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
 
-              {/* ✅ NOVA ROTA DE ESTOQUE */}
+              {/* ERP Integration Routes */}
               <Route path="/estoque" element={<EstoquePage />} />
+              <Route path="/tributacoes" element={<TributacoesPage />} />
+              <Route path="/vendas" element={<VendasPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
