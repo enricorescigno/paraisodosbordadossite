@@ -1,4 +1,3 @@
-
 interface ProdutoEstoque {
   codigo: string;
   descricao: string;
