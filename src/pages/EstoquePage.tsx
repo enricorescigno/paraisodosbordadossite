@@ -1,3 +1,16 @@
+
+import { useEffect, useState } from "react";
+import { buscarEstoque } from "../services/estoqueService";
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from "@/components/ui/table";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+
 interface ProdutoEstoque {
   codigo: string;
   descricao: string;
@@ -5,54 +18,84 @@ interface ProdutoEstoque {
   unidade: string;
 }
 
-export const buscarEstoque = async () => {
-  try {
-    const response = await fetch(
-      "http://sgps.sgsistemas.com.br:8201/api/estoque",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          usuario: "homologacao",
-          senha: "iVMfwV1q4y-&?c&p~6ei",
-        }),
+const EstoquePage = () => {
+  const [estoque, setEstoque] = useState<ProdutoEstoque[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState<string | null>(null);
+
+  useEffect(() => {
+    const carregarEstoque = async () => {
+      try {
+        setLoading(true);
+        const data = await buscarEstoque();
+        
+        if (data && data.dados) {
+          setEstoque(data.dados);
+        } else {
+          setEstoque([]);
+        }
+        setErro(null);
+      } catch (error: any) {
+        console.error("Erro ao carregar estoque:", error);
+        setErro("Não foi possível carregar os dados do estoque. Tente novamente mais tarde.");
+      } finally {
+        setLoading(false);
       }
-    );
+    };
 
-    const data = await response.json();
-    console.log("Resposta da API de estoque:", data);
+    carregarEstoque();
+  }, []);
 
-    return data;
-  } catch (error) {
-    console.error("Erro ao buscar estoque:", error);
-    throw error; // Propagate the error for proper handling in the component
-  }
+  return (
+    <div className="container mx-auto py-8 px-4 md:px-6">
+      <h1 className="text-3xl font-bold mb-6">Estoque Atual</h1>
+      
+      {erro && (
+        <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-md mb-6">
+          {erro}
+        </div>
+      )}
+
+      {loading ? (
+        <LoadingSpinner />
+      ) : estoque.length === 0 ? (
+        <div className="text-center py-12 bg-gray-50 rounded-lg">
+          <p className="text-gray-500 text-lg">Nenhum produto encontrado no estoque.</p>
+        </div>
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
+          <Table>
+            <TableHeader>
+              <TableRow className="bg-gray-100">
+                <TableHead className="font-semibold">Código</TableHead>
+                <TableHead className="font-semibold">Descrição</TableHead>
+                <TableHead className="font-semibold">Unidade</TableHead>
+                <TableHead className="font-semibold text-right">Saldo</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {estoque.map((produto) => (
+                <TableRow 
+                  key={produto.codigo}
+                  className="hover:bg-gray-50"
+                >
+                  <TableCell className="font-medium">{produto.codigo}</TableCell>
+                  <TableCell>{produto.descricao}</TableCell>
+                  <TableCell>{produto.unidade}</TableCell>
+                  <TableCell className="text-right">
+                    {produto.saldo.toLocaleString('pt-BR', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      )}
+    </div>
+  );
 };
 
-// This function exists to maintain backward compatibility
-export const buscarProdutos = async () => {
-  return buscarEstoque();
-};
-
-export const enviarEstoqueParaN8n = async () => {
-  try {
-    const estoque = await buscarEstoque(); // Busca os dados da API SG Sistemas
-
-    const response = await fetch("https://enrico-paraiso.app.n8n.cloud/webhook/7b6c6b7e-a532-4f94-b01d-6c66d43dd061", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(estoque),
-    });
-
-    const result = await response.text();
-    console.log("Estoque enviado para o n8n:", result);
-    return true;
-  } catch (error) {
-    console.error("Erro ao enviar estoque para o n8n:", error);
-    return false;
-  }
-};
+export default EstoquePage;
