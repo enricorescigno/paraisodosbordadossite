@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { buscarEstoque, enviarEstoqueParaN8n } from "../services/estoqueService"; // Certifique-se de importar a função
+import { useEffect, useState } from "react";
+import { buscarEstoque, enviarEstoqueParaN8n } from "../services/estoqueService";
 
 interface ProdutoEstoque {
   codigo: string;
@@ -12,24 +12,26 @@ const EstoquePage = () => {
   const [estoque, setEstoque] = useState<ProdutoEstoque[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Carregar o estoque e enviar para o n8n
   useEffect(() => {
     const carregarEstoque = async () => {
       try {
         const data = await buscarEstoque();
-        console.log("Resposta da API de estoque:", data); // Log para depuração
+        console.log("Resposta da API de estoque:", data);
 
         if (data && data.dados) {
           setEstoque(data.dados);
+          // Enviar os dados para o n8n após carregar o estoque
+          const sucesso = await enviarEstoqueParaN8n(data.dados);
+          if (sucesso) {
+            console.log("Dados enviados com sucesso para o n8n.");
+          } else {
+            console.log("Falha ao enviar os dados para o n8n.");
+          }
+        } else {
+          console.log("Nenhum dado encontrado no estoque.");
         }
         setLoading(false);
-
-        // Enviar os dados para o n8n após o carregamento do estoque
-        const sucesso = await enviarEstoqueParaN8n();
-        if (sucesso) {
-          console.log("Dados enviados com sucesso para o n8n.");
-        } else {
-          console.log("Falha ao enviar os dados para o n8n.");
-        }
       } catch (error) {
         console.error("Erro ao carregar estoque:", error);
       }
@@ -44,7 +46,7 @@ const EstoquePage = () => {
       {loading ? (
         <p>Carregando estoque...</p>
       ) : estoque.length === 0 ? (
-        <p>Nenhum produto encontrado no estoque.</p>
+        <p>Nenhum produto encontrado.</p>
       ) : (
         <table className="w-full border-collapse border border-gray-300">
           <thead>
