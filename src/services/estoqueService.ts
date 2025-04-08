@@ -1,25 +1,70 @@
-export const enviarEstoqueParaN8n = async () => {
-  try {
-    const response = await fetch('http://sgps.sgsistemas.com.br:8201/integracao/sgsistemas/v1/produtos/estoque?filial=1', {
-      method: 'GET',
-      headers: {
-        Authorization: 'Basic ' + btoa('homologacao:iVMfwV1q4y-&?c&p~6ei'),
-        'Content-Type': 'application/json',
-      },
-    });
+import { useEffect, useState } from "react";
+import { buscarProdutos, enviarEstoqueParaN8n } from "../services/estoqueService";
 
-    const data = await response.json();
+interface ProdutoEstoque {
+  codigo: string;
+  descricao: string;
+  saldo: number;
+  unidade: string;
+}
 
-    await fetch('https://enrico-paraiso.app.n8n.cloud/webhook/7b6c6b7e-a532-4f94-b01d-6c66d43dd061', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+const EstoquePage = () => {
+  const [estoque, setEstoque] = useState<ProdutoEstoque[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    console.log("Dados enviados com sucesso para o n8n.");
-  } catch (error) {
-    console.error("Erro ao enviar para o n8n:", error);
-  }
+  useEffect(() => {
+    const carregarEstoque = async () => {
+      const data = await buscarProdutos();
+      console.log("Resposta da API de estoque:", data);
+
+      if (data && data.dados) {
+        setEstoque(data.dados);
+      }
+      setLoading(false);
+    };
+
+    carregarEstoque();
+  }, []);
+
+  return (
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-6">Estoque Atual</h1>
+
+      <button
+        className="bg-green-500 text-white px-4 py-2 rounded mb-4"
+        onClick={enviarEstoqueParaN8n}
+      >
+        Enviar Estoque para n8n
+      </button>
+
+      {loading ? (
+        <p>Carregando estoque...</p>
+      ) : estoque.length === 0 ? (
+        <p>Nenhum produto encontrado.</p>
+      ) : (
+        <table className="w-full border-collapse border border-gray-300">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border border-gray-300 px-4 py-2">Código</th>
+              <th className="border border-gray-300 px-4 py-2">Descrição</th>
+              <th className="border border-gray-300 px-4 py-2">Unidade</th>
+              <th className="border border-gray-300 px-4 py-2">Saldo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {estoque.map((produto) => (
+              <tr key={produto.codigo}>
+                <td className="border border-gray-300 px-4 py-2">{produto.codigo}</td>
+                <td className="border border-gray-300 px-4 py-2">{produto.descricao}</td>
+                <td className="border border-gray-300 px-4 py-2">{produto.unidade}</td>
+                <td className="border border-gray-300 px-4 py-2">{produto.saldo}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
 };
+
+export default EstoquePage;
