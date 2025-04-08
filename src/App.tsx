@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +19,10 @@ import ScrollToTop from "./components/ScrollToTop";
 import EstoquePage from "./pages/EstoquePage";
 import TributacoesPage from "./pages/TributacoesPage";
 import VendasPage from "./pages/VendasPage";
+import PedidosCompraProdutosPage from "./pages/PedidosCompraProdutosPage";
+import PedidosCompraDistribuicaoPage from "./pages/PedidosCompraDistribuicaoPage";
+import PedidosCompraStatusPage from "./pages/PedidosCompraStatusPage";
+import PrazosPagamentoPage from "./pages/PrazosPagamentoPage";
 
 import "./styles/typography.css";
 
@@ -73,6 +78,10 @@ function App() {
               <Route path="/estoque" element={<EstoquePage />} />
               <Route path="/tributacoes" element={<TributacoesPage />} />
               <Route path="/vendas" element={<VendasPage />} />
+              <Route path="/pedidos-compra/produtos" element={<PedidosCompraProdutosPage />} />
+              <Route path="/pedidos-compra/distribuicao" element={<PedidosCompraDistribuicaoPage />} />
+              <Route path="/pedidos-compra/status" element={<PedidosCompraStatusPage />} />
+              <Route path="/prazos-pagamento" element={<PrazosPagamentoPage />} />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
