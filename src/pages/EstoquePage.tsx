@@ -1,9 +1,14 @@
-
 import { useEffect, useState } from "react";
 import { buscarEstoque, enviarEstoqueParaN8n } from "../services/estoqueService";
-import LoadingSpinner from "../components/common/LoadingSpinner";
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
-import { useToast } from "@/hooks/use-toast";
+import { 
+  Table, 
+  TableBody, 
+  TableCell, 
+  TableHead, 
+  TableHeader, 
+  TableRow 
+} from "@/components/ui/table";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 interface ProdutoEstoque {
   codigo: string;
@@ -15,97 +20,76 @@ interface ProdutoEstoque {
 const EstoquePage = () => {
   const [estoque, setEstoque] = useState<ProdutoEstoque[]>([]);
   const [loading, setLoading] = useState(true);
-  const [enviando, setEnviando] = useState(false);
-  const { toast } = useToast();
+  const [erro, setErro] = useState<string | null>(null);
 
   useEffect(() => {
     const carregarEstoque = async () => {
       try {
+        setLoading(true);
         const data = await buscarEstoque();
-        console.log("Resposta da API de estoque:", data);
-
+        
         if (data && data.dados) {
           setEstoque(data.dados);
+          
+          // Enviar os dados para o n8n
+          await enviarEstoqueParaN8n();
         } else {
-          console.log("Nenhum dado encontrado no estoque.");
+          setEstoque([]);
         }
-      } catch (error) {
+        setErro(null);
+      } catch (error: any) {
         console.error("Erro ao carregar estoque:", error);
-        toast({
-          title: "Erro",
-          description: "Não foi possível carregar os dados do estoque.",
-          variant: "destructive",
-        });
+        setErro("Não foi possível carregar os dados do estoque. Tente novamente mais tarde.");
       } finally {
         setLoading(false);
       }
     };
 
     carregarEstoque();
-  }, [toast]);
-
-  const handleEnviarParaN8n = async () => {
-    setEnviando(true);
-    try {
-      const resultado = await enviarEstoqueParaN8n();
-      if (resultado) {
-        toast({
-          title: "Sucesso",
-          description: "Dados enviados com sucesso para o n8n.",
-        });
-      } else {
-        toast({
-          title: "Erro",
-          description: "Falha ao enviar os dados para o n8n.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      console.error("Erro ao enviar para n8n:", error);
-      toast({
-        title: "Erro",
-        description: "Ocorreu um erro ao enviar os dados para o n8n.",
-        variant: "destructive",
-      });
-    } finally {
-      setEnviando(false);
-    }
-  };
+  }, []);
 
   return (
-    <div className="p-8">
+    <div className="container mx-auto py-8 px-4 md:px-6">
       <h1 className="text-3xl font-bold mb-6">Estoque Atual</h1>
       
-      <button
-        className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded mb-6 flex items-center gap-2 disabled:opacity-70"
-        onClick={handleEnviarParaN8n}
-        disabled={loading || enviando}
-      >
-        {enviando ? "Enviando..." : "Enviar Estoque para n8n"}
-      </button>
+      {erro && (
+        <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-md mb-6">
+          {erro}
+        </div>
+      )}
 
       {loading ? (
         <LoadingSpinner />
       ) : estoque.length === 0 ? (
-        <p>Nenhum produto encontrado.</p>
+        <div className="text-center py-12 bg-gray-50 rounded-lg">
+          <p className="text-gray-500 text-lg">Nenhum produto encontrado no estoque.</p>
+        </div>
       ) : (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
           <Table>
             <TableHeader>
-              <TableRow>
-                <TableHead>Código</TableHead>
-                <TableHead>Descrição</TableHead>
-                <TableHead>Unidade</TableHead>
-                <TableHead>Saldo</TableHead>
+              <TableRow className="bg-gray-100">
+                <TableHead className="font-semibold">Código</TableHead>
+                <TableHead className="font-semibold">Descrição</TableHead>
+                <TableHead className="font-semibold">Unidade</TableHead>
+                <TableHead className="font-semibold text-right">Saldo</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {estoque.map((produto) => (
-                <TableRow key={produto.codigo}>
-                  <TableCell>{produto.codigo}</TableCell>
+                <TableRow 
+                  key={produto.codigo}
+                  className="hover:bg-gray-50"
+                >
+                  <TableCell className="font-medium">{produto.codigo}</TableCell>
                   <TableCell>{produto.descricao}</TableCell>
                   <TableCell>{produto.unidade}</TableCell>
-                  <TableCell>{produto.saldo}</TableCell>
+                  <TableCell className="text-right">
+                    {produto.saldo.toLocaleString('pt-BR', {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2
+                    })}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
