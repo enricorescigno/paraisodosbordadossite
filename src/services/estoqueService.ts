@@ -44,7 +44,7 @@ export const enviarEstoqueParaN8n = async () => {
     if (data && data.dados) {
       // Enviar os dados para o n8n
       const envioResponse = await fetch(
-        "https://enrico-paraiso.app.n8n.cloud/webhook/7b6c6b7e-a532-4f94-b01d-6c66d43dd061", 
+        "https://enrico-paraiso.app.n8n.cloud/webhook-test/7b6c6b7e-a532-4f94-b01d-6c66d43dd061", 
         {
           method: "POST",
           headers: {
