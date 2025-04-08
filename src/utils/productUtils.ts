@@ -138,7 +138,7 @@ export const bonesProducts: Product[] = [
     name: "Boné Bordado Respira",
     type: "product",
     category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/f3372ecb-c7c5-4bea-a52d-959ab9019e56.png",
+    imageUrl: "/lovable-uploads/2.png",
     description: "Boné casual com bordado 'respira', confeccionado em tecido macio e ajuste regulável.",
     price: "Sob consulta",
     colors: ["Amarelo", "Verde", "Rosa", "Branco", "Vermelho", "Azul Claro"],
