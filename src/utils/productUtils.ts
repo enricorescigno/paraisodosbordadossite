@@ -134,7 +134,7 @@ export const pantufaProducts: Product[] = [
 // Bonés Collection
 export const bonesProducts: Product[] = [
 {
-  id: 9001,
+  id: 300,
   name: "Boné Bordado Original",
   type: "portfolio",
   category: "Bonés Bordados",
@@ -155,7 +155,7 @@ export const bonesProducts: Product[] = [
   keywords: ["boné", "bordado", "original"]
 },
 {
-  id: 9002,
+  id: 301,
   name: "Boné Bordado Paraíso",
   type: "portfolio",
   category: "Bonés Bordados",
@@ -176,7 +176,7 @@ export const bonesProducts: Product[] = [
   keywords: ["boné", "bordado", "paraíso"]
 },
 {
-  id: 9003,
+  id: 302,
   name: "Boné Bordado Vibes",
   type: "portfolio",
   category: "Bonés Bordados",
@@ -197,7 +197,7 @@ export const bonesProducts: Product[] = [
   keywords: ["boné", "bordado", "vibes"]
 },
 {
-  id: 9004,
+  id: 303,
   name: "Boné Bordado Estilo",
   type: "portfolio",
   category: "Bonés Bordados",
