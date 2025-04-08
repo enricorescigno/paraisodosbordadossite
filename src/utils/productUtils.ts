@@ -141,7 +141,7 @@ export const bonesProducts: Product[] = [
     imageUrl: "/lovable-uploads/bone-vermelho.png",
     description: "Boné casual com bordado, confeccionado em tecido macio e ajuste regulável.",
     price: "Sob consulta",
-    colors: ["Vermelho", "Preto", "Azul", "Branco"],
+    colors: ["Vermelho", "Azul", "Branco", "Preto"],
     sizes: ["Único"],
     rating: 4.8,
     isNew: true,
