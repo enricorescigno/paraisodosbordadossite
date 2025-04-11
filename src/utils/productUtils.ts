@@ -1,4 +1,3 @@
-
 import { Product } from '../types/product';
 import { 
   camaProducts,
@@ -184,16 +183,15 @@ export const bonesProducts: Product[] = [
   }
 ];
 
-import { Product } from '../types/product';
-
+// Bordados Collection
 export const bordadosProducts: Product[] = [
   // === BORDADOS EM BOLSAS ===
   {
     id: 900,
     name: "Bordado em Necessaire - Voice Tec",
-    type: "product",
-    category: "Bordados em Bolsas",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Necessaire",
+    imageUrl: "/lovable-uploads/a929d547-e8ae-4eb4-9a37-286f520221a9.png",
     description: "Necessaire com bordado corporativo da Voice Tec. Ideal para brindes e uso profissional.",
     price: "Sob consulta",
     colors: ["Cinza"],
@@ -201,14 +199,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.8,
     isNew: true,
     features: ["Bordado personalizado", "Material resistente", "Compacta e funcional", "Design elegante"],
-    images: []
+    images: ["/lovable-uploads/a929d547-e8ae-4eb4-9a37-286f520221a9.png"]
   },
   {
     id: 901,
     name: "Bordado em Bolsas - Imparáveis",
-    type: "product",
-    category: "Bordados em Bolsas",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Bolsa",
+    imageUrl: "/lovable-uploads/75dd2442-7f72-473a-9ab7-6666d1b4796a.png",
     description: "Bolsa preta com bordado personalizado 'Imparáveis'. Perfeita para eventos ou uso pessoal.",
     price: "Sob consulta",
     colors: ["Preto"],
@@ -216,14 +214,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.7,
     isNew: true,
     features: ["Espaçosa", "Durável", "Bordado institucional", "Design versátil"],
-    images: []
+    images: ["/lovable-uploads/75dd2442-7f72-473a-9ab7-6666d1b4796a.png"]
   },
   {
     id: 902,
     name: "Bordado em Necessaire + Toalha de rosto",
-    type: "product",
-    category: "Bordados em Bolsas",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Necessaire",
+    imageUrl: "/lovable-uploads/3bb94c02-6771-46d8-8e2f-efe9b267c391.png",
     description: "Kit com necessaire e toalha bordada. Ideal para presentes personalizados.",
     price: "Sob consulta",
     colors: ["Preto"],
@@ -231,14 +229,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.9,
     isNew: true,
     features: ["Conjunto prático", "Acabamento premium", "Ideal para uso pessoal", "Bordado fino"],
-    images: []
+    images: ["/lovable-uploads/3bb94c02-6771-46d8-8e2f-efe9b267c391.png"]
   },
   {
     id: 903,
     name: "Bordado em Bolsas - Brows Evolution",
-    type: "product",
-    category: "Bordados em Bolsas",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Bolsa",
+    imageUrl: "/lovable-uploads/a9039859-5fad-4bea-b70e-a421fc3a738e.png",
     description: "Bolsa rosa bordada com logo da Brows Evolution. Estilo e identidade para profissionais da beleza.",
     price: "Sob consulta",
     colors: ["Rosa"],
@@ -246,14 +244,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.7,
     isNew: true,
     features: ["Design moderno", "Bordado elegante", "Ideal para estúdios", "Compacta"],
-    images: []
+    images: ["/lovable-uploads/a9039859-5fad-4bea-b70e-a421fc3a738e.png"]
   },
   {
     id: 904,
     name: "Bordado em Necessaire - Kit com três peças",
-    type: "product",
-    category: "Bordados em Bolsas",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Necessaire",
+    imageUrl: "/lovable-uploads/5e83b50f-c3b6-435c-92cd-21f6ea1fbb17.png",
     description: "Conjunto com 3 necessaires bordadas, ideal para kits de higiene, maternidade ou presentes.",
     price: "Sob consulta",
     colors: ["Rosa Bebê"],
@@ -261,16 +259,16 @@ export const bordadosProducts: Product[] = [
     rating: 4.9,
     isNew: true,
     features: ["Trio de necessaires", "Acabamento impecável", "Ótima para organização", "Estilo delicado"],
-    images: []
+    images: ["/lovable-uploads/5e83b50f-c3b6-435c-92cd-21f6ea1fbb17.png"]
   },
 
   // === BORDADOS EM TOALHAS ===
   {
     id: 905,
     name: "Bordado em Toalha de Banho e Rosto",
-    type: "product",
-    category: "Bordados em Toalhas",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Toalha de Banho",
+    imageUrl: "/lovable-uploads/d2fc000c-904f-4a72-974e-e6aa5ad89b79.png",
     description: "Toalhas com bordado elegante de nomes e detalhes clássicos. Ideal para uso pessoal ou presente.",
     price: "Sob consulta",
     colors: ["Branco", "Bege"],
@@ -278,14 +276,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.9,
     isNew: true,
     features: ["Bordado sofisticado", "Toque macio", "Alta absorção", "Design refinado"],
-    images: []
+    images: ["/lovable-uploads/d2fc000c-904f-4a72-974e-e6aa5ad89b79.png"]
   },
   {
     id: 906,
     name: "Bordado em toalha de banho - Marcotex",
-    type: "product",
-    category: "Bordados em Toalhas",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Toalha de Banho",
+    imageUrl: "/lovable-uploads/16ec485a-1a80-474e-a14b-c0e40d3b0780.png",
     description: "Toalha verde Marcotex com bordado personalizado. Qualidade e estilo para o dia a dia.",
     price: "Sob consulta",
     colors: ["Verde"],
@@ -293,16 +291,16 @@ export const bordadosProducts: Product[] = [
     rating: 4.8,
     isNew: true,
     features: ["Personalização de nome", "Material premium", "Alta durabilidade", "Cor vibrante"],
-    images: []
+    images: ["/lovable-uploads/16ec485a-1a80-474e-a14b-c0e40d3b0780.png"]
   },
 
   // === VESTUÁRIO ===
   {
     id: 907,
     name: "Bordado em Camisa Infantil - Caminhão",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado Infantil",
+    imageUrl: "/lovable-uploads/4de7cea7-6ec7-40d7-805f-b6376c8ce332.png",
     description: "Camisa infantil bordada com desenho de caminhão. Ideal para uniformes ou uso pessoal.",
     price: "Sob consulta",
     colors: ["Branco"],
@@ -310,14 +308,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.7,
     isNew: true,
     features: ["Bordado divertido", "Conforto infantil", "Durável", "Toque suave"],
-    images: []
+    images: ["/lovable-uploads/4de7cea7-6ec7-40d7-805f-b6376c8ce332.png"]
   },
   {
     id: 908,
     name: "Bordado em Camisa Básica - Casa e Condomínio",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png",
     description: "Camisa polo com bordado institucional. Ideal para uniformes corporativos.",
     price: "Sob consulta",
     colors: ["Azul"],
@@ -325,14 +323,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.8,
     isNew: true,
     features: ["Profissionalismo", "Acabamento premium", "Logo personalizado", "Conforto no uso diário"],
-    images: []
+    images: ["/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"]
   },
   {
     id: 909,
     name: "Bordado em Camisa - Impactto",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png",
     description: "Camisa com bordado da empresa Impactto. Qualidade e personalização para empresas.",
     price: "Sob consulta",
     colors: ["Verde"],
@@ -340,14 +338,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.7,
     isNew: true,
     features: ["Design corporativo", "Conforto e durabilidade", "Acabamento impecável", "Estilo profissional"],
-    images: []
+    images: ["/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"]
   },
   {
     id: 910,
     name: "Bordado em Fardamento - Pet Dream",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png",
     description: "Uniforme bordado para clínicas veterinárias. Marca Pet Dream bordada com qualidade.",
     price: "Sob consulta",
     colors: ["Verde"],
@@ -355,14 +353,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.8,
     isNew: true,
     features: ["Identidade profissional", "Resistente", "Visual moderno", "Bordado em alta definição"],
-    images: []
+    images: ["/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png"]
   },
   {
     id: 911,
     name: "Bordado em Camisa - Girassol",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png",
     description: "Camisa bordada com flor de girassol. Ideal para identidade visual criativa.",
     price: "Sob consulta",
     colors: ["Preto", "Amarelo"],
@@ -370,14 +368,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.7,
     isNew: true,
     features: ["Bordado colorido", "Estampa personalizada", "Criatividade e beleza", "Acabamento fino"],
-    images: []
+    images: ["/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png"]
   },
   {
     id: 912,
     name: "Bordados em Fardamentos para times de futebol",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png",
     description: "Camisas personalizadas com escudos bordados para times de futebol.",
     price: "Sob consulta",
     colors: ["Azul", "Branco"],
@@ -385,14 +383,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.8,
     isNew: true,
     features: ["Escudos personalizados", "Alta resistência", "Ideal para clubes e torcidas", "Visual esportivo"],
-    images: []
+    images: ["/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"]
   },
   {
     id: 913,
     name: "Bordado em Fardamento - Biscoitos feito por nós",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png",
     description: "Fardamento bordado com marca artesanal. Ideal para negócios familiares e branding local.",
     price: "Sob consulta",
     colors: ["Branco"],
@@ -400,14 +398,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.9,
     isNew: true,
     features: ["Estilo artesanal", "Bordado exclusivo", "Conexão com a marca", "Tecido confortável"],
-    images: []
+    images: ["/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"]
   },
   {
     id: 914,
     name: "Bordado em Camisa - Capibaribe",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png",
     description: "Camisa com escudo bordado do Capibaribe FC. Ideal para fãs e projetos personalizados.",
     price: "Sob consulta",
     colors: ["Preto"],
@@ -415,14 +413,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.7,
     isNew: true,
     features: ["Escudo bordado", "Material leve", "Visual esportivo", "Alta definição"],
-    images: []
+    images: ["/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"]
   },
   {
     id: 915,
     name: "Bordado em Camisa - Doutor Pet",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png",
     description: "Uniforme bordado para clínicas veterinárias. Marca Doutor Pet bordada com identidade.",
     price: "Sob consulta",
     colors: ["Verde", "Estampado"],
@@ -430,14 +428,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.9,
     isNew: true,
     features: ["Estampa temática", "Bordado personalizado", "Conforto", "Design exclusivo"],
-    images: []
+    images: ["/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png"]
   },
   {
     id: 916,
     name: "Bordado em Avental - Gallo",
-    type: "product",
-    category: "Bordados em Vestuário",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado em Jaleco",
+    imageUrl: "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png",
     description: "Avental verde bordado com logomarca da Gallo. Ideal para cozinha profissional.",
     price: "Sob consulta",
     colors: ["Verde"],
@@ -445,16 +443,16 @@ export const bordadosProducts: Product[] = [
     rating: 4.9,
     isNew: true,
     features: ["Logo bordado", "Estilo clean", "Alta resistência", "Conforto durante o uso"],
-    images: []
+    images: ["/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png"]
   },
 
   // === INFANTIL ===
   {
     id: 917,
     name: "Bordado em Fralda de Tecido - Nome (Maya)",
-    type: "product",
-    category: "Bordados Infantis",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado Infantil",
+    imageUrl: "/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png",
     description: "Fralda bordada com nome personalizado. Suavidade e identidade para o enxoval.",
     price: "Sob consulta",
     colors: ["Lilás"],
@@ -462,14 +460,14 @@ export const bordadosProducts: Product[] = [
     rating: 5.0,
     isNew: true,
     features: ["Toque macio", "Bordado delicado", "Personalização com nome", "Ideal para bebês"],
-    images: []
+    images: ["/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png"]
   },
   {
     id: 918,
     name: "Bordado em Fralda de Tecido - Nome (Davi)",
-    type: "product",
-    category: "Bordados Infantis",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado Infantil",
+    imageUrl: "/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png",
     description: "Fralda de tecido personalizada com nome e coroa bordada. Toque especial ao enxoval.",
     price: "Sob consulta",
     colors: ["Branco"],
@@ -477,14 +475,14 @@ export const bordadosProducts: Product[] = [
     rating: 5.0,
     isNew: true,
     features: ["Design encantador", "Bordado nobre", "Ideal para presente", "Alta absorção"],
-    images: []
+    images: ["/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png"]
   },
   {
     id: 919,
     name: "Bordado em Macacão - Leãozinho Safari",
-    type: "product",
-    category: "Bordados Infantis",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado Infantil",
+    imageUrl: "/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png",
     description: "Macacão bordado com tema safari. Conforto e diversão para os pequenos.",
     price: "Sob consulta",
     colors: ["Cinza"],
@@ -492,14 +490,14 @@ export const bordadosProducts: Product[] = [
     rating: 4.9,
     isNew: true,
     features: ["Bordado fofo", "Tecido macio", "Temática safari", "Ideal para bebês"],
-    images: []
+    images: ["/lovable-uploads/d8ce6c10-ac88-4583-a5fe-59e4b8f9046b.png"]
   },
   {
     id: 920,
     name: "Bordado em Manta - Leãozinho",
-    type: "product",
-    category: "Bordados Infantis",
-    imageUrl: "",
+    type: "portfolio",
+    category: "Bordado Infantil",
+    imageUrl: "/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png",
     description: "Manta bordada com desenho de leãozinho. Ideal para proteger e encantar.",
     price: "Sob consulta",
     colors: ["Verde", "Bege"],
@@ -507,7 +505,7 @@ export const bordadosProducts: Product[] = [
     rating: 4.8,
     isNew: true,
     features: ["Estilo infantil", "Confortável", "Tema animal", "Bordado de alta definição"],
-    images: []
+    images: ["/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png"]
   }
 ];
 
@@ -1223,5 +1221,6 @@ export const allProducts: Product[] = [
   ...jalecosProducts.map(product => ({ ...product, type: 'product' })),
   ...roupoesProducts.map(product => ({ ...product, type: 'product' })),
   ...toalhasProducts.map(product => ({ ...product, type: 'product' })),
-  ...allCategoryProducts.map(product => ({ ...product, type: 'product' }))
+  ...allCategoryProducts.map(product => ({ ...product, type: 'product' })),
+  ...bordadosProducts
 ];

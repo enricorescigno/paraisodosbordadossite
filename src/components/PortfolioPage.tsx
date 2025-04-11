@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -52,17 +53,22 @@ const PortfolioPage = () => {
       const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
       let categoryItems: Product[] = [];
       
-      if (matchingCategory) {
-        // Filtra produtos que correspondem à categoria mapeada
+      if (categoryPath) {
+        // Filtra produtos com base na categoria da URL
         categoryItems = allProducts.filter(product => 
           // Excluir produto 204 explicitamente
           Number(product.id) !== 204 && 
-          // Incluir apenas produtos de portfólio ou com categorias de bordado
-          ((product.type === 'portfolio') || 
-           (product.category.toLowerCase().includes('bordado') || 
-           product.category.toLowerCase().includes('bonés'))) && 
-          (product.category === matchingCategory || 
-           product.category.toLowerCase().includes(matchingCategory.toLowerCase()))
+          // Incluir apenas produtos de portfólio
+          (product.type === 'portfolio') && 
+          // Verificar se a categoria corresponde ao caminho da URL
+          (product.category.toLowerCase().includes(categoryTitle.toLowerCase()) ||
+           (categoryPath === 'bordado-bolsa' && product.category.includes('Bolsa')) ||
+           (categoryPath === 'bordado-necessaire' && product.category.includes('Necessaire')) ||
+           (categoryPath === 'bordado-bone' && (product.category.includes('Boné') || product.category.includes('Bone'))) ||
+           (categoryPath === 'bordado-jaleco' && 
+            (product.category.includes('Jaleco') || product.category.includes('Vestuário'))) ||
+           (categoryPath === 'bordado-infantis' && product.category.includes('Infantil')) ||
+           (categoryPath === 'bordado-toalha-banho' && product.category.includes('Toalha')))
         );
       }
 
@@ -81,7 +87,7 @@ const PortfolioPage = () => {
       setFilteredItems(categoryItems);
       setLoading(false);
     }, 300);
-  }, [location.pathname, categoryPath]);
+  }, [location.pathname, categoryPath, categoryTitle]);
   
   return (
     <motion.div 
