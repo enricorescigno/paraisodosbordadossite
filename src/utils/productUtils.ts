@@ -718,3 +718,23 @@ export const jalecosProducts: Product[] = [
     keywords: ["jaleco", "colorido", "pediatria", "odontopediatria", "crianças"]
   }
 ];
+
+// Add missing exports for other collections
+export const roupoesProducts: Product[] = [];
+export const toalhasProducts: Product[] = [];
+
+// Create and export allProducts
+export const allProducts: Product[] = [
+  ...pantufaProducts,
+  ...bonesProducts,
+  ...bordadosProducts,
+  ...camisetasProducts,
+  ...camisasPoloProducts,
+  ...jalecosProducts,
+  ...camaProducts,
+  ...mesaCozinhaProducts,
+  ...tapeteCortinasProducts,
+  ...banhoProducts,
+  ...infantilProducts,
+  ...vestuarioProducts
+];
