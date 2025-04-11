@@ -18,7 +18,7 @@ const PORTFOLIO_CATEGORIES = {
   'Bordado em Necessaire': 'bordado-necessaire',
   'Bordado em Bolsa': 'bordado-bolsa',
   'Bordado em Jaleco': 'bordado-jaleco',
-  'Bordado Infantil': 'bordado-infantis',
+  'Bordado Infantis': 'bordado-infantis',
   'Bordado em Toalha de Banho': 'bordado-toalha-banho',
   'Bonés Bordados': 'bordado-bone',
   'Bordado': 'bordado-bone',
@@ -27,11 +27,7 @@ const PORTFOLIO_CATEGORIES = {
   'Jalecos': 'bordado-jaleco',
   'Pantufas': 'vestuario',
   'Roupões Infantis': 'bordado-infantis',
-  'Toalhas Infantis': 'bordado-toalha-banho',
-  'Bordados em Bolsas': 'bordado-bolsa',
-  'Bordados em Toalhas': 'bordado-toalha-banho',
-  'Bordados em Vestuário': 'bordado-jaleco',
-  'Bordados Infantis': 'bordado-infantis'
+  'Toalhas Infantis': 'bordado-toalha-banho'
 };
 
 const AllPortfolioPage = () => {
