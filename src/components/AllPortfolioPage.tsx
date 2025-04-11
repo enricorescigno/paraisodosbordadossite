@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { useIsMobile } from '../hooks/use-mobile';
-import { allProducts } from '../utils/productUtils';
+import { allProducts, bordadosProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -27,7 +27,11 @@ const PORTFOLIO_CATEGORIES = {
   'Jalecos': 'bordado-jaleco',
   'Pantufas': 'vestuario',
   'Roupões Infantis': 'bordado-infantis',
-  'Toalhas Infantis': 'bordado-toalha-banho'
+  'Toalhas Infantis': 'bordado-toalha-banho',
+  'Bordados em Bolsas': 'bordado-bolsa',
+  'Bordados em Toalhas': 'bordado-toalha-banho',
+  'Bordados em Vestuário': 'vestuario',
+  'Bordados Infantis': 'bordado-infantis'
 };
 
 const AllPortfolioPage = () => {
@@ -39,22 +43,31 @@ const AllPortfolioPage = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      // Usar os produtos do nosso arquivo productUtils.ts
-      // Estritamente filtrar apenas itens de portfólio
-      const portfolioItems = allProducts.filter(product => 
-        // Exclui explicitamente o produto 204
-        Number(product.id) !== 204 && 
-        (
-          // Include items explicitly marked as portfolio type
-          (product.type === 'portfolio') ||
-          // Or include items with category related to embroidery/bordado
-          (product.category && 
-           (product.category.toLowerCase().includes('bordado') || 
-            product.category.toLowerCase().includes('bonés')))
-        )
+      // Use both the existing allProducts filter and the new bordadosProducts
+      const portfolioItems = [
+        // Original portfolio items
+        ...allProducts.filter(product => 
+          // Exclui explicitamente o produto 204
+          Number(product.id) !== 204 && 
+          (
+            // Include items explicitly marked as portfolio type
+            (product.type === 'portfolio') ||
+            // Or include items with category related to embroidery/bordado
+            (product.category && 
+             (product.category.toLowerCase().includes('bordado') || 
+              product.category.toLowerCase().includes('bonés')))
+          )
+        ),
+        // Add our new bordados products explicitly 
+        ...bordadosProducts
+      ];
+      
+      // Create a unique set of products by id
+      const uniqueProducts = Array.from(
+        new Map(portfolioItems.map(item => [item.id, item])).values()
       );
       
-      setAllPortfolioItems(portfolioItems);
+      setAllPortfolioItems(uniqueProducts);
       setLoading(false);
     }, 300);
   }, []);

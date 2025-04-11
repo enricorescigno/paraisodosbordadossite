@@ -1,9 +1,10 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { allProducts } from '../utils/productUtils';
+import { allProducts, bordadosProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -19,7 +20,8 @@ const PORTFOLIO_CATEGORIES: Record<string, string> = {
   'bordado-bolsa': 'Bordado em Bolsa',
   'bordado-jaleco': 'Jalecos',
   'bordado-infantis': 'Roupões Infantis',
-  'bordado-toalha-banho': 'Toalhas Infantis'
+  'bordado-toalha-banho': 'Toalhas Infantis',
+  'vestuario': 'Bordados em Vestuário'
 };
 
 // Category name translations for titles
@@ -29,7 +31,8 @@ const categoryTitles: Record<string, string> = {
   'bordado-bolsa': 'Bordado em Bolsa',
   'bordado-jaleco': 'Bordado em Jaleco',
   'bordado-infantis': 'Bordado Infantil',
-  'bordado-toalha-banho': 'Bordado em Toalha de Banho'
+  'bordado-toalha-banho': 'Bordado em Toalha de Banho',
+  'vestuario': 'Bordado em Vestuário'
 };
 
 const PortfolioPage = () => {
@@ -48,33 +51,47 @@ const PortfolioPage = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      // Obter produtos do productUtils.ts que correspondem à categoria do portfólio
+      // Combine all potential portfolio items
+      let allPotentialItems = [
+        ...allProducts.filter(product => 
+          Number(product.id) !== 204 && 
+          (product.type === 'portfolio' || 
+           product.category.toLowerCase().includes('bordado') || 
+           product.category.toLowerCase().includes('bonés'))
+        ),
+        ...bordadosProducts
+      ];
+      
+      // Make sure we have unique items
+      const uniqueItems = Array.from(
+        new Map(allPotentialItems.map(item => [item.id, item])).values()
+      );
+      
+      // Filter by the selected category
       const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
       let categoryItems: Product[] = [];
       
       if (matchingCategory) {
-        // Filtra produtos que correspondem à categoria mapeada
-        categoryItems = allProducts.filter(product => 
-          // Excluir produto 204 explicitamente
-          Number(product.id) !== 204 && 
-          // Incluir apenas produtos de portfólio ou com categorias de bordado
-          ((product.type === 'portfolio') || 
-           (product.category.toLowerCase().includes('bordado') || 
-           product.category.toLowerCase().includes('bonés'))) && 
+        // Filter products that match the mapped category
+        categoryItems = uniqueItems.filter(product => 
           (product.category === matchingCategory || 
            product.category.toLowerCase().includes(matchingCategory.toLowerCase()))
         );
       }
 
-      // Se não encontrar itens de portfólio, buscar como produtos normais relacionados a bordado
+      // If no specific items found, try broader matching
       if (categoryItems.length === 0) {
-        categoryItems = allProducts.filter(product => 
-          Number(product.id) !== 204 &&
-          (product.category.toLowerCase().includes('bordado') || 
-           product.category.toLowerCase().includes('bonés')) &&
-          (product.category === categoryTitles[categoryPath] || 
-           product.category.toLowerCase().includes(categoryTitles[categoryPath]?.toLowerCase() || ''))
-        );
+        categoryItems = uniqueItems.filter(product => {
+          const productCategory = product.category.toLowerCase();
+          const searchTitle = categoryTitles[categoryPath]?.toLowerCase() || '';
+          const searchPath = categoryPath.toLowerCase();
+          
+          return (
+            productCategory.includes('bordado') && 
+            (productCategory.includes(searchPath) || 
+             (searchTitle && productCategory.includes(searchTitle)))
+          );
+        });
       }
 
       setPortfolioItems(categoryItems);
