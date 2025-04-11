@@ -701,4 +701,20 @@ export const jalecosProducts: Product[] = [
     category: "Jalecos",
     imageUrl: "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png",
     description: "Jaleco com opções de cores e bordado personalizado, ideal para pediatria, odontopediatria e profissionais que desejam um ambiente mais leve e acolhedor.",
-    price: "Sob consulta
+    price: "Sob consulta",
+    colors: ["Branco", "Verde", "Azul", "Rosa"],
+    sizes: ["P", "M", "G", "GG"],
+    rating: 4.7,
+    isNew: true,
+    features: [
+      "Cores variadas para ambiente acolhedor",
+      "Bordados temáticos infantis",
+      "Material confortável e leve",
+      "Design divertido e profissional"
+    ],
+    images: [
+      "/lovable-uploads/34f2f2c0-1ba3-4d9f-8dda-091058742d3e.png"
+    ],
+    keywords: ["jaleco", "colorido", "pediatria", "odontopediatria", "crianças"]
+  }
+];
