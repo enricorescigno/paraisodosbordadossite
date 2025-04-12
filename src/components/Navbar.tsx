@@ -1,19 +1,17 @@
-
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ShoppingBag, Search, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SearchBox from './SearchBox';
-import { useMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const Navbar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const { isMobile } = useMobile();
+  const { isMobile } = useIsMobile();
 
-  // Controla o estado da navbar ao rolar a página
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -27,7 +25,6 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Fecha o menu ao mudar de página
   useEffect(() => {
     setIsOpen(false);
     setIsSearchOpen(false);
@@ -47,12 +44,10 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        {/* Logo/Brand */}
         <Link to="/" className="text-xl font-bold text-brand-red flex items-center">
           Paraíso dos Bordados
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8">
           <Link
             to="/"
@@ -89,7 +84,6 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Navigation Actions */}
         <div className="flex items-center space-x-3">
           <button
             onClick={() => setIsSearchOpen(!isSearchOpen)}
@@ -106,21 +100,18 @@ const Navbar = () => {
             </Link>
           </Button>
           
-          {/* Mobile Menu Button */}
           <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </Button>
         </div>
       </div>
 
-      {/* Search Box */}
       {isSearchOpen && (
         <div className="container mx-auto px-4 py-3">
           <SearchBox onClose={() => setIsSearchOpen(false)} />
         </div>
       )}
 
-      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-white border-t shadow-lg animate-fade-in">
           <div className="container mx-auto px-4 py-4 flex flex-col space-y-3">
