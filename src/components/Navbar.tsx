@@ -1,144 +1,166 @@
 
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, ShoppingCart, Menu, X } from 'lucide-react';
-import MenubarNav from './MenubarNav';
+import { Link, useLocation } from 'react-router-dom';
+import { Menu, X, ShoppingBag, Search, Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import SearchBox from './SearchBox';
-import { useIsMobile } from '../hooks/use-mobile';
-import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '@/lib/utils';
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { useMobile } from '@/hooks/use-mobile';
 
 const Navbar = () => {
+  const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const isMobile = useIsMobile();
+  const { isMobile } = useMobile();
 
+  // Controla o estado da navbar ao rolar a página
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return (
-    <header className={cn("z-50 sticky top-0 left-0 right-0 w-full transition-all duration-300", 
-      isScrolled ? "backdrop-blur-xl bg-white/90 shadow-sm" : "backdrop-blur-none bg-white")}>
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <nav className="h-16 flex items-center justify-between">
-          <div className="flex items-center space-x-6">
-            <Link to="/" className="flex items-center">
-              <img 
-                src="/lovable-uploads/1b6b8029-a368-4270-a444-57d4aab3676e.png" 
-                alt="Paraíso dos Bordados" 
-                className="h-14 w-auto" 
-              />
-            </Link>
-            
-            {!isMobile && <MenubarNav />}
-          </div>
+  // Fecha o menu ao mudar de página
+  useEffect(() => {
+    setIsOpen(false);
+    setIsSearchOpen(false);
+  }, [location.pathname]);
 
-          <div className="flex items-center gap-4">
-            {!isMobile && (
-              <button 
-                onClick={() => setIsSearchOpen(!isSearchOpen)} 
-                className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300" 
-                aria-label="Buscar"
-              >
-                <Search className="h-5 w-5 text-brand-dark" />
-              </button>
-            )}
-            
-            {isMobile && (
-              <Sheet>
-                <SheetTrigger asChild>
-                  <button 
-                    className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-100" 
-                    aria-label="Menu"
-                  >
-                    <Menu className="h-5 w-5 text-brand-dark" />
-                  </button>
-                </SheetTrigger>
-                <SheetContent side="right" className="w-full h-full sm:w-[350px] p-4">
-                  <div className="flex justify-end">
-                    <SheetClose className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-100">
-                      <X className="h-5 w-5 text-brand-dark" />
-                    </SheetClose>
-                  </div>
-                  <div className="flex flex-col gap-6 mt-2">
-                    <div className="mb-4">
-                      <SearchBox onClose={() => {}} showCloseButton={false} />
-                    </div>
-                    <div className="space-y-5">
-                      <Link 
-                        to="/categoria/cama-mesa-banho" 
-                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
-                      >
-                        Cama, Mesa e Banho
-                      </Link>
-                      <Link 
-                        to="/categoria/infantil" 
-                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
-                      >
-                        Infantil
-                      </Link>
-                      <Link 
-                        to="/categoria/vestuario" 
-                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
-                      >
-                        Vestuário
-                      </Link>
-                      <Link 
-                        to="/produtos" 
-                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
-                      >
-                        Todos os Produtos
-                      </Link>
-                      <Link 
-                        to="/portfolio" 
-                        className="block py-3 px-4 hover:bg-brand-red hover:text-white rounded-md font-medium"
-                      >
-                        Portfólio
-                      </Link>
-                      <Link 
-                        to="/sobre" 
-                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
-                      >
-                        Sobre Nós
-                      </Link>
-                      <Link 
-                        to="/nossos-parceiros" 
-                        className="block py-3 px-4 hover:bg-gray-100 rounded-md font-medium"
-                      >
-                        Parceiros
-                      </Link>
-                    </div>
-                  </div>
-                </SheetContent>
-              </Sheet>
-            )}
-          </div>
-        </nav>
-        
-        {!isMobile && (
-          <AnimatePresence>
-            {isSearchOpen && (
-              <motion.div 
-                initial={{ opacity: 0, y: -10 }} 
-                animate={{ opacity: 1, y: 0 }} 
-                exit={{ opacity: 0, y: -10 }} 
-                transition={{ duration: 0.2 }} 
-                className="py-3"
-              >
-                <SearchBox onClose={() => setIsSearchOpen(false)} />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        )}
+  const isActive = (path: string) => {
+    if (path === '/') {
+      return location.pathname === path;
+    }
+    return location.pathname.startsWith(path);
+  };
+
+  return (
+    <nav
+      className={`fixed w-full top-0 z-50 transition-all duration-300 ${
+        isScrolled ? 'apple-navbar shadow-md py-3' : 'bg-white/90 py-4'
+      }`}
+    >
+      <div className="container mx-auto px-4 flex justify-between items-center">
+        {/* Logo/Brand */}
+        <Link to="/" className="text-xl font-bold text-brand-red flex items-center">
+          Paraíso dos Bordados
+        </Link>
+
+        {/* Desktop Navigation */}
+        <div className="hidden md:flex items-center space-x-8">
+          <Link
+            to="/"
+            className={`nav-link ${isActive('/') ? 'text-brand-red after:w-full' : ''}`}
+          >
+            Início
+          </Link>
+          <Link
+            to="/produtos"
+            className={`nav-link ${isActive('/produtos') || isActive('/categoria') ? 'text-brand-red after:w-full' : ''}`}
+          >
+            Produtos
+          </Link>
+          <Link
+            to="/portfolio"
+            className={`nav-link ${isActive('/portfolio') ? 'text-brand-red after:w-full' : ''}`}
+          >
+            Portfólio
+          </Link>
+          <Link
+            to="/dia-das-maes"
+            className={`nav-link ${isActive('/dia-das-maes') ? 'text-brand-red after:w-full' : ''}`}
+          >
+            <span className="flex items-center">
+              Dia das Mães
+              <Heart className="ml-1 w-4 h-4 text-brand-red" />
+            </span>
+          </Link>
+          <Link
+            to="/sobre"
+            className={`nav-link ${isActive('/sobre') ? 'text-brand-red after:w-full' : ''}`}
+          >
+            Sobre
+          </Link>
+        </div>
+
+        {/* Navigation Actions */}
+        <div className="flex items-center space-x-3">
+          <button
+            onClick={() => setIsSearchOpen(!isSearchOpen)}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            aria-label="Pesquisar"
+          >
+            <Search size={20} />
+          </button>
+          
+          <Button variant="ghost" size="icon" asChild>
+            <Link to="/carrinho">
+              <ShoppingBag size={20} />
+              <span className="sr-only">Carrinho</span>
+            </Link>
+          </Button>
+          
+          {/* Mobile Menu Button */}
+          <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </Button>
+        </div>
       </div>
-    </header>
+
+      {/* Search Box */}
+      {isSearchOpen && (
+        <div className="container mx-auto px-4 py-3">
+          <SearchBox onClose={() => setIsSearchOpen(false)} />
+        </div>
+      )}
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="md:hidden bg-white border-t shadow-lg animate-fade-in">
+          <div className="container mx-auto px-4 py-4 flex flex-col space-y-3">
+            <Link
+              to="/"
+              className={`p-3 rounded-md ${isActive('/') ? 'bg-brand-red/10 text-brand-red font-medium' : ''}`}
+            >
+              Início
+            </Link>
+            <Link
+              to="/produtos"
+              className={`p-3 rounded-md ${isActive('/produtos') || isActive('/categoria') ? 'bg-brand-red/10 text-brand-red font-medium' : ''}`}
+            >
+              Produtos
+            </Link>
+            <Link
+              to="/portfolio"
+              className={`p-3 rounded-md ${isActive('/portfolio') ? 'bg-brand-red/10 text-brand-red font-medium' : ''}`}
+            >
+              Portfólio
+            </Link>
+            <Link
+              to="/dia-das-maes"
+              className={`p-3 rounded-md ${isActive('/dia-das-maes') ? 'bg-brand-red/10 text-brand-red font-medium' : ''}`}
+            >
+              <span className="flex items-center">
+                Dia das Mães
+                <Heart className="ml-1 w-4 h-4 text-brand-red" />
+              </span>
+            </Link>
+            <Link
+              to="/sobre"
+              className={`p-3 rounded-md ${isActive('/sobre') ? 'bg-brand-red/10 text-brand-red font-medium' : ''}`}
+            >
+              Sobre
+            </Link>
+          </div>
+        </div>
+      )}
+    </nav>
   );
 };
 
