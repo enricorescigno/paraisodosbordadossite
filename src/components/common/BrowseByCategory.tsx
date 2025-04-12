@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette, BedDouble, Utensils, Curtains } from 'lucide-react';
+import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette, BedDouble, Utensils, Home } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
@@ -102,7 +102,7 @@ const allCategories: Category[] = [
   { id: 'cama', name: 'Cama', icon: <BedDouble className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/cama', type: 'product' },
   { id: 'banho', name: 'Banho', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/banho', type: 'product' },
   { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <Utensils className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/mesa-cozinha', type: 'product' },
-  { id: 'tapete-cortinas', name: 'Tapete e Cortinas', icon: <Curtains className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/tapete-cortinas', type: 'product' },
+  { id: 'tapete-cortinas', name: 'Tapete e Cortinas', icon: <Home className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/tapete-cortinas', type: 'product' },
   
   // Portfolio categories
   { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio', type: 'portfolio' },
