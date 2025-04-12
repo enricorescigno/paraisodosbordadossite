@@ -46,5 +46,6 @@ export const allProducts: Product[] = [
   ...banhoProducts,
   ...camaProducts,
   ...mesaCozinhaProducts,
-  ...tapeteCortinasProducts
+  ...tapeteCortinasProducts,
+  ...infantilProducts // Add infantil products to the main collection
 ];
