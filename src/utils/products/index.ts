@@ -5,8 +5,8 @@ import { bordadosProducts } from './bordadosProducts';
 import { bordadosInfantisProducts } from './bordadosInfantisProducts';
 import { vestuarioProducts } from './vestuarioProducts';
 import { banhoProducts } from './banhoProducts';
+import { camaProducts } from './camaProducts';
 import { 
-  camaProducts,
   mesaCozinhaProducts,
   tapeteCortinasProducts,
   infantilProducts,
@@ -43,5 +43,6 @@ export const allProducts: Product[] = [
   ...bordadosProducts,
   ...bordadosInfantisProducts,
   ...vestuarioProducts,
-  ...banhoProducts
+  ...banhoProducts,
+  ...camaProducts
 ];

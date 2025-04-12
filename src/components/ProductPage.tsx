@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -16,13 +15,15 @@ import BrowseByCategory from './common/BrowseByCategory';
 // Category name translations for titles
 const categoryTitles: Record<string, string> = {
   'banho': 'Banho',
-  'pantufa': 'Pantufa'
+  'pantufa': 'Pantufa',
+  'cama': 'Cama'
 };
 
 // Mapping from URL paths to product categories
 const CATEGORY_MAPPINGS: Record<string, string> = {
   'banho': 'Banho',
   'pantufa': 'Pantufa',
+  'cama': 'Cama'
 };
 
 const ProductPage = () => {
@@ -116,4 +117,3 @@ const ProductPage = () => {
 };
 
 export default ProductPage;
-

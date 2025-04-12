@@ -1,22 +1,97 @@
 
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette } from 'lucide-react';
+import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette, BedDouble } from 'lucide-react';
 import { motion } from 'framer-motion';
-import CategoryIcon from './CategoryIcon';
+import { cn } from '@/lib/utils';
 
-interface Category {
-  id: string;
+interface CategoryIconProps {
   name: string;
   icon: React.ReactNode;
-  path: string;
-  type: 'product' | 'portfolio';
+  isActive?: boolean;
+  onClick?: () => void;
 }
 
-// Combined list of all categories - Removed Cama, Mesa e Cozinha, and Banho
+const CategoryIcon = ({
+  name,
+  icon,
+  isActive = false,
+  onClick
+}: CategoryIconProps) => {
+  // Function to format category names with line breaks
+  const formatCategoryName = (name: string) => {
+    // Words that should trigger a line break after them
+    const breakAfterWords = ['em', 'e', 'de', 'Mesa', 'para'];
+    const words = name.split(' ');
+
+    // If there's only one word or less than 3 characters, just return it
+    if (words.length <= 1 || name.length < 3) {
+      return name;
+    }
+
+    // Check if any of the words should trigger a line break
+    for (let i = 0; i < words.length - 1; i++) {
+      const lowerCaseWord = words[i].toLowerCase();
+      if (breakAfterWords.includes(lowerCaseWord) || breakAfterWords.includes(words[i])) {
+        // Return the first part + line break + second part
+        return <>
+            {words.slice(0, i + 1).join(' ')}
+            <br />
+            {words.slice(i + 1).join(' ')}
+          </>;
+      }
+    }
+
+    // If no trigger words found but we have multiple words,
+    // default to breaking after the middle word
+    const middleIndex = Math.floor(words.length / 2);
+    return <>
+        {words.slice(0, middleIndex).join(' ')}
+        <br />
+        {words.slice(middleIndex).join(' ')}
+      </>;
+  };
+
+  return (
+    <div 
+      className={cn(
+        "category-icon flex flex-col items-center justify-center p-3 md:p-4 rounded-2xl min-w-[72px] md:min-w-[100px] transition-all duration-300 hover:scale-105 bg-white border md:mx-1",
+        isActive 
+          ? "border-brand-red shadow-md" 
+          : "border-gray-200 hover:border-gray-300 hover:shadow-sm"
+      )}
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          onClick && onClick();
+        }
+      }}
+      aria-pressed={isActive}
+    >
+      <div className={cn(
+        "icon-wrapper rounded-full p-2 md:p-3 mb-2",
+        isActive ? "bg-brand-red/10 text-brand-red" : "bg-gray-100 text-gray-600"
+      )}>
+        {icon}
+      </div>
+      <span className={cn(
+        "text-center text-xs md:text-sm font-medium w-full text-gray-700",
+        isActive && "text-gray-900"
+      )}>
+        {formatCategoryName(name)}
+      </span>
+    </div>
+  );
+};
+
+// Combined list of all categories
 const allCategories: Category[] = [
   // Product categories
   { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/pantufa', type: 'product' },
+  { id: 'cama', name: 'Cama', icon: <BedDouble className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/cama', type: 'product' },
+  { id: 'banho', name: 'Banho', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/banho', type: 'product' },
   
   // Portfolio categories
   { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio', type: 'portfolio' },
