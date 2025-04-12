@@ -9,19 +9,31 @@ import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
 import BrowseByCategory from './common/BrowseByCategory';
+import { Skeleton } from './ui/skeleton';
 
 const AllProductsPage = () => {
   const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [allProductsList, setAllProductsList] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [activeCategory, setActiveCategory] = useState('infantil');  // Changed from 'pantufa' to 'infantil'
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   
-  // Load all products
+  // Load all products with improved loading states for better UX
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {
+    
+    // Show skeleton loader initially
+    let initialTimer: number;
+    if (initialLoading) {
+      initialTimer = window.setTimeout(() => {
+        setInitialLoading(false);
+      }, 300);
+    }
+    
+    // Load products with minimal delay for better UX
+    const timer = setTimeout(() => {
       // Get all products (excluding portfolio items)
       let productItems = products.filter(product => 
         product.type === 'product' && 
@@ -32,7 +44,12 @@ const AllProductsPage = () => {
       setAllProductsList(productItems);
       setLoading(false);
     }, 300);
-  }, []);
+    
+    return () => {
+      clearTimeout(timer);
+      if (initialTimer) clearTimeout(initialTimer);
+    };
+  }, [initialLoading]);
 
   // Filter products based on active category
   useEffect(() => {
@@ -68,38 +85,70 @@ const AllProductsPage = () => {
     setFilteredProducts(result);
   }, [activeCategory, allProductsList]);
   
+  // Skeleton for initial loading
+  const renderLoadingSkeleton = () => (
+    <div className={`py-16 md:py-24 bg-[#f5f5f7] ${isMobile ? 'pt-24' : 'pt-20'}`}>
+      <div className="container-custom">
+        <div className="mx-auto text-center max-w-lg mb-8">
+          <Skeleton className="h-10 w-3/4 mx-auto mb-4" />
+          <Skeleton className="h-5 w-full mx-auto" />
+        </div>
+        
+        <div className="mx-auto max-w-xl mb-10">
+          <Skeleton className="h-16 w-full rounded-xl" />
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-sm overflow-hidden">
+              <Skeleton className="h-48 w-full" />
+              <div className="p-4">
+                <Skeleton className="h-5 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+  
   return (
     <div className="min-h-screen bg-white">
-      <section className={`py-16 md:py-24 bg-[#f5f5f7] ${isMobile ? 'pt-24' : 'pt-20'}`}>
-        <div className="container-custom">
-          <PageHeader 
-            title="Nossos Produtos"
-            description="Explore nossa coleção de produtos feitos com qualidade e atenção aos detalhes."
-          />
-          
-          {/* Using only the category icons menu */}
-          <BrowseByCategory 
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-            showOnlyProducts={true}
-          />
-          
-          {loading ? (
-            <LoadingSpinner />
-          ) : filteredProducts.length > 0 ? (
-            <ProductsCarousel 
-              products={filteredProducts} 
-              whatsappNumber={whatsappNumber} 
+      {initialLoading ? (
+        renderLoadingSkeleton()
+      ) : (
+        <section className={`py-16 md:py-24 bg-[#f5f5f7] ${isMobile ? 'pt-24' : 'pt-20'}`}>
+          <div className="container-custom">
+            <PageHeader 
+              title="Nossos Produtos"
+              description="Explore nossa coleção de produtos feitos com qualidade e atenção aos detalhes."
             />
-          ) : (
-            <EmptyState 
-              message="Nenhum produto encontrado nesta categoria."
-              buttonText="Voltar para página inicial"
-              buttonLink="/"
+            
+            {/* Using only the category icons menu */}
+            <BrowseByCategory 
+              activeCategory={activeCategory}
+              onCategoryChange={setActiveCategory}
+              showOnlyProducts={true}
             />
-          )}
-        </div>
-      </section>
+            
+            {loading ? (
+              <LoadingSpinner />
+            ) : filteredProducts.length > 0 ? (
+              <ProductsCarousel 
+                products={filteredProducts} 
+                whatsappNumber={whatsappNumber} 
+              />
+            ) : (
+              <EmptyState 
+                message="Nenhum produto encontrado nesta categoria."
+                buttonText="Voltar para página inicial"
+                buttonLink="/"
+              />
+            )}
+          </div>
+        </section>
+      )}
       
       <Footer />
       <WhatsAppSupport />

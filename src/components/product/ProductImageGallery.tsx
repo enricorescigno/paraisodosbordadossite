@@ -1,8 +1,10 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getImageLoading } from '../../utils/imageUtils';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -24,12 +26,36 @@ const ProductImageGallery = ({
   const [isZoomed, setIsZoomed] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
+  const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
+
+  // Initialize images loaded state array
+  useEffect(() => {
+    setImagesLoaded(Array(images.length).fill(false));
+    setImageError(false);
+    
+    // Show thumbnails after slight delay for better perceived loading
+    const timer = setTimeout(() => {
+      setThumbnailsVisible(true);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [images.length]);
 
   // Reset active image index when color or images change
   useEffect(() => {
     setActiveImageIndex(0);
     setImageError(false);
   }, [selectedColor, images]);
+
+  // Handle image loading complete
+  const handleImageLoaded = useCallback((index: number) => {
+    setImagesLoaded(prev => {
+      const newState = [...prev];
+      newState[index] = true;
+      return newState;
+    });
+  }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
@@ -58,6 +84,14 @@ const ProductImageGallery = ({
     cursor: 'zoom-in'
   };
 
+  const nextImage = () => {
+    setActiveImageIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevImage = () => {
+    setActiveImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
   return (
     <div className="bg-white rounded-2xl overflow-hidden">
       <AnimatePresence mode="wait">
@@ -78,17 +112,26 @@ const ProductImageGallery = ({
           >
             {images.length > 0 && !imageError ? (
               <AspectRatio ratio={1/1}>
+                {!imagesLoaded[activeImageIndex] && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
+                    <Skeleton className="h-full w-full" />
+                  </div>
+                )}
                 <motion.img 
                   src={images[activeImageIndex]} 
                   alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
-                  className="w-full h-full object-contain mix-blend-multiply p-4 transition-transform duration-200"
+                  className={`w-full h-full object-contain mix-blend-multiply p-4 transition-transform duration-200 ${
+                    !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
+                  }`}
                   style={imageStyle}
-                  loading="lazy"
+                  loading={getImageLoading(activeImageIndex === 0)}
+                  onLoad={() => handleImageLoaded(activeImageIndex)}
                   onError={(e) => {
                     console.log("Image error for:", images[activeImageIndex]);
                     setImageError(true);
                     e.currentTarget.src = placeholder(category);
                   }}
+                  fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                 />
               </AspectRatio>
             ) : (
@@ -110,14 +153,14 @@ const ProductImageGallery = ({
             {images.length > 1 && !imageError && (
               <>
                 <button 
-                  onClick={() => setActiveImageIndex(prev => prev === 0 ? images.length - 1 : prev - 1)}
+                  onClick={prevImage}
                   className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
                   aria-label="Imagem anterior"
                 >
                   <ChevronLeft className="h-5 w-5 text-gray-700" />
                 </button>
                 <button 
-                  onClick={() => setActiveImageIndex(prev => prev === images.length - 1 ? 0 : prev + 1)}
+                  onClick={nextImage}
                   className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
                   aria-label="Próxima imagem"
                 >
@@ -127,9 +170,14 @@ const ProductImageGallery = ({
             )}
           </div>
           
-          {/* Thumbnails */}
-          {images.length > 1 && !imageError && (
-            <div className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar">
+          {/* Thumbnails - only show when ready */}
+          {images.length > 1 && !imageError && thumbnailsVisible && (
+            <motion.div 
+              className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.4 }}
+            >
               {images.map((img, index) => (
                 <motion.button
                   key={`thumb-${index}`}
@@ -141,20 +189,27 @@ const ProductImageGallery = ({
                   }`}
                   aria-label={`Ver imagem ${index + 1}`}
                 >
+                  {/* Thumbnail skeleton */}
+                  {!imagesLoaded[index] && (
+                    <Skeleton className="h-full w-full absolute inset-0" />
+                  )}
                   <img 
                     src={img} 
                     alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
-                    className="h-full w-full object-contain bg-[#FAFAFA] mix-blend-multiply p-1"
+                    className={`h-full w-full object-contain bg-[#FAFAFA] mix-blend-multiply p-1 ${
+                      !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
+                    }`}
                     loading="lazy"
+                    onLoad={() => handleImageLoaded(index)}
                   />
                 </motion.button>
               ))}
-            </div>
+            </motion.div>
           )}
         </motion.div>
       </AnimatePresence>
       
-      {/* Lightbox for zoomed view */}
+      {/* Lightbox for zoomed view - with preloaded images */}
       <AnimatePresence>
         {isLightboxOpen && images.length > 0 && (
           <motion.div
@@ -183,6 +238,32 @@ const ProductImageGallery = ({
               >
                 <span className="text-white text-2xl">&times;</span>
               </button>
+              
+              {/* Navigation buttons in lightbox */}
+              {images.length > 1 && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevImage();
+                    }}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                    aria-label="Imagem anterior"
+                  >
+                    <ChevronLeft className="h-6 w-6 text-white" />
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextImage();
+                    }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                    aria-label="Próxima imagem"
+                  >
+                    <ChevronRight className="h-6 w-6 text-white" />
+                  </button>
+                </>
+              )}
             </motion.div>
           </motion.div>
         )}

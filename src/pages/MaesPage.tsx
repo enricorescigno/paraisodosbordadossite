@@ -1,17 +1,21 @@
-import React, { useRef } from 'react';
+
+import { useRef, useEffect } from 'react';
 import { Heart, Gift, ArrowDown } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AppleButton } from '@/components/ui/apple-button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import ProductsCarousel from '@/components/product/ProductsCarousel';
 import { Product } from '@/types/product';
 import { bonesProducts, bordadosProducts } from '@/utils/productUtils';
+import { getImageLoading } from '@/utils/imageUtils';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 
-// Use the actual available products for Mother's Day
+// Use the actual available products for Mother's Day with preloaded state
 const mothersProducts: Product[] = [
-  ...bonesProducts,
-  ...bordadosProducts.slice(0, 2)
+  ...bonesProducts.slice(0, 3),
+  ...bordadosProducts.slice(0, 3)
 ];
 
 // Animation variants
@@ -37,19 +41,38 @@ const staggerContainer = {
   }
 };
 
-const MaesPage: React.FC = () => {
+const MaesPage = () => {
   const productsRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLDivElement>(null);
+  const isHeroInView = useInView(heroRef, { once: true });
+  useScrollToTop();
   
   const scrollToProducts = () => {
     productsRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Preload critical images
+  useEffect(() => {
+    // Preload hero image
+    const heroImage = new Image();
+    heroImage.src = "https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
+    
+    // Preload first few product images
+    mothersProducts.slice(0, 2).forEach((product) => {
+      const img = new Image();
+      img.src = product.imageUrl;
+    });
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex items-center">
+      {/* Hero Section - Optimized */}
+      <section 
+        ref={heroRef}
+        className="relative min-h-[70vh] md:min-h-[80vh] flex items-center"
+      >
         <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat" 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{ 
             backgroundImage: 'url(https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)',
             backgroundPosition: '75% center' 
@@ -62,18 +85,18 @@ const MaesPage: React.FC = () => {
           <motion.div 
             className="max-w-2xl"
             initial="hidden"
-            animate="visible"
+            animate={isHeroInView ? "visible" : "hidden"}
             variants={staggerContainer}
           >
             <motion.h1 
-              className="text-4xl md:text-5xl lg:text-6xl font-bold text-brand-red mb-4"
+              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-brand-red mb-4"
               variants={fadeInUp}
             >
               Celebre o Dia das Mães com um presente único!
             </motion.h1>
             
             <motion.p 
-              className="text-xl md:text-2xl text-gray-700 mb-8"
+              className="text-lg md:text-xl lg:text-2xl text-gray-700 mb-6 md:mb-8"
               variants={fadeInUp}
             >
               Ofereça um toque de elegância e carinho com nossos produtos exclusivos para essa data especial.
@@ -82,7 +105,7 @@ const MaesPage: React.FC = () => {
             <motion.div variants={fadeInUp}>
               <AppleButton 
                 size="lg" 
-                className="group bg-[#E30613] hover:bg-[#c00510] text-white px-8 py-4"
+                className="group bg-[#E30613] hover:bg-[#c00510] text-white px-6 md:px-8 py-3 md:py-4"
                 onClick={scrollToProducts}
               >
                 <span>Ver Produtos</span>
@@ -96,7 +119,7 @@ const MaesPage: React.FC = () => {
       {/* Products Section */}
       <section 
         ref={productsRef} 
-        className="py-16 bg-gray-50"
+        className="py-12 md:py-16 bg-gray-50"
       >
         <motion.div 
           className="container mx-auto px-4 sm:px-6 md:px-8"
@@ -105,22 +128,22 @@ const MaesPage: React.FC = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <div className="flex items-center justify-between mb-10">
+          <div className="flex items-center justify-between mb-8 md:mb-10">
             <div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-2">Presentes Especiais</h2>
+              <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Presentes Especiais</h2>
               <p className="text-gray-600">Seleção exclusiva para o Dia das Mães</p>
             </div>
             
-            <Heart className="text-[#E30613] h-8 w-8" />
+            <Heart className="text-[#E30613] h-6 w-6 md:h-8 md:w-8" />
           </div>
           
-          {/* Products Carousel */}
+          {/* Products Carousel - optimized with skeleton loading */}
           <ProductsCarousel 
             products={mothersProducts} 
             whatsappNumber="5511999999999"
           />
           
-          {/* Featured Products Grid (for larger screens) */}
+          {/* Featured Products Grid (for larger screens) - with progressive loading */}
           <div className="hidden lg:block mt-16">
             <h3 className="text-2xl font-bold text-gray-800 mb-8">Destaques para Presente</h3>
             
@@ -129,16 +152,19 @@ const MaesPage: React.FC = () => {
               variants={staggerContainer}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, amount: 0.1 }}
             >
-              {mothersProducts.slice(0, 3).map((product) => (
+              {mothersProducts.slice(0, 3).map((product, index) => (
                 <motion.div key={product.id} variants={fadeInUp}>
                   <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <div className="aspect-square overflow-hidden">
+                    <div className="aspect-square overflow-hidden bg-gray-100">
                       <img 
                         src={product.imageUrl} 
                         alt={product.name} 
                         className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                        loading={getImageLoading(index < 2)}
+                        width={400}
+                        height={400}
                       />
                     </div>
                     <CardContent className="p-6">
@@ -177,23 +203,23 @@ const MaesPage: React.FC = () => {
       </section>
 
       {/* Message Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-white">
         <motion.div 
           className="container mx-auto px-4 sm:px-6 md:px-8 max-w-4xl text-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.8 }}
         >
           <div 
-            className="p-8 md:p-12 rounded-2xl"
+            className="p-6 md:p-8 lg:p-12 rounded-2xl"
             style={{ 
               background: "linear-gradient(to right, rgba(227, 6, 19, 0.05), rgba(0, 100, 0, 0.05))" 
             }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">Mensagem Especial</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Mensagem Especial</h2>
             
-            <p className="text-xl md:text-2xl text-gray-700 italic mb-8">
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-700 italic mb-6 md:mb-8">
               "Neste Dia das Mães, ofereça o presente que demonstra o seu carinho. 
               Personalize e surpreenda com o Paraíso dos Bordados."
             </p>

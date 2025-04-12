@@ -12,6 +12,7 @@ import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
 import BrowseByCategory from './common/BrowseByCategory';
+import { Skeleton } from './ui/skeleton';
 
 // Category name translations for titles
 const categoryTitles: Record<string, string> = {
@@ -35,6 +36,7 @@ const ProductPage = () => {
   const location = useLocation();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const whatsappNumber = "+5581995970776";
   useScrollToTop();
@@ -45,8 +47,19 @@ const ProductPage = () => {
   const categoryTitle = categoryTitles[categoryPath] || categoryPath;
   
   useEffect(() => {
+    // Show immediate UI feedback
     setLoading(true);
-    setTimeout(() => {
+    
+    // Simulate faster initial loading with a skeleton
+    let initialTimer: number;
+    if (initialLoading) {
+      initialTimer = window.setTimeout(() => {
+        setInitialLoading(false);
+      }, 300);
+    }
+    
+    // Fetch products with a minimal delay for better UX
+    const loadProducts = () => {
       // Get the corresponding category name from the URL path
       const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
       
@@ -108,8 +121,44 @@ const ProductPage = () => {
       setProducts(finalProducts);
       setFilteredProducts(finalProducts);
       setLoading(false);
-    }, 500);
-  }, [location.pathname, categoryPath]);
+    };
+    
+    // Execute with slight delay to let initial render complete
+    const timer = window.setTimeout(loadProducts, 300);
+    
+    return () => {
+      window.clearTimeout(timer);
+      if (initialTimer) window.clearTimeout(initialTimer);
+    };
+  }, [location.pathname, categoryPath, initialLoading]);
+
+  // Skeleton for initial loading
+  const renderLoadingSkeleton = () => (
+    <div className="py-12 md:py-20 bg-[#f5f5f7]">
+      <div className="container-custom px-4">
+        <div className="mx-auto text-center max-w-lg mb-8">
+          <Skeleton className="h-10 w-3/4 mx-auto mb-4" />
+          <Skeleton className="h-5 w-full mx-auto" />
+        </div>
+        
+        <div className="mx-auto max-w-xl mb-10">
+          <Skeleton className="h-16 w-full rounded-xl" />
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div key={index} className="bg-white rounded-xl shadow-sm overflow-hidden">
+              <Skeleton className="h-48 w-full" />
+              <div className="p-4">
+                <Skeleton className="h-5 w-3/4 mb-2" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <motion.div 
@@ -118,35 +167,39 @@ const ProductPage = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <section className="py-12 md:py-20 bg-[#f5f5f7]">
-        <div className="container-custom px-4">
-          <PageHeader 
-            title={categoryTitle}
-            description={`Explore nossa coleção de ${categoryTitle.toLowerCase()} feitos com qualidade e atenção aos detalhes.`}
-          />
-          
-          {/* Show only the product categories */}
-          <BrowseByCategory 
-            activeCategory={categoryPath}
-            showOnlyProducts={true}
-          />
-          
-          {loading ? (
-            <LoadingSpinner />
-          ) : filteredProducts.length > 0 ? (
-            <ProductsCarousel 
-              products={filteredProducts}
-              whatsappNumber={whatsappNumber}
+      {initialLoading ? (
+        renderLoadingSkeleton()
+      ) : (
+        <section className="py-12 md:py-20 bg-[#f5f5f7]">
+          <div className="container-custom px-4">
+            <PageHeader 
+              title={categoryTitle}
+              description={`Explore nossa coleção de ${categoryTitle.toLowerCase()} feitos com qualidade e atenção aos detalhes.`}
             />
-          ) : (
-            <EmptyState 
-              message="Nenhum produto encontrado nesta categoria."
-              buttonText="Ver todos os produtos"
-              buttonLink="/produtos"
+            
+            {/* Show only the product categories */}
+            <BrowseByCategory 
+              activeCategory={categoryPath}
+              showOnlyProducts={true}
             />
-          )}
-        </div>
-      </section>
+            
+            {loading ? (
+              <LoadingSpinner />
+            ) : filteredProducts.length > 0 ? (
+              <ProductsCarousel 
+                products={filteredProducts}
+                whatsappNumber={whatsappNumber}
+              />
+            ) : (
+              <EmptyState 
+                message="Nenhum produto encontrado nesta categoria."
+                buttonText="Ver todos os produtos"
+                buttonLink="/produtos"
+              />
+            )}
+          </div>
+        </section>
+      )}
       
       <Footer />
       <WhatsAppSupport />

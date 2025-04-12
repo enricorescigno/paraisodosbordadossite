@@ -38,9 +38,15 @@
     <meta name="apple-mobile-web-app-title" content="Paraíso dos Bordados">
     <meta name="format-detection" content="telephone=no">
     
+    <!-- Performance optimizations -->
+    <meta http-equiv="Cache-Control" content="max-age=1800">
+    
     <!-- Preconnect to domains -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Prioritize critical CSS -->
+    <link rel="preload" href="/src/index.css" as="style">
     
     <!-- Performance optimization: preload critical assets -->
     <link rel="preload" as="image" href="/lovable-uploads/1b6b8029-a368-4270-a444-57d4aab3676e.png" fetchpriority="high" />
@@ -52,5 +58,27 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Deferred non-critical scripts -->
+    <script type="module" defer>
+      // Register service worker for caching
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js').catch(err => {
+            console.log('Service worker registration failed:', err);
+          });
+        });
+      }
+      
+      // Add analytics script deferred
+      const addAnalytics = () => {
+        if (window.location.hostname !== 'localhost') {
+          // Add analytics code here when ready
+        }
+      };
+      
+      // Defer analytics loading
+      setTimeout(addAnalytics, 3000);
+    </script>
   </body>
 </html>
