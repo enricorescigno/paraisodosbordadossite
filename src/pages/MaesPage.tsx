@@ -1,4 +1,3 @@
-
 import React, { useRef } from 'react';
 import { Heart, Gift, ArrowDown } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -7,48 +6,11 @@ import { AppleButton } from '@/components/ui/apple-button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import ProductsCarousel from '@/components/product/ProductsCarousel';
 import { Product } from '@/types/product';
+import { bonesProducts, bordadosProducts } from '@/utils/productUtils';
 
-// Mock products for Mother's Day
+// Use a subset of the products we're keeping for Mother's Day
 const mothersProducts: Product[] = [
-  {
-    id: 'm1',
-    name: 'Kit Toalhas Bordadas Mãe',
-    description: 'Conjunto de toalhas de banho e rosto personalizadas com bordado exclusivo para o Dia das Mães.',
-    imageUrl: 'https://images.unsplash.com/photo-1584992236310-6edddc08acff?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    isNew: true,
-    colors: ['#ffffff', '#f8c9d4', '#d4e2f8'],
-    type: 'product',
-    category: 'Banho'
-  },
-  {
-    id: 'm2',
-    name: 'Roupão Personalizado',
-    description: 'Roupão macio e confortável com nome bordado, para momentos de relaxamento.',
-    imageUrl: 'https://images.unsplash.com/photo-1550350881-6ea8af141d44?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    isNew: true,
-    colors: ['#ffffff', '#f5f5dc', '#d4f8e2'],
-    type: 'product',
-    category: 'Banho'
-  },
-  {
-    id: 'm3',
-    name: 'Almofada Bordada',
-    description: 'Almofada especial com mensagem personalizada para demonstrar seu carinho.',
-    imageUrl: 'https://images.unsplash.com/photo-1589196726441-85a7dbd6fb32?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    colors: ['#e3e4e5', '#f8d4d4', '#e2f8d4'],
-    type: 'product',
-    category: 'Cama'
-  },
-  {
-    id: 'm4',
-    name: 'Kit Aventais Mãe e Filha',
-    description: 'Avental duplo para momentos especiais na cozinha com sua mãe.',
-    imageUrl: 'https://images.unsplash.com/photo-1582020738577-1e067bcd6d79?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&q=80',
-    isNew: true,
-    colors: ['#f2f2f2', '#f8e5d4', '#f8f5d4'],
-    type: 'product',
-    category: 'Mesa e Cozinha'
-  }
+  ...bordadosProducts.slice(0, 4)
 ];
 
 // Animation variants
