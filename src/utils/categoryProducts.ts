@@ -1,3 +1,4 @@
+
 import { Product } from '../types/product';
 
 // Empty collections for product categories that we're removing
@@ -11,11 +12,14 @@ export const vestuarioProducts: Product[] = [];
 // Import remaining products that we're keeping
 import { 
   bonesProducts,
-  bordadosProducts
+  bordadosProducts,
+  bordadosInfantisProducts
 } from './productUtils';
 
 // Create the combined collection of all products - only with the ones we're keeping
 export const allCategoryProducts: Product[] = [
   ...bonesProducts,
-  ...bordadosProducts
+  ...bordadosProducts,
+  ...bordadosInfantisProducts
 ];
+

@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { allProducts, bordadosProducts } from '../utils/productUtils';
+import { allProducts, bordadosProducts, bordadosInfantisProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -19,7 +19,7 @@ const PORTFOLIO_CATEGORIES: Record<string, string> = {
   'bordado-necessaire': 'Bordado em Necessaire',
   'bordado-bolsa': 'Bordado em Bolsa',
   'bordado-jaleco': 'Jalecos',
-  'bordado-infantis': 'Roupões Infantis',
+  'bordado-infantis': 'Bordados Infantis',
   'bordado-toalha-banho': 'Toalhas Infantis',
   'vestuario': 'Bordados em Vestuário'
 };
@@ -59,7 +59,8 @@ const PortfolioPage = () => {
            product.category.toLowerCase().includes('bordado') || 
            product.category.toLowerCase().includes('bonés'))
         ),
-        ...bordadosProducts
+        ...bordadosProducts,
+        ...bordadosInfantisProducts
       ];
       
       // Make sure we have unique items
@@ -92,6 +93,11 @@ const PortfolioPage = () => {
              (searchTitle && productCategory.includes(searchTitle)))
           );
         });
+      }
+
+      // Special handling for "bordado-infantis" category
+      if (categoryPath === 'bordado-infantis') {
+        categoryItems = bordadosInfantisProducts;
       }
 
       setPortfolioItems(categoryItems);

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { useIsMobile } from '../hooks/use-mobile';
-import { allProducts, bordadosProducts } from '../utils/productUtils';
+import { allProducts, bordadosProducts, bordadosInfantisProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -59,7 +59,9 @@ const AllPortfolioPage = () => {
           )
         ),
         // Add our new bordados products explicitly 
-        ...bordadosProducts
+        ...bordadosProducts,
+        // Add our new bordados infantis products explicitly
+        ...bordadosInfantisProducts
       ];
       
       // Create a unique set of products by id
