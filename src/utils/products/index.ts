@@ -7,8 +7,8 @@ import { vestuarioProducts } from './vestuarioProducts';
 import { banhoProducts } from './banhoProducts';
 import { camaProducts } from './camaProducts';
 import { mesaCozinhaProducts } from './mesaCozinhaProducts';
+import { tapeteCortinasProducts } from './tapeteCortinasProducts';
 import { 
-  tapeteCortinasProducts,
   infantilProducts,
   pantufaProducts,
   camisetasProducts,
@@ -45,5 +45,6 @@ export const allProducts: Product[] = [
   ...vestuarioProducts,
   ...banhoProducts,
   ...camaProducts,
-  ...mesaCozinhaProducts
+  ...mesaCozinhaProducts,
+  ...tapeteCortinasProducts
 ];

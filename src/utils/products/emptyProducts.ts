@@ -2,7 +2,6 @@
 import { Product } from '../../types/product';
 
 // Empty collections for product categories that we're removing or not currently using
-export const tapeteCortinasProducts: Product[] = [];
 export const infantilProducts: Product[] = [];
 export const pantufaProducts: Product[] = [];
 export const camisetasProducts: Product[] = [];
