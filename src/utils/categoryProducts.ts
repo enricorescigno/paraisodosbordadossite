@@ -1,7 +1,10 @@
+
 import { Product } from '../types/product';
 
+// Import infantilProducts from emptyProducts
+import { infantilProducts } from './products/emptyProducts';
+
 // Empty collections for product categories that we're removing
-export const infantilProducts: Product[] = [];
 export const vestuarioProducts: Product[] = [];
 
 // Import remaining products that we're keeping from the new modular files
@@ -16,7 +19,7 @@ import {
   tapeteCortinasProducts
 } from './products';
 
-// Create the combined collection of all products - only with the ones we're keeping
+// Create the combined collection of all products - include the infantil products
 export const allCategoryProducts: Product[] = [
   ...bonesProducts,
   ...bordadosProducts,
@@ -25,5 +28,6 @@ export const allCategoryProducts: Product[] = [
   ...banhoProducts,
   ...camaProducts,
   ...mesaCozinhaProducts,
-  ...tapeteCortinasProducts
+  ...tapeteCortinasProducts,
+  ...infantilProducts
 ];
