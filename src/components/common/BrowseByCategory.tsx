@@ -1,9 +1,18 @@
 
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette, BedDouble } from 'lucide-react';
+import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette, BedDouble, Utensils } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+
+// Define the Category type
+interface Category {
+  id: string;
+  name: string;
+  icon: React.ReactNode;
+  path: string;
+  type: 'product' | 'portfolio';
+}
 
 interface CategoryIconProps {
   name: string;
@@ -92,6 +101,7 @@ const allCategories: Category[] = [
   { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/pantufa', type: 'product' },
   { id: 'cama', name: 'Cama', icon: <BedDouble className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/cama', type: 'product' },
   { id: 'banho', name: 'Banho', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/banho', type: 'product' },
+  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <Utensils className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/mesa-cozinha', type: 'product' },
   
   // Portfolio categories
   { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio', type: 'portfolio' },

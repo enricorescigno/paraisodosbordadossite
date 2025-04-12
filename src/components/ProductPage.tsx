@@ -16,14 +16,16 @@ import BrowseByCategory from './common/BrowseByCategory';
 const categoryTitles: Record<string, string> = {
   'banho': 'Banho',
   'pantufa': 'Pantufa',
-  'cama': 'Cama'
+  'cama': 'Cama',
+  'mesa-cozinha': 'Mesa e Cozinha'
 };
 
 // Mapping from URL paths to product categories
 const CATEGORY_MAPPINGS: Record<string, string> = {
   'banho': 'Banho',
   'pantufa': 'Pantufa',
-  'cama': 'Cama'
+  'cama': 'Cama',
+  'mesa-cozinha': 'Mesa e Cozinha'
 };
 
 const ProductPage = () => {
