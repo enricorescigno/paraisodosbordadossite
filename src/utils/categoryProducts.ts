@@ -10,13 +10,7 @@ export const vestuarioProducts: Product[] = [];
 
 // Import remaining products that we're keeping
 import { 
-  pantufaProducts, 
-  bonesProducts, 
-  camisetasProducts, 
-  camisasPoloProducts, 
-  jalecosProducts, 
-  roupoesProducts, 
-  toalhasProducts,
+  bonesProducts,
   bordadosProducts
 } from './productUtils';
 

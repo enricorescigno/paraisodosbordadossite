@@ -7,42 +7,12 @@ import { motion } from 'framer-motion';
 import BrowseByCategory from './common/BrowseByCategory';
 import ProductsCarousel from './product/ProductsCarousel';
 import { Product } from '@/types/product';
+import { bonesProducts, bordadosProducts } from '@/utils/productUtils';
 
-// Estrutura de produtos para showcase que representa o portfólio
+// Updated portfolio products showcase using actual products from our collection
 const portfolioProducts: Product[] = [
-  {
-    id: 301,
-    name: "Boné Personalizado Empresarial",
-    description: "Bonés personalizados com bordado de alta qualidade para sua empresa",
-    imageUrl: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop",
-    category: "Bordado em Boné",
-    rating: 4.8,
-    type: 'portfolio'
-  }, {
-    id: 310,
-    name: "Necessaire Floral Bordada",
-    description: "Necessaire com bordado floral personalizado",
-    imageUrl: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png",
-    category: "Bordado em Necessaire",
-    rating: 4.9,
-    type: 'portfolio'
-  }, {
-    id: 320,
-    name: "Bolsa Tote com Bordado",
-    description: "Bolsa tote com bordado personalizado para o dia a dia",
-    imageUrl: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
-    category: "Bordado em Bolsa",
-    rating: 4.7,
-    type: 'portfolio'
-  }, {
-    id: 330,
-    name: "Jaleco Médico Personalizado",
-    description: "Jaleco médico com bordado personalizado para profissionais da saúde",
-    imageUrl: "https://images.unsplash.com/photo-1524901548305-08eeddc35080?q=80&w=500&auto=format&fit=crop",
-    category: "Bordado em Jaleco",
-    rating: 5.0,
-    type: 'portfolio'
-  }
+  ...bonesProducts,
+  ...bordadosProducts.slice(0, 2)  // Only take 2 items from bordados to avoid overwhelming the showcase
 ];
 
 const ProductShowcase = () => {

@@ -8,9 +8,10 @@ import ProductsCarousel from '@/components/product/ProductsCarousel';
 import { Product } from '@/types/product';
 import { bonesProducts, bordadosProducts } from '@/utils/productUtils';
 
-// Use a subset of the products we're keeping for Mother's Day
+// Use the actual available products for Mother's Day
 const mothersProducts: Product[] = [
-  ...bordadosProducts.slice(0, 4)
+  ...bonesProducts,
+  ...bordadosProducts.slice(0, 2)
 ];
 
 // Animation variants
