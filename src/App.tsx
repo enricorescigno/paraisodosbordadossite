@@ -23,7 +23,6 @@ import PedidosCompraProdutosPage from "./pages/PedidosCompraProdutosPage";
 import PedidosCompraDistribuicaoPage from "./pages/PedidosCompraDistribuicaoPage";
 import PedidosCompraStatusPage from "./pages/PedidosCompraStatusPage";
 import PrazosPagamentoPage from "./pages/PrazosPagamentoPage";
-import DiadasMaes from "./pages/DiadasMaes";
 
 import "./styles/typography.css";
 
@@ -69,9 +68,6 @@ function App() {
 
               {/* Product Detail Page */}
               <Route path="/produto/:productId" element={<ProductDetailPage />} />
-
-              {/* Special Pages */}
-              <Route path="/dia-das-maes" element={<DiadasMaes />} />
 
               {/* Institutional Pages */}
               <Route path="/sobre" element={<AboutUs />} />
