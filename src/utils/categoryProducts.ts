@@ -1,4 +1,3 @@
-
 import { Product } from '../types/product';
 
 // Empty collections for product categories that we're removing
@@ -22,4 +21,3 @@ export const allCategoryProducts: Product[] = [
   ...bordadosProducts,
   ...bordadosInfantisProducts
 ];
-
