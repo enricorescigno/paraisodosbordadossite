@@ -1,6 +1,7 @@
+
 // This file provides search functionality across products
 import { Product } from '../types/product';
-import { pantufaProducts, vestuarioProducts } from './productUtils';
+import { pantufaProducts, vestuarioProducts } from './products';
 
 // Sample product database - In a real app, you would fetch this from an API
 const sampleProducts: Product[] = [

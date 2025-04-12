@@ -8,13 +8,13 @@ export const banhoProducts: Product[] = [];
 export const infantilProducts: Product[] = [];
 export const vestuarioProducts: Product[] = [];
 
-// Import remaining products that we're keeping
+// Import remaining products that we're keeping from the new modular files
 import { 
   bonesProducts,
   bordadosProducts,
   bordadosInfantisProducts,
   vestuarioProducts as vestuarioProductsImport
-} from './productUtils';
+} from './products';
 
 // Create the combined collection of all products - only with the ones we're keeping
 export const allCategoryProducts: Product[] = [
