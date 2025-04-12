@@ -19,7 +19,8 @@ const categoryTitles: Record<string, string> = {
   'pantufa': 'Pantufa',
   'cama': 'Cama',
   'mesa-cozinha': 'Mesa e Cozinha',
-  'tapete-cortinas': 'Tapete e Cortinas'
+  'tapete-cortinas': 'Tapete e Cortinas',
+  'infantil': 'Infantil'
 };
 
 // Mapping from URL paths to product categories
@@ -28,7 +29,8 @@ const CATEGORY_MAPPINGS: Record<string, string> = {
   'pantufa': 'Pantufa',
   'cama': 'Cama',
   'mesa-cozinha': 'Mesa e Cozinha',
-  'tapete-cortinas': 'Tapete e Cortinas'
+  'tapete-cortinas': 'Tapete e Cortinas',
+  'infantil': 'Infantil'
 };
 
 const ProductPage = () => {
@@ -68,6 +70,13 @@ const ProductPage = () => {
           !product.category.toLowerCase().includes('bonés') &&
           (product.category.toLowerCase().includes('tapete') || 
            product.category.toLowerCase().includes('cortina'))
+        );
+      } else if (categoryPath === 'infantil') {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          product.category.toLowerCase().includes('infantil')
         );
       } else {
         // Standard category filtering

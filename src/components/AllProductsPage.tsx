@@ -50,6 +50,8 @@ const AllProductsPage = () => {
         return productCategory.includes('mesa') || productCategory.includes('cozinha');
       } else if (searchCategory === 'tapete-cortinas') {
         return productCategory.includes('tapete') || productCategory.includes('cortina');
+      } else if (searchCategory === 'infantil') {
+        return productCategory.includes('infantil');
       }
       
       return productCategory.includes(searchCategory) || 

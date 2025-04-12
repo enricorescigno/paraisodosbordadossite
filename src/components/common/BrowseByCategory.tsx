@@ -103,6 +103,7 @@ const allCategories: Category[] = [
   { id: 'banho', name: 'Banho', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/banho', type: 'product' },
   { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <Utensils className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/mesa-cozinha', type: 'product' },
   { id: 'tapete-cortinas', name: 'Tapete e Cortinas', icon: <Home className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/tapete-cortinas', type: 'product' },
+  { id: 'infantil', name: 'Infantil', icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/infantil', type: 'product' },
   
   // Portfolio categories
   { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio', type: 'portfolio' },
