@@ -10,6 +10,7 @@ import {
   bordadosProducts,
   bordadosInfantisProducts,
   vestuarioProducts,
+  bordadoVestuarioProducts,
   banhoProducts,
   camaProducts,
   mesaCozinhaProducts,

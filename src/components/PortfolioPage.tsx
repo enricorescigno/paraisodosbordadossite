@@ -1,10 +1,10 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { allProducts, bordadosProducts, bordadosInfantisProducts, vestuarioProducts } from '../utils/productUtils';
+import { allProducts } from '../utils/productUtils';
+import { bordadosProducts, bordadosInfantisProducts, bordadoVestuarioProducts } from '../utils/products';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -51,54 +51,47 @@ const PortfolioPage = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      // Combine all potential portfolio items
-      let allPotentialItems = [
-        ...allProducts.filter(product => 
-          Number(product.id) !== 204 && 
-          (product.type === 'portfolio' || 
-           product.category.toLowerCase().includes('bordado') || 
-           product.category.toLowerCase().includes('bonés'))
-        ),
-        ...bordadosProducts,
-        ...bordadosInfantisProducts,
-        ...vestuarioProducts
-      ];
-      
-      // Make sure we have unique items
-      const uniqueItems = Array.from(
-        new Map(allPotentialItems.map(item => [item.id, item])).values()
-      );
-      
-      // Filter by the selected category
-      const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
+      // Start with empty collection
       let categoryItems: Product[] = [];
       
-      // Special handling for specific categories
+      // Handle specific categories first
       if (categoryPath === 'bordado-vestuario') {
-        categoryItems = vestuarioProducts;
+        categoryItems = bordadoVestuarioProducts;
       } else if (categoryPath === 'bordado-infantis') {
         categoryItems = bordadosInfantisProducts;
-      } else if (matchingCategory) {
-        // Filter products that match the mapped category
-        categoryItems = uniqueItems.filter(product => 
-          (product.category === matchingCategory || 
-           product.category.toLowerCase().includes(matchingCategory.toLowerCase()))
+      } else if (categoryPath === 'bordado-bone') {
+        categoryItems = bordadosProducts.filter(product => 
+          product.category.toLowerCase().includes('boné') || 
+          product.category.toLowerCase().includes('bone')
         );
-      }
-
-      // If no specific items found, try broader matching
-      if (categoryItems.length === 0) {
-        categoryItems = uniqueItems.filter(product => {
-          const productCategory = product.category.toLowerCase();
-          const searchTitle = categoryTitles[categoryPath]?.toLowerCase() || '';
-          const searchPath = categoryPath.toLowerCase();
-          
-          return (
-            productCategory.includes('bordado') && 
-            (productCategory.includes(searchPath) || 
-             (searchTitle && productCategory.includes(searchTitle)))
+      } else {
+        // For other categories, filter from allProducts
+        const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
+        
+        if (matchingCategory) {
+          // Filter products that match the mapped category
+          categoryItems = allProducts.filter(product => 
+            product.type === 'portfolio' &&
+            (product.category === matchingCategory || 
+             product.category.toLowerCase().includes(matchingCategory.toLowerCase()))
           );
-        });
+        }
+        
+        // If no specific items found, try broader matching
+        if (categoryItems.length === 0) {
+          categoryItems = allProducts.filter(product => {
+            const productCategory = product.category.toLowerCase();
+            const searchTitle = categoryTitles[categoryPath]?.toLowerCase() || '';
+            const searchPath = categoryPath.toLowerCase();
+            
+            return (
+              product.type === 'portfolio' &&
+              productCategory.includes('bordado') && 
+              (productCategory.includes(searchPath) || 
+               (searchTitle && productCategory.includes(searchTitle)))
+            );
+          });
+        }
       }
 
       setPortfolioItems(categoryItems);

@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { useIsMobile } from '../hooks/use-mobile';
-import { allProducts, bordadosProducts, bordadosInfantisProducts, vestuarioProducts } from '../utils/productUtils';
+import { allProducts, bordadosProducts, bordadosInfantisProducts, bordadoVestuarioProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -61,7 +61,7 @@ const AllPortfolioPage = () => {
         // Add our specific category products explicitly 
         ...bordadosProducts,
         ...bordadosInfantisProducts,
-        ...vestuarioProducts
+        ...bordadoVestuarioProducts
       ];
       
       // Create a unique set of products by id

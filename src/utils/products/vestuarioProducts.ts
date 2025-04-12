@@ -1,6 +1,7 @@
+
 import { Product } from '../../types/product';
 
-// Vestuário Collection
+// Vestuário Collection (regular clothing products)
 export const vestuarioProducts: Product[] = [
   {
     id: "vestuario-1",
@@ -204,12 +205,12 @@ export const vestuarioProducts: Product[] = [
   }
 ];
 
-// These products are now moved from the bordado-vestuario collection, kept for reference
+// These products are for the "Bordado em Vestuário" portfolio section
 export const bordadoVestuarioProducts: Product[] = [
   {
     id: 201,
     name: "Bordado em Camisa Básica - Casa e Condomínio",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Vestuário",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado em uma camisa básica com o logo de Casa e Condomínio.",

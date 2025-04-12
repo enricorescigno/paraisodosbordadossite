@@ -3,7 +3,7 @@ import { Product } from '../../types/product';
 import { bonesProducts } from './bonesProducts';
 import { bordadosProducts } from './bordadosProducts';
 import { bordadosInfantisProducts } from './bordadosInfantisProducts';
-import { vestuarioProducts } from './vestuarioProducts';
+import { vestuarioProducts, bordadoVestuarioProducts } from './vestuarioProducts';
 import { banhoProducts } from './banhoProducts';
 import { camaProducts } from './camaProducts';
 import { mesaCozinhaProducts } from './mesaCozinhaProducts';
@@ -24,6 +24,7 @@ export {
   bordadosProducts,
   bordadosInfantisProducts,
   vestuarioProducts,
+  bordadoVestuarioProducts,
   banhoProducts,
   camaProducts,
   mesaCozinhaProducts,
@@ -43,6 +44,7 @@ export const allProducts: Product[] = [
   ...bordadosProducts,
   ...bordadosInfantisProducts,
   ...vestuarioProducts,
+  ...bordadoVestuarioProducts,
   ...banhoProducts,
   ...camaProducts,
   ...mesaCozinhaProducts,
