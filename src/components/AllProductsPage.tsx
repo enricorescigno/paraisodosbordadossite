@@ -45,6 +45,13 @@ const AllProductsPage = () => {
       const productCategory = product.category.toLowerCase();
       const searchCategory = activeCategory.toLowerCase();
       
+      // Normalize category names for matching
+      if (searchCategory === 'mesa-cozinha') {
+        return productCategory.includes('mesa') || productCategory.includes('cozinha');
+      } else if (searchCategory === 'tapete-cortinas') {
+        return productCategory.includes('tapete') || productCategory.includes('cortina');
+      }
+      
       return productCategory.includes(searchCategory) || 
              searchCategory.includes(productCategory);
     });

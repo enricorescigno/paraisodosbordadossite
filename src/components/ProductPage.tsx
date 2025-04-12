@@ -50,15 +50,36 @@ const ProductPage = () => {
       // Get the corresponding category name from the URL path
       const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
       
-      // Filter for products in this category, excluding portfolio items
-      const categoryProducts = allProducts.filter(product => 
-        product.type === 'product' && 
-        !product.category.toLowerCase().includes('bordado') && 
-        !product.category.toLowerCase().includes('bonés') &&
-        (product.category === categoryName || 
-          product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
-          categoryName.toLowerCase().includes(product.category.toLowerCase()))
-      );
+      // Filter for products in this category
+      let categoryProducts: Product[] = [];
+      
+      if (categoryPath === 'mesa-cozinha') {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          (product.category.toLowerCase().includes('mesa') || 
+           product.category.toLowerCase().includes('cozinha'))
+        );
+      } else if (categoryPath === 'tapete-cortinas') {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          (product.category.toLowerCase().includes('tapete') || 
+           product.category.toLowerCase().includes('cortina'))
+        );
+      } else {
+        // Standard category filtering
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          (product.category === categoryName || 
+            product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
+            categoryName.toLowerCase().includes(product.category.toLowerCase()))
+        );
+      }
       
       // If still no products found, try partial matching
       let finalProducts = categoryProducts;
@@ -71,6 +92,10 @@ const ProductPage = () => {
             product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' ')))
         );
       }
+      
+      // Add console logging to help debug
+      console.log(`Category path: ${categoryPath}, Category name: ${categoryName}`);
+      console.log(`Found ${finalProducts.length} products for category ${categoryName}`);
       
       setProducts(finalProducts);
       setFilteredProducts(finalProducts);
