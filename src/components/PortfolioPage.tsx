@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -72,7 +73,12 @@ const PortfolioPage = () => {
       const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
       let categoryItems: Product[] = [];
       
-      if (matchingCategory) {
+      // Special handling for specific categories
+      if (categoryPath === 'bordado-vestuario') {
+        categoryItems = vestuarioProducts;
+      } else if (categoryPath === 'bordado-infantis') {
+        categoryItems = bordadosInfantisProducts;
+      } else if (matchingCategory) {
         // Filter products that match the mapped category
         categoryItems = uniqueItems.filter(product => 
           (product.category === matchingCategory || 
@@ -93,11 +99,6 @@ const PortfolioPage = () => {
              (searchTitle && productCategory.includes(searchTitle)))
           );
         });
-      }
-
-      // Special handling for "bordado-infantis" category
-      if (categoryPath === 'bordado-infantis') {
-        categoryItems = bordadosInfantisProducts;
       }
 
       setPortfolioItems(categoryItems);

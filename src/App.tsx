@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -56,7 +57,6 @@ function App() {
 
               {/* Vestuário Subcategories */}
               <Route path="/categoria/camisa" element={<ProductPage />} />
-              <Route path="/categoria/jaleco" element={<ProductPage />} />
               <Route path="/categoria/pantufa" element={<ProductPage />} />
 
               {/* Portfolio Pages */}
@@ -64,7 +64,7 @@ function App() {
               <Route path="/portfolio/bordado-bone" element={<PortfolioPage />} />
               <Route path="/portfolio/bordado-necessaire" element={<PortfolioPage />} />
               <Route path="/portfolio/bordado-bolsa" element={<PortfolioPage />} />
-              <Route path="/portfolio/bordado-jaleco" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-vestuario" element={<PortfolioPage />} />
               <Route path="/portfolio/bordado-infantis" element={<PortfolioPage />} />
               <Route path="/portfolio/bordado-toalha-banho" element={<PortfolioPage />} />
 

@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuContent, NavigationMenuTrigger, NavigationMenuLink } from "@/components/ui/navigation-menu";
 import { useIsMobile } from '../hooks/use-mobile';
@@ -93,8 +94,8 @@ const MenubarNav = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/portfolio/bordado-jaleco" className="block text-sm text-gray-700 hover:text-brand-red transition-colors">
-                      Bordado em Jaleco
+                    <Link to="/portfolio/bordado-vestuario" className="block text-sm text-gray-700 hover:text-brand-red transition-colors">
+                      Bordado em Vestuário
                     </Link>
                   </li>
                 </ul>

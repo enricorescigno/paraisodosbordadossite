@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { useIsMobile } from '../hooks/use-mobile';
-import { allProducts, bordadosProducts, bordadosInfantisProducts } from '../utils/productUtils';
+import { allProducts, bordadosProducts, bordadosInfantisProducts, vestuarioProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -17,20 +17,20 @@ const PORTFOLIO_CATEGORIES = {
   'Bordado em Boné': 'bordado-bone',
   'Bordado em Necessaire': 'bordado-necessaire',
   'Bordado em Bolsa': 'bordado-bolsa',
-  'Bordado em Jaleco': 'bordado-jaleco',
+  'Bordado em Vestuário': 'bordado-vestuario',
   'Bordado Infantis': 'bordado-infantis',
   'Bordado em Toalha de Banho': 'bordado-toalha-banho',
   'Bonés Bordados': 'bordado-bone',
   'Bordado': 'bordado-bone',
-  'Camisetas': 'vestuario',
-  'Camisas Polo': 'vestuario',
-  'Jalecos': 'bordado-jaleco',
-  'Pantufas': 'vestuario',
+  'Camisetas': 'bordado-vestuario',
+  'Camisas Polo': 'bordado-vestuario',
+  'Jalecos': 'bordado-vestuario',
+  'Pantufas': 'bordado-vestuario',
   'Roupões Infantis': 'bordado-infantis',
   'Toalhas Infantis': 'bordado-toalha-banho',
   'Bordados em Bolsas': 'bordado-bolsa',
   'Bordados em Toalhas': 'bordado-toalha-banho',
-  'Bordados em Vestuário': 'vestuario',
+  'Bordados em Vestuário': 'bordado-vestuario',
   'Bordados Infantis': 'bordado-infantis'
 };
 
@@ -43,7 +43,7 @@ const AllPortfolioPage = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      // Use both the existing allProducts filter and the new bordadosProducts
+      // Use both the existing allProducts filter and the specific category products
       const portfolioItems = [
         // Original portfolio items
         ...allProducts.filter(product => 
@@ -58,10 +58,10 @@ const AllPortfolioPage = () => {
               product.category.toLowerCase().includes('bonés')))
           )
         ),
-        // Add our new bordados products explicitly 
+        // Add our specific category products explicitly 
         ...bordadosProducts,
-        // Add our new bordados infantis products explicitly
-        ...bordadosInfantisProducts
+        ...bordadosInfantisProducts,
+        ...vestuarioProducts
       ];
       
       // Create a unique set of products by id
