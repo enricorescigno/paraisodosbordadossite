@@ -1,23 +1,44 @@
-
 import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 
-const partners = [{
-  name: "Doutor Pet",
-  logo: "/lovable-uploads/2621c87d-6ff0-42bb-9c13-0598532a29ba.png"
-}, {
-  name: "Locar House",
-  logo: "/lovable-uploads/ab58fe55-29a7-473f-85f5-12b906a493de.png"
-}, {
-  name: "Tomaselli",
-  logo: "/lovable-uploads/681f2ac7-f2d7-4f75-814e-9279195db99b.png"
-}, {
-  name: "Gerson Parisio",
-  logo: "/lovable-uploads/d4081c14-99d1-497a-93ea-81600e2314fd.png"
-}, {
-  name: "NX Boats",
-  logo: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png"
-}];
+const partners = [
+  {
+    name: "Doutor Pet",
+    logo: "/lovable-uploads/2621c87d-6ff0-42bb-9c13-0598532a29ba.png"
+  },
+  {
+    name: "Locar House",
+    logo: "/lovable-uploads/ab58fe55-29a7-473f-85f5-12b906a493de.png"
+  },
+  {
+    name: "Tomaselli",
+    logo: "/lovable-uploads/681f2ac7-f2d7-4f75-814e-9279195db99b.png"
+  },
+  {
+    name: "Gerson Parisio",
+    logo: "/lovable-uploads/d4081c14-99d1-497a-93ea-81600e2314fd.png"
+  },
+  {
+    name: "NX Boats",
+    logo: "/lovable-uploads/7c55472e-acf8-4000-8adc-9fe6b6c3a396.png"
+  },
+  {
+    name: "Centraltur Viagens",
+    logo: "/lovable-uploads/40314056-8e46-4b7f-9d75-f18c107911d8.png"
+  },
+  {
+    name: "Clínicas Mimo",
+    logo: "/lovable-uploads/f55e926e-0886-406b-bde4-551e93196365.png"
+  },
+  {
+    name: "JV Contabilidade",
+    logo: "/lovable-uploads/602557a9-37de-472f-ab79-5a67b62be92e.png"
+  },
+  {
+    name: "Aeroclube de Pernambuco",
+    logo: "/lovable-uploads/b70c7185-64f1-4f7e-99d4-ebc8cfd42aae.png"
+  }
+];
 
 interface PartnersProps {
   showTitle?: boolean;
