@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Bed, Bath, ChefHat, Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette } from 'lucide-react';
+import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette } from 'lucide-react';
 import { motion } from 'framer-motion';
 import CategoryIcon from './CategoryIcon';
 
@@ -12,12 +12,9 @@ interface Category {
   type: 'product' | 'portfolio';
 }
 
-// Combined list of all categories
+// Combined list of all categories - Removed Cama, Mesa e Cozinha, and Banho
 const allCategories: Category[] = [
   // Product categories
-  { id: 'cama', name: 'Cama', icon: <Bed className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/cama', type: 'product' },
-  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <ChefHat className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/mesa-cozinha', type: 'product' },
-  { id: 'banho', name: 'Banho', icon: <Bath className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/banho', type: 'product' },
   { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/pantufa', type: 'product' },
   
   // Portfolio categories
@@ -26,8 +23,7 @@ const allCategories: Category[] = [
   { id: 'bordado-jaleco', name: 'Bordado em Jaleco', icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-jaleco', type: 'portfolio' },
   { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-infantis', type: 'portfolio' },
   { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-bolsa', type: 'portfolio' },
-  { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' },
-  { id: 'bordado-toalha-banho', name: 'Bordado em Toalha', icon: <Bath className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-toalha-banho', type: 'portfolio' }
+  { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' }
 ];
 
 interface BrowseByCategoryProps {

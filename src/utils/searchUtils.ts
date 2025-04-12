@@ -6,36 +6,6 @@ import { pantufaProducts } from './productUtils';
 // Sample product database - In a real app, you would fetch this from an API
 const sampleProducts: Product[] = [
   {
-    id: "101", // ID matching ProductDetailPage
-    name: "Toalha Bordada Personalizada",
-    category: "banho",
-    description: "Toalha de alta qualidade com bordados personalizados",
-    keywords: ["toalha", "personalizada", "bordado", "banho", "presente"],
-    slug: "toalha-bordada-personalizada",
-    type: "product",
-    imageUrl: "/lovable-uploads/cb60af2d-a399-4029-ab74-6f5374d38b9c.png"
-  },
-  {
-    id: "301", // ID matching portfolio item in ProductDetailPage
-    name: "Boné Personalizado Empresarial",
-    category: "bordado-bone",
-    description: "Boné de alta qualidade com bordado personalizado para sua empresa",
-    keywords: ["boné", "bone", "personalizado", "empresarial", "bordado", "empresa"],
-    slug: "bone-personalizado-empresarial",
-    type: "portfolio",
-    imageUrl: "https://images.unsplash.com/photo-1521369909029-2afed882baee?q=80&w=500&auto=format&fit=crop"
-  },
-  {
-    id: "302", // ID matching portfolio bone
-    name: "Boné Esportivo Bordado",
-    category: "bordado-bone",
-    description: "Bordado com símbolos esportivos, perfeito para equipes e torcedores",
-    keywords: ["boné", "bone", "esportivo", "time", "bordado"],
-    slug: "bone-esportivo-bordado",
-    type: "portfolio",
-    imageUrl: "https://images.unsplash.com/photo-1580880783109-4d9daf311df5?q=80&w=500&auto=format&fit=crop"
-  },
-  {
     id: "330", // ID matching portfolio jaleco
     name: "Jaleco Bordado",
     category: "jaleco",
@@ -66,16 +36,6 @@ const sampleProducts: Product[] = [
     imageUrl: "/lovable-uploads/120d7ca4-3d83-432d-81df-5bcf1993da75.png"
   },
   {
-    id: "102", // ID matching product in ProductDetailPage
-    name: "Jogo de Toalhas Casal",
-    category: "cama",
-    description: "Jogo completo de toalhas bordadas para casal",
-    keywords: ["toalhas", "jogo", "casal", "cama", "bordado"],
-    slug: "jogo-toalhas-casal",
-    type: "product",
-    imageUrl: "/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png"
-  },
-  {
     id: "320", // ID matching portfolio bolsa
     name: "Bolsa Bordada Personalizada",
     category: "bordado-bolsa",
@@ -84,16 +44,6 @@ const sampleProducts: Product[] = [
     slug: "bolsa-bordada-personalizada",
     type: "portfolio",
     imageUrl: "/lovable-uploads/cb60af2d-a399-4029-ab74-6f5374d38b9c.png"
-  },
-  {
-    id: "350", // ID matching portfolio toalha
-    name: "Toalha de Mesa Bordada",
-    category: "mesa-cozinha",
-    description: "Toalha de mesa com bordados elegantes",
-    keywords: ["toalha", "mesa", "jantar", "cozinha", "bordado", "refeição", "refeicao"],
-    slug: "toalha-mesa-bordada",
-    type: "product",
-    imageUrl: "/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png"
   }
 ];
 
