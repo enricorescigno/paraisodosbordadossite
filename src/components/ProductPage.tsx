@@ -74,7 +74,8 @@ const ProductPage = () => {
           product.type === 'product' && 
           !product.category.toLowerCase().includes('bordado') && 
           !product.category.toLowerCase().includes('bonés') &&
-          product.category.toLowerCase().includes('infantil')
+          product.category.toLowerCase().includes('infantil') &&
+          !product.name.toLowerCase().includes('kit infantil bordado') // Exclude "Kit Infantil Bordado"
         );
       } else {
         // Standard category filtering

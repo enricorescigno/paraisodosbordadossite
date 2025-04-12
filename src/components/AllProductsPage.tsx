@@ -41,20 +41,29 @@ const AllProductsPage = () => {
     let result: any[] = [];
     
     // Filter by the selected category
-    result = allProductsList.filter(product => {
-      const productCategory = product.category.toLowerCase();
-      const searchCategory = activeCategory.toLowerCase();
-      
-      // Normalize category names for matching
-      if (searchCategory === 'mesa-cozinha') {
-        return productCategory.includes('mesa') || productCategory.includes('cozinha');
-      } else if (searchCategory === 'tapete-cortinas') {
-        return productCategory.includes('tapete') || productCategory.includes('cortina');
-      }
-      
-      return productCategory.includes(searchCategory) || 
-             searchCategory.includes(productCategory);
-    });
+    if (activeCategory === 'infantil') {
+      // Special case for infantil to exclude "Kit Infantil Bordado"
+      result = allProductsList.filter(product => {
+        const productCategory = product.category.toLowerCase();
+        return productCategory.includes('infantil') && 
+               !product.name.toLowerCase().includes('kit infantil bordado');
+      });
+    } else {
+      result = allProductsList.filter(product => {
+        const productCategory = product.category.toLowerCase();
+        const searchCategory = activeCategory.toLowerCase();
+        
+        // Normalize category names for matching
+        if (searchCategory === 'mesa-cozinha') {
+          return productCategory.includes('mesa') || productCategory.includes('cozinha');
+        } else if (searchCategory === 'tapete-cortinas') {
+          return productCategory.includes('tapete') || productCategory.includes('cortina');
+        }
+        
+        return productCategory.includes(searchCategory) || 
+               searchCategory.includes(productCategory);
+      });
+    }
     
     setFilteredProducts(result);
   }, [activeCategory, allProductsList]);
