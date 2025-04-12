@@ -4,11 +4,11 @@ import { bonesProducts } from './bonesProducts';
 import { bordadosProducts } from './bordadosProducts';
 import { bordadosInfantisProducts } from './bordadosInfantisProducts';
 import { vestuarioProducts } from './vestuarioProducts';
+import { banhoProducts } from './banhoProducts';
 import { 
   camaProducts,
   mesaCozinhaProducts,
   tapeteCortinasProducts,
-  banhoProducts,
   infantilProducts,
   pantufaProducts,
   camisetasProducts,
@@ -24,10 +24,10 @@ export {
   bordadosProducts,
   bordadosInfantisProducts,
   vestuarioProducts,
+  banhoProducts,
   camaProducts,
   mesaCozinhaProducts,
   tapeteCortinasProducts,
-  banhoProducts,
   infantilProducts,
   pantufaProducts,
   camisetasProducts,
@@ -42,5 +42,6 @@ export const allProducts: Product[] = [
   ...bonesProducts,
   ...bordadosProducts,
   ...bordadosInfantisProducts,
-  ...vestuarioProducts
+  ...vestuarioProducts,
+  ...banhoProducts
 ];

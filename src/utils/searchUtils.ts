@@ -1,7 +1,7 @@
 
 // This file provides search functionality across products
 import { Product } from '../types/product';
-import { pantufaProducts, vestuarioProducts } from './products';
+import { pantufaProducts, vestuarioProducts, banhoProducts } from './products';
 
 // Sample product database - In a real app, you would fetch this from an API
 const sampleProducts: Product[] = [
@@ -61,7 +61,14 @@ const vestuarioWithKeywords = vestuarioProducts.map(product => ({
   slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
 }));
 
-export const products: Product[] = [...sampleProducts, ...pantufasWithKeywords, ...vestuarioWithKeywords];
+// Create keywords for banhoProducts if they don't have them
+const banhoWithKeywords = banhoProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['banho', 'toalha', 'roupão', 'toalha de rosto', 'toalha de banho', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
+
+export const products: Product[] = [...sampleProducts, ...pantufasWithKeywords, ...vestuarioWithKeywords, ...banhoWithKeywords];
 
 // Function to search products based on query - with improved matching and prioritization
 export function searchProducts(query: string): Product[] {

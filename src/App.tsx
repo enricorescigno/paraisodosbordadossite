@@ -48,6 +48,7 @@ function App() {
               <Route path="/categoria/cama-mesa-banho" element={<ProductPage />} />
               <Route path="/categoria/infantil" element={<ProductPage />} />
               <Route path="/categoria/vestuario" element={<ProductPage />} />
+              <Route path="/categoria/banho" element={<ProductPage />} />
 
               {/* Cama, Mesa e Banho Subcategories */}
               <Route path="/categoria/cama" element={<ProductPage />} />
