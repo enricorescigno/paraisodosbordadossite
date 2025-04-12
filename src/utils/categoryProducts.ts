@@ -4,27 +4,24 @@ import { Product } from '../types/product';
 // Import infantilProducts from emptyProducts
 import { infantilProducts } from './products/emptyProducts';
 
-// Empty collections for product categories that we're removing
-export const vestuarioProducts: Product[] = [];
-
-// Import remaining products that we're keeping from the new modular files
+// Import vestuario products
 import { 
   bonesProducts,
   bordadosProducts,
   bordadosInfantisProducts,
-  vestuarioProducts as vestuarioProductsImport,
+  vestuarioProducts,
   banhoProducts,
   camaProducts,
   mesaCozinhaProducts,
   tapeteCortinasProducts
 } from './products';
 
-// Create the combined collection of all products - include the infantil products
+// Create the combined collection of all products - include the infantil and vestuario products
 export const allCategoryProducts: Product[] = [
   ...bonesProducts,
   ...bordadosProducts,
   ...bordadosInfantisProducts,
-  ...vestuarioProductsImport,
+  ...vestuarioProducts,
   ...banhoProducts,
   ...camaProducts,
   ...mesaCozinhaProducts,

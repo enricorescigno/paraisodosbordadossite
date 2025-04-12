@@ -20,7 +20,8 @@ const categoryTitles: Record<string, string> = {
   'cama': 'Cama',
   'mesa-cozinha': 'Mesa e Cozinha',
   'tapete-cortinas': 'Tapete e Cortinas',
-  'infantil': 'Infantil'  // Added infantil title
+  'infantil': 'Infantil',
+  'vestuario': 'Vestuário'  // Added vestuario title
 };
 
 // Mapping from URL paths to product categories
@@ -29,7 +30,8 @@ const CATEGORY_MAPPINGS: Record<string, string> = {
   'cama': 'Cama',
   'mesa-cozinha': 'Mesa e Cozinha',
   'tapete-cortinas': 'Tapete e Cortinas',
-  'infantil': 'Infantil'  // Added infantil mapping
+  'infantil': 'Infantil',
+  'vestuario': 'Vestuário'  // Added vestuario mapping
 };
 
 const ProductPage = () => {
@@ -89,6 +91,13 @@ const ProductPage = () => {
           !product.category.toLowerCase().includes('bonés') &&
           product.category.toLowerCase().includes('infantil') &&
           !product.name.toLowerCase().includes('kit infantil bordado') // Exclude "Kit Infantil Bordado"
+        );
+      } else if (categoryPath === 'vestuario') {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          product.category.toLowerCase().includes('vestuário')
         );
       } else {
         // Standard category filtering

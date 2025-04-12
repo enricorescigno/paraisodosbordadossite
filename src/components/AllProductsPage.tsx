@@ -16,7 +16,7 @@ const AllProductsPage = () => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [allProductsList, setAllProductsList] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-  const [activeCategory, setActiveCategory] = useState('infantil');  // Changed from 'pantufa' to 'infantil'
+  const [activeCategory, setActiveCategory] = useState('vestuario');  // Changed to vestuario as default
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   
@@ -64,6 +64,12 @@ const AllProductsPage = () => {
         const productCategory = product.category.toLowerCase();
         return productCategory.includes('infantil') && 
                !product.name.toLowerCase().includes('kit infantil bordado');
+      });
+    } else if (activeCategory === 'vestuario') {
+      // Special case for vestuario
+      result = allProductsList.filter(product => {
+        const productCategory = product.category.toLowerCase();
+        return productCategory.includes('vestuário');
       });
     } else {
       result = allProductsList.filter(product => {
