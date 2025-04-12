@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { bonesProducts } from '../utils/productUtils';
+import { allProducts } from '../utils/productUtils';
+import { mesaCozinhaProducts } from '../utils/categoryProducts';
 import { Product } from '../types/product';
 import { useScrollToTop } from '../hooks/useScrollToTop';
 import PageHeader from './common/PageHeader';
@@ -12,14 +13,32 @@ import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
 import BrowseByCategory from './common/BrowseByCategory';
 
-// Category name translations for titles - only keep bones category
+// Category name translations for titles
 const categoryTitles: Record<string, string> = {
-  'bones': 'Bonés Bordados',
+  'cama-mesa-banho': 'Cama, Mesa e Banho',
+  'cama': 'Cama',
+  'mesa-cozinha': 'Mesa e Cozinha',
+  'tapete-cortinas': 'Tapete e Cortinas',
+  'banho': 'Banho',
+  'infantil': 'Infantil',
+  'vestuario': 'Vestuário',
+  'camisa': 'Camisa',
+  'jaleco': 'Jaleco',
+  'pantufa': 'Pantufa'
 };
 
-// Mapping from URL paths to product categories - only keep bones category
+// Mapping from URL paths to product categories
 const CATEGORY_MAPPINGS: Record<string, string> = {
-  'bones': 'Bonés Bordados',
+  'cama-mesa-banho': 'Cama, Mesa e Banho',
+  'cama': 'Cama',
+  'mesa-cozinha': 'Mesa e Cozinha',
+  'tapete-cortinas': 'Tapete e Cortinas',
+  'banho': 'Banho',
+  'infantil': 'Infantil',
+  'vestuario': 'Vestuário',
+  'camisa': 'Camisa',
+  'jaleco': 'Jaleco',
+  'pantufa': 'Pantufa',
 };
 
 const ProductPage = () => {
@@ -40,12 +59,50 @@ const ProductPage = () => {
     setTimeout(() => {
       let categoryProducts: Product[] = [];
       
-      // Since we only have bonés products now
-      if (categoryPath === 'bones') {
-        categoryProducts = bonesProducts;
+      // Special handling for mesa-cozinha category to ensure product 204 is included
+      if (categoryPath === 'mesa-cozinha') {
+        // Certifique-se de incluir apenas produtos reais, não de portfólio
+        let regularProducts = allProducts.filter(p => 
+          p.type === 'product' && 
+          !p.category.toLowerCase().includes('bordado') && 
+          !p.category.toLowerCase().includes('bonés') &&
+          (p.category.toLowerCase().includes('mesa') || 
+           p.category.toLowerCase().includes('cozinha')) && 
+          Number(p.id) !== 204
+        );
+        
+        // Obter o produto 204 do array mesaCozinhaProducts
+        const product204 = mesaCozinhaProducts.find(p => Number(p.id) === 204);
+        
+        if (product204) {
+          categoryProducts = [product204, ...regularProducts];
+        } else {
+          categoryProducts = regularProducts;
+        }
       } else {
-        // Default to empty for any other category
-        categoryProducts = [];
+        // Get the corresponding category name from the URL path
+        const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
+        
+        // For other categories, filter normally, excluding portfolio items
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          (product.category === categoryName || 
+           product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
+           categoryName.toLowerCase().includes(product.category.toLowerCase()))
+        );
+        
+        // If still no products found, try partial matching
+        if (categoryProducts.length === 0) {
+          categoryProducts = allProducts.filter(product => 
+            product.type === 'product' && 
+            !product.category.toLowerCase().includes('bordado') && 
+            !product.category.toLowerCase().includes('bonés') &&
+            (categoryPath.includes(product.category.toLowerCase().replace(/\s+/g, '-')) ||
+             product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' ')))
+          );
+        }
       }
       
       setProducts(categoryProducts);

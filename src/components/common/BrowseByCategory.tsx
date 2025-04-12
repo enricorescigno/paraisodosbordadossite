@@ -12,10 +12,13 @@ interface Category {
   type: 'product' | 'portfolio';
 }
 
-// Updated categories list - removed empty categories (cama, mesa-cozinha, banho)
+// Combined list of all categories
 const allCategories: Category[] = [
-  // Product categories - only keep boné category for products
-  { id: 'bones', name: 'Bonés Bordados', icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/bones', type: 'product' },
+  // Product categories
+  { id: 'cama', name: 'Cama', icon: <Bed className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/cama', type: 'product' },
+  { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <ChefHat className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/mesa-cozinha', type: 'product' },
+  { id: 'banho', name: 'Banho', icon: <Bath className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/banho', type: 'product' },
+  { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/pantufa', type: 'product' },
   
   // Portfolio categories
   { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio', type: 'portfolio' },
