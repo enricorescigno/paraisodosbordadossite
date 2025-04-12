@@ -1,10 +1,9 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { allProducts, bordadosProducts, bordadosInfantisProducts } from '../utils/productUtils';
+import { allProducts, bordadosProducts, bordadosInfantisProducts, vestuarioProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -18,7 +17,7 @@ const PORTFOLIO_CATEGORIES: Record<string, string> = {
   'bordado-bone': 'Bonés Bordados',
   'bordado-necessaire': 'Bordado em Necessaire',
   'bordado-bolsa': 'Bordado em Bolsa',
-  'bordado-jaleco': 'Jalecos',
+  'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordados Infantis',
   'bordado-toalha-banho': 'Toalhas Infantis',
   'vestuario': 'Bordados em Vestuário'
@@ -29,10 +28,10 @@ const categoryTitles: Record<string, string> = {
   'bordado-bone': 'Bordado em Boné',
   'bordado-necessaire': 'Bordado em Necessaire',
   'bordado-bolsa': 'Bordado em Bolsa',
-  'bordado-jaleco': 'Bordado em Jaleco',
+  'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordado Infantil',
   'bordado-toalha-banho': 'Bordado em Toalha de Banho',
-  'vestuario': 'Bordado em Vestuário'
+  'vestuario': 'Bordados em Vestuário'
 };
 
 const PortfolioPage = () => {
@@ -60,7 +59,8 @@ const PortfolioPage = () => {
            product.category.toLowerCase().includes('bonés'))
         ),
         ...bordadosProducts,
-        ...bordadosInfantisProducts
+        ...bordadosInfantisProducts,
+        ...vestuarioProducts
       ];
       
       // Make sure we have unique items

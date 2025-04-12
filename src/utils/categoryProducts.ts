@@ -12,12 +12,14 @@ export const vestuarioProducts: Product[] = [];
 import { 
   bonesProducts,
   bordadosProducts,
-  bordadosInfantisProducts
+  bordadosInfantisProducts,
+  vestuarioProducts as vestuarioProductsImport
 } from './productUtils';
 
 // Create the combined collection of all products - only with the ones we're keeping
 export const allCategoryProducts: Product[] = [
   ...bonesProducts,
   ...bordadosProducts,
-  ...bordadosInfantisProducts
+  ...bordadosInfantisProducts,
+  ...vestuarioProductsImport
 ];

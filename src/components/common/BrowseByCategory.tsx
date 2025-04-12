@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette } from 'lucide-react';
@@ -20,7 +21,7 @@ const allCategories: Category[] = [
   // Portfolio categories
   { id: 'all', name: 'Todos', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio', type: 'portfolio' },
   { id: 'bordado-bone', name: 'Bordado em Boné', icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-bone', type: 'portfolio' },
-  { id: 'bordado-jaleco', name: 'Bordado em Jaleco', icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-jaleco', type: 'portfolio' },
+  { id: 'bordado-vestuario', name: 'Bordado em Vestuário', icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-vestuario', type: 'portfolio' },
   { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-infantis', type: 'portfolio' },
   { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-bolsa', type: 'portfolio' },
   { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' }

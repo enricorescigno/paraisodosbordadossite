@@ -55,9 +55,9 @@ export const categories: Category[] = [
   },
   {
     id: 6,
-    name: "Bordado em Jaleco",
+    name: "Bordado em Vestuário",
     icon: "shirt",
-    slug: "bordado-jaleco"
+    slug: "bordado-vestuario"
   },
   {
     id: 7,
