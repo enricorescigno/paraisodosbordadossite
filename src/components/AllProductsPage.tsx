@@ -14,7 +14,7 @@ const AllProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [allProductsList, setAllProductsList] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-  const [activeCategory, setActiveCategory] = useState('pantufa');  // Default to pantufas
+  const [activeCategory, setActiveCategory] = useState('infantil');  // Changed from 'pantufa' to 'infantil'
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
   

@@ -98,7 +98,7 @@ const CategoryIcon = ({
 // Combined list of all categories
 const allCategories: Category[] = [
   // Product categories
-  { id: 'pantufa', name: 'Pantufas', icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/pantufa', type: 'product' },
+  { id: 'infantil', name: 'Infantil', icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/infantil', type: 'product' },
   { id: 'cama', name: 'Cama', icon: <BedDouble className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/cama', type: 'product' },
   { id: 'banho', name: 'Banho', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/banho', type: 'product' },
   { id: 'mesa-cozinha', name: 'Mesa e Cozinha', icon: <Utensils className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/categoria/mesa-cozinha', type: 'product' },
