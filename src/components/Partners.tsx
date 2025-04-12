@@ -69,6 +69,9 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
   const [displayPartners, setDisplayPartners] = useState(partners.slice(0, maxDisplay));
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [scrollDirection, setScrollDirection] = useState(1);
+  const [animationId, setAnimationId] = useState<number | null>(null);
 
   // Lazy load partners for better performance
   useEffect(() => {
@@ -86,13 +89,13 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
         // Only start animation when in view
         if (entry.isIntersecting) {
           setIsInView(true);
-          
-          // Now start auto-scroll if needed
-          if (scrollElement.scrollWidth > scrollElement.clientWidth) {
-            startAutoScroll(scrollElement);
-          }
         } else {
           setIsInView(false);
+          // Stop animation when out of view
+          if (animationId !== null) {
+            cancelAnimationFrame(animationId);
+            setAnimationId(null);
+          }
         }
       },
       { threshold: 0.1 }
@@ -102,38 +105,72 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
     
     return () => {
       observer.disconnect();
+      // Cleanup animation on unmount
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+      }
     };
-  }, [fullPage]);
+  }, [fullPage, animationId]);
   
-  const startAutoScroll = (element: HTMLDivElement) => {
-    const scrollWidth = element.scrollWidth;
-    const clientWidth = element.clientWidth;
+  // Effect for auto-scrolling
+  useEffect(() => {
+    if (fullPage || !isInView) return;
     
-    let direction = 1;
-    let position = 0;
-    const speed = 0.3; // Reduced speed for better UX
+    const scrollElement = scrollRef.current;
+    if (!scrollElement) return;
     
-    const scroll = () => {
-      if (!element || !isInView) return;
+    const scrollWidth = scrollElement.scrollWidth;
+    const clientWidth = scrollElement.clientWidth;
+    
+    if (scrollWidth <= clientWidth) return; // No need to scroll if content fits
+    
+    const autoScroll = () => {
+      if (!scrollElement || !isInView) return;
       
-      position += speed * direction;
+      // Update position based on direction
+      let newPosition = scrollPosition + (0.5 * scrollDirection);
       
-      if (position >= scrollWidth - clientWidth) {
-        direction = -1;
-      } else if (position <= 0) {
-        direction = 1;
+      // Check boundaries and change direction
+      if (newPosition >= scrollWidth - clientWidth) {
+        setScrollDirection(-1);
+        newPosition = scrollWidth - clientWidth;
+      } else if (newPosition <= 0) {
+        setScrollDirection(1);
+        newPosition = 0;
       }
       
-      element.scrollLeft = position;
-      requestAnimationFrame(scroll);
+      setScrollPosition(newPosition);
+      scrollElement.scrollLeft = newPosition;
+      
+      // Continue animation
+      const id = requestAnimationFrame(autoScroll);
+      setAnimationId(id);
     };
     
-    const animationId = requestAnimationFrame(scroll);
+    // Start auto-scrolling
+    const id = requestAnimationFrame(autoScroll);
+    setAnimationId(id);
     
     return () => {
-      cancelAnimationFrame(animationId);
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+      }
     };
-  };
+  }, [isInView, fullPage, scrollPosition, scrollDirection]);
+
+  // Reset scroll when component remounts
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = 0;
+      setScrollPosition(0);
+    }
+    
+    return () => {
+      if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, []);
 
   const container = {
     hidden: { opacity: 0 },
@@ -161,7 +198,7 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
 
   return (
     <section className={`bg-brand-light py-8 ${fullPage ? 'rounded-xl' : ''}`}>
-      <div className="container-custom">
+      <div className="container mx-auto px-4">
         {showTitle && (
           <div className="text-center mb-8">
             <h2 className="text-2xl font-semibold text-brand-dark">Nossos Parceiros</h2>
@@ -186,7 +223,7 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
                 <img 
                   src={partner.logo} 
                   alt={partner.name} 
-                  className="max-h-24 max-w-full mb-4" 
+                  className="max-h-24 max-w-full mb-4 object-contain" 
                   width={120}
                   height={80}
                   loading={getImageLoading(index < 4)}
@@ -199,9 +236,8 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
         ) : (
           <div className="relative overflow-hidden">
             <div 
-              className="flex space-x-6 py-4 overflow-x-auto hide-scrollbar transition-opacity duration-500" 
+              className="flex space-x-6 py-4 overflow-x-auto hide-scrollbar" 
               ref={scrollRef}
-              style={{ scrollBehavior: 'smooth' }}
             >
               {displayPartners.map((partner, index) => (
                 <div 
@@ -211,7 +247,7 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
                   <img 
                     src={partner.logo} 
                     alt={partner.name} 
-                    className="max-h-12 max-w-full" 
+                    className="max-h-12 max-w-full object-contain" 
                     width={100}
                     height={60}
                     loading={getImageLoading(index < 4)}
@@ -219,7 +255,7 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
                 </div>
               ))}
               
-              {/* Only add duplicates if we're not showing all partners */}
+              {/* Add duplicates for continuous scrolling effect */}
               {!fullPage && displayPartners.slice(0, 4).map((partner, index) => (
                 <div 
                   key={`duplicate-${index}`} 
@@ -228,7 +264,7 @@ const Partners = ({ showTitle = true, fullPage = false, maxDisplay = fullPage ? 
                   <img 
                     src={partner.logo} 
                     alt={partner.name} 
-                    className="max-h-12 max-w-full" 
+                    className="max-h-12 max-w-full object-contain" 
                     width={100}
                     height={60}
                     loading="lazy"
