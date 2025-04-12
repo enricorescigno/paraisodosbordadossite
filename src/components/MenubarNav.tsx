@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuContent, NavigationMenuTrigger, NavigationMenuLink } from "@/components/ui/navigation-menu";
 import { useIsMobile } from '../hooks/use-mobile';
 import { cn } from '@/lib/utils';
+
 const MenubarNav = () => {
   const isMobile = useIsMobile();
 
-  // For mobile, we'll return null as the mobile menu is handled in Navbar.tsx
   if (isMobile) return null;
   return <div className="flex justify-center pb-2">
       <NavigationMenu>
@@ -125,6 +125,12 @@ const MenubarNav = () => {
           <NavigationMenuItem>
             <Link to="/sobre" className="text-sm text-brand-dark hover:text-brand-red transition-colors duration-200">
               Sobre Nós
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link to="/dias-das-maes" className="text-sm text-brand-dark hover:text-brand-red transition-colors duration-200">
+              Dia das Mães
             </Link>
           </NavigationMenuItem>
         </NavigationMenuList>

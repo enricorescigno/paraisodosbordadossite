@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -23,6 +23,7 @@ import PedidosCompraProdutosPage from "./pages/PedidosCompraProdutosPage";
 import PedidosCompraDistribuicaoPage from "./pages/PedidosCompraDistribuicaoPage";
 import PedidosCompraStatusPage from "./pages/PedidosCompraStatusPage";
 import PrazosPagamentoPage from "./pages/PrazosPagamentoPage";
+import MaesPage from "./pages/MaesPage";
 
 import "./styles/typography.css";
 
@@ -40,6 +41,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/produtos" element={<AllProductsPage />} />
+              <Route path="/dias-das-maes" element={<MaesPage />} />
 
               {/* Main Categories */}
               <Route path="/categoria/cama-mesa-banho" element={<ProductPage />} />
