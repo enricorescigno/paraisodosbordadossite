@@ -15,11 +15,13 @@ import BrowseByCategory from './common/BrowseByCategory';
 
 // Category name translations for titles
 const categoryTitles: Record<string, string> = {
+  'banho': 'Banho',
   'pantufa': 'Pantufa'
 };
 
 // Mapping from URL paths to product categories
 const CATEGORY_MAPPINGS: Record<string, string> = {
+  'banho': 'Banho',
   'pantufa': 'Pantufa',
 };
 
@@ -114,3 +116,4 @@ const ProductPage = () => {
 };
 
 export default ProductPage;
+
