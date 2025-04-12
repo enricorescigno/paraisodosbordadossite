@@ -27,42 +27,42 @@ export const allCategories: Category[] = [
   { 
     id: 'pantufa', 
     name: 'Pantufas', 
-    icon: <Palette className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Palette, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/categoria/pantufa', 
     type: 'product' 
   },
   { 
     id: 'cama', 
     name: 'Cama', 
-    icon: <BedDouble className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(BedDouble, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/categoria/cama', 
     type: 'product' 
   },
   { 
     id: 'banho', 
     name: 'Banho', 
-    icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(ShoppingBag, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/categoria/banho', 
     type: 'product' 
   },
   { 
     id: 'mesa-cozinha', 
     name: 'Mesa e Cozinha', 
-    icon: <Utensils className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Utensils, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/categoria/mesa-cozinha', 
     type: 'product' 
   },
   { 
     id: 'tapete-cortinas', 
     name: 'Tapete e Cortinas', 
-    icon: <Home className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Home, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/categoria/tapete-cortinas', 
     type: 'product' 
   },
   { 
     id: 'infantil', 
     name: 'Infantil', 
-    icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Baby, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/categoria/infantil', 
     type: 'product' 
   },
@@ -71,42 +71,42 @@ export const allCategories: Category[] = [
   { 
     id: 'all', 
     name: 'Todos', 
-    icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Paintbrush, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/portfolio', 
     type: 'portfolio' 
   },
   { 
     id: 'bordado-bone', 
     name: 'Bordado em Boné', 
-    icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Shirt, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/portfolio/bordado-bone', 
     type: 'portfolio' 
   },
   { 
     id: 'bordado-vestuario', 
     name: 'Bordado em Vestuário', 
-    icon: <Shirt className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Shirt, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/portfolio/bordado-vestuario', 
     type: 'portfolio' 
   },
   { 
     id: 'bordado-infantis', 
     name: 'Bordado Infantil', 
-    icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Baby, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/portfolio/bordado-infantis', 
     type: 'portfolio' 
   },
   { 
     id: 'bordado-bolsa', 
     name: 'Bordado em Bolsa', 
-    icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(ShoppingBag, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/portfolio/bordado-bolsa', 
     type: 'portfolio' 
   },
   { 
     id: 'bordado-necessaire', 
     name: 'Bordado em Necessaire', 
-    icon: <Briefcase className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, 
+    icon: React.createElement(Briefcase, { className: "w-5 h-5 md:w-7 md:h-7 text-gray-700", 'aria-hidden': "true" }), 
     path: '/portfolio/bordado-necessaire', 
     type: 'portfolio' 
   }
