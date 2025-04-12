@@ -1,9 +1,8 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { getImageLoading } from '../utils/imageUtils';
 
-// Updated partner list with new images
+// Updated partner list, removing the last four partners
 const partners = [
   {
     name: "Doutor Pet",
@@ -40,22 +39,6 @@ const partners = [
   {
     name: "Aeroclube de Pernambuco",
     logo: "/lovable-uploads/b70c7185-64f1-4f7e-99d4-ebc8cfd42aae.png"
-  },
-  {
-    name: "Parceiro 10",
-    logo: "/lovable-uploads/0a4859ea-7a2a-45c7-ac73-e7f7a709aab4.png"
-  },
-  {
-    name: "Parceiro 11",
-    logo: "/lovable-uploads/01c74faa-daf1-4918-a69a-9de345d8901d.png"
-  },
-  {
-    name: "Parceiro 12",
-    logo: "/lovable-uploads/003b91a9-1518-4429-a0dc-5d95c156106e.png"
-  },
-  {
-    name: "Parceiro 13",
-    logo: "/lovable-uploads/008350e4-cc5b-4f6d-b585-c95707eef535.png"
   }
 ];
 
