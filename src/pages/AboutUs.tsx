@@ -1,8 +1,6 @@
-
 import { MapPin, Phone, Mail, Clock, Heart, Award, Zap, ShoppingBag, Check, Gift } from 'lucide-react';
 import Footer from "../components/Footer";
 import WhatsAppSupport from "../components/WhatsAppSupport";
-
 const AboutUs = () => {
   return <div className="min-h-screen bg-white">
       <main className="pt-24 pb-16 py-0">
@@ -168,10 +166,8 @@ const AboutUs = () => {
                     <div className="flex items-start gap-4">
                       <Zap className="h-5 w-5 text-brand-red shrink-0 mt-1" />
                       <div>
-                        <p className="font-medium text-brand-dark">Entrega Rápida</p>
-                        <p className="text-gray-600">
-                          Para serviços específicos, garantimos um prazo mínimo de entrega de até 1 hora.
-                        </p>
+                        <p className="font-medium text-brand-dark">Alta Qualidade</p>
+                        <p className="text-gray-600">Com serviços específicos, garantimos qualidade na produção para nossos clientes.</p>
                       </div>
                     </div>
                   </div>
@@ -186,5 +182,4 @@ const AboutUs = () => {
       <WhatsAppSupport />
     </div>;
 };
-
 export default AboutUs;
