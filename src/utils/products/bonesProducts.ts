@@ -54,25 +54,26 @@ export const bonesProducts: Product[] = [
   },
   {
     id: 304,
-    name: "Boné Bordado Empresarial",
+    name: "Boné Bordado Logomarca",
     type: "portfolio",
     category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/bone-azul.png",
-    description: "Boné com bordado profissional para sua empresa, perfeito para eventos corporativos e uniformes.",
+    imageUrl: "/lovable-uploads/f32a3878-6a5e-4523-b9ee-0a398883bcf7.png",
+    description: "Boné com bordado de logomarca, perfeito para eventos corporativos e uniformes.",
     price: "Sob consulta",
-    colors: ["Azul", "Preto", "Branco", "Cinza"],
+    colors: ["Preto"],
     sizes: ["Único"],
     rating: 4.9,
     isNew: true,
     features: [
-      "Bordado empresarial de precisão",
+      "Bordado de logomarca",
       "Acabamento profissional",
       "Ajuste confortável",
       "Personalização completa"
     ],
     images: [
-      "/lovable-uploads/bone-azul.png"
+      "/lovable-uploads/f32a3878-6a5e-4523-b9ee-0a398883bcf7.png"
     ],
-    keywords: ["boné", "bordado", "empresarial", "corporativo", "uniforme"]
+    keywords: ["boné", "bordado", "logomarca", "corporativo", "uniforme"]
   }
 ];
+
