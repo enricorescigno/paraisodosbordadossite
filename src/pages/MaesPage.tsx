@@ -1,4 +1,3 @@
-
 import React, { useState, useRef } from 'react';
 import { Gift, Calendar, Instagram, Phone, Facebook, Mail, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -18,21 +17,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useScrollToTop } from '@/hooks/useScrollToTop';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
-// Add Montserrat font
 const fontFamily = `'Montserrat', sans-serif`;
 
-// Animation variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut"
-    }
+    transition: { duration: 0.6, ease: "easeOut" }
   }
 };
 
@@ -40,13 +34,10 @@ const staggerContainer = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.2
-    }
+    transition: { staggerChildren: 0.2 }
   }
 };
 
-// Form schema
 const formSchema = z.object({
   name: z.string().min(3, {
     message: "Nome deve ter pelo menos 3 caracteres.",
@@ -62,9 +53,9 @@ const formSchema = z.object({
 const MaesPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate(); // Add navigation hook
+  const navigate = useNavigate();
   useScrollToTop();
-  
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,27 +66,35 @@ const MaesPage = () => {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // In a real app, you would send this data to your backend
-    console.log(values);
-    
-    // Show success message
     setSubmitted(true);
-    
-    // Show toast notification
-    toast({
-      title: "Inscrição realizada com sucesso!",
-      description: "Você já está participando do sorteio. Boa sorte!",
-    });
 
-    // Navigate to home page after a short delay
-    setTimeout(() => {
-      navigate('/');
-    }, 2000); // 2 seconds delay to show the success message
+    fetch('https://n8n.rfmidias.com.br/webhook-test/form-agtech', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(values),
+    })
+      .then(() => {
+        toast({
+          title: "Inscrição realizada com sucesso!",
+          description: "Você já está participando do sorteio. Boa sorte!",
+        });
+
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      })
+      .catch(() => {
+        toast({
+          title: "Erro ao enviar",
+          description: "Tente novamente mais tarde.",
+          variant: "destructive",
+        });
+        setSubmitted(false);
+      });
   }
 
   return (
     <div className="flex flex-col min-h-screen bg-white" style={{ fontFamily }}>
-      {/* Fixed Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md py-3">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <div className="text-lg font-bold text-brand-red">
@@ -105,19 +104,14 @@ const MaesPage = () => {
               className="h-10 w-auto"
             />
           </div>
-          
           <h1 className="text-center text-xl md:text-2xl font-medium text-brand-red drop-shadow-sm">
             Promoção especial de Dia das Mães
           </h1>
-          
-          <div className="w-16 md:w-24"></div> {/* Spacer for balance */}
+          <div className="w-16 md:w-24"></div>
         </div>
       </header>
 
-      {/* Hero Section with Form */}
-      <section 
-        className="pt-24 md:pt-28 pb-16 bg-gradient-to-b from-pink-50 to-white"
-      >
+      <section className="pt-24 md:pt-28 pb-16 bg-gradient-to-b from-pink-50 to-white">
         <div className="container mx-auto px-4 md:px-6">
           <motion.div 
             className="max-w-3xl mx-auto text-center mb-8"
@@ -131,15 +125,11 @@ const MaesPage = () => {
             >
               Participe do nosso sorteio especial de Dia das Mães!
             </motion.h2>
-            
-            <motion.p 
-              className="text-lg text-gray-700 mb-8"
-              variants={fadeInUp}
-            >
+            <motion.p className="text-lg text-gray-700 mb-8" variants={fadeInUp}>
               Preencha abaixo e concorra a um presente incrível para sua mãe.
             </motion.p>
           </motion.div>
-          
+
           <motion.div 
             ref={formRef}
             className="max-w-md mx-auto bg-white rounded-xl shadow-lg p-6 md:p-8"
@@ -163,7 +153,6 @@ const MaesPage = () => {
                       </FormItem>
                     )}
                   />
-                  
                   <FormField
                     control={form.control}
                     name="email"
@@ -177,7 +166,6 @@ const MaesPage = () => {
                       </FormItem>
                     )}
                   />
-                  
                   <FormField
                     control={form.control}
                     name="phone"
@@ -191,7 +179,6 @@ const MaesPage = () => {
                       </FormItem>
                     )}
                   />
-                  
                   <Button 
                     type="submit" 
                     className="w-full bg-brand-red hover:bg-brand-red/90 text-white py-6 text-lg transition-all duration-300 hover:shadow-lg"
@@ -213,13 +200,11 @@ const MaesPage = () => {
         </div>
       </section>
 
-      {/* How it Works Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-center mb-12">
             Como funciona o sorteio?
           </h2>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <motion.div 
               className="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow"
@@ -237,7 +222,6 @@ const MaesPage = () => {
                 Faça sua inscrição até o dia 11/05/2025 para participar do sorteio
               </p>
             </motion.div>
-            
             <motion.div 
               className="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow"
               whileHover={{ y: -5 }}
@@ -254,7 +238,6 @@ const MaesPage = () => {
                 O sorteio será realizado ao vivo no nosso Instagram em 12/05/2025
               </p>
             </motion.div>
-            
             <motion.div 
               className="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-md transition-shadow"
               whileHover={{ y: -5 }}
@@ -275,7 +258,6 @@ const MaesPage = () => {
         </div>
       </section>
 
-      {/* Footer with Social Links */}
       <footer className="bg-brand-red text-white py-10">
         <div className="container mx-auto px-4">
           <div className="text-center mb-8">
@@ -292,7 +274,6 @@ const MaesPage = () => {
               </a>
             </div>
           </div>
-          
           <div className="text-center">
             <p className="mb-2">Entre em contato via WhatsApp</p>
             <a 
