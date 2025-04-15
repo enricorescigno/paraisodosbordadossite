@@ -1,5 +1,4 @@
-
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import { Gift, Calendar, Instagram, Phone, Facebook, Mail, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { z } from "zod";
@@ -99,11 +98,7 @@ const MaesPage = () => {
       <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md py-3">
         <div className="container mx-auto px-4 flex items-center justify-between">
           <div className="text-lg font-bold text-brand-red">
-            <img 
-              src="/lovable-uploads/b979b6e5-f16a-4720-af22-dd8dc88adc74.png" 
-              alt="Paraíso dos Bordados Logo" 
-              className="h-10 w-auto"
-            />
+            Paraíso dos Bordados
           </div>
           
           <h1 className="text-center text-xl md:text-2xl font-medium text-brand-red drop-shadow-sm">
