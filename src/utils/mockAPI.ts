@@ -1,3 +1,4 @@
+
 // Este arquivo simula uma API para gerenciar produtos e categorias
 
 export interface Category {
@@ -114,7 +115,13 @@ export const getProductsByCategory = (categorySlug: string) => {
   return allProducts.filter(product => {
     // Se for categoria de portfólio, incluir apenas itens de portfólio
     if (isPortfolioCategory) {
-      return product.type === 'portfolio' && product.category.toLowerCase().includes(categorySlug.replace(/-/g, ' '));
+      return product.type === 'portfolio' && (
+        product.category.toLowerCase().includes(categorySlug.replace(/-/g, ' ')) ||
+        (categorySlug === 'bordado-toalha-banho' && 
+         (product.name.toLowerCase().includes('toalha de rosto') || 
+          product.name.toLowerCase().includes('toalha de banho') ||
+          product.category === 'Bordado em Toalha de Banho'))
+      );
     }
     
     // Se for categoria regular, incluir apenas produtos regulares

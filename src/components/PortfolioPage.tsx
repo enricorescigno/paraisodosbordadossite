@@ -75,13 +75,25 @@ const PortfolioPage = () => {
         categoryItems = bonesProducts;
       } else if (categoryPath === 'bordado-toalha-banho') {
         // Filter specifically for toalha de banho items and also include
-        // items that were formerly in the toalha category
-        categoryItems = allProducts.filter(product => 
+        // items that contain "toalha de rosto" in the name or description
+        categoryItems = bordadosProducts.filter(product => 
+          product.type === 'portfolio' &&
+          ((product.category === 'Bordado em Toalha de Banho') || 
+           (product.name.toLowerCase().includes('toalha de rosto')))
+        );
+        
+        // Also add products from allProducts with appropriate categories
+        const additionalItems = allProducts.filter(product => 
           product.type === 'portfolio' &&
           (product.category === 'Bordado em Toalha de Banho' || 
-           product.category === 'Bordado em Toalha' ||
-           product.name.toLowerCase().includes('toalha'))
+           product.name.toLowerCase().includes('toalha') ||
+           product.category.toLowerCase().includes('toalha'))
         );
+        
+        // Combine the items, removing duplicates based on id
+        const combinedItems = [...categoryItems, ...additionalItems];
+        const uniqueItems = Array.from(new Map(combinedItems.map(item => [item.id, item])).values());
+        categoryItems = uniqueItems;
       } else {
         // For other categories, filter from allProducts
         const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
