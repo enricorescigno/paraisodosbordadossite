@@ -133,8 +133,8 @@ const ProductImageGallery = ({
                       e.currentTarget.src = placeholder(category);
                     }
                   }}
-                  // Fix fetchPriority warning by using lowercase
-                  fetchpriority={activeImageIndex === 0 ? "high" : "auto"}
+                  // Use proper camelCase for React props
+                  fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                 />
               </AspectRatio>
             ) : (
