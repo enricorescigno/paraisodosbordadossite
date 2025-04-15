@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 // Bordados Infantis Collection
@@ -49,7 +48,7 @@ export const bordadosInfantisProducts: Product[] = [
   },
   {
     id: 1003,
-    name: "Bordado em Fralda de Tecido - Davi",
+    name: "Bordado em Fralda de Tecido - João Arthur",
     type: "product",
     category: "Bordados Infantis",
     imageUrl: "/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png",
@@ -69,7 +68,7 @@ export const bordadosInfantisProducts: Product[] = [
     images: [
       "/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"
     ],
-    keywords: ["fralda", "tecido", "personalizado", "bebê", "davi", "bordado"]
+    keywords: ["fralda", "tecido", "personalizado", "bebê", "joão arthur", "bordado"]
   },
   {
     id: 1004,
