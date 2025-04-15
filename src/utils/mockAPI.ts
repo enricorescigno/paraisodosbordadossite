@@ -118,8 +118,7 @@ export const getProductsByCategory = (categorySlug: string) => {
       return product.type === 'portfolio' && (
         product.category.toLowerCase().includes(categorySlug.replace(/-/g, ' ')) ||
         (categorySlug === 'bordado-toalha-banho' && 
-         (product.name.toLowerCase().includes('toalha de rosto') || 
-          product.name.toLowerCase().includes('toalha de banho') ||
+         (product.name.toLowerCase().includes('toalha de banho') ||
           product.category === 'Bordado em Toalha de Banho'))
       );
     }

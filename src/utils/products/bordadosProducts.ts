@@ -49,28 +49,6 @@ export const bordadosProducts: Product[] = [
     keywords: ["bolsa", "bordado", "imparáveis", "personalizado"]
   },
   {
-    id: 2003,
-    name: "Bordado em Necessaire + Toalha de Rosto",
-    type: "product",
-    category: "Bordado em Toalha de Banho",
-    imageUrl: "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop",
-    description: "Combo com necessaire e toalha de rosto, ambos com bordado personalizado.",
-    price: "Sob consulta",
-    colors: ["Preto"],
-    sizes: ["Único"],
-    rating: 5.0,
-    isNew: true,
-    features: [
-      "Bordado sofisticado",
-      "Prático e funcional",
-      "Ótima opção para presente"
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop"
-    ],
-    keywords: ["necessaire", "toalha", "bordado", "conjunto", "kit"]
-  },
-  {
     id: 2004,
     name: "Bordado em Bolsas - Brows Evolution",
     type: "product",
@@ -158,21 +136,6 @@ export const bordadosProducts: Product[] = [
     rating: 4.8,
     isNew: true,
     features: ["Bordado personalizado", "Material resistente", "Compacta e funcional", "Design elegante"],
-    images: []
-  },
-  {
-    id: 902,
-    name: "Bordado em Necessaire + Toalha de rosto",
-    type: "portfolio",
-    category: "Bordado em Toalha de Banho",
-    imageUrl: "",
-    description: "Kit com necessaire e toalha bordada. Ideal para presentes personalizados.",
-    price: "Sob consulta",
-    colors: ["Preto"],
-    sizes: ["Único"],
-    rating: 4.9,
-    isNew: true,
-    features: ["Conjunto prático", "Acabamento premium", "Ideal para uso pessoal", "Bordado fino"],
     images: []
   }
 ];

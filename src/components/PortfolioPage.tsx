@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -74,20 +73,18 @@ const PortfolioPage = () => {
         // Use the bonesProducts directly for this category
         categoryItems = bonesProducts;
       } else if (categoryPath === 'bordado-toalha-banho') {
-        // Filter specifically for toalha de banho items and also include
-        // items that contain "toalha de rosto" in the name or description
+        // Filter specifically for toalha de banho items
         categoryItems = bordadosProducts.filter(product => 
           product.type === 'portfolio' &&
-          ((product.category === 'Bordado em Toalha de Banho') || 
-           (product.name.toLowerCase().includes('toalha de rosto')))
+          product.category === 'Bordado em Toalha de Banho'
         );
         
         // Also add products from allProducts with appropriate categories
         const additionalItems = allProducts.filter(product => 
           product.type === 'portfolio' &&
           (product.category === 'Bordado em Toalha de Banho' || 
-           product.name.toLowerCase().includes('toalha') ||
-           product.category.toLowerCase().includes('toalha'))
+           product.name.toLowerCase().includes('toalha de banho') ||
+           product.category.toLowerCase().includes('toalha de banho'))
         );
         
         // Combine the items, removing duplicates based on id

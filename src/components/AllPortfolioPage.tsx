@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
@@ -71,7 +72,13 @@ const AllPortfolioPage = () => {
         new Map(portfolioItems.map(item => [item.id, item])).values()
       );
       
-      setAllPortfolioItems(uniqueProducts);
+      // Filter out the product with ID 2003 and 902 (Bordado em Necessaire + Toalha de Rosto)
+      const filteredProducts = uniqueProducts.filter(product => 
+        product.id !== 2003 && product.id !== 902 && 
+        !product.name.toLowerCase().includes('necessaire + toalha')
+      );
+      
+      setAllPortfolioItems(filteredProducts);
       setLoading(false);
     }, 300);
   }, []);
