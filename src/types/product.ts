@@ -13,6 +13,19 @@ export interface Product {
   sizes?: string[];
   rating?: number;
   isNew?: boolean;
+  isAvailable?: boolean;
+  isCustomizable?: boolean;
+  stockQuantity?: number;
+  minPurchaseQuantity?: number;
+  tags?: string[];
+  featured?: boolean;
+  dimensions?: {
+    width: number;
+    height: number;
+    depth: number;
+    weight: number;
+  };
+  createdAt?: string;
   features?: string[];
   keywords?: string[];
   slug?: string;
