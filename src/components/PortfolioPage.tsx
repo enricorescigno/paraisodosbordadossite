@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -21,7 +22,7 @@ const PORTFOLIO_CATEGORIES: Record<string, string> = {
   'bordado-bolsa': 'Bordado em Bolsa',
   'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordados Infantis',
-  'bordado-toalha-banho': 'Toalhas Infantis',
+  'bordado-toalha-banho': 'Bordado em Toalha de Banho',
   'bordado-toalha': 'Bordado em Toalha',
   'vestuario': 'Bordados em Vestuário'
 };
@@ -67,6 +68,13 @@ const PortfolioPage = () => {
       } else if (categoryPath === 'bordado-bone') {
         // Use the bonesProducts directly for this category
         categoryItems = bonesProducts;
+      } else if (categoryPath === 'bordado-toalha-banho') {
+        // Filter specifically for toalha de banho items
+        categoryItems = allProducts.filter(product => 
+          product.type === 'portfolio' &&
+          (product.category === 'Bordado em Toalha de Banho' || 
+           product.name.toLowerCase().includes('toalha de banho'))
+        );
       } else {
         // For other categories, filter from allProducts
         const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
