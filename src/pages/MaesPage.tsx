@@ -1,22 +1,25 @@
 
-import { useRef, useEffect } from 'react';
-import { Heart, Gift, ArrowDown } from 'lucide-react';
-import { motion, useInView } from 'framer-motion';
+import { useState } from 'react';
+import { Calendar, Instagram, Gift, Phone, Check, Info } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { AppleButton } from '@/components/ui/apple-button';
-import { Card, CardContent, CardFooter } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import ProductsCarousel from '@/components/product/ProductsCarousel';
-import { Product } from '@/types/product';
-import { bonesProducts, bordadosProducts } from '@/utils/productUtils';
-import { getImageLoading } from '@/utils/imageUtils';
 import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { AppleButton } from '@/components/ui/apple-button';
+import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'sonner';
 
-// Use the actual available products for Mother's Day with preloaded state
-const mothersProducts: Product[] = [
-  ...bonesProducts.slice(0, 3),
-  ...bordadosProducts.slice(0, 3)
-];
+// Form schema
+const giveawayFormSchema = z.object({
+  fullName: z.string().min(3, { message: 'Nome deve ter pelo menos 3 caracteres' }),
+  email: z.string().email({ message: 'E-mail inválido' }),
+  phone: z.string().min(11, { message: 'Telefone inválido' }).max(15)
+});
+
+type GiveawayFormValues = z.infer<typeof giveawayFormSchema>;
 
 // Animation variants
 const fadeInUp = {
@@ -25,7 +28,7 @@ const fadeInUp = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.6,
+      duration: 0.5,
       ease: "easeOut"
     }
   }
@@ -42,199 +45,248 @@ const staggerContainer = {
 };
 
 const MaesPage = () => {
-  const productsRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-  const isHeroInView = useInView(heroRef, { once: true });
+  const [formSubmitted, setFormSubmitted] = useState(false);
   useScrollToTop();
   
-  const scrollToProducts = () => {
-    productsRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const form = useForm<GiveawayFormValues>({
+    resolver: zodResolver(giveawayFormSchema),
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: ""
+    }
+  });
 
-  // Preload critical images
-  useEffect(() => {
-    // Preload hero image
-    const heroImage = new Image();
-    heroImage.src = "https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80";
-    
-    // Preload first few product images
-    mothersProducts.slice(0, 2).forEach((product) => {
-      const img = new Image();
-      img.src = product.imageUrl;
-    });
-  }, []);
+  const onSubmit = (data: GiveawayFormValues) => {
+    console.log('Form submitted:', data);
+    // In a real app, you would send this data to a server
+    toast.success("Formulário enviado com sucesso!");
+    setFormSubmitted(true);
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* Hero Section - Optimized */}
-      <section 
-        ref={heroRef}
-        className="relative min-h-[70vh] md:min-h-[80vh] flex items-center"
-      >
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ 
-            backgroundImage: 'url(https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)',
-            backgroundPosition: '75% center' 
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-white/90 to-white/60"></div>
+      {/* Fixed Header */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-brand-red/90 backdrop-blur-sm py-4 shadow-md">
+        <div className="container mx-auto px-4">
+          <h1 className="text-center text-white text-xl md:text-2xl font-medium tracking-tight drop-shadow-sm">
+            Promoção especial de Dia das Mães
+          </h1>
         </div>
-        
-        <div className="container mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+      </header>
+
+      {/* Hero Section with Form */}
+      <section className="pt-24 pb-12 md:pt-28 md:pb-16 bg-gradient-to-b from-red-50 to-white">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
           <motion.div 
-            className="max-w-2xl"
+            className="max-w-lg mx-auto text-center mb-8"
             initial="hidden"
-            animate={isHeroInView ? "visible" : "hidden"}
+            animate="visible"
             variants={staggerContainer}
           >
-            <motion.h1 
-              className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-brand-red mb-4"
+            <motion.h2 
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-brand-red mb-4"
               variants={fadeInUp}
             >
-              Celebre o Dia das Mães com um presente único!
-            </motion.h1>
+              Participe do nosso sorteio especial de Dia das Mães!
+            </motion.h2>
             
             <motion.p 
-              className="text-lg md:text-xl lg:text-2xl text-gray-700 mb-6 md:mb-8"
+              className="text-base md:text-lg text-gray-700 mb-6"
               variants={fadeInUp}
             >
-              Ofereça um toque de elegância e carinho com nossos produtos exclusivos para essa data especial.
+              Preencha abaixo e concorra a um presente incrível para sua mãe.
             </motion.p>
-            
-            <motion.div variants={fadeInUp}>
+          </motion.div>
+          
+          {!formSubmitted ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="max-w-md mx-auto"
+            >
+              <div className="bg-white p-6 rounded-xl shadow-md">
+                <Form {...form}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                    <FormField
+                      control={form.control}
+                      name="fullName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700">Nome completo</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Seu nome completo" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700">E-mail</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="seu@email.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700">Telefone com WhatsApp</FormLabel>
+                          <FormControl>
+                            <Input placeholder="(DDD) 00000-0000" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <AppleButton 
+                      type="submit" 
+                      size="lg" 
+                      className="w-full mt-6 bg-brand-red hover:bg-brand-red/90"
+                    >
+                      Quero participar
+                    </AppleButton>
+                  </form>
+                </Form>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="max-w-md mx-auto bg-white p-8 rounded-xl shadow-md text-center"
+            >
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+                <Check className="h-8 w-8 text-green-600" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Pronto! Você já está participando.</h3>
+              <p className="text-gray-600 mb-4">Boa sorte!</p>
               <AppleButton 
-                size="lg" 
-                className="group bg-[#E30613] hover:bg-[#c00510] text-white px-6 md:px-8 py-3 md:py-4"
-                onClick={scrollToProducts}
+                onClick={() => setFormSubmitted(false)} 
+                variant="outline" 
+                className="mt-2"
               >
-                <span>Ver Produtos</span>
-                <ArrowDown className="ml-2 h-5 w-5 animate-bounce" />
+                Voltar ao formulário
               </AppleButton>
+            </motion.div>
+          )}
+        </div>
+      </section>
+
+      {/* How it Works Section */}
+      <section className="py-12 md:py-16 bg-gray-50">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <motion.h2 
+            className="text-2xl md:text-3xl font-bold text-center text-gray-800 mb-12"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            Como funciona o sorteio?
+          </motion.h2>
+          
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
+            <motion.div 
+              className="bg-white p-6 rounded-xl shadow-sm text-center"
+              variants={fadeInUp}
+            >
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+                <Calendar className="h-8 w-8 text-brand-red" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Inscreva-se até o dia 11/05</h3>
+              <p className="text-gray-600">Preencha o formulário até esta data para garantir sua participação.</p>
+            </motion.div>
+            
+            <motion.div 
+              className="bg-white p-6 rounded-xl shadow-sm text-center"
+              variants={fadeInUp}
+            >
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+                <Instagram className="h-8 w-8 text-brand-red" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Sorteio ao vivo no Instagram</h3>
+              <p className="text-gray-600">O sorteio será realizado ao vivo no Instagram em 12/05.</p>
+            </motion.div>
+            
+            <motion.div 
+              className="bg-white p-6 rounded-xl shadow-sm text-center"
+              variants={fadeInUp}
+            >
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+                <Gift className="h-8 w-8 text-brand-red" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">Entrega do prêmio</h3>
+              <p className="text-gray-600">O prêmio será retirado na loja ou enviado para a ganhadora.</p>
             </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Products Section */}
-      <section 
-        ref={productsRef} 
-        className="py-12 md:py-16 bg-gray-50"
-      >
-        <motion.div 
-          className="container mx-auto px-4 sm:px-6 md:px-8"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <div className="flex items-center justify-between mb-8 md:mb-10">
+      {/* Footer with Social Links */}
+      <footer className="py-10 bg-gray-800 text-white">
+        <div className="container mx-auto px-4 sm:px-6 md:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">Presentes Especiais</h2>
-              <p className="text-gray-600">Seleção exclusiva para o Dia das Mães</p>
+              <h3 className="text-lg font-semibold mb-2">Paraíso dos Bordados</h3>
+              <p className="text-gray-300 text-sm">Presentes especiais para todas as mães</p>
             </div>
             
-            <Heart className="text-[#E30613] h-6 w-6 md:h-8 md:w-8" />
-          </div>
-          
-          {/* Products Carousel - optimized with skeleton loading */}
-          <ProductsCarousel 
-            products={mothersProducts} 
-            whatsappNumber="5511999999999"
-          />
-          
-          {/* Featured Products Grid (for larger screens) - with progressive loading */}
-          <div className="hidden lg:block mt-16">
-            <h3 className="text-2xl font-bold text-gray-800 mb-8">Destaques para Presente</h3>
-            
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              variants={staggerContainer}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.1 }}
-            >
-              {mothersProducts.slice(0, 3).map((product, index) => (
-                <motion.div key={product.id} variants={fadeInUp}>
-                  <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-                    <div className="aspect-square overflow-hidden bg-gray-100">
-                      <img 
-                        src={product.imageUrl} 
-                        alt={product.name} 
-                        className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                        loading={getImageLoading(index < 2)}
-                        width={400}
-                        height={400}
-                      />
-                    </div>
-                    <CardContent className="p-6">
-                      <h4 className="text-xl font-semibold mb-2">{product.name}</h4>
-                      <p className="text-gray-600 mb-4">{product.description}</p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-brand-red font-medium">Solicitar Orçamento</span>
-                        
-                        {product.isNew && (
-                          <span className="bg-[#006400] text-white text-xs px-2 py-1 rounded-full">
-                            Novo
-                          </span>
-                        )}
-                      </div>
-                    </CardContent>
-                    <CardFooter>
-                      <Link 
-                        to={`/produto/${product.id}`} 
-                        className="w-full"
-                      >
-                        <AppleButton 
-                          variant="outline" 
-                          className="w-full border-2 border-[#E30613] text-[#E30613] hover:bg-[#E30613] hover:text-white"
-                        >
-                          <Gift className="h-4 w-4" />
-                          <span>Ver Detalhes</span>
-                        </AppleButton>
-                      </Link>
-                    </CardFooter>
-                  </Card>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Message Section */}
-      <section className="py-12 md:py-16 bg-white">
-        <motion.div 
-          className="container mx-auto px-4 sm:px-6 md:px-8 max-w-4xl text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div 
-            className="p-6 md:p-8 lg:p-12 rounded-2xl"
-            style={{ 
-              background: "linear-gradient(to right, rgba(227, 6, 19, 0.05), rgba(0, 100, 0, 0.05))" 
-            }}
-          >
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6">Mensagem Especial</h2>
-            
-            <p className="text-lg md:text-xl lg:text-2xl text-gray-700 italic mb-6 md:mb-8">
-              "Neste Dia das Mães, ofereça o presente que demonstra o seu carinho. 
-              Personalize e surpreenda com o Paraíso dos Bordados."
-            </p>
-            
-            <Link to="/produtos">
-              <AppleButton 
-                size="lg" 
-                className="mt-4 bg-[#006400] hover:bg-[#005000] text-white"
+            <div className="flex items-center gap-4">
+              <a 
+                href="https://instagram.com/paraisodosbordados" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                aria-label="Instagram"
               >
-                Explore Nossa Coleção
-              </AppleButton>
-            </Link>
+                <Instagram className="h-5 w-5" />
+              </a>
+              
+              <a 
+                href="https://wa.me/5581995970776" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+                aria-label="WhatsApp"
+              >
+                <Phone className="h-5 w-5" />
+              </a>
+              
+              <Link
+                to="/contato"
+                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+              >
+                <Info className="h-4 w-4" />
+                <span>Mais informações</span>
+              </Link>
+            </div>
           </div>
-        </motion.div>
-      </section>
+          
+          <div className="mt-8 pt-6 border-t border-gray-700 text-center text-gray-400 text-sm">
+            <p>© 2024 Paraíso dos Bordados. Todos os direitos reservados.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
