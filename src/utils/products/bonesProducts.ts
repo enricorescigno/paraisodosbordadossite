@@ -76,4 +76,3 @@ export const bonesProducts: Product[] = [
     keywords: ["boné", "bordado", "logomarca", "corporativo", "uniforme"]
   }
 ];
-

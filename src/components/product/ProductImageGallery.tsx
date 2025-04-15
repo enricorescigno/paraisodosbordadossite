@@ -124,14 +124,17 @@ const ProductImageGallery = ({
                     !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
                   }`}
                   style={imageStyle}
-                  loading={getImageLoading(activeImageIndex === 0)}
+                  loading={getImageLoading(activeImageIndex === 0 ? true : false)}
                   onLoad={() => handleImageLoaded(activeImageIndex)}
                   onError={(e) => {
                     console.log("Image error for:", images[activeImageIndex]);
                     setImageError(true);
-                    e.currentTarget.src = placeholder(category);
+                    if (e.currentTarget) {
+                      e.currentTarget.src = placeholder(category);
+                    }
                   }}
-                  fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
+                  // Fix fetchPriority warning by using lowercase
+                  fetchpriority={activeImageIndex === 0 ? "high" : "auto"}
                 />
               </AspectRatio>
             ) : (
@@ -201,6 +204,7 @@ const ProductImageGallery = ({
                     }`}
                     loading="lazy"
                     onLoad={() => handleImageLoaded(index)}
+                    onError={() => console.log("Thumbnail error loading:", img)}
                   />
                 </motion.button>
               ))}
