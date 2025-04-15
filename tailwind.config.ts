@@ -139,7 +139,6 @@ export default {
 			},
 			fontFamily: {
 				sans: [
-					'Montserrat',
 					'Inter',
 					'system-ui',
 					'-apple-system',
