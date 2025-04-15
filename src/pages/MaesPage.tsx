@@ -1,4 +1,3 @@
-
 import { useState, useRef } from 'react';
 import { Gift, Calendar, Instagram, Phone, Facebook, Mail, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -18,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useScrollToTop } from '@/hooks/useScrollToTop';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 // Add Montserrat font
 const fontFamily = `'Montserrat', sans-serif`;
@@ -61,6 +61,7 @@ const formSchema = z.object({
 const MaesPage = () => {
   const [submitted, setSubmitted] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate(); // Add navigation hook
   useScrollToTop();
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -84,6 +85,11 @@ const MaesPage = () => {
       title: "Inscrição realizada com sucesso!",
       description: "Você já está participando do sorteio. Boa sorte!",
     });
+
+    // Navigate to home page after a short delay
+    setTimeout(() => {
+      navigate('/');
+    }, 2000); // 2 seconds delay to show the success message
   }
 
   return (
