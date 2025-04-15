@@ -52,20 +52,22 @@ export const bordadosInfantisProducts: Product[] = [
     name: "Bordado em Fralda de Tecido - Davi",
     type: "product",
     category: "Bordados Infantis",
-    imageUrl: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png",
     description: "Fralda personalizada com bordado de nome, perfeito para o dia a dia do bebê.",
     price: "Sob consulta",
-    colors: ["Verde", "Branco"],
+    colors: ["Verde", "Branco", "Azul"],
     sizes: ["Único"],
     rating: 5.0,
     isNew: true,
     features: [
       "Personalização exclusiva",
       "Ideal para bebês",
-      "Conforto e maciez"
+      "Conforto e maciez",
+      "Bordado feito à mão",
+      "Material 100% algodão"
     ],
     images: [
-      "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop"
+      "/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"
     ],
     keywords: ["fralda", "tecido", "personalizado", "bebê", "davi", "bordado"]
   },

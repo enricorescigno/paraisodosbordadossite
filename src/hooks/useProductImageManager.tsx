@@ -9,7 +9,8 @@ export const colorToImageMap: Record<string, string[]> = {
   "Marrom": ["/lovable-uploads/3bb94c02-6771-46d8-8e2f-efe9b267c391.png"],
   "Rosa": ["/lovable-uploads/0f23a8fc-2cfb-4961-a2d3-47b09c4ec29c.png"],
   "Verde": ["/lovable-uploads/3bda6c77-533b-4d79-9a50-fbd946f1cbd6.png"],
-  "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"]
+  "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"],
+  "Azul": ["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]
 };
 
 export const useProductImageManager = (product: Product | null, selectedColor: string) => {
@@ -19,6 +20,14 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   // Initialize images based on product data
   const initializeImages = (product: Product) => {
     if (!product) return;
+    
+    // Special handling for product ID 1003 (Bordado em Fralda de Tecido - Davi)
+    if (product.id.toString() === "1003") {
+      const images = ["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"];
+      setCurrentImages(images);
+      setActiveImageIndex(0);
+      return;
+    }
     
     if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
       const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
@@ -52,6 +61,10 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
           setCurrentImages([product.imageUrl]);
           setActiveImageIndex(0);
         }
+      } else if (product.id.toString() === "1003") {
+        // Special case for product 1003 (Bordado em Fralda de Tecido - Davi)
+        setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
+        setActiveImageIndex(0);
       } else {
         initializeImages(product);
       }
@@ -70,6 +83,13 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setActiveImageIndex(0);
         return;
       }
+    }
+    
+    // Special handling for product 1003 (Bordado em Fralda de Tecido - Davi)
+    if (product.id.toString() === "1003" && selectedColor === "Azul") {
+      setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
+      setActiveImageIndex(0);
+      return;
     }
     
     if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
@@ -95,7 +115,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       'Bordado em Bolsa': '/images/placeholders/bag.jpg',
       'Jalecos': '/images/placeholders/uniform.jpg',
       'Roupões Infantis': '/images/placeholders/kids-embroidery.jpg',
-      'Toalhas Infantis': '/images/placeholders/towel.jpg'
+      'Toalhas Infantis': '/images/placeholders/towel.jpg',
+      'Bordados Infantis': '/images/placeholders/kids-embroidery.jpg'
     };
     
     return placeholders[category] || 'https://via.placeholder.com/500x500?text=Produto';
