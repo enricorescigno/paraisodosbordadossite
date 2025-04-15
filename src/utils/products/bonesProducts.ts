@@ -6,7 +6,7 @@ export const bonesProducts: Product[] = [
   {
     id: 300,
     name: "Boné Bordado Frase",
-    type: "product",
+    type: "portfolio",
     category: "Bonés Bordados",
     imageUrl: "/lovable-uploads/bone-vermelho.png",
     description: "Boné casual com bordado, confeccionado em tecido macio e ajuste regulável.",
@@ -32,7 +32,7 @@ export const bonesProducts: Product[] = [
   {
     id: 303,
     name: "Boné Bordado Logomarca Geométrica",
-    type: "product",
+    type: "portfolio",
     category: "Bonés Bordados",
     imageUrl: "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png",
     description: "Boné com bordado de logomarca geométrica, design exclusivo e diferenciado com estilo contemporâneo.",
@@ -51,5 +51,28 @@ export const bonesProducts: Product[] = [
       "/lovable-uploads/c4a8d0f3-ea47-4a53-9ddf-94cb81607643.png"
     ],
     keywords: ["boné", "bordado", "logomarca", "geométrico", "exclusivo"]
+  },
+  {
+    id: 304,
+    name: "Boné Bordado Empresarial",
+    type: "portfolio",
+    category: "Bonés Bordados",
+    imageUrl: "/lovable-uploads/bone-azul.png",
+    description: "Boné com bordado profissional para sua empresa, perfeito para eventos corporativos e uniformes.",
+    price: "Sob consulta",
+    colors: ["Azul", "Preto", "Branco", "Cinza"],
+    sizes: ["Único"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Bordado empresarial de precisão",
+      "Acabamento profissional",
+      "Ajuste confortável",
+      "Personalização completa"
+    ],
+    images: [
+      "/lovable-uploads/bone-azul.png"
+    ],
+    keywords: ["boné", "bordado", "empresarial", "corporativo", "uniforme"]
   }
 ];

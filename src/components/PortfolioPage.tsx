@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -5,6 +6,7 @@ import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { allProducts } from '../utils/productUtils';
 import { bordadosProducts, bordadosInfantisProducts, bordadoVestuarioProducts } from '../utils/products';
+import { bonesProducts } from '../utils/products/bonesProducts';
 import { Product } from '../types/product';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -50,6 +52,8 @@ const PortfolioPage = () => {
   
   useEffect(() => {
     setLoading(true);
+    console.log("Categoria atual:", categoryPath);
+    
     setTimeout(() => {
       // Start with empty collection
       let categoryItems: Product[] = [];
@@ -60,10 +64,8 @@ const PortfolioPage = () => {
       } else if (categoryPath === 'bordado-infantis') {
         categoryItems = bordadosInfantisProducts;
       } else if (categoryPath === 'bordado-bone') {
-        categoryItems = bordadosProducts.filter(product => 
-          product.category.toLowerCase().includes('boné') || 
-          product.category.toLowerCase().includes('bone')
-        );
+        // Use the bonesProducts directly for this category
+        categoryItems = bonesProducts;
       } else {
         // For other categories, filter from allProducts
         const matchingCategory = PORTFOLIO_CATEGORIES[categoryPath] || '';
@@ -94,6 +96,7 @@ const PortfolioPage = () => {
         }
       }
 
+      console.log("Itens encontrados:", categoryItems.length);
       setPortfolioItems(categoryItems);
       setFilteredItems(categoryItems);
       setLoading(false);
