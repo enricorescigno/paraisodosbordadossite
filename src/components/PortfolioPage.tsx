@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -23,6 +22,7 @@ const PORTFOLIO_CATEGORIES: Record<string, string> = {
   'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordados Infantis',
   'bordado-toalha-banho': 'Toalhas Infantis',
+  'bordado-toalha': 'Bordado em Toalha',
   'vestuario': 'Bordados em Vestuário'
 };
 
@@ -34,6 +34,7 @@ const categoryTitles: Record<string, string> = {
   'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordado Infantil',
   'bordado-toalha-banho': 'Bordado em Toalha de Banho',
+  'bordado-toalha': 'Bordado em Toalha',
   'vestuario': 'Bordados em Vestuário'
 };
 

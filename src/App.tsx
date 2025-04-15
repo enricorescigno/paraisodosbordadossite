@@ -66,6 +66,7 @@ function App() {
               <Route path="/portfolio/bordado-vestuario" element={<PortfolioPage />} />
               <Route path="/portfolio/bordado-infantis" element={<PortfolioPage />} />
               <Route path="/portfolio/bordado-toalha-banho" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-toalha" element={<PortfolioPage />} />
 
               {/* Product Detail Page */}
               <Route path="/produto/:productId" element={<ProductDetailPage />} />

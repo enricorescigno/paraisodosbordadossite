@@ -113,6 +113,11 @@ const MenubarNav = () => {
                       Bordado em Toalha de Banho
                     </Link>
                   </li>
+                  <li>
+                    <Link to="/portfolio/bordado-toalha" className="block text-sm text-gray-700 hover:text-brand-red transition-colors">
+                      Bordado em Toalha
+                    </Link>
+                  </li>
                 </ul>
               </div>
               <div className="col-span-2 mt-4 pt-4 border-t border-gray-100">

@@ -51,7 +51,7 @@ export const categories: Category[] = [
     id: 5,
     name: "Bordado em Toalha",
     icon: "paintbrush",
-    slug: "bordado-toalha-banho"
+    slug: "bordado-toalha"
   },
   {
     id: 6,
@@ -94,6 +94,12 @@ export const categories: Category[] = [
     name: "Pantufas",
     icon: "footprints",
     slug: "pantufa"
+  },
+  {
+    id: 13,
+    name: "Bordado em Toalha de Banho",
+    icon: "paintbrush",
+    slug: "bordado-toalha-banho"
   }
 ];
 
