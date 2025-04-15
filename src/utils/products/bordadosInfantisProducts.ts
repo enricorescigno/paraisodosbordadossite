@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Bordados Infantis Collection
@@ -54,7 +55,7 @@ export const bordadosInfantisProducts: Product[] = [
     imageUrl: "/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png",
     description: "Fralda personalizada com bordado de nome, perfeito para o dia a dia do bebê.",
     price: "Sob consulta",
-    colors: ["Verde", "Branco", "Azul"],
+    colors: ["Branco"],
     sizes: ["Único"],
     rating: 5.0,
     isNew: true,
