@@ -1,8 +1,9 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { getImageLoading } from '../utils/imageUtils';
 
-// Updated partner list, removing the last four partners
+// Updated partner list with the new partners added
 const partners = [
   {
     name: "Doutor Pet",
@@ -39,6 +40,14 @@ const partners = [
   {
     name: "Aeroclube de Pernambuco",
     logo: "/lovable-uploads/b70c7185-64f1-4f7e-99d4-ebc8cfd42aae.png"
+  },
+  {
+    name: "Probene Nutrition",
+    logo: "/lovable-uploads/1e9fd183-f02b-4c3c-ac2d-57b3ea3fa193.png"
+  },
+  {
+    name: "YRTes",
+    logo: "/lovable-uploads/435abcfc-6228-4790-914a-39af49035795.png"
   }
 ];
 
