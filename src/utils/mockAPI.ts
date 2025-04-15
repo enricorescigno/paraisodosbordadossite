@@ -1,4 +1,3 @@
-
 // Este arquivo simula uma API para gerenciar produtos e categorias
 
 export interface Category {
@@ -49,9 +48,9 @@ export const categories: Category[] = [
   },
   {
     id: 5,
-    name: "Bordado em Toalha",
-    icon: "paintbrush",
-    slug: "bordado-toalha"
+    name: "Bordado em Toalha de Banho",
+    icon: "bath",
+    slug: "bordado-toalha-banho"
   },
   {
     id: 6,
@@ -94,12 +93,6 @@ export const categories: Category[] = [
     name: "Pantufas",
     icon: "footprints",
     slug: "pantufa"
-  },
-  {
-    id: 13,
-    name: "Bordado em Toalha de Banho",
-    icon: "bath",
-    slug: "bordado-toalha-banho"
   }
 ];
 

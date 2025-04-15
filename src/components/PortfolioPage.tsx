@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
@@ -23,7 +23,6 @@ const PORTFOLIO_CATEGORIES: Record<string, string> = {
   'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordados Infantis',
   'bordado-toalha-banho': 'Bordado em Toalha de Banho',
-  'bordado-toalha': 'Bordado em Toalha',
   'vestuario': 'Bordados em Vestuário'
 };
 
@@ -35,12 +34,12 @@ const categoryTitles: Record<string, string> = {
   'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordado Infantil',
   'bordado-toalha-banho': 'Bordado em Toalha de Banho',
-  'bordado-toalha': 'Bordado em Toalha',
   'vestuario': 'Bordados em Vestuário'
 };
 
 const PortfolioPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [portfolioItems, setPortfolioItems] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [filteredItems, setFilteredItems] = useState<Product[]>([]);
@@ -53,6 +52,12 @@ const PortfolioPage = () => {
   const categoryTitle = categoryTitles[categoryPath] || categoryPath;
   
   useEffect(() => {
+    // Redirect from old "bordado-toalha" path to "bordado-toalha-banho"
+    if (categoryPath === 'bordado-toalha') {
+      navigate('/portfolio/bordado-toalha-banho', { replace: true });
+      return;
+    }
+    
     setLoading(true);
     console.log("Categoria atual:", categoryPath);
     
@@ -69,11 +74,13 @@ const PortfolioPage = () => {
         // Use the bonesProducts directly for this category
         categoryItems = bonesProducts;
       } else if (categoryPath === 'bordado-toalha-banho') {
-        // Filter specifically for toalha de banho items
+        // Filter specifically for toalha de banho items and also include
+        // items that were formerly in the toalha category
         categoryItems = allProducts.filter(product => 
           product.type === 'portfolio' &&
           (product.category === 'Bordado em Toalha de Banho' || 
-           product.name.toLowerCase().includes('toalha de banho'))
+           product.category === 'Bordado em Toalha' ||
+           product.name.toLowerCase().includes('toalha'))
         );
       } else {
         // For other categories, filter from allProducts
@@ -110,7 +117,7 @@ const PortfolioPage = () => {
       setFilteredItems(categoryItems);
       setLoading(false);
     }, 300);
-  }, [location.pathname, categoryPath]);
+  }, [location.pathname, categoryPath, navigate]);
   
   return (
     <motion.div 

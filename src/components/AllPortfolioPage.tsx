@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
@@ -22,7 +21,6 @@ const PORTFOLIO_CATEGORIES = {
   'Bordado em Vestuário': 'bordado-vestuario',
   'Bordado Infantis': 'bordado-infantis',
   'Bordado em Toalha de Banho': 'bordado-toalha-banho',
-  'Bordado em Toalha': 'bordado-toalha',
   'Bonés Bordados': 'bordado-bone',
   'Bordado': 'bordado-bone',
   'Camisetas': 'bordado-vestuario',
@@ -32,7 +30,7 @@ const PORTFOLIO_CATEGORIES = {
   'Roupões Infantis': 'bordado-infantis',
   'Toalhas Infantis': 'bordado-toalha-banho',
   'Bordados em Bolsas': 'bordado-bolsa',
-  'Bordados em Toalhas': 'bordado-toalha',
+  'Bordados em Toalhas': 'bordado-toalha-banho',
   'Bordados em Vestuário': 'bordado-vestuario',
   'Bordados Infantis': 'bordado-infantis'
 };

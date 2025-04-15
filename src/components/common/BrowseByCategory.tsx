@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Shirt, Paintbrush, Baby, Briefcase, ShoppingBag, Palette, BedDouble, Utensils, Home, Bath } from 'lucide-react';
@@ -112,7 +111,6 @@ const allCategories: Category[] = [
   { id: 'bordado-infantis', name: 'Bordado Infantil', icon: <Baby className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-infantis', type: 'portfolio' },
   { id: 'bordado-bolsa', name: 'Bordado em Bolsa', icon: <ShoppingBag className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-bolsa', type: 'portfolio' },
   { id: 'bordado-necessaire', name: 'Bordado em Necessaire', icon: <Briefcase className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-necessaire', type: 'portfolio' },
-  { id: 'bordado-toalha', name: 'Bordado em Toalha', icon: <Paintbrush className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-toalha', type: 'portfolio' },
   { id: 'bordado-toalha-banho', name: 'Bordado em Toalha de Banho', icon: <Bath className="w-5 h-5 md:w-7 md:h-7 text-gray-700" aria-hidden="true" />, path: '/portfolio/bordado-toalha-banho', type: 'portfolio' }
 ];
 
