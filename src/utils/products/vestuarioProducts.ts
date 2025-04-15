@@ -232,7 +232,7 @@ export const bordadoVestuarioProducts: Product[] = [
   {
     id: 202,
     name: "Bordado em Camisa - Impcatto",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Vestuário",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado de logo em camisa para a empresa Impcatto.",
@@ -254,7 +254,7 @@ export const bordadoVestuarioProducts: Product[] = [
   {
     id: 203,
     name: "Bordado em Fardamento - Pet Dream",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Fardamentos",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado do logo Pet Dream em fardamento para hospital veterinário.",
@@ -276,7 +276,7 @@ export const bordadoVestuarioProducts: Product[] = [
   {
     id: 204,
     name: "Bordado em Camisa - Girassol",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Vestuário",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado com design de girassol na camisa.",
@@ -298,7 +298,7 @@ export const bordadoVestuarioProducts: Product[] = [
   {
     id: 205,
     name: "Bordado em Fardamento para Times de Futebol",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Fardamentos",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado em fardamento para diversos times de futebol.",
@@ -320,7 +320,7 @@ export const bordadoVestuarioProducts: Product[] = [
   {
     id: 206,
     name: "Bordado em Fardamento - Biscoitos Feitos por Nós",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Fardamentos",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado do logo 'Biscoitos Feitos Por Nós' em fardamento.",
@@ -342,7 +342,7 @@ export const bordadoVestuarioProducts: Product[] = [
   {
     id: 207,
     name: "Bordado em Camisa - Capibaribe",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Vestuário",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado de logo do time Capibaribe em uma camisa.",
@@ -364,7 +364,7 @@ export const bordadoVestuarioProducts: Product[] = [
   {
     id: 208,
     name: "Bordado em Camisa - Doutor Pet",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Vestuário",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado com o logo Doutor Pet na camisa.",
@@ -386,7 +386,7 @@ export const bordadoVestuarioProducts: Product[] = [
   {
     id: 209,
     name: "Bordado em Avental",
-    type: "product",
+    type: "portfolio",
     category: "Bordado em Vestuário",
     imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
     description: "Bordado de logo ou texto em avental.",
