@@ -48,6 +48,11 @@ const ProductCard = ({
 
   // Function to get the proper image
   const getImageUrl = () => {
+    // Special case for Bordado em Toalha de Banho product
+    if (Number(id) === 2010) {
+      return "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png";
+    }
+    
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
       return images["Branco"]?.[0]; // Use first image of default color
     }

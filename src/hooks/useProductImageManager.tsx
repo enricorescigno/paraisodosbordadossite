@@ -29,6 +29,17 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
+    // Special handling for product ID 2010 (Bordado em Toalha de Banho)
+    if (product.id.toString() === "2010") {
+      const images = [
+        "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
+        "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
+      ];
+      setCurrentImages(images);
+      setActiveImageIndex(0);
+      return;
+    }
+    
     if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
       const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
       const colorImages = defaultColor && product.images[defaultColor] ? product.images[defaultColor] : [];
@@ -65,6 +76,13 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         // Special case for product 1003 (Bordado em Fralda de Tecido - Davi)
         setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
         setActiveImageIndex(0);
+      } else if (product.id.toString() === "2010") {
+        // Special case for product 2010 (Bordado em Toalha de Banho)
+        setCurrentImages([
+          "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
+          "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
+        ]);
+        setActiveImageIndex(0);
       } else {
         initializeImages(product);
       }
@@ -88,6 +106,16 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     // Special handling for product 1003 (Bordado em Fralda de Tecido - Davi)
     if (product.id.toString() === "1003" && selectedColor === "Azul") {
       setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Special handling for product 2010 (Bordado em Toalha de Banho)
+    if (product.id.toString() === "2010") {
+      setCurrentImages([
+        "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
+        "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
+      ]);
       setActiveImageIndex(0);
       return;
     }
