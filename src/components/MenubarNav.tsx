@@ -133,12 +133,6 @@ const MenubarNav = () => {
               Sobre Nós
             </Link>
           </NavigationMenuItem>
-
-          <NavigationMenuItem>
-            <Link to="/dias-das-maes" className="text-sm text-brand-dark hover:text-brand-red transition-colors duration-200">
-              Dia das Mães
-            </Link>
-          </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
     </div>;
