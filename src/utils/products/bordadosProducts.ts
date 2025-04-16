@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Bordados em Bolsas Collection
@@ -139,11 +140,11 @@ export const bordadosProducts: Product[] = [
   },
   {
     id: 2010,
-    name: "Bordado em Toalha de Banho",
+    name: "Bordado em Toalha",
     type: "portfolio",
-    category: "Bordado em Toalha de Banho",
+    category: "Bordado em Toalha",
     imageUrl: "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
-    description: "Toalhas de banho com bordado personalizado, perfeitas para presentear ou para uso próprio. Feitas com algodão de alta qualidade e bordados elegantes.",
+    description: "Toalhas com bordado personalizado, perfeitas para presentear ou para uso próprio. Feitas com algodão de alta qualidade e bordados elegantes.",
     price: "Sob consulta",
     colors: ["Branco"],
     sizes: ["Único"],

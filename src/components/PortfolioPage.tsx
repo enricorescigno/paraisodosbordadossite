@@ -21,7 +21,7 @@ const PORTFOLIO_CATEGORIES: Record<string, string> = {
   'bordado-bolsa': 'Bordado em Bolsa',
   'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordados Infantis',
-  'bordado-toalha-banho': 'Bordado em Toalha de Banho',
+  'bordado-toalha-banho': 'Bordado em Toalha',
   'vestuario': 'Bordados em Vestuário'
 };
 
@@ -32,7 +32,7 @@ const categoryTitles: Record<string, string> = {
   'bordado-bolsa': 'Bordado em Bolsa',
   'bordado-vestuario': 'Bordado em Vestuário',
   'bordado-infantis': 'Bordado Infantil',
-  'bordado-toalha-banho': 'Bordado em Toalha de Banho',
+  'bordado-toalha-banho': 'Bordado em Toalha',
   'vestuario': 'Bordados em Vestuário'
 };
 

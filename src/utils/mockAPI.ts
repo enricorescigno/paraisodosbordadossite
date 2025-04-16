@@ -49,7 +49,7 @@ export const categories: Category[] = [
   },
   {
     id: 5,
-    name: "Bordado em Toalha de Banho",
+    name: "Bordado em Toalha",
     icon: "bath",
     slug: "bordado-toalha-banho"
   },
@@ -118,8 +118,8 @@ export const getProductsByCategory = (categorySlug: string) => {
       return product.type === 'portfolio' && (
         product.category.toLowerCase().includes(categorySlug.replace(/-/g, ' ')) ||
         (categorySlug === 'bordado-toalha-banho' && 
-         (product.name.toLowerCase().includes('toalha de banho') ||
-          product.category === 'Bordado em Toalha de Banho'))
+         (product.name.toLowerCase().includes('toalha') ||
+          product.category === 'Bordado em Toalha'))
       );
     }
     
@@ -148,12 +148,12 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Branco", "Bege"]
   },
-  // Updating existing or adding new Bordado em Toalha de Banho product
+  // Updating existing or adding new Bordado em Toalha product
   {
     id: 2010,
-    name: "Bordado em Toalha de Banho",
-    description: "Toalhas de banho com bordado personalizado, perfeitas para presentear ou para uso próprio. Feitas com algodão de alta qualidade e bordados elegantes.",
-    category: "Bordado em Toalha de Banho",
+    name: "Bordado em Toalha",
+    description: "Toalhas com bordado personalizado, perfeitas para presentear ou para uso próprio. Feitas com algodão de alta qualidade e bordados elegantes.",
+    category: "Bordado em Toalha",
     images: [
       "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
       "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"

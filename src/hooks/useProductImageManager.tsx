@@ -29,7 +29,7 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Special handling for product ID 2010 (Bordado em Toalha de Banho)
+    // Special handling for product ID 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
       const images = [
         "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
@@ -77,7 +77,7 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
         setActiveImageIndex(0);
       } else if (product.id.toString() === "2010") {
-        // Special case for product 2010 (Bordado em Toalha de Banho)
+        // Special case for product 2010 (Bordado em Toalha)
         setCurrentImages([
           "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
           "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
@@ -110,7 +110,7 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Special handling for product 2010 (Bordado em Toalha de Banho)
+    // Special handling for product 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
       setCurrentImages([
         "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
@@ -141,6 +141,7 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       'Bonés Bordados': '/images/placeholders/cap.jpg',
       'Bordado em Necessaire': '/images/placeholders/necessaire.jpg',
       'Bordado em Bolsa': '/images/placeholders/bag.jpg',
+      'Bordado em Toalha': '/images/placeholders/towel.jpg',
       'Jalecos': '/images/placeholders/uniform.jpg',
       'Roupões Infantis': '/images/placeholders/kids-embroidery.jpg',
       'Toalhas Infantis': '/images/placeholders/towel.jpg',

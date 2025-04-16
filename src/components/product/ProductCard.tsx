@@ -48,7 +48,7 @@ const ProductCard = ({
 
   // Function to get the proper image
   const getImageUrl = () => {
-    // Special case for Bordado em Toalha de Banho product
+    // Special case for Bordado em Toalha product
     if (Number(id) === 2010) {
       return "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png";
     }
