@@ -18,6 +18,12 @@ export interface Product {
   isNew?: boolean;
   colors?: string[];
   sizes?: string[];
+  price?: string;
+  features?: string[];
+  rating?: number;
+  imageUrl?: string;
+  originalPrice?: string;
+  discount?: string;
 }
 
 // Categorias de produtos
