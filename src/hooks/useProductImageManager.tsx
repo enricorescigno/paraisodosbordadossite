@@ -29,7 +29,13 @@ export const colorToImageMap: Record<string, string[]> = {
     "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
     "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
   ],
-  "Amarelo": ["/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png"] // Fralda Amarela
+  "Amarelo": ["/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png"], // Fralda Amarela
+  "Cinza": [
+    "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
+    "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
+    "/lovable-uploads/57491ecd-9620-4c38-be43-1d61ed97c5ae.png",
+    "/lovable-uploads/bf315398-f5d5-4e34-a642-0ff432375a70.png"
+  ]
 };
 
 export const useProductImageManager = (product: Product | null, selectedColor: string) => {
@@ -68,6 +74,18 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     if (product.id.toString() === "1003") {
       const images = ["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"];
       setCurrentImages(images);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Special handling for product ID 1004 (Bordado em Macacão - Leãozinho Safari)
+    if (product.id.toString() === "1004") {
+      setCurrentImages([
+        "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
+        "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
+        "/lovable-uploads/57491ecd-9620-4c38-be43-1d61ed97c5ae.png",
+        "/lovable-uploads/bf315398-f5d5-4e34-a642-0ff432375a70.png"
+      ]);
       setActiveImageIndex(0);
       return;
     }
@@ -138,6 +156,16 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
           "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png",
           "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png",
           "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"
+        ]);
+        setActiveImageIndex(0);
+        return;
+      } else if (product.id.toString() === "1004") {
+        // Special case for product 1004 - Bordado em Macacão - Leãozinho Safari
+        setCurrentImages([
+          "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
+          "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
+          "/lovable-uploads/57491ecd-9620-4c38-be43-1d61ed97c5ae.png",
+          "/lovable-uploads/bf315398-f5d5-4e34-a642-0ff432375a70.png"
         ]);
         setActiveImageIndex(0);
         return;
@@ -220,6 +248,18 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
           "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"
         ]);
       }
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for product 1004 (Bordado em Macacão - Leãozinho Safari)
+    if (product.id.toString() === "1004" && selectedColor === "Cinza") {
+      setCurrentImages([
+        "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
+        "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
+        "/lovable-uploads/57491ecd-9620-4c38-be43-1d61ed97c5ae.png",
+        "/lovable-uploads/bf315398-f5d5-4e34-a642-0ff432375a70.png"
+      ]);
       setActiveImageIndex(0);
       return;
     }

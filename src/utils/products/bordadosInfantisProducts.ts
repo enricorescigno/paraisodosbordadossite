@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Bordados Infantis Collection
@@ -85,22 +86,28 @@ export const bordadosInfantisProducts: Product[] = [
     name: "Bordado em Macacão - Leãozinho Safari",
     type: "product",
     category: "Bordados Infantis",
-    imageUrl: "https://images.unsplash.com/photo-1522771930-78848d9293e8?q=80&w=500&auto=format&fit=crop",
-    description: "Macacão infantil com bordado de leãozinho, ideal para os pequenos aventureiros.",
+    imageUrl: "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
+    description: "Macacão infantil com bordado de leãozinho, ideal para os pequenos aventureiros. Bordado personalizado com nome e desenho de leão.",
     price: "Sob consulta",
-    colors: ["Cinza", "Bege"],
+    colors: ["Cinza"],
     sizes: ["P", "M", "G"],
     rating: 4.8,
     isNew: true,
     features: [
       "Bordado encantador de leãozinho",
-      "Tecido confortável",
+      "Personalização com nome opcional",
+      "Tecido confortável e fresco",
+      "Botões de madeira decorativos",
+      "Ideal para presentes",
       "Perfeito para o clima quente"
     ],
     images: [
-      "https://images.unsplash.com/photo-1522771930-78848d9293e8?q=80&w=500&auto=format&fit=crop"
+      "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
+      "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
+      "/lovable-uploads/57491ecd-9620-4c38-be43-1d61ed97c5ae.png",
+      "/lovable-uploads/bf315398-f5d5-4e34-a642-0ff432375a70.png"
     ],
-    keywords: ["macacão", "infantil", "leão", "safari", "bordado"]
+    keywords: ["macacão", "infantil", "leão", "safari", "bordado", "personalizado"]
   },
   {
     id: 1005,

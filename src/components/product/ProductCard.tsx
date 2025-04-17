@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -56,6 +57,13 @@ const ProductCard = ({
       return "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png";
     }
     
+    // Special case for Bordado em Macacão - Leãozinho Safari
+    if (Number(id) === 1004) {
+      if (images && Array.isArray(images) && images.length > 0) {
+        return "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png";
+      }
+    }
+    
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
       return images["Branco"]?.[0]; // Use first image of default color
     }
@@ -110,7 +118,7 @@ const ProductCard = ({
             target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
           }}
         />
-        {(isNew || Number(id) === 204) && (
+        {(isNew || Number(id) === 204 || Number(id) === 1004) && (
           <div className="absolute top-3 right-3">
             <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
               Novo
