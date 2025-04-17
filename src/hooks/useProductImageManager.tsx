@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
@@ -22,7 +21,9 @@ export const colorToImageMap: Record<string, string[]> = {
   "Verde Água": [
     "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
     "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
-    "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png"
+    "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png",
+    "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
+    "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
   ],
   "Vermelho": [
     "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
@@ -90,6 +91,16 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
+    // Special handling for product ID 1005 (Bordado em Manta - Leãozinho)
+    if (product.id.toString() === "1005") {
+      setCurrentImages([
+        "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
+        "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
     // Special handling for product ID 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
       if (selectedColor === "Verde") {
@@ -139,8 +150,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   // Update images when product changes
   useEffect(() => {
     if (product) {
+      // Special case for product 1001 - Bordado em Camisa Infantil - Caminhão
       if (product.id.toString() === "1001") {
-        // Special case for product 1001 - Bordado em Camisa Infantil - Caminhão
         setCurrentImages([
           "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
           "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
@@ -148,8 +159,9 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         ]);
         setActiveImageIndex(0);
         return;
-      } else if (product.id.toString() === "1002") {
-        // Special case for product 1002 - Bordado em Fralda de Tecido - Nome
+      }
+      // Special case for product 1002 - Bordado em Fralda de Tecido - Nome
+      else if (product.id.toString() === "1002") {
         setCurrentImages([
           "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
           "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png",
@@ -159,8 +171,9 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         ]);
         setActiveImageIndex(0);
         return;
-      } else if (product.id.toString() === "1004") {
-        // Special case for product 1004 - Bordado em Macacão - Leãozinho Safari
+      }
+      // Special case for product 1004 - Bordado em Macacão - Leãozinho Safari
+      else if (product.id.toString() === "1004") {
         setCurrentImages([
           "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
           "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
@@ -169,8 +182,18 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         ]);
         setActiveImageIndex(0);
         return;
-      } else if (product.id.toString() === "204") {
-        // Special case for product 204 - initialize with default color
+      }
+      // Special case for product 1005 - Bordado em Manta - Leãozinho
+      else if (product.id.toString() === "1005") {
+        setCurrentImages([
+          "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
+          "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
+        ]);
+        setActiveImageIndex(0);
+        return;
+      }
+      // Special case for product 204 - initialize with default color
+      else if (product.id.toString() === "204") {
         const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
         if (defaultColor && colorToImageMap[defaultColor]) {
           setCurrentImages(colorToImageMap[defaultColor]);
@@ -179,12 +202,14 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
           setCurrentImages([product.imageUrl]);
           setActiveImageIndex(0);
         }
-      } else if (product.id.toString() === "1003") {
-        // Special case for product 1003 (Bordado em Fralda de Tecido - Davi)
+      }
+      // Special case for product 1003 (Bordado em Fralda de Tecido - Davi)
+      else if (product.id.toString() === "1003") {
         setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
         setActiveImageIndex(0);
-      } else if (product.id.toString() === "2010") {
-        // Special case for product 2010 (Bordado em Toalha)
+      }
+      // Special case for product 2010 (Bordado em Toalha)
+      else if (product.id.toString() === "2010") {
         if (selectedColor === "Verde") {
           setCurrentImages([
             "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
@@ -259,6 +284,16 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
         "/lovable-uploads/57491ecd-9620-4c38-be43-1d61ed97c5ae.png",
         "/lovable-uploads/bf315398-f5d5-4e34-a642-0ff432375a70.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for product 1005 (Bordado em Manta - Leãozinho)
+    if (product.id.toString() === "1005" && selectedColor === "Verde Água") {
+      setCurrentImages([
+        "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
+        "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
       ]);
       setActiveImageIndex(0);
       return;

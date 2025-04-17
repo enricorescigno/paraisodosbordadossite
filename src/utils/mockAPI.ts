@@ -1,4 +1,3 @@
-
 // Este arquivo simula uma API para gerenciar produtos e categorias
 
 export interface Category {
@@ -223,5 +222,21 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Cinza"],
     sizes: ["P", "M", "G"]
+  },
+  // New product: Bordado em Manta - Leãozinho
+  {
+    id: 1005,
+    name: "Bordado em Manta - Leãozinho",
+    description: "Manta infantil com bordado de leãozinho personalizado, ideal para o aconchego do bebê. Disponível em verde água, perfeita para presentear.",
+    category: "Bordados Infantis",
+    images: [
+      "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
+      "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
+    ],
+    tags: ["bordado", "personalizado", "infantil", "manta", "leão"],
+    type: "product",
+    isNew: true,
+    colors: ["Verde Água"],
+    sizes: ["Único"]
   }
 ];

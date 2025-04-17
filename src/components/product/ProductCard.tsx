@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -64,6 +63,13 @@ const ProductCard = ({
       }
     }
     
+    // Special case for Bordado em Manta - Leãozinho
+    if (Number(id) === 1005) {
+      if (images && Array.isArray(images) && images.length > 0) {
+        return "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png";
+      }
+    }
+    
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
       return images["Branco"]?.[0]; // Use first image of default color
     }
@@ -118,7 +124,7 @@ const ProductCard = ({
             target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
           }}
         />
-        {(isNew || Number(id) === 204 || Number(id) === 1004) && (
+        {(isNew || Number(id) === 204 || Number(id) === 1004 || Number(id) === 1005) && (
           <div className="absolute top-3 right-3">
             <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
               Novo

@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 // Bordados Infantis Collection
@@ -114,22 +113,26 @@ export const bordadosInfantisProducts: Product[] = [
     name: "Bordado em Manta - Leãozinho",
     type: "product",
     category: "Bordados Infantis",
-    imageUrl: "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?q=80&w=500&auto=format&fit=crop",
-    description: "Manta infantil com bordado de leãozinho, ideal para o aconchego do bebê.",
+    imageUrl: "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
+    description: "Manta infantil com bordado de leãozinho personalizado, ideal para o aconchego do bebê. Disponível em verde água, perfeita para presentear.",
     price: "Sob consulta",
-    colors: ["Cinza", "Amarelo"],
+    colors: ["Verde Água"],
     sizes: ["Único"],
     rating: 4.8,
     isNew: true,
     features: [
-      "Bordado de leãozinho",
-      "Manta macia e quente",
-      "Perfeito para bebês"
+      "Bordado artesanal de leãozinho",
+      "Personalização com nome da criança",
+      "Manta macia e confortável",
+      "Material de alta qualidade",
+      "Tecido hipoalergênico",
+      "Ideal para presente de bebê"
     ],
     images: [
-      "https://images.unsplash.com/photo-1535268647677-300dbf3d78d1?q=80&w=500&auto=format&fit=crop"
+      "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
+      "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
     ],
-    keywords: ["manta", "infantil", "leão", "bebê", "bordado"]
+    keywords: ["manta", "infantil", "leão", "bebê", "bordado", "personalizado"]
   },
   {
     id: 1006,
