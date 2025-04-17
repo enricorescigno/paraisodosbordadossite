@@ -143,10 +143,10 @@ export const bordadosProducts: Product[] = [
     name: "Bordado em Toalha",
     type: "portfolio",
     category: "Bordado em Toalha",
-    imageUrl: "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
+    imageUrl: "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
     description: "Toalhas com bordado personalizado, perfeitas para presentear ou para uso próprio. Feitas com algodão de alta qualidade e bordados elegantes.",
     price: "Sob consulta",
-    colors: ["Branco"],
+    colors: ["Branco", "Verde Água"],
     sizes: ["Único"],
     rating: 4.9,
     isNew: true,
@@ -157,9 +157,12 @@ export const bordadosProducts: Product[] = [
       "Ideal para presentes e enxovais"
     ],
     images: [
+      "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
+      "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
+      "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png",
       "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
       "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
     ],
-    keywords: ["toalha", "bordado", "personalizado", "nome", "banho"]
+    keywords: ["toalha", "bordado", "personalizado", "nome", "banho", "ricardo", "lucas"]
   }
 ];

@@ -148,20 +148,23 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Branco", "Bege"]
   },
-  // Updating existing or adding new Bordado em Toalha product
+  // Updating Bordado em Toalha product
   {
     id: 2010,
     name: "Bordado em Toalha",
     description: "Toalhas com bordado personalizado, perfeitas para presentear ou para uso próprio. Feitas com algodão de alta qualidade e bordados elegantes.",
     category: "Bordado em Toalha",
     images: [
+      "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
+      "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
+      "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png",
       "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
       "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
     ],
     tags: ["bordado", "personalizado"],
     type: "portfolio",
     isNew: true,
-    colors: ["Branco"],
+    colors: ["Branco", "Verde Água"],
     sizes: ["Único"]
   }
 ];

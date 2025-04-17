@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -50,7 +49,7 @@ const ProductCard = ({
   const getImageUrl = () => {
     // Special case for Bordado em Toalha product
     if (Number(id) === 2010) {
-      return "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png";
+      return "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png";
     }
     
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {

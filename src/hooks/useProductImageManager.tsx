@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
@@ -10,7 +9,12 @@ export const colorToImageMap: Record<string, string[]> = {
   "Rosa": ["/lovable-uploads/0f23a8fc-2cfb-4961-a2d3-47b09c4ec29c.png"],
   "Verde": ["/lovable-uploads/3bda6c77-533b-4d79-9a50-fbd946f1cbd6.png"],
   "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"],
-  "Azul": ["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]
+  "Azul": ["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"],
+  "Verde Água": [
+    "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
+    "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
+    "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png"
+  ]
 };
 
 export const useProductImageManager = (product: Product | null, selectedColor: string) => {
@@ -32,6 +36,9 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     // Special handling for product ID 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
       const images = [
+        "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
+        "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
+        "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png",
         "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
         "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
       ];
@@ -79,6 +86,9 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       } else if (product.id.toString() === "2010") {
         // Special case for product 2010 (Bordado em Toalha)
         setCurrentImages([
+          "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
+          "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
+          "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png",
           "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
           "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
         ]);
@@ -112,10 +122,18 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     
     // Special handling for product 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
-      setCurrentImages([
-        "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
-        "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
-      ]);
+      if (selectedColor === "Verde Água") {
+        setCurrentImages([
+          "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
+          "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
+          "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png"
+        ]);
+      } else {
+        setCurrentImages([
+          "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
+          "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
+        ]);
+      }
       setActiveImageIndex(0);
       return;
     }
