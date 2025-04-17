@@ -81,6 +81,11 @@ const ProductCard = ({
       return "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png";
     }
     
+    // Special case for Bordado em Fardamento para Times de Futebol
+    if (Number(id) === 902) {
+      return "/lovable-uploads/58739ba7-3b07-4be7-8a25-dd721a363924.png";
+    }
+    
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
       return images["Branco"]?.[0]; // Use first image of default color
     }

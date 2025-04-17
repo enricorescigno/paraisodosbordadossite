@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
@@ -138,6 +137,18 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
+    // Special handling for Bordado em Fardamento para Times de Futebol (902)
+    if (product.id.toString() === "902") {
+      setCurrentImages([
+        "/lovable-uploads/58739ba7-3b07-4be7-8a25-dd721a363924.png",
+        "/lovable-uploads/aee9dd23-444e-44e3-990b-ba3476180468.png",
+        "/lovable-uploads/ce9f6559-20b2-437b-8f8d-061614aaeebf.png",
+        "/lovable-uploads/3c44a694-b8f4-4e17-aa40-9fc14f33aec5.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
     // Special handling for product ID 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
       if (selectedColor === "Verde") {
@@ -187,7 +198,19 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   // Update images when product changes
   useEffect(() => {
     if (product) {
-      // Special case for product 1001 - Bordado em Camisa Infantil - Caminhão
+      // Special case for product 902 - Bordado em Fardamento para Times de Futebol
+      if (product.id.toString() === "902") {
+        setCurrentImages([
+          "/lovable-uploads/58739ba7-3b07-4be7-8a25-dd721a363924.png",
+          "/lovable-uploads/aee9dd23-444e-44e3-990b-ba3476180468.png",
+          "/lovable-uploads/ce9f6559-20b2-437b-8f8d-061614aaeebf.png",
+          "/lovable-uploads/3c44a694-b8f4-4e17-aa40-9fc14f33aec5.png"
+        ]);
+        setActiveImageIndex(0);
+        return;
+      }
+      
+      // Special case for product ID 1001 (Bordado em Camisa Infantil - Caminhão)
       if (product.id.toString() === "1001") {
         setCurrentImages([
           "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
@@ -299,6 +322,31 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   useEffect(() => {
     if (!product) return;
     
+    // Handle color changes for product 902 (Bordado em Fardamento para Times de Futebol)
+    if (product.id.toString() === "902") {
+      if (selectedColor === "Azul") {
+        setCurrentImages([
+          "/lovable-uploads/58739ba7-3b07-4be7-8a25-dd721a363924.png",
+          "/lovable-uploads/aee9dd23-444e-44e3-990b-ba3476180468.png",
+          "/lovable-uploads/ce9f6559-20b2-437b-8f8d-061614aaeebf.png"
+        ]);
+      } else if (selectedColor === "Branco") {
+        setCurrentImages([
+          "/lovable-uploads/3c44a694-b8f4-4e17-aa40-9fc14f33aec5.png"
+        ]);
+      } else {
+        setCurrentImages([
+          "/lovable-uploads/58739ba7-3b07-4be7-8a25-dd721a363924.png",
+          "/lovable-uploads/aee9dd23-444e-44e3-990b-ba3476180468.png",
+          "/lovable-uploads/ce9f6559-20b2-437b-8f8d-061614aaeebf.png",
+          "/lovable-uploads/3c44a694-b8f4-4e17-aa40-9fc14f33aec5.png"
+        ]);
+      }
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for product 1001 (Bordado em Camisa Infantil - Caminhão)
     if (product.id.toString() === "1001" && selectedColor === "Vermelho") {
       setCurrentImages([
         "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
@@ -359,117 +407,4 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     }
     
     // Handle color changes for Bordado em Bolsas products
-    if ((product.id.toString() === "2002" || product.id.toString() === "901") && selectedColor === "Rosa") {
-      setCurrentImages([
-        "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
-        "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png"
-      ]);
-      setActiveImageIndex(0);
-      return;
-    }
-    
-    if ((product.id.toString() === "2002" || product.id.toString() === "901") && selectedColor === "Bege") {
-      setCurrentImages([
-        "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
-        "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
-      ]);
-      setActiveImageIndex(0);
-      return;
-    }
-    
-    // Handle color changes for Brows Evolution bags
-    if ((product.id.toString() === "2004" || product.id.toString() === "903")) {
-      if (selectedColor === "Rosa") {
-        setCurrentImages([
-          "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
-          "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png"
-        ]);
-      } else if (selectedColor === "Bege") {
-        setCurrentImages([
-          "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
-          "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
-        ]);
-      }
-      setActiveImageIndex(0);
-      return;
-    }
-    
-    if (product.id.toString() === "204" && selectedColor) {
-      console.log("Mudando para cor:", selectedColor);
-      if (colorToImageMap[selectedColor]) {
-        console.log("Imagens para esta cor:", colorToImageMap[selectedColor]);
-        setCurrentImages(colorToImageMap[selectedColor]);
-        setActiveImageIndex(0);
-        return;
-      }
-    }
-    
-    // Special handling for product 1003 (Bordado em Fralda de Tecido - Davi)
-    if (product.id.toString() === "1003" && selectedColor === "Azul") {
-      setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
-      setActiveImageIndex(0);
-      return;
-    }
-    
-    // Special handling for product 2010 (Bordado em Toalha)
-    if (product.id.toString() === "2010") {
-      if (selectedColor === "Verde") {
-        setCurrentImages([
-          "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
-          "/lovable-uploads/9dd1e51a-955c-43f7-869c-b974b6c81c12.png",
-          "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png"
-        ]);
-      } else if (selectedColor === "Verde Água") {
-        setCurrentImages([
-          "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
-          "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
-          "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png"
-        ]);
-      } else {
-        setCurrentImages([
-          "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
-          "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
-        ]);
-      }
-      setActiveImageIndex(0);
-      return;
-    }
-    
-    if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
-      const colorImages = product.images[selectedColor] || [];
-      setCurrentImages(colorImages);
-      setActiveImageIndex(0);
-    }
-  }, [selectedColor, product]);
-
-  // Get the placeholder image based on product category
-  const getPlaceholder = (category: string) => {
-    const placeholders: Record<string, string> = {
-      'Cama, Mesa e Banho': '/images/placeholders/home-textile.jpg',
-      'Cama': '/images/placeholders/home-textile.jpg',
-      'Mesa e Cozinha': '/images/placeholders/home-textile.jpg',
-      'Banho': '/images/placeholders/towel.jpg',
-      'Infantil': '/images/placeholders/kids.jpg',
-      'Vestuário': '/images/placeholders/clothing.jpg',
-      'Jaleco': '/images/placeholders/uniform.jpg',
-      'Pantufas': '/images/placeholders/slippers.jpg',
-      'Bonés Bordados': '/images/placeholders/cap.jpg',
-      'Bordado em Necessaire': '/images/placeholders/necessaire.jpg',
-      'Bordado em Bolsa': '/images/placeholders/bag.jpg',
-      'Bordado em Toalha': '/images/placeholders/towel.jpg',
-      'Jalecos': '/images/placeholders/uniform.jpg',
-      'Roupões Infantis': '/images/placeholders/kids-embroidery.jpg',
-      'Toalhas Infantis': '/images/placeholders/towel.jpg',
-      'Bordados Infantis': '/images/placeholders/kids-embroidery.jpg'
-    };
-    
-    return placeholders[category] || 'https://via.placeholder.com/500x500?text=Produto';
-  };
-
-  return {
-    currentImages,
-    activeImageIndex,
-    setActiveImageIndex,
-    getPlaceholder
-  };
-};
+    if ((product.id.toString() === "
