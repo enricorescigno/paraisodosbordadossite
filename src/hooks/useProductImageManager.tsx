@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
@@ -407,4 +408,89 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     }
     
     // Handle color changes for Bordado em Bolsas products
-    if ((product.id.toString() === "
+    if ((product.id.toString() === "2002" || product.id.toString() === "901") && 
+        (selectedColor === "Rosa" || selectedColor === "Preto" || selectedColor === "Bege")) {
+      setCurrentImages([
+        "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+        "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
+        "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+        "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for Bordado em Bolsas - Brows Evolution
+    if ((product.id.toString() === "2004" || product.id.toString() === "903") && 
+        (selectedColor === "Rosa" || selectedColor === "Preto" || selectedColor === "Bege")) {
+      setCurrentImages([
+        "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+        "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
+        "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+        "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for product 2010 (Bordado em Toalha)
+    if (product.id.toString() === "2010") {
+      if (selectedColor === "Verde") {
+        setCurrentImages([
+          "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
+          "/lovable-uploads/9dd1e51a-955c-43f7-869c-b974b6c81c12.png",
+          "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png"
+        ]);
+      } else if (selectedColor === "Verde Água") {
+        setCurrentImages([
+          "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
+          "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
+          "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png"
+        ]);
+      } else {
+        setCurrentImages([
+          "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
+          "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
+        ]);
+      }
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // For products with color-specific images in colorToImageMap
+    if (colorToImageMap[selectedColor] && (
+        product.id.toString() === "204"
+    )) {
+      setCurrentImages(colorToImageMap[selectedColor]);
+      setActiveImageIndex(0);
+      return;
+    }
+  }, [selectedColor, product]);
+
+  // Function to get a placeholder image based on product category
+  const getPlaceholder = (category: string) => {
+    const lowerCategory = category.toLowerCase();
+    
+    if (lowerCategory.includes('toalha') || lowerCategory.includes('banho')) {
+      return "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop";
+    } else if (lowerCategory.includes('bolsa') || lowerCategory.includes('necessaire')) {
+      return "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop";
+    } else if (lowerCategory.includes('camisa') || lowerCategory.includes('fardamento') || lowerCategory.includes('vestuário')) {
+      return "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop";
+    } else if (lowerCategory.includes('infantil') || lowerCategory.includes('macacão') || lowerCategory.includes('manta')) {
+      return "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop";
+    } else if (lowerCategory.includes('mesa') || lowerCategory.includes('cozinha')) {
+      return "https://images.unsplash.com/photo-1544919979-32456c49a6b8?q=80&w=500&auto=format&fit=crop";
+    }
+    
+    // Default placeholder
+    return "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=500&auto=format&fit=crop";
+  };
+
+  return {
+    currentImages,
+    activeImageIndex,
+    setActiveImageIndex,
+    getPlaceholder
+  };
+};

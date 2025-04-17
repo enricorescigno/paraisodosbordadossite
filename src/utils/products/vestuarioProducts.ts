@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Bordado em Vestuário collection
