@@ -81,6 +81,11 @@ const ProductCard = ({
       return "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png";
     }
     
+    // Special case for Bordado em Fardamento para Times de Futebol
+    if (Number(id) === 205 || Number(id) === 902) {
+      return "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png";
+    }
+    
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
       return images["Branco"]?.[0]; // Use first image of default color
     }
@@ -135,7 +140,7 @@ const ProductCard = ({
             target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
           }}
         />
-        {(isNew || Number(id) === 204 || Number(id) === 1004 || Number(id) === 1005 || Number(id) === 2002 || Number(id) === 2004) && (
+        {(isNew || Number(id) === 204 || Number(id) === 1004 || Number(id) === 1005 || Number(id) === 2002 || Number(id) === 2004 || Number(id) === 205 || Number(id) === 902) && (
           <div className="absolute top-3 right-3">
             <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
               Novo

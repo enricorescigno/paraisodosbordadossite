@@ -25,7 +25,10 @@ export const colorToImageMap: Record<string, string[]> = {
   "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"],
   "Azul": [
     "/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png",
-    "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png" // Fralda Azul
+    "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png", // Fralda Azul
+    "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Time futebol - Overview
+    "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Time futebol - Montpellier
+    "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png"  // Time futebol - PSG
   ],
   "Verde Água": [
     "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
@@ -137,6 +140,18 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       setActiveImageIndex(0);
       return;
     }
+
+    // Special handling for Bordado em Fardamento para Times de Futebol (205 and 902)
+    if (product.id.toString() === "205" || product.id.toString() === "902") {
+      setCurrentImages([
+        "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
+        "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Montpellier detalhe
+        "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png", // PSG detalhe
+        "/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"  // Marseille detalhe
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
     
     // Special handling for product ID 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
@@ -187,6 +202,18 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   // Update images when product changes
   useEffect(() => {
     if (product) {
+      // Special case for product 205/902 - Bordado em Fardamento para Times de Futebol
+      if (product.id.toString() === "205" || product.id.toString() === "902") {
+        setCurrentImages([
+          "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
+          "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Montpellier detalhe
+          "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png", // PSG detalhe
+          "/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"  // Marseille detalhe
+        ]);
+        setActiveImageIndex(0);
+        return;
+      }
+      
       // Special case for product 1001 - Bordado em Camisa Infantil - Caminhão
       if (product.id.toString() === "1001") {
         setCurrentImages([
@@ -293,12 +320,37 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         initializeImages(product);
       }
     }
-  }, [product]);
+  }, [product, selectedColor]);
 
   // Update images when color changes
   useEffect(() => {
     if (!product) return;
     
+    // Handle color changes for product 205/902 (Bordado em Fardamento para Times de Futebol)
+    if (product.id.toString() === "205" || product.id.toString() === "902") {
+      if (selectedColor === "Azul") {
+        setCurrentImages([
+          "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
+          "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Montpellier detalhe
+          "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png"  // PSG detalhe
+        ]);
+      } else if (selectedColor === "Branco") {
+        setCurrentImages([
+          "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png"  // PSG detalhe no uniforme branco
+        ]);
+      } else {
+        setCurrentImages([
+          "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
+          "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Montpellier detalhe
+          "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png", // PSG detalhe
+          "/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"  // Marseille detalhe
+        ]);
+      }
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for product 1001 (Bordado em Camisa Infantil - Caminhão)
     if (product.id.toString() === "1001" && selectedColor === "Vermelho") {
       setCurrentImages([
         "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",

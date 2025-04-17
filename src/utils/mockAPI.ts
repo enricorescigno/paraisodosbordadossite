@@ -257,5 +257,23 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Rosa", "Bege"],
     sizes: ["Único"]
+  },
+  // Adicionando Bordado em Fardamento para Times de Futebol
+  {
+    id: 902,
+    name: "Bordado em Fardamento para Times de Futebol",
+    description: "Bordado em fardamento para diversos times de futebol europeus incluindo PSG, Marseille e Montpellier. Trabalho de alta precisão para uniformes esportivos.",
+    category: "Bordado em Fardamentos",
+    images: [
+      "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
+      "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Montpellier detalhe
+      "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png", // PSG detalhe
+      "/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"  // Marseille detalhe
+    ],
+    tags: ["bordado", "fardamento", "futebol", "time", "esporte", "psg", "marseille", "montpellier"],
+    type: "portfolio",
+    isNew: true,
+    colors: ["Azul", "Branco", "variados"],
+    sizes: ["P", "M", "G", "GG"]
   }
 ];
