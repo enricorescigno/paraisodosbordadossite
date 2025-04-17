@@ -105,6 +105,11 @@ const ProductCard = ({
       return "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png";
     }
     
+    // Special case for Bordado em Camisa - Capibaribe
+    if (Number(id) === 207) {
+      return "/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png";
+    }
+    
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
       return images["Branco"]?.[0]; // Use first image of default color
     }

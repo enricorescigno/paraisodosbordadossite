@@ -54,7 +54,8 @@ export const colorToImageMap: Record<string, string[]> = {
   ],
   "Amarelo": [
     "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png", // Fralda Amarela
-    "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png"  // Camisa Girassol
+    "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png",  // Camisa Girassol
+    "/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"   // Capibaribe
   ],
   "Cinza": [
     "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
@@ -65,7 +66,8 @@ export const colorToImageMap: Record<string, string[]> = {
   "Preto": [
     "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png", // For Brows Evolution bag
     "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",  // For Brows Evolution bag detail
-    "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png"   // Camisa Girassol
+    "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png",   // Camisa Girassol
+    "/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"    // Capibaribe
   ]
 };
 
@@ -153,6 +155,12 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png", // PSG detalhe
         "/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"  // Marseille detalhe
       ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    if (product.id.toString() === "207") {
+      setCurrentImages(["/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"]);
       setActiveImageIndex(0);
       return;
     }
@@ -272,6 +280,12 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
           "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
           "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
         ]);
+        setActiveImageIndex(0);
+        return;
+      }
+      
+      if (product.id.toString() === "207") {
+        setCurrentImages(["/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"]);
         setActiveImageIndex(0);
         return;
       }
@@ -460,6 +474,13 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
           "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
         ]);
       }
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    if (product.id.toString() === "207" && 
+        (selectedColor === "Preto" || selectedColor === "Amarelo")) {
+      setCurrentImages(["/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"]);
       setActiveImageIndex(0);
       return;
     }

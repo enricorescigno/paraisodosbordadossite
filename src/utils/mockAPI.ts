@@ -324,5 +324,21 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Azul", "Branco", "variados"],
     sizes: ["P", "M", "G", "GG"]
+  },
+  
+  // Updating Bordado em Camisa - Capibaribe
+  {
+    id: 207,
+    name: "Bordado em Camisa - Capibaribe",
+    description: "Bordado de logo do time Capibaribe em uma camisa. Detalhes nítidos na mascote do leão com contorno amarelo vibrante em fundo preto.",
+    category: "Bordado em Vestuário",
+    images: [
+      "/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"
+    ],
+    tags: ["camisa", "bordado", "futebol", "time", "esporte", "capibaribe"],
+    type: "portfolio",
+    isNew: false,
+    colors: ["Preto", "Amarelo"],
+    sizes: ["P", "M", "G", "GG"]
   }
 ];
