@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
@@ -18,6 +19,11 @@ export const colorToImageMap: Record<string, string[]> = {
     "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
     "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
     "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png"
+  ],
+  "Vermelho": [
+    "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
+    "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
+    "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
   ]
 };
 
@@ -28,6 +34,17 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   // Initialize images based on product data
   const initializeImages = (product: Product) => {
     if (!product) return;
+    
+    // Special handling for product ID 1001 (Bordado em Camisa Infantil - Caminhão)
+    if (product.id.toString() === "1001") {
+      setCurrentImages([
+        "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
+        "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
+        "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
     
     // Special handling for product ID 1003 (Bordado em Fralda de Tecido - Davi)
     if (product.id.toString() === "1003") {
@@ -86,7 +103,16 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   // Update images when product changes
   useEffect(() => {
     if (product) {
-      if (product.id.toString() === "204") {
+      if (product.id.toString() === "1001") {
+        // Special case for product 1001 - Bordado em Camisa Infantil - Caminhão
+        setCurrentImages([
+          "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
+          "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
+          "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+        ]);
+        setActiveImageIndex(0);
+        return;
+      } else if (product.id.toString() === "204") {
         // Special case for product 204 - initialize with default color
         const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
         if (defaultColor && colorToImageMap[defaultColor]) {
@@ -131,6 +157,16 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   // Update images when color changes
   useEffect(() => {
     if (!product) return;
+    
+    if (product.id.toString() === "1001" && selectedColor === "Vermelho") {
+      setCurrentImages([
+        "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
+        "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
+        "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
     
     if (product.id.toString() === "204" && selectedColor) {
       console.log("Mudando para cor:", selectedColor);

@@ -148,6 +148,23 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Branco", "Bege"]
   },
+  // Bordado em Camisa Infantil - Caminhão
+  {
+    id: 1001,
+    name: "Bordado em Camisa Infantil - Caminhão",
+    description: "Camisa infantil com bordado de caminhão, ideal para crianças aventureiras. Bordado detalhado com caminhão vermelho em tecido de alta qualidade.",
+    category: "Bordados Infantis",
+    images: [
+      "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
+      "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
+      "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+    ],
+    tags: ["infantil", "bordado", "caminhão"],
+    type: "product",
+    isNew: true,
+    colors: ["Branco", "Vermelho"],
+    sizes: ["P", "M", "G"]
+  },
   // Updating Bordado em Toalha product
   {
     id: 2010,
