@@ -49,6 +49,10 @@ const ProductCard = ({
   const getImageUrl = () => {
     // Special case for Bordado em Toalha product
     if (Number(id) === 2010) {
+      // Use the first image of the Verde color (new images)
+      if (images && Array.isArray(images) && images.length > 5) {
+        return images[5]; // Using the first image from the new green set
+      }
       return "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png";
     }
     
