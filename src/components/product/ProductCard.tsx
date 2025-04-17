@@ -28,7 +28,6 @@ const ProductCard = ({
   isPortfolio = false,
   showActionButton = true
 }: ProductCardProps) => {
-  // Function to get placeholder image based on product type
   const getPlaceholderImage = (name: string) => {
     const lowerName = name.toLowerCase();
     if (lowerName.includes('necessaire') || lowerName.includes('bolsa')) {
@@ -45,81 +44,66 @@ const ProductCard = ({
     return "https://via.placeholder.com/500x500?text=Sem+Imagem";
   };
 
-  // Function to get the proper image
   const getImageUrl = () => {
-    // Special case for Bordado em Toalha product
     if (Number(id) === 2010) {
-      // Use the first image of the Verde color (new images)
       if (images && Array.isArray(images) && images.length > 5) {
-        return images[5]; // Using the first image from the new green set
+        return images[5];
       }
       return "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png";
     }
     
-    // Special case for Bordado em Macacão - Leãozinho Safari
     if (Number(id) === 1004) {
       if (images && Array.isArray(images) && images.length > 0) {
         return "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png";
       }
     }
     
-    // Special case for Bordado em Manta - Leãozinho
     if (Number(id) === 1005) {
       if (images && Array.isArray(images) && images.length > 0) {
         return "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png";
       }
     }
     
-    // Special case for Bordado em Bolsas - Imparáveis
     if (Number(id) === 2002 || Number(id) === 901) {
       return "/lovable-uploads/185199e6-f644-4c5e-9df7-7c45a81dda9b.png";
     }
     
-    // Special case for Bordado em Bolsas - Brows Evolution
     if (Number(id) === 2004 || Number(id) === 903) {
       return "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png";
     }
     
-    // Special case for Bordado em Fardamento para Times de Futebol
     if (Number(id) === 205 || Number(id) === 902) {
       return "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png";
     }
     
-    // Special case for Bordado em Camisa - Impcatto
     if (Number(id) === 202) {
       return "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png";
     }
     
-    // Special case for Bordado em Fardamento - Pet Dream
     if (Number(id) === 203) {
       return "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png";
     }
     
-    // Special case for Bordado em Camisa - Girassol
     if (Number(id) === 204) {
       return "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png";
     }
     
-    // Special case for Bordado em Fardamento - Biscoitos Feitos por Nós
     if (Number(id) === 206) {
       return "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png";
     }
     
-    // Special case for Bordado em Camisa - Capibaribe
     if (Number(id) === 207) {
       return "/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png";
     }
     
-    // Special case for Bordado em Camisa - Doutor Pet
     if (Number(id) === 208) {
       return "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png";
     }
     
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
-      return images["Branco"]?.[0]; // Use first image of default color
+      return images["Branco"]?.[0];
     }
     
-    // If no image is provided, use a placeholder based on product type
     if (!imageUrl && (!images || (Array.isArray(images) && images.length === 0))) {
       return getPlaceholderImage(name);
     }
@@ -127,7 +111,6 @@ const ProductCard = ({
     return imageUrl || (Array.isArray(images) ? images[0] : null) || "https://via.placeholder.com/500x500?text=Sem+Imagem";
   };
 
-  // Get optimized image URL
   const optimizedImageUrl = getImageUrl();
 
   return (
@@ -190,7 +173,6 @@ const ProductCard = ({
         )}
       </div>
       
-      {/* Renderizar o botão apenas se showActionButton for true */}
       {showActionButton && (
         <div className="flex justify-center mt-auto w-full">
           <Link to={`/produto/${id}`} className="w-full sm:w-auto flex justify-center">
