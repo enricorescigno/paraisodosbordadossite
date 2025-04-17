@@ -47,7 +47,10 @@ export const bordadosProducts: Product[] = [
       "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
       "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
       "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
-      "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
+      "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png",
+      "/lovable-uploads/185199e6-f644-4c5e-9df7-7c45a81dda9b.png",
+      "/lovable-uploads/77747fae-966b-471d-925b-6daaca500595.png",
+      "/lovable-uploads/825c01c0-de2d-4af3-925e-93c8e24aaf6f.png"
     ],
     keywords: ["bolsa", "bordado", "imparáveis", "personalizado"]
   },

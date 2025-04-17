@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -73,7 +72,7 @@ const ProductCard = ({
     
     // Special case for Bordado em Bolsas - Imparáveis
     if (Number(id) === 2002 || Number(id) === 901) {
-      return "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png";
+      return "/lovable-uploads/185199e6-f644-4c5e-9df7-7c45a81dda9b.png";
     }
     
     // Special case for Bordado em Bolsas - Brows Evolution
