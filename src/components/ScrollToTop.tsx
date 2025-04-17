@@ -2,12 +2,15 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-// Este componente garante que o scroll volta ao topo quando a navegação ocorre
+/**
+ * This component scrolls the window to the top when the route changes
+ * It must be used inside a Router component
+ */
 const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Rola a página para o topo com behavior instant para melhor UX
+    // Scroll the page to the top with behavior instant for better UX
     window.scrollTo({
       top: 0,
       behavior: 'instant'
