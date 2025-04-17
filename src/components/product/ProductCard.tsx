@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -70,6 +71,16 @@ const ProductCard = ({
       }
     }
     
+    // Special case for Bordado em Bolsas - Imparáveis
+    if (Number(id) === 2002 || Number(id) === 901) {
+      return "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png";
+    }
+    
+    // Special case for Bordado em Bolsas - Brows Evolution
+    if (Number(id) === 2004 || Number(id) === 903) {
+      return "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png";
+    }
+    
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
       return images["Branco"]?.[0]; // Use first image of default color
     }
@@ -124,7 +135,7 @@ const ProductCard = ({
             target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
           }}
         />
-        {(isNew || Number(id) === 204 || Number(id) === 1004 || Number(id) === 1005) && (
+        {(isNew || Number(id) === 204 || Number(id) === 1004 || Number(id) === 1005 || Number(id) === 2002 || Number(id) === 2004) && (
           <div className="absolute top-3 right-3">
             <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
               Novo

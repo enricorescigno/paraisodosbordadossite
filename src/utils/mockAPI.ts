@@ -1,3 +1,4 @@
+
 // Este arquivo simula uma API para gerenciar produtos e categorias
 
 export interface Category {
@@ -237,6 +238,24 @@ export const allProducts: Product[] = [
     type: "product",
     isNew: true,
     colors: ["Verde Água"],
+    sizes: ["Único"]
+  },
+  // Updated Bordado em Bolsas - Imparáveis with new images
+  {
+    id: 2002,
+    name: "Bordado em Bolsas - Imparáveis",
+    description: "Bolsa de alta qualidade com bordado exclusivo de marca. Disponível em rosa e bege.",
+    category: "Bordado em Bolsa",
+    images: [
+      "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+      "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
+      "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+      "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
+    ],
+    tags: ["bordado", "bolsa", "personalizado", "brows evolution"],
+    type: "product",
+    isNew: true,
+    colors: ["Rosa", "Bege"],
     sizes: ["Único"]
   }
 ];

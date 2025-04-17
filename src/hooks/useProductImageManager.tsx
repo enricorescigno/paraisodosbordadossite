@@ -1,12 +1,21 @@
+
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
 export const colorToImageMap: Record<string, string[]> = {
   "Branco": ["/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png"],
   "Dourado": ["/lovable-uploads/7df18d21-e4ed-468f-b727-826aa9641c3b.png"],
-  "Bege": ["/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png"],
+  "Bege": [
+    "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
+    "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png", // Bege Brows Evolution bag
+    "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"  // Bege Brows Evolution bag detail
+  ],
   "Marrom": ["/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png", "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"],
-  "Rosa": ["/lovable-uploads/0f23a8fc-2cfb-4961-a2d3-47b09c4ec29c.png"],
+  "Rosa": [
+    "/lovable-uploads/0f23a8fc-2cfb-4961-a2d3-47b09c4ec29c.png",
+    "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png", // Rosa Brows Evolution bag
+    "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png"  // Rosa Brows Evolution bag detail
+  ],
   "Verde": [
     "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
     "/lovable-uploads/9dd1e51a-955c-43f7-869c-b974b6c81c12.png",
@@ -36,6 +45,10 @@ export const colorToImageMap: Record<string, string[]> = {
     "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
     "/lovable-uploads/57491ecd-9620-4c38-be43-1d61ed97c5ae.png",
     "/lovable-uploads/bf315398-f5d5-4e34-a642-0ff432375a70.png"
+  ],
+  "Preto": [
+    "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png", // For Brows Evolution bag
+    "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png"  // For Brows Evolution bag detail
   ]
 };
 
@@ -96,6 +109,30 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       setCurrentImages([
         "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
         "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Special handling for Bordado em Bolsas - Imparáveis (2002 and 901)
+    if (product.id.toString() === "2002" || product.id.toString() === "901") {
+      setCurrentImages([
+        "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+        "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
+        "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+        "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Special handling for Bordado em Bolsas - Brows Evolution (2004 and 903)
+    if (product.id.toString() === "2004" || product.id.toString() === "903") {
+      setCurrentImages([
+        "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+        "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
+        "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+        "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
       ]);
       setActiveImageIndex(0);
       return;
@@ -188,6 +225,28 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setCurrentImages([
           "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
           "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
+        ]);
+        setActiveImageIndex(0);
+        return;
+      }
+      // Special case for Bordado em Bolsas - Imparáveis (2002 and 901)
+      else if (product.id.toString() === "2002" || product.id.toString() === "901") {
+        setCurrentImages([
+          "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+          "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
+          "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+          "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
+        ]);
+        setActiveImageIndex(0);
+        return;
+      }
+      // Special case for Bordado em Bolsas - Brows Evolution (2004 and 903)
+      else if (product.id.toString() === "2004" || product.id.toString() === "903") {
+        setCurrentImages([
+          "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+          "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
+          "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+          "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
         ]);
         setActiveImageIndex(0);
         return;
@@ -295,6 +354,42 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
         "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
       ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for Bordado em Bolsas products
+    if ((product.id.toString() === "2002" || product.id.toString() === "901") && selectedColor === "Rosa") {
+      setCurrentImages([
+        "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+        "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    if ((product.id.toString() === "2002" || product.id.toString() === "901") && selectedColor === "Bege") {
+      setCurrentImages([
+        "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+        "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for Brows Evolution bags
+    if ((product.id.toString() === "2004" || product.id.toString() === "903")) {
+      if (selectedColor === "Rosa") {
+        setCurrentImages([
+          "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+          "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png"
+        ]);
+      } else if (selectedColor === "Bege") {
+        setCurrentImages([
+          "/lovable-uploads/d4b673c3-7a22-4939-bc62-cf72bd811054.png",
+          "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png"
+        ]);
+      }
       setActiveImageIndex(0);
       return;
     }
