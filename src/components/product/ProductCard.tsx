@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -99,6 +98,11 @@ const ProductCard = ({
     // Special case for Bordado em Camisa - Girassol
     if (Number(id) === 204) {
       return "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png";
+    }
+    
+    // Special case for Bordado em Fardamento - Biscoitos Feitos por Nós
+    if (Number(id) === 206) {
+      return "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png";
     }
     
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {

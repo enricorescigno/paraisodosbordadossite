@@ -290,6 +290,23 @@ export const allProducts: Product[] = [
     colors: ["Branco", "Verde"],
     sizes: ["P", "M", "G", "GG"]
   },
+  // Adicionando Bordado em Fardamento - Biscoitos Feitos por Nós
+  {
+    id: 206,
+    name: "Bordado em Fardamento - Biscoitos Feitos por Nós",
+    description: "Bordado do logo 'Biscoitos Feitos Por Nós' em fardamento. Disponível em azul marinho e branco, com design elegante para equipe de confeitaria artesanal.",
+    category: "Bordado em Fardamentos",
+    images: [
+      "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png",
+      "/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png"
+    ],
+    tags: ["fardamento", "bordado", "logo", "gastronomia", "empresarial", "confeitaria", "biscoitos"],
+    type: "portfolio",
+    isNew: true,
+    colors: ["Azul Marinho", "Branco", "Vermelho"],
+    sizes: ["P", "M", "G", "GG"]
+  },
+  
   // Adicionando Bordado em Fardamento para Times de Futebol
   {
     id: 902,

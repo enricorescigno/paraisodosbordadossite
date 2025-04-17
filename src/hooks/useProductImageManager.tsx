@@ -4,7 +4,8 @@ import { Product } from '@/types/product';
 export const colorToImageMap: Record<string, string[]> = {
   "Branco": [
     "/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png",
-    "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png" // Pet Dream branco
+    "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png", // Pet Dream branco
+    "/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png"  // Biscoitos Feitos por Nós branco
   ],
   "Dourado": ["/lovable-uploads/7df18d21-e4ed-468f-b727-826aa9641c3b.png"],
   "Bege": [
@@ -35,6 +36,9 @@ export const colorToImageMap: Record<string, string[]> = {
     "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Time futebol - Montpellier
     "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png"  // Time futebol - PSG
   ],
+  "Azul Marinho": [
+    "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png" // Biscoitos Feitos por Nós azul
+  ],
   "Verde Água": [
     "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
     "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
@@ -45,7 +49,8 @@ export const colorToImageMap: Record<string, string[]> = {
   "Vermelho": [
     "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
     "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
-    "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+    "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png",
+    "/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png" // Biscoitos Feitos por Nós vermelho
   ],
   "Amarelo": [
     "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png", // Fralda Amarela
@@ -304,6 +309,36 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
           setCurrentImages([
             "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
             "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
+          ]);
+        }
+        setActiveImageIndex(0);
+        return;
+      }
+      
+      if (product.id.toString() === "203") {
+        if (selectedColor === "Verde") {
+          setCurrentImages(["/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png"]);
+        } else if (selectedColor === "Branco") {
+          setCurrentImages(["/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png"]);
+        } else {
+          setCurrentImages([
+            "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png",
+            "/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png"
+          ]);
+        }
+        setActiveImageIndex(0);
+        return;
+      }
+      
+      if (product.id.toString() === "206") {
+        if (selectedColor === "Azul Marinho") {
+          setCurrentImages(["/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png"]);
+        } else if (selectedColor === "Branco" || selectedColor === "Vermelho") {
+          setCurrentImages(["/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png"]);
+        } else {
+          setCurrentImages([
+            "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png",
+            "/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png"
           ]);
         }
         setActiveImageIndex(0);
