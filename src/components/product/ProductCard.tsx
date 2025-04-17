@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -93,6 +94,11 @@ const ProductCard = ({
     // Special case for Bordado em Fardamento - Pet Dream
     if (Number(id) === 203) {
       return "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png";
+    }
+    
+    // Special case for Bordado em Camisa - Girassol
+    if (Number(id) === 204) {
+      return "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png";
     }
     
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {

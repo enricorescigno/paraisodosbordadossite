@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
 export const colorToImageMap: Record<string, string[]> = {
-  "Branco": ["/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png"],
+  "Branco": [
+    "/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png",
+    "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png" // Pet Dream branco
+  ],
   "Dourado": ["/lovable-uploads/7df18d21-e4ed-468f-b727-826aa9641c3b.png"],
   "Bege": [
     "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
@@ -21,7 +24,8 @@ export const colorToImageMap: Record<string, string[]> = {
     "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png",
     "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png", // Fralda Verde
     "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png", // Impcatto camisa
-    "/lovable-uploads/652a8949-cb0d-4fd6-8ac2-d73fdd4cd81e.png"  // Impcatto camisas
+    "/lovable-uploads/652a8949-cb0d-4fd6-8ac2-d73fdd4cd81e.png",  // Impcatto camisas
+    "/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png" // Pet Dream verde
   ],
   "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"],
   "Azul": [
@@ -43,7 +47,10 @@ export const colorToImageMap: Record<string, string[]> = {
     "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
     "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
   ],
-  "Amarelo": ["/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png"], // Fralda Amarela
+  "Amarelo": [
+    "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png", // Fralda Amarela
+    "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png"  // Camisa Girassol
+  ],
   "Cinza": [
     "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
     "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
@@ -52,17 +59,8 @@ export const colorToImageMap: Record<string, string[]> = {
   ],
   "Preto": [
     "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png", // For Brows Evolution bag
-    "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png"  // For Brows Evolution bag detail
-  ],
-  "Verde": [
-    "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
-    "/lovable-uploads/9dd1e51a-955c-43f7-869c-b974b6c81c12.png",
-    "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png",
-    "/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png", // Pet Dream verde
-  ],
-  "Branco": [
-    "/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png",
-    "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png", // Pet Dream branco
+    "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",  // For Brows Evolution bag detail
+    "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png"   // Camisa Girassol
   ]
 };
 
