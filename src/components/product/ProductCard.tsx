@@ -90,6 +90,11 @@ const ProductCard = ({
       return "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png";
     }
     
+    // Special case for Bordado em Fardamento - Pet Dream
+    if (Number(id) === 203) {
+      return "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png";
+    }
+    
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
       return images["Branco"]?.[0]; // Use first image of default color
     }

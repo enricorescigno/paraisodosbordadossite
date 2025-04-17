@@ -53,6 +53,16 @@ export const colorToImageMap: Record<string, string[]> = {
   "Preto": [
     "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png", // For Brows Evolution bag
     "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png"  // For Brows Evolution bag detail
+  ],
+  "Verde": [
+    "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
+    "/lovable-uploads/9dd1e51a-955c-43f7-869c-b974b6c81c12.png",
+    "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png",
+    "/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png", // Pet Dream verde
+  ],
+  "Branco": [
+    "/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png",
+    "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png", // Pet Dream branco
   ]
 };
 
@@ -454,6 +464,21 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setCurrentImages([
           "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
           "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
+        ]);
+      }
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    if (product.id.toString() === "203") {
+      if (selectedColor === "Verde") {
+        setCurrentImages(["/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png"]);
+      } else if (selectedColor === "Branco") {
+        setCurrentImages(["/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png"]);
+      } else {
+        setCurrentImages([
+          "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png",
+          "/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png"
         ]);
       }
       setActiveImageIndex(0);

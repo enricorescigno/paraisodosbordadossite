@@ -273,6 +273,23 @@ export const allProducts: Product[] = [
     colors: ["Verde"],
     sizes: ["P", "M", "G", "GG"]
   },
+  
+  // Update Bordado em Fardamento - Pet Dream with new images
+  {
+    id: 203,
+    name: "Bordado em Fardamento - Pet Dream",
+    description: "Bordado do logo Pet Dream em fardamento para hospital veterinário. Disponível em branco e verde.",
+    category: "Bordado em Fardamentos",
+    images: [
+      "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe92.png",
+      "/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png"
+    ],
+    tags: ["fardamento", "bordado", "veterinário", "pet", "empresarial"],
+    type: "portfolio",
+    isNew: true,
+    colors: ["Branco", "Verde"],
+    sizes: ["P", "M", "G", "GG"]
+  },
   // Adicionando Bordado em Fardamento para Times de Futebol
   {
     id: 902,
