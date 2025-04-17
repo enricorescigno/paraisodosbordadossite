@@ -1,3 +1,4 @@
+
 // Este arquivo simula uma API para gerenciar produtos e categorias
 
 export interface Category {
@@ -256,23 +257,5 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Rosa", "Bege"],
     sizes: ["Único"]
-  },
-  // New Bordado em Fardamento para Times de Futebol product
-  {
-    id: 902,
-    name: "Bordado em Fardamento para Times de Futebol",
-    description: "Bordados profissionais para times de futebol, com alta qualidade e precisão. Reproduzimos escudos de times nacionais e internacionais como Paris Saint-Germain, Olympique de Marseille e Montpellier.",
-    category: "Bordado em Vestuário",
-    images: [
-      "/lovable-uploads/58739ba7-3b07-4be7-8a25-dd721a363924.png",
-      "/lovable-uploads/aee9dd23-444e-44e3-990b-ba3476180468.png",
-      "/lovable-uploads/ce9f6559-20b2-437b-8f8d-061614aaeebf.png",
-      "/lovable-uploads/3c44a694-b8f4-4e17-aa40-9fc14f33aec5.png"
-    ],
-    tags: ["bordado", "fardamento", "futebol", "times", "esporte"],
-    type: "portfolio",
-    isNew: true,
-    colors: ["Azul", "Branco"],
-    sizes: ["P", "M", "G", "GG"]
   }
 ];

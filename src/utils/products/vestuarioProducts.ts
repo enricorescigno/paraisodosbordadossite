@@ -1,165 +1,409 @@
-
 import { Product } from '../../types/product';
 
-// Bordado em Vestuário collection
-export const bordadoVestuarioProducts: Product[] = [
-  {
-    id: 901,
-    name: "Bordado em Avental - Personalizado",
-    type: "portfolio",
-    category: "Bordado em Vestuário",
-    imageUrl: "",
-    description: "Avental com bordado personalizado, ideal para cozinheiros, chefs e empresas do ramo alimentício.",
-    price: "Sob consulta",
-    colors: ["Branco", "Preto"],
-    sizes: ["Único"],
-    rating: 5.0,
-    features: [
-      "Tecido resistente ao calor",
-      "Bordado de alta definição",
-      "Personalização com logo e nome"
-    ],
-    images: []
-  },
-  {
-    id: 902,
-    name: "Bordado em Fardamento para Times de Futebol",
-    type: "portfolio",
-    category: "Bordado em Vestuário",
-    imageUrl: "/lovable-uploads/58739ba7-3b07-4be7-8a25-dd721a363924.png",
-    description: "Bordados profissionais para times de futebol, com alta qualidade e precisão. Reproduzimos escudos de times nacionais e internacionais como Paris Saint-Germain, Olympique de Marseille e Montpellier.",
-    price: "Sob consulta",
-    colors: ["Azul", "Branco"],
-    sizes: ["P", "M", "G", "GG"],
-    rating: 5.0,
-    isNew: true,
-    features: [
-      "Bordado de alta definição",
-      "Fidelidade às cores originais dos escudos",
-      "Acabamento profissional",
-      "Resistente a lavagens",
-      "Ideal para uniformes esportivos"
-    ],
-    images: [
-      "/lovable-uploads/58739ba7-3b07-4be7-8a25-dd721a363924.png",
-      "/lovable-uploads/aee9dd23-444e-44e3-990b-ba3476180468.png",
-      "/lovable-uploads/ce9f6559-20b2-437b-8f8d-061614aaeebf.png",
-      "/lovable-uploads/3c44a694-b8f4-4e17-aa40-9fc14f33aec5.png"
-    ],
-    keywords: ["fardamento", "uniforme", "futebol", "bordado", "times", "esporte"]
-  }
-];
-
-// Vestuário collection
+// Vestuário Collection (regular clothing products)
 export const vestuarioProducts: Product[] = [
   {
-    id: 101,
-    name: "Camiseta Lisa",
+    id: "vestuario-1",
+    name: "Camisa Básica unisex 100% algodão adulto",
     type: "product",
     category: "Vestuário",
-    imageUrl: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=500&auto=format&fit=crop",
-    description: "Camiseta básica de algodão, diversas cores.",
-    price: "R$29,90",
-    colors: ["Branco", "Preto", "Azul"],
-    sizes: ["P", "M", "G"],
-    rating: 4.5,
-    isNew: true,
-    features: [
-      "Algodão penteado",
-      "Costura reforçada",
-      "Modelagem confortável"
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=500&auto=format&fit=crop"
-    ],
-    keywords: ["camiseta", "algodão", "básica", "cores"]
-  },
-  {
-    id: 102,
-    name: "Camisa Polo",
-    type: "product",
-    category: "Vestuário",
-    imageUrl: "https://images.unsplash.com/photo-1576566588028-4149c5773555?q=80&w=500&auto=format&fit=crop",
-    description: "Camisa polo de piquet, ideal para o dia a dia.",
-    price: "R$49,90",
-    colors: ["Branco", "Marinho", "Cinza"],
+    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
+    description: "Camisa básica unisex confeccionada em 100% algodão, confortável e de alta qualidade.",
+    price: "R$ 29,90",
+    colors: ["Branco", "Preto", "Cinza"],
     sizes: ["P", "M", "G", "GG"],
     rating: 4.7,
-    isNew: true,
+    isNew: false,
     features: [
-      "Piquet de alta qualidade",
-      "Gola e punhos em ribana",
-      "Fechamento com botões"
+      "100% algodão",
+      "Tecido macio",
+      "Confortável"
     ],
     images: [
-      "https://images.unsplash.com/photo-1576566588028-4149c5773555?q=80&w=500&auto=format&fit=crop"
+      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
     ],
-    keywords: ["camisa polo", "piquet", "casual", "confortável"]
+    keywords: ["camisa", "básica", "unisex", "algodão", "adulto"]
   },
   {
-    id: 103,
-    name: "Calça Jeans",
+    id: "vestuario-2",
+    name: "Camisa Polo Masculina",
     type: "product",
     category: "Vestuário",
-    imageUrl: "https://images.unsplash.com/photo-1602471620513-2508437cae59?q=80&w=500&auto=format&fit=crop",
-    description: "Calça jeans skinny, diversos tamanhos.",
-    price: "R$79,90",
-    colors: ["Azul", "Preto"],
-    sizes: ["36", "38", "40", "42", "44"],
+    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
+    description: "Camisa polo masculina de alta qualidade, ideal para ambientes casuais ou formais.",
+    price: "Sob consulta",
+    colors: ["Azul", "Preto", "Branco"],
+    sizes: ["P", "M", "G", "GG"],
     rating: 4.6,
-    isNew: true,
+    isNew: false,
     features: [
-      "Jeans com elastano",
-      "Modelagem skinny",
-      "Cós com passantes"
+      "Tecido de alta qualidade",
+      "Design elegante",
+      "Confortável para uso diário"
     ],
     images: [
-      "https://images.unsplash.com/photo-1602471620513-2508437cae59?q=80&w=500&auto=format&fit=crop"
+      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
     ],
-    keywords: ["calça jeans", "skinny", "denim", "tamanhos"]
+    keywords: ["camisa", "polo", "masculina"]
   },
   {
-    id: 104,
-    name: "Jaqueta de Couro",
+    id: "vestuario-3",
+    name: "Pantufa Cotele",
     type: "product",
     category: "Vestuário",
-    imageUrl: "https://images.unsplash.com/photo-1585580533049-84b3604b9498?q=80&w=500&auto=format&fit=crop",
-    description: "Jaqueta de couro sintético, forro interno.",
-    price: "R$149,90",
-    colors: ["Preto", "Marrom"],
-    sizes: ["P", "M", "G"],
+    imageUrl: "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
+    description: "Pantufa modelo Cotele, macia e confortável para uso doméstico.",
+    price: "R$ 98,00",
+    colors: ["Bege", "Cinza"],
+    sizes: ["34-36", "37-39", "40-42"],
     rating: 4.8,
     isNew: true,
     features: [
-      "Couro sintético de alta qualidade",
-      "Forro em poliéster",
-      "Fechamento com zíper"
+      "Material macio e confortável",
+      "Sola antiderrapante",
+      "Design elegante"
     ],
     images: [
-      "https://images.unsplash.com/photo-1585580533049-84b3604b9498?q=80&w=500&auto=format&fit=crop"
+      "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png"
     ],
-    keywords: ["jaqueta", "couro sintético", "estilo", "inverno"]
+    keywords: ["pantufa", "cotele", "calçado", "conforto"]
   },
   {
-    id: 105,
-    name: "Moletom Canguru",
+    id: "vestuario-4",
+    name: "Pantufa Popom",
     type: "product",
     category: "Vestuário",
-    imageUrl: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=500&auto=format&fit=crop",
-    description: "Moletom com capuz e bolso canguru, flanelado.",
-    price: "R$69,90",
-    colors: ["Cinza", "Preto", "Vinho"],
-    sizes: ["P", "M", "G", "GG"],
-    rating: 4.6,
+    imageUrl: "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
+    description: "Pantufa modelo Popom, macia e quentinha para os dias frios.",
+    price: "R$ 98,00",
+    colors: ["Rosa", "Azul", "Cinza"],
+    sizes: ["34-36", "37-39", "40-42"],
+    rating: 4.7,
     isNew: true,
     features: [
-      "Moletom flanelado",
-      "Capuz com cordão",
-      "Bolso canguru"
+      "Extra macia",
+      "Detalhes em pompom",
+      "Sola antiderrapante"
     ],
     images: [
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=500&auto=format&fit=crop"
+      "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png"
     ],
-    keywords: ["moletom", "canguru", "conforto", "inverno"]
+    keywords: ["pantufa", "popom", "pompom", "calçado", "conforto"]
+  },
+  {
+    id: "vestuario-5",
+    name: "Robe",
+    type: "product",
+    category: "Vestuário",
+    imageUrl: "/lovable-uploads/c5a5f1e0-a7bb-49d6-bdc5-b6382ccdc453.png",
+    description: "Robe confortável para uso doméstico, perfeito para relaxar após o banho.",
+    price: "R$ 59,90",
+    colors: ["Branco", "Bege", "Azul claro"],
+    sizes: ["P", "M", "G", "GG"],
+    rating: 4.6,
+    isNew: false,
+    features: [
+      "Material macio e absorvente",
+      "Cinto ajustável",
+      "Confortável e elegante"
+    ],
+    images: [
+      "/lovable-uploads/c5a5f1e0-a7bb-49d6-bdc5-b6382ccdc453.png"
+    ],
+    keywords: ["robe", "roupão", "banho", "conforto"]
+  },
+  {
+    id: "vestuario-6",
+    name: "Camisa Básica Infantil",
+    type: "product",
+    category: "Vestuário",
+    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
+    description: "Camisa básica infantil, confortável e de alta qualidade para crianças.",
+    price: "R$ 24,00",
+    colors: ["Branco", "Azul", "Rosa"],
+    sizes: ["2 anos", "4 anos", "6 anos", "8 anos"],
+    rating: 4.8,
+    isNew: false,
+    features: [
+      "Tecido macio e confortável",
+      "Ótimo para o dia a dia",
+      "Fácil de lavar"
+    ],
+    images: [
+      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+    ],
+    keywords: ["camisa", "básica", "infantil", "criança"]
+  },
+  {
+    id: "vestuario-7",
+    name: "Jaleco Masculino - Oxford",
+    type: "product",
+    category: "Vestuário",
+    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
+    description: "Jaleco masculino em tecido Oxford, ideal para profissionais da saúde e laboratórios.",
+    price: "R$ 75,00",
+    colors: ["Branco"],
+    sizes: ["P", "M", "G", "GG"],
+    rating: 4.7,
+    isNew: false,
+    features: [
+      "Tecido Oxford resistente",
+      "Bolsos funcionais",
+      "Design profissional"
+    ],
+    images: [
+      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+    ],
+    keywords: ["jaleco", "masculino", "oxford", "profissional", "saúde"]
+  },
+  {
+    id: "vestuario-8",
+    name: "Jaleco Feminino - Oxford",
+    type: "product",
+    category: "Vestuário",
+    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
+    description: "Jaleco feminino em tecido Oxford, ideal para profissionais da saúde e laboratórios.",
+    price: "R$ 72,00",
+    colors: ["Branco"],
+    sizes: ["P", "M", "G", "GG"],
+    rating: 4.7,
+    isNew: false,
+    features: [
+      "Tecido Oxford resistente",
+      "Corte feminino",
+      "Bolsos funcionais",
+      "Design profissional"
+    ],
+    images: [
+      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+    ],
+    keywords: ["jaleco", "feminino", "oxford", "profissional", "saúde"]
+  },
+  {
+    id: "vestuario-9",
+    name: "Pantufa Toque de Seda",
+    type: "product",
+    category: "Vestuário",
+    imageUrl: "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
+    description: "Pantufa com toque de seda, extremamente macia e confortável.",
+    price: "R$ 58,00",
+    colors: ["Bege", "Marrom", "Cinza"],
+    sizes: ["34-36", "37-39", "40-42"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Acabamento que imita a textura da seda",
+      "Extremamente macia",
+      "Sola antiderrapante",
+      "Design elegante"
+    ],
+    images: [
+      "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png"
+    ],
+    keywords: ["pantufa", "toque de seda", "calçado", "conforto"]
+  }
+];
+
+// These products are for the "Bordado em Vestuário" portfolio section
+export const bordadoVestuarioProducts: Product[] = [
+  {
+    id: 202,
+    name: "Bordado em Camisa - Impcatto",
+    type: "portfolio",
+    category: "Bordado em Vestuário",
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    description: "Bordado de logo em camisa para a empresa Impcatto.",
+    price: "35,00",
+    isNew: false,
+    isAvailable: true,
+    isCustomizable: true,
+    colors: ["azul", "branco", "preto"],
+    sizes: ["P", "M", "G", "GG"],
+    stockQuantity: 50,
+    minPurchaseQuantity: 5,
+    tags: ["camisa", "bordado", "logo", "empresarial"],
+    featured: false,
+    dimensions: {
+      width: 0,
+      height: 0,
+      depth: 0,
+      weight: 0
+    },
+    createdAt: "2023-04-01T10:00:00Z"
+  },
+  {
+    id: 203,
+    name: "Bordado em Fardamento - Pet Dream",
+    type: "portfolio",
+    category: "Bordado em Fardamentos",
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    description: "Bordado do logo Pet Dream em fardamento para hospital veterinário.",
+    price: "40,00",
+    isNew: false,
+    isAvailable: true,
+    isCustomizable: true,
+    colors: ["azul", "branco", "verde"],
+    sizes: ["P", "M", "G", "GG"],
+    stockQuantity: 20,
+    minPurchaseQuantity: 5,
+    tags: ["fardamento", "bordado", "veterinário", "pet", "empresarial"],
+    featured: false,
+    dimensions: {
+      width: 0,
+      height: 0,
+      depth: 0,
+      weight: 0
+    },
+    createdAt: "2023-04-02T10:00:00Z"
+  },
+  {
+    id: 204,
+    name: "Bordado em Camisa - Girassol",
+    type: "portfolio",
+    category: "Bordado em Vestuário",
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    description: "Bordado com design de girassol na camisa.",
+    price: "30,00",
+    isNew: false,
+    isAvailable: true,
+    isCustomizable: true,
+    colors: ["branco", "azul"],
+    sizes: ["P", "M", "G", "GG"],
+    stockQuantity: 40,
+    minPurchaseQuantity: 1,
+    tags: ["camisa", "bordado", "floral", "girassol"],
+    featured: false,
+    dimensions: {
+      width: 0,
+      height: 0,
+      depth: 0,
+      weight: 0
+    },
+    createdAt: "2023-04-03T10:00:00Z"
+  },
+  {
+    id: 205,
+    name: "Bordado em Fardamento para Times de Futebol",
+    type: "portfolio",
+    category: "Bordado em Fardamentos",
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    description: "Bordado em fardamento para diversos times de futebol.",
+    price: "45,00",
+    isNew: false,
+    isAvailable: true,
+    isCustomizable: true,
+    colors: ["variados"],
+    sizes: ["P", "M", "G", "GG"],
+    stockQuantity: 100,
+    minPurchaseQuantity: 10,
+    tags: ["fardamento", "bordado", "futebol", "time", "esporte"],
+    featured: false,
+    dimensions: {
+      width: 0,
+      height: 0,
+      depth: 0,
+      weight: 0
+    },
+    createdAt: "2023-04-04T10:00:00Z"
+  },
+  {
+    id: 206,
+    name: "Bordado em Fardamento - Biscoitos Feitos por Nós",
+    type: "portfolio",
+    category: "Bordado em Fardamentos",
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    description: "Bordado do logo 'Biscoitos Feitos Por Nós' em fardamento.",
+    price: "35,00",
+    isNew: false,
+    isAvailable: true,
+    isCustomizable: true,
+    colors: ["branco", "rosa"],
+    sizes: ["P", "M", "G", "GG"],
+    stockQuantity: 30,
+    minPurchaseQuantity: 5,
+    tags: ["fardamento", "bordado", "logo", "gastronomia", "empresarial"],
+    featured: false,
+    dimensions: {
+      width: 0,
+      height: 0,
+      depth: 0,
+      weight: 0
+    },
+    createdAt: "2023-04-05T10:00:00Z"
+  },
+  {
+    id: 207,
+    name: "Bordado em Camisa - Capibaribe",
+    type: "portfolio",
+    category: "Bordado em Vestuário",
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    description: "Bordado de logo do time Capibaribe em uma camisa.",
+    price: "40,00",
+    isNew: false,
+    isAvailable: true,
+    isCustomizable: true,
+    colors: ["azul", "branco"],
+    sizes: ["P", "M", "G", "GG"],
+    stockQuantity: 25,
+    minPurchaseQuantity: 5,
+    tags: ["camisa", "bordado", "futebol", "time", "esporte"],
+    featured: false,
+    dimensions: {
+      width: 0,
+      height: 0,
+      depth: 0,
+      weight: 0
+    },
+    createdAt: "2023-04-06T10:00:00Z"
+  },
+  {
+    id: 208,
+    name: "Bordado em Camisa - Doutor Pet",
+    type: "portfolio",
+    category: "Bordado em Vestuário",
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    description: "Bordado com o logo Doutor Pet na camisa.",
+    price: "35,00",
+    isNew: false,
+    isAvailable: true,
+    isCustomizable: true,
+    colors: ["azul", "branco", "verde"],
+    sizes: ["P", "M", "G", "GG"],
+    stockQuantity: 30,
+    minPurchaseQuantity: 5,
+    tags: ["camisa", "bordado", "veterinário", "pet", "empresarial"],
+    featured: false,
+    dimensions: {
+      width: 0,
+      height: 0,
+      depth: 0,
+      weight: 0
+    },
+    createdAt: "2023-04-07T10:00:00Z"
+  },
+  {
+    id: 209,
+    name: "Bordado em Avental",
+    type: "portfolio",
+    category: "Bordado em Vestuário",
+    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    description: "Bordado de logo ou texto em avental.",
+    price: "50,00",
+    isNew: false,
+    isAvailable: true,
+    isCustomizable: true,
+    colors: ["branco", "preto", "vermelho"],
+    sizes: ["Único"],
+    stockQuantity: 20,
+    minPurchaseQuantity: 2,
+    tags: ["avental", "bordado", "gastronomia", "empresarial"],
+    featured: false,
+    dimensions: {
+      width: 0,
+      height: 0,
+      depth: 0,
+      weight: 0
+    },
+    createdAt: "2023-04-08T10:00:00Z"
   }
 ];
