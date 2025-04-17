@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -108,6 +109,11 @@ const ProductCard = ({
     // Special case for Bordado em Camisa - Capibaribe
     if (Number(id) === 207) {
       return "/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png";
+    }
+    
+    // Special case for Bordado em Camisa - Doutor Pet
+    if (Number(id) === 208) {
+      return "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png";
     }
     
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {

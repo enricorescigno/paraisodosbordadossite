@@ -1,3 +1,4 @@
+
 // Este arquivo simula uma API para gerenciar produtos e categorias
 
 export interface Category {
@@ -340,5 +341,25 @@ export const allProducts: Product[] = [
     isNew: false,
     colors: ["Preto", "Amarelo"],
     sizes: ["P", "M", "G", "GG"]
+  },
+  
+  // Adding Bordado em Camisa - Doutor Pet with new images
+  {
+    id: 208,
+    name: "Bordado em Camisa - Doutor Pet",
+    description: "Bordado com o logo Doutor Pet na camisa. Disponível em verde, verde água e caqui. O logo apresenta um veterinário com animais de estimação em um círculo verde.",
+    category: "Bordado em Vestuário",
+    images: [
+      "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png",
+      "/lovable-uploads/d5b5532a-f97b-4e54-b83a-e67256cb21dc.png",
+      "/lovable-uploads/4a3d432f-60d7-4543-b6f8-bc13a8a3c870.png",
+      "/lovable-uploads/135d959f-0f03-4169-a803-d49bc2b1ea43.png"
+    ],
+    tags: ["camisa", "bordado", "veterinário", "pet", "empresarial"],
+    type: "portfolio",
+    isNew: true,
+    colors: ["Verde", "Verde Água", "Caqui"],
+    sizes: ["P", "M", "G", "GG"]
   }
 ];
+
