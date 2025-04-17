@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 // Bordados Infantis Collection
@@ -34,22 +33,28 @@ export const bordadosInfantisProducts: Product[] = [
     name: "Bordado em Fralda de Tecido - Nome",
     type: "product",
     category: "Bordados Infantis",
-    imageUrl: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop",
-    description: "Fralda de tecido personalizada com bordado do nome, ideal para presente de bebê.",
+    imageUrl: "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
+    description: "Fralda de tecido personalizada com bordado do nome, ideal para presente de bebê. Disponível em várias cores: Marrom, Verde, Amarelo, Azul.",
     price: "Sob consulta",
-    colors: ["Rosa", "Lilás"],
+    colors: ["Marrom", "Verde", "Amarelo", "Azul"],
     sizes: ["Único"],
     rating: 4.9,
     isNew: true,
     features: [
-      "Bordado personalizado",
+      "Bordado personalizado com nome",
       "Tecido macio e confortável",
-      "Presente ideal para bebês"
+      "Presente ideal para bebês",
+      "Várias cores disponíveis",
+      "Acabamento de alta qualidade"
     ],
     images: [
-      "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop"
+      "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
+      "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png",
+      "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png",
+      "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png",
+      "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"
     ],
-    keywords: ["fralda", "tecido", "bebê", "personalizado", "bordado"]
+    keywords: ["fralda", "tecido", "bebê", "personalizado", "bordado", "nome", "davi"]
   },
   {
     id: 1003,

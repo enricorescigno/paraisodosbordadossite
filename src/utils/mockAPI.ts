@@ -186,5 +186,24 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Branco", "Verde Água", "Verde"],
     sizes: ["Único"]
+  },
+  // Updated Bordado em Fralda de Tecido - Nome with new images
+  {
+    id: 1002,
+    name: "Bordado em Fralda de Tecido - Nome",
+    description: "Fralda de tecido personalizada com bordado do nome, ideal para presente de bebê. Disponível em várias cores: Marrom, Verde, Amarelo, Azul.",
+    category: "Bordados Infantis",
+    images: [
+      "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
+      "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png",
+      "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png",
+      "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png",
+      "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"
+    ],
+    tags: ["bordado", "personalizado", "infantil", "fralda"],
+    type: "product",
+    isNew: true,
+    colors: ["Marrom", "Verde", "Amarelo", "Azul"],
+    sizes: ["Único"]
   }
 ];

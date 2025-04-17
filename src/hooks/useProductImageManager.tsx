@@ -6,15 +6,19 @@ export const colorToImageMap: Record<string, string[]> = {
   "Branco": ["/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png"],
   "Dourado": ["/lovable-uploads/7df18d21-e4ed-468f-b727-826aa9641c3b.png"],
   "Bege": ["/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png"],
-  "Marrom": ["/lovable-uploads/3bb94c02-6771-46d8-8e2f-efe9b267c391.png"],
+  "Marrom": ["/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png", "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"],
   "Rosa": ["/lovable-uploads/0f23a8fc-2cfb-4961-a2d3-47b09c4ec29c.png"],
   "Verde": [
     "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
     "/lovable-uploads/9dd1e51a-955c-43f7-869c-b974b6c81c12.png",
-    "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png"
+    "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png",
+    "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png" // Fralda Verde
   ],
   "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"],
-  "Azul": ["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"],
+  "Azul": [
+    "/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png",
+    "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png" // Fralda Azul
+  ],
   "Verde Água": [
     "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
     "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
@@ -24,7 +28,8 @@ export const colorToImageMap: Record<string, string[]> = {
     "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
     "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
     "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
-  ]
+  ],
+  "Amarelo": ["/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png"] // Fralda Amarela
 };
 
 export const useProductImageManager = (product: Product | null, selectedColor: string) => {
@@ -41,6 +46,19 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
         "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
         "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+      ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Special handling for product ID 1002 (Bordado em Fralda de Tecido - Nome)
+    if (product.id.toString() === "1002") {
+      setCurrentImages([
+        "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
+        "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png",
+        "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png",
+        "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png",
+        "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"
       ]);
       setActiveImageIndex(0);
       return;
@@ -112,6 +130,17 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         ]);
         setActiveImageIndex(0);
         return;
+      } else if (product.id.toString() === "1002") {
+        // Special case for product 1002 - Bordado em Fralda de Tecido - Nome
+        setCurrentImages([
+          "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
+          "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png",
+          "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png",
+          "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png",
+          "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"
+        ]);
+        setActiveImageIndex(0);
+        return;
       } else if (product.id.toString() === "204") {
         // Special case for product 204 - initialize with default color
         const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
@@ -164,6 +193,33 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
         "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
       ]);
+      setActiveImageIndex(0);
+      return;
+    }
+    
+    // Handle color changes for product 1002 (Bordado em Fralda de Tecido - Nome)
+    if (product.id.toString() === "1002") {
+      if (selectedColor === "Marrom") {
+        setCurrentImages([
+          "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
+          "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"
+        ]);
+      } else if (selectedColor === "Verde") {
+        setCurrentImages(["/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png"]);
+      } else if (selectedColor === "Amarelo") {
+        setCurrentImages(["/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png"]);
+      } else if (selectedColor === "Azul") {
+        setCurrentImages(["/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png"]);
+      } else {
+        // Default to showing all images
+        setCurrentImages([
+          "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
+          "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png",
+          "/lovable-uploads/055ae88a-0c44-443e-ad15-3fbafecf130a.png",
+          "/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png",
+          "/lovable-uploads/f0a45e2e-eccf-4166-a7a7-75ccfe8cdb68.png"
+        ]);
+      }
       setActiveImageIndex(0);
       return;
     }
