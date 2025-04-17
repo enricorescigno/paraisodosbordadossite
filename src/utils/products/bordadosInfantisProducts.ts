@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Bordados Infantis Collection
@@ -133,51 +134,6 @@ export const bordadosInfantisProducts: Product[] = [
       "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
     ],
     keywords: ["manta", "infantil", "leão", "bebê", "bordado", "personalizado"]
-  },
-  {
-    id: 1006,
-    name: "Bordado em Toalha de Rosto",
-    type: "portfolio",
-    category: "Bordado em Toalha",
-    imageUrl: "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop",
-    description: "Toalha de rosto personalizada com bordado, ideal para presentear ou usar no dia a dia.",
-    price: "Sob consulta",
-    colors: ["Branco", "Azul", "Rosa"],
-    sizes: ["Único"],
-    rating: 4.9,
-    isNew: true,
-    features: [
-      "Bordado personalizado",
-      "Toalha macia e absorvente",
-      "Alta qualidade",
-      "100% algodão"
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop"
-    ],
-    keywords: ["toalha", "rosto", "bordado", "personalizado", "presente"]
-  },
-  {
-    id: 1007,
-    name: "Bordado em Toalha de Banho",
-    type: "portfolio",
-    category: "Bordado em Toalha",
-    imageUrl: "https://images.unsplash.com/photo-1582562124811-c09040d0a901?q=80&w=500&auto=format&fit=crop",
-    description: "Toalha de banho com bordado personalizado, perfeita para dar um toque especial ao seu banheiro.",
-    price: "Sob consulta",
-    colors: ["Branco", "Bege", "Verde"],
-    sizes: ["G"],
-    rating: 5.0,
-    isNew: true,
-    features: [
-      "Bordado de alta qualidade",
-      "Toalha felpuda e absorvente",
-      "Material premium",
-      "Personalização a seu gosto"
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1582562124811-c09040d0a901?q=80&w=500&auto=format&fit=crop"
-    ],
-    keywords: ["toalha", "banho", "bordado", "personalizado", "presente", "decoração"]
   }
 ];
+
