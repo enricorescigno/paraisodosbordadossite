@@ -1,4 +1,3 @@
-
 // Este arquivo simula uma API para gerenciar produtos e categorias
 
 export interface Category {
@@ -257,6 +256,22 @@ export const allProducts: Product[] = [
     isNew: true,
     colors: ["Rosa", "Bege"],
     sizes: ["Único"]
+  },
+  // Atualizando Bordado em Camisa - Impcatto
+  {
+    id: 202,
+    name: "Bordado em Camisa - Impcatto",
+    description: "Bordado de logo em camisa para a empresa Impcatto. Trabalho detalhado em camisas verdes com bordado de alta precisão do logo da empresa em duas cores.",
+    category: "Bordado em Vestuário",
+    images: [
+      "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png",
+      "/lovable-uploads/652a8949-cb0d-4fd6-8ac2-d73fdd4cd81e.png"
+    ],
+    tags: ["camisa", "bordado", "logo", "empresarial"],
+    type: "portfolio",
+    isNew: false,
+    colors: ["Verde"],
+    sizes: ["P", "M", "G", "GG"]
   },
   // Adicionando Bordado em Fardamento para Times de Futebol
   {

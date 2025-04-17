@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
@@ -20,7 +19,9 @@ export const colorToImageMap: Record<string, string[]> = {
     "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
     "/lovable-uploads/9dd1e51a-955c-43f7-869c-b974b6c81c12.png",
     "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png",
-    "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png" // Fralda Verde
+    "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png", // Fralda Verde
+    "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png", // Impcatto camisa
+    "/lovable-uploads/652a8949-cb0d-4fd6-8ac2-d73fdd4cd81e.png"  // Impcatto camisas
   ],
   "Vinho": ["/lovable-uploads/eb41cb5b-59c0-4d31-b82c-28b327eed958.png"],
   "Azul": [
@@ -59,11 +60,9 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   const [currentImages, setCurrentImages] = useState<string[]>([]);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
-  // Initialize images based on product data
   const initializeImages = (product: Product) => {
     if (!product) return;
     
-    // Special handling for product ID 1001 (Bordado em Camisa Infantil - Caminhão)
     if (product.id.toString() === "1001") {
       setCurrentImages([
         "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
@@ -74,7 +73,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Special handling for product ID 1002 (Bordado em Fralda de Tecido - Nome)
     if (product.id.toString() === "1002") {
       setCurrentImages([
         "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
@@ -87,15 +85,12 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Special handling for product ID 1003 (Bordado em Fralda de Tecido - Davi)
     if (product.id.toString() === "1003") {
-      const images = ["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"];
-      setCurrentImages(images);
+      setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
       setActiveImageIndex(0);
       return;
     }
     
-    // Special handling for product ID 1004 (Bordado em Macacão - Leãozinho Safari)
     if (product.id.toString() === "1004") {
       setCurrentImages([
         "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
@@ -107,7 +102,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Special handling for product ID 1005 (Bordado em Manta - Leãozinho)
     if (product.id.toString() === "1005") {
       setCurrentImages([
         "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
@@ -117,7 +111,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Special handling for Bordado em Bolsas - Imparáveis (2002 and 901)
     if (product.id.toString() === "2002" || product.id.toString() === "901") {
       setCurrentImages([
         "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
@@ -129,7 +122,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Special handling for Bordado em Bolsas - Brows Evolution (2004 and 903)
     if (product.id.toString() === "2004" || product.id.toString() === "903") {
       setCurrentImages([
         "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
@@ -140,8 +132,7 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       setActiveImageIndex(0);
       return;
     }
-
-    // Special handling for Bordado em Fardamento para Times de Futebol (205 and 902)
+    
     if (product.id.toString() === "205" || product.id.toString() === "902") {
       setCurrentImages([
         "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
@@ -153,28 +144,24 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Special handling for product ID 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
       if (selectedColor === "Verde") {
-        const images = [
+        setCurrentImages([
           "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
           "/lovable-uploads/9dd1e51a-955c-43f7-869c-b974b6c81c12.png",
           "/lovable-uploads/0e63ddb2-a891-4a5a-aad8-a4edb22a66f6.png"
-        ];
-        setCurrentImages(images);
+        ]);
       } else if (selectedColor === "Verde Água") {
-        const images = [
+        setCurrentImages([
           "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png",
           "/lovable-uploads/38aaf457-7842-4f6f-9654-a50425b98530.png",
           "/lovable-uploads/494e5c1f-f39b-4fc9-93eb-4a1d16e06cf4.png"
-        ];
-        setCurrentImages(images);
+        ]);
       } else {
-        const images = [
+        setCurrentImages([
           "/lovable-uploads/32a81fea-21e4-426b-a513-d4a05b4381a9.png",
           "/lovable-uploads/2a87573c-1da5-418a-bbcb-22196583e5bd.png"
-        ];
-        setCurrentImages(images);
+        ]);
       }
       setActiveImageIndex(0);
       return;
@@ -199,10 +186,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     }
   };
 
-  // Update images when product changes
   useEffect(() => {
     if (product) {
-      // Special case for product 205/902 - Bordado em Fardamento para Times de Futebol
       if (product.id.toString() === "205" || product.id.toString() === "902") {
         setCurrentImages([
           "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
@@ -214,7 +199,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         return;
       }
       
-      // Special case for product 1001 - Bordado em Camisa Infantil - Caminhão
       if (product.id.toString() === "1001") {
         setCurrentImages([
           "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
@@ -224,8 +208,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setActiveImageIndex(0);
         return;
       }
-      // Special case for product 1002 - Bordado em Fralda de Tecido - Nome
-      else if (product.id.toString() === "1002") {
+      
+      if (product.id.toString() === "1002") {
         setCurrentImages([
           "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
           "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png",
@@ -236,8 +220,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setActiveImageIndex(0);
         return;
       }
-      // Special case for product 1004 - Bordado em Macacão - Leãozinho Safari
-      else if (product.id.toString() === "1004") {
+      
+      if (product.id.toString() === "1004") {
         setCurrentImages([
           "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
           "/lovable-uploads/3da0fe71-1385-4b2c-8d2b-81a6f409c3bd.png", 
@@ -247,8 +231,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setActiveImageIndex(0);
         return;
       }
-      // Special case for product 1005 - Bordado em Manta - Leãozinho
-      else if (product.id.toString() === "1005") {
+      
+      if (product.id.toString() === "1005") {
         setCurrentImages([
           "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
           "/lovable-uploads/3e992647-de18-485e-a85b-a41854b1227b.png"
@@ -256,8 +240,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setActiveImageIndex(0);
         return;
       }
-      // Special case for Bordado em Bolsas - Imparáveis (2002 and 901)
-      else if (product.id.toString() === "2002" || product.id.toString() === "901") {
+      
+      if (product.id.toString() === "2002" || product.id.toString() === "901") {
         setCurrentImages([
           "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
           "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
@@ -267,8 +251,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setActiveImageIndex(0);
         return;
       }
-      // Special case for Bordado em Bolsas - Brows Evolution (2004 and 903)
-      else if (product.id.toString() === "2004" || product.id.toString() === "903") {
+      
+      if (product.id.toString() === "2004" || product.id.toString() === "903") {
         setCurrentImages([
           "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
           "/lovable-uploads/dd50745c-ca05-43e7-82cc-570a84db32ab.png",
@@ -278,8 +262,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         setActiveImageIndex(0);
         return;
       }
-      // Special case for product 204 - initialize with default color
-      else if (product.id.toString() === "204") {
+      
+      if (product.id.toString() === "204") {
         const defaultColor = product.colors && product.colors.length > 0 ? product.colors[0] : '';
         if (defaultColor && colorToImageMap[defaultColor]) {
           setCurrentImages(colorToImageMap[defaultColor]);
@@ -289,13 +273,13 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
           setActiveImageIndex(0);
         }
       }
-      // Special case for product 1003 (Bordado em Fralda de Tecido - Davi)
-      else if (product.id.toString() === "1003") {
+      
+      if (product.id.toString() === "1003") {
         setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
         setActiveImageIndex(0);
       }
-      // Special case for product 2010 (Bordado em Toalha)
-      else if (product.id.toString() === "2010") {
+      
+      if (product.id.toString() === "2010") {
         if (selectedColor === "Verde") {
           setCurrentImages([
             "/lovable-uploads/5638df7e-a0e8-4648-81cc-7ebabc46d71a.png",
@@ -316,17 +300,15 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         }
         setActiveImageIndex(0);
         return;
-      } else {
-        initializeImages(product);
       }
+      
+      initializeImages(product);
     }
   }, [product, selectedColor]);
 
-  // Update images when color changes
   useEffect(() => {
     if (!product) return;
     
-    // Handle color changes for product 205/902 (Bordado em Fardamento para Times de Futebol)
     if (product.id.toString() === "205" || product.id.toString() === "902") {
       if (selectedColor === "Azul") {
         setCurrentImages([
@@ -350,7 +332,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Handle color changes for product 1001 (Bordado em Camisa Infantil - Caminhão)
     if (product.id.toString() === "1001" && selectedColor === "Vermelho") {
       setCurrentImages([
         "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
@@ -361,7 +342,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Handle color changes for product 1002 (Bordado em Fralda de Tecido - Nome)
     if (product.id.toString() === "1002") {
       if (selectedColor === "Marrom") {
         setCurrentImages([
@@ -375,7 +355,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       } else if (selectedColor === "Azul") {
         setCurrentImages(["/lovable-uploads/b4b1bf45-7f3e-414b-b33c-4d3ca7d5c55c.png"]);
       } else {
-        // Default to showing all images
         setCurrentImages([
           "/lovable-uploads/8fb7cea7-4cfd-4d4b-ba56-280c3aa41e2d.png",
           "/lovable-uploads/9a8507cf-7a70-415c-8c4a-4eb424c32dd4.png",
@@ -388,7 +367,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Handle color changes for product 1004 (Bordado em Macacão - Leãozinho Safari)
     if (product.id.toString() === "1004" && selectedColor === "Cinza") {
       setCurrentImages([
         "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png",
@@ -400,7 +378,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Handle color changes for product 1005 (Bordado em Manta - Leãozinho)
     if (product.id.toString() === "1005" && selectedColor === "Verde Água") {
       setCurrentImages([
         "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png",
@@ -410,7 +387,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Handle color changes for Bordado em Bolsas products
     if ((product.id.toString() === "2002" || product.id.toString() === "901") && selectedColor === "Rosa") {
       setCurrentImages([
         "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
@@ -429,7 +405,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       return;
     }
     
-    // Handle color changes for Brows Evolution bags
     if ((product.id.toString() === "2004" || product.id.toString() === "903")) {
       if (selectedColor === "Rosa") {
         setCurrentImages([
@@ -456,14 +431,12 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       }
     }
     
-    // Special handling for product 1003 (Bordado em Fralda de Tecido - Davi)
     if (product.id.toString() === "1003" && selectedColor === "Azul") {
       setCurrentImages(["/lovable-uploads/f92f7a74-5afd-4a68-ac2f-e865dbe23826.png"]);
       setActiveImageIndex(0);
       return;
     }
     
-    // Special handling for product 2010 (Bordado em Toalha)
     if (product.id.toString() === "2010") {
       if (selectedColor === "Verde") {
         setCurrentImages([
@@ -494,7 +467,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     }
   }, [selectedColor, product]);
 
-  // Get the placeholder image based on product category
   const getPlaceholder = (category: string) => {
     const placeholders: Record<string, string> = {
       'Cama, Mesa e Banho': '/images/placeholders/home-textile.jpg',

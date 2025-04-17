@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -84,6 +83,11 @@ const ProductCard = ({
     // Special case for Bordado em Fardamento para Times de Futebol
     if (Number(id) === 205 || Number(id) === 902) {
       return "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png";
+    }
+    
+    // Special case for Bordado em Camisa - Impcatto
+    if (Number(id) === 202) {
+      return "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png";
     }
     
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
