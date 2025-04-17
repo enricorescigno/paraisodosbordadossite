@@ -1,12 +1,9 @@
-
 import { Link } from 'react-router-dom';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuContent, NavigationMenuTrigger, NavigationMenuLink } from "@/components/ui/navigation-menu";
 import { useIsMobile } from '../hooks/use-mobile';
 import { cn } from '@/lib/utils';
-
 const MenubarNav = () => {
   const isMobile = useIsMobile();
-
   if (isMobile) return null;
   return <div className="flex justify-center pb-2">
       <NavigationMenu>
@@ -109,9 +106,7 @@ const MenubarNav = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link to="/portfolio/bordado-toalha-banho" className="block text-sm text-gray-700 hover:text-brand-red transition-colors">
-                      Bordado em Toalha de Banho
-                    </Link>
+                    
                   </li>
                   <li>
                     <Link to="/portfolio/bordado-toalha" className="block text-sm text-gray-700 hover:text-brand-red transition-colors">
