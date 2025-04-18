@@ -191,29 +191,6 @@ export const bordadosProducts: Product[] = [
   // Adding the moved toalha products
   {
     id: 1006,
-    name: "Bordado em Toalha de Rosto",
-    type: "portfolio",
-    category: "Bordado em Toalha",
-    imageUrl: "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop",
-    description: "Toalha de rosto personalizada com bordado, ideal para presentear ou usar no dia a dia.",
-    price: "Sob consulta",
-    colors: ["Branco", "Azul", "Rosa"],
-    sizes: ["Único"],
-    rating: 4.9,
-    isNew: true,
-    features: [
-      "Bordado personalizado",
-      "Toalha macia e absorvente",
-      "Alta qualidade",
-      "100% algodão"
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop"
-    ],
-    keywords: ["toalha", "rosto", "bordado", "personalizado", "presente"]
-  },
-  {
-    id: 1006,
     name: "Bordado em Toalha de Banho",
     type: "portfolio",
     category: "Bordado em Toalha",
@@ -240,7 +217,7 @@ export const bordadosProducts: Product[] = [
   },
   {
     id: 2011,
-    name: "Bordado em Toalha de Rosto - Ricardo e Lucas",
+    name: "Bordado em Toalha de Rosto",
     type: "portfolio",
     category: "Bordado em Toalha",
     imageUrl: "/lovable-uploads/c43e1aa8-d406-4206-b941-3dd865acd9aa.png",
