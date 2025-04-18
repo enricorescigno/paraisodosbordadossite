@@ -234,5 +234,31 @@ export const bordadosProducts: Product[] = [
       "https://images.unsplash.com/photo-1582562124811-c09040d0a901?q=80&w=500&auto=format&fit=crop"
     ],
     keywords: ["toalha", "banho", "bordado", "personalizado", "presente", "decoração"]
-  }
+  },
+  {
+    id: 1006,
+    name: "Bordado em Toalha de Banho",
+    type: "portfolio",
+    category: "Bordado em Toalha",
+    imageUrl: "/lovable-uploads/bffd98fc-13d9-4757-82bd-72310db9af58.png",
+    description: "Toalha de banho personalizada com bordado elegante em padrão damasco e nome. Feita com tecido 100% algodão de alta qualidade, com acabamento sofisticado em tons terrosos.",
+    price: "Sob consulta",
+    colors: ["Branco", "Bege"],
+    sizes: ["Único"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Bordado personalizado com nome",
+      "Padrão damasco exclusivo",
+      "100% algodão de alta qualidade",
+      "Acabamento elegante em tons terrosos",
+      "Ideal para presente"
+    ],
+    images: [
+      "/lovable-uploads/bffd98fc-13d9-4757-82bd-72310db9af58.png",
+      "/lovable-uploads/82e63709-7d7f-4c50-8732-e65fb5a96ca0.png"
+    ],
+    tags: ["toalha", "bordado", "personalizado", "nome", "banho", "damasco"],
+    keywords: ["toalha de banho", "bordado", "personalizado", "nome", "banho", "damasco", "presente"]
+  },
 ];
