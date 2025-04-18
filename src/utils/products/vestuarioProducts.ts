@@ -7,20 +7,24 @@ export const vestuarioProducts: Product[] = [
     name: "Camisa Básica unisex 100% algodão adulto",
     type: "product",
     category: "Vestuário",
-    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
     description: "Camisa básica unisex confeccionada em 100% algodão, confortável e de alta qualidade.",
     price: "R$ 29,90",
-    colors: ["Branco", "Preto", "Cinza"],
+    colors: ["Preto", "Amarelo", "Azul Royal", "Verde Água", "Branco", "Cinza", "Vermelho"],
     sizes: ["P", "M", "G", "GG"],
     rating: 4.7,
-    isNew: false,
     features: [
       "100% algodão",
       "Tecido macio",
       "Confortável"
     ],
     images: [
-      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+      "/lovable-uploads/e627464a-ea49-431e-bdfe-61fdc8d0ade6.png", // Preto
+      "/lovable-uploads/413dc254-7151-42ff-8c76-9542fe0fd000.png", // Amarelo
+      "/lovable-uploads/5196f41e-9122-43b3-87e0-bba36f02db37.png", // Azul Royal
+      "/lovable-uploads/a9eb955b-2415-4603-83b7-b0bfe976aff8.png", // Verde Água
+      "/lovable-uploads/ea192bca-bdb8-4a1f-928f-81c705de4209.png", // Branco
+      "/lovable-uploads/fb5f097a-e5ed-4a81-ac17-6a80e73281e8.png", // Cinza
+      "/lovable-uploads/fe3394aa-dcf4-4d2e-9292-2049e3ee9f66.png", // Vermelho
     ],
     keywords: ["camisa", "básica", "unisex", "algodão", "adulto"]
   },
