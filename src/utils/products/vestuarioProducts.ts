@@ -33,20 +33,27 @@ export const vestuarioProducts: Product[] = [
     name: "Camisa Polo Masculina",
     type: "product",
     category: "Vestuário",
-    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
-    description: "Camisa polo masculina de alta qualidade, ideal para ambientes casuais ou formais.",
+    imageUrl: "/lovable-uploads/7d78953f-1496-4f4c-ba23-5acf30512358.png",
+    description: "Camisa polo masculina de alta qualidade, ideal para ambientes casuais ou formais. Disponível em diversas cores e tamanhos.",
     price: "Sob consulta",
-    colors: ["Azul", "Preto", "Branco"],
-    sizes: ["P", "M", "G", "GG"],
+    colors: [
+      "Preta", "Branca", "Cinza", "Chumbo", "Azul Royal",
+      "Azul Turquesa", "Azul Marinho", "Vermelha", "Amarelo Claro",
+      "Amarelo Canário", "Laranja", "Vinho", "Verde Bandeira", "Pink"
+    ],
+    sizes: ["P", "M", "G", "GG", "XG", "XG1", "XG2", "XG3"],
     rating: 4.6,
-    isNew: false,
     features: [
       "Tecido de alta qualidade",
       "Design elegante",
-      "Confortável para uso diário"
+      "Confortável para uso diário",
+      "Diversas cores disponíveis",
+      "Ampla variedade de tamanhos"
     ],
     images: [
-      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+      "/lovable-uploads/7d78953f-1496-4f4c-ba23-5acf30512358.png",
+      "/lovable-uploads/0220db3b-aa3e-48cd-9637-a4a532a17de8.png",
+      "/lovable-uploads/8b1f7b0c-0709-4fd7-8b32-400b0aa610de.png"
     ],
     keywords: ["camisa", "polo", "masculina"]
   },
