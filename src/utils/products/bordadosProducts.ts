@@ -107,7 +107,7 @@ export const bordadosProducts: Product[] = [
     name: "Bordado em Bolsas - Imparáveis",
     type: "portfolio",
     category: "Bordado em Bolsa",
-    imageUrl: "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
+    imageUrl: "/lovable-uploads/77747fae-966b-471d-925b-6daaca500595.png",
     description: "Bolsa preta com bordado personalizado 'Imparáveis'. Perfeita para eventos ou uso pessoal.",
     price: "Sob consulta",
     colors: ["Preto"],
@@ -116,8 +116,6 @@ export const bordadosProducts: Product[] = [
     isNew: true,
     features: ["Espaçosa", "Durável", "Bordado institucional", "Design versátil"],
     images: [
-      "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png",
-      "/lovable-uploads/185199e6-f644-4c5e-9df7-7c45a81dda9b.png",
       "/lovable-uploads/77747fae-966b-471d-925b-6daaca500595.png",
       "/lovable-uploads/825c01c0-de2d-4af3-925e-93c8e24aaf6f.png"
     ]
