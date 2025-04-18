@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 // Adding new Infantil products as requested
@@ -11,7 +10,7 @@ export const infantilProducts: Product[] = [
     imageUrl: "/lovable-uploads/c5a5f1e0-a7bb-49d6-bdc5-b6382ccdc453.png", // Using a placeholder image
     description: "Roupão infantil temático da Cinderella, macio e confortável.",
     price: "R$ 153,00",
-    keywords: ["infantil", "roupão", "criança", "cinderela", "cinderella", "banho"],
+    keywords: ["infantil", "roupão", "criança", "cinderela", "cinderela", "banho"],
     slug: "roupao-infantil-cinderella",
     isNew: true
   },
@@ -31,10 +30,22 @@ export const infantilProducts: Product[] = [
     name: "Toalha de Banho Lila",
     type: "product",
     category: "infantil",
-    imageUrl: "/lovable-uploads/1bb354e7-598f-421d-9f97-f716da838757.png", // Using a placeholder image
-    description: "Toalha de banho infantil modelo Lila, macia e absorvente.",
+    imageUrl: "/lovable-uploads/2d5a7e2c-50c4-4f92-9d2a-12d97193274f.png",
+    description: "Toalha de banho infantil modelo Lila, macia e absorvente com estampa delicada de fadas.",
     price: "R$ 72,00",
-    keywords: ["infantil", "toalha", "banho", "lila", "criança"],
+    colors: ["Rosa", "Rosa Claro"],
+    features: [
+      "100% Algodão",
+      "Extra macia e absorvente",
+      "Delicada estampa de fadas",
+      "Acabamento premium",
+      "Ideal para crianças"
+    ],
+    images: [
+      "/lovable-uploads/2d5a7e2c-50c4-4f92-9d2a-12d97193274f.png",
+      "/lovable-uploads/a723a589-9a41-4a97-9fe5-ee36ed3e1bde.png"
+    ],
+    keywords: ["infantil", "toalha", "banho", "lila", "criança", "fadas"],
     slug: "toalha-de-banho-lila"
   },
   {
