@@ -141,10 +141,10 @@ export const vestuarioProducts: Product[] = [
     name: "Camisa Básica Infantil",
     type: "product",
     category: "Vestuário",
-    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
+    imageUrl: "/lovable-uploads/ae9237f1-d928-455a-aef3-cd6ec98152b5.png",
     description: "Camisa básica infantil, confortável e de alta qualidade para crianças.",
     price: "R$ 24,00",
-    colors: ["Branco", "Azul", "Rosa"],
+    colors: ["Branco", "Preto"],
     sizes: ["2 anos", "4 anos", "6 anos", "8 anos"],
     rating: 4.8,
     isNew: false,
@@ -154,7 +154,8 @@ export const vestuarioProducts: Product[] = [
       "Fácil de lavar"
     ],
     images: [
-      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+      "/lovable-uploads/ae9237f1-d928-455a-aef3-cd6ec98152b5.png",
+      "/lovable-uploads/9a19c748-b91d-49a9-afae-c0661b497dfa.png"
     ],
     keywords: ["camisa", "básica", "infantil", "criança"]
   },
