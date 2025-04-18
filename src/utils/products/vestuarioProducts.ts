@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 // Vestuário Collection (regular clothing products)
@@ -407,30 +406,5 @@ export const bordadoVestuarioProducts: Product[] = [
       weight: 0
     },
     createdAt: "2023-04-07T10:00:00Z"
-  },
-  {
-    id: 209,
-    name: "Bordado em Avental",
-    type: "portfolio",
-    category: "Bordado em Vestuário",
-    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
-    description: "Bordado de logo ou texto em avental.",
-    price: "50,00",
-    isNew: false,
-    isAvailable: true,
-    isCustomizable: true,
-    colors: ["branco", "preto", "vermelho"],
-    sizes: ["Único"],
-    stockQuantity: 20,
-    minPurchaseQuantity: 2,
-    tags: ["avental", "bordado", "gastronomia", "empresarial"],
-    featured: false,
-    dimensions: {
-      width: 0,
-      height: 0,
-      depth: 0,
-      weight: 0
-    },
-    createdAt: "2023-04-08T10:00:00Z"
   }
 ];
