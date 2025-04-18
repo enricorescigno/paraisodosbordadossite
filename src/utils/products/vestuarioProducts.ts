@@ -62,20 +62,20 @@ export const vestuarioProducts: Product[] = [
     name: "Pantufa Cotele",
     type: "product",
     category: "Vestuário",
-    imageUrl: "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
+    imageUrl: "/lovable-uploads/deffe1d3-4ea9-4bac-af0b-968592271c09.png",
     description: "Pantufa modelo Cotele, macia e confortável para uso doméstico.",
     price: "R$ 98,00",
     colors: ["Bege", "Cinza"],
     sizes: ["34-36", "37-39", "40-42"],
     rating: 4.8,
-    isNew: true,
     features: [
       "Material macio e confortável",
       "Sola antiderrapante",
       "Design elegante"
     ],
     images: [
-      "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png"
+      "/lovable-uploads/deffe1d3-4ea9-4bac-af0b-968592271c09.png",
+      "/lovable-uploads/8ef339fb-f352-446f-8084-fc4f47afb4cd.png"
     ],
     keywords: ["pantufa", "cotele", "calçado", "conforto"]
   },
