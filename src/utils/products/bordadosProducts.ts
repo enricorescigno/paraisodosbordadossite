@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Bordados em Bolsas Collection
@@ -14,7 +15,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Cinza"],
     sizes: ["Único"],
     rating: 4.6,
-    isNew: true,
     features: [
       "Bordado exclusivo",
       "Tecido resistente",
@@ -36,7 +36,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Preto"],
     sizes: ["Único"],
     rating: 4.8,
-    isNew: true,
     features: [
       "Design elegante",
       "Bordado sofisticado",
@@ -64,7 +63,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Rosa", "Bege"],
     sizes: ["Único"],
     rating: 4.7,
-    isNew: true,
     features: [
       "Design moderno",
       "Bordado com logotipo da marca",
@@ -90,7 +88,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Rosa"],
     sizes: ["Único"],
     rating: 4.9,
-    isNew: true,
     features: [
       "Bordado elegante",
       "Conjunto prático e funcional",
@@ -113,7 +110,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Preto"],
     sizes: ["Único"],
     rating: 4.7,
-    isNew: true,
     features: ["Espaçosa", "Durável", "Bordado institucional", "Design versátil"],
     images: [
       "/lovable-uploads/77747fae-966b-471d-925b-6daaca500595.png",
@@ -131,7 +127,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Rosa", "Bege"],
     sizes: ["Único"],
     rating: 4.7,
-    isNew: true,
     features: ["Design moderno", "Bordado elegante", "Ideal para estúdios", "Compacta"],
     images: [
       "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png",
@@ -151,7 +146,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Cinza"],
     sizes: ["Único"],
     rating: 4.8,
-    isNew: true,
     features: ["Bordado personalizado", "Material resistente", "Compacta e funcional", "Design elegante"],
     images: []
   },
@@ -166,7 +160,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Branco", "Bege"],
     sizes: ["Único"],
     rating: 4.9,
-    isNew: true,
     features: [
       "Toalhas 100% algodão",
       "Bordado personalizado com nomes",
@@ -188,7 +181,6 @@ export const bordadosProducts: Product[] = [
     tags: ["toalha", "bordado", "personalizado", "nome", "banho", "arabesco"],
     keywords: ["toalha", "bordado", "personalizado", "nome", "banho", "arabesco", "decorativo"]
   },
-  // Adding the moved toalha products
   {
     id: 1006,
     name: "Bordado em Toalha de Banho",
@@ -200,7 +192,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Branco", "Bege"],
     sizes: ["Único"],
     rating: 4.9,
-    isNew: true,
     features: [
       "Bordado personalizado com nome",
       "Padrão damasco exclusivo",
@@ -226,7 +217,6 @@ export const bordadosProducts: Product[] = [
     colors: ["Verde Água"],
     sizes: ["Único"],
     rating: 4.9,
-    isNew: true,
     features: [
       "Bordado personalizado com nomes",
       "Tecido de alta qualidade",
@@ -240,5 +230,6 @@ export const bordadosProducts: Product[] = [
     ],
     tags: ["toalha", "bordado", "personalizado", "nome", "verde água"],
     keywords: ["toalha de rosto", "bordado", "personalizado", "nome", "verde água", "ricardo", "lucas"]
-  },
+  }
 ];
+

@@ -152,13 +152,6 @@ const ProductCard = ({
             target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
           }}
         />
-        {(isNew || Number(id) === 204 || Number(id) === 1004 || Number(id) === 1005 || Number(id) === 2002 || Number(id) === 2004 || Number(id) === 205 || Number(id) === 902) && (
-          <div className="absolute top-3 right-3">
-            <span className="bg-brand-red text-white text-xs px-2 py-1 rounded-full font-medium">
-              Novo
-            </span>
-          </div>
-        )}
       </div>
       
       <div className="flex flex-col flex-grow w-full">
