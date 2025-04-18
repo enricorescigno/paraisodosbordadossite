@@ -84,10 +84,10 @@ export const vestuarioProducts: Product[] = [
     name: "Pantufa Popom",
     type: "product",
     category: "Vestuário",
-    imageUrl: "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
+    imageUrl: "/lovable-uploads/c7a9518a-56f6-41c6-9797-b1f9e0fb7c34.png",
     description: "Pantufa modelo Popom, macia e quentinha para os dias frios.",
     price: "R$ 98,00",
-    colors: ["Rosa", "Azul", "Cinza"],
+    colors: ["Rosa", "Bege"],
     sizes: ["34-36", "37-39", "40-42"],
     rating: 4.7,
     isNew: true,
@@ -97,7 +97,8 @@ export const vestuarioProducts: Product[] = [
       "Sola antiderrapante"
     ],
     images: [
-      "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png"
+      "/lovable-uploads/c7a9518a-56f6-41c6-9797-b1f9e0fb7c34.png",
+      "/lovable-uploads/b7fa37c5-9cee-4599-abbc-d07300366e9e.png"
     ],
     keywords: ["pantufa", "popom", "pompom", "calçado", "conforto"]
   },
