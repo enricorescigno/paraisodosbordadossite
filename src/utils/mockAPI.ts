@@ -267,7 +267,7 @@ export const allProducts: Product[] = [
     sizes: ["Único"]
   },
   
-  // Updated portfolio item - removed first two images
+  // Updated portfolio item - added tags property
   {
     id: 901,
     name: "Bordado em Bolsas - Imparáveis",
@@ -280,6 +280,7 @@ export const allProducts: Product[] = [
     rating: 4.7,
     isNew: true,
     features: ["Espaçosa", "Durável", "Bordado institucional", "Design versátil"],
+    tags: ["bordado", "bolsa", "personalizado", "imparáveis"],
     images: [
       "/lovable-uploads/616f35be-5698-47de-a797-b1159dc49c1a.png",
       "/lovable-uploads/185199e6-f644-4c5e-9df7-7c45a81dda9b.png",
