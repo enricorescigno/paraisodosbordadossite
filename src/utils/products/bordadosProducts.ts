@@ -238,4 +238,30 @@ export const bordadosProducts: Product[] = [
     tags: ["toalha", "bordado", "personalizado", "nome", "banho", "damasco"],
     keywords: ["toalha de banho", "bordado", "personalizado", "nome", "banho", "damasco", "presente"]
   },
+  {
+    id: 2011,
+    name: "Bordado em Toalha de Rosto - Ricardo e Lucas",
+    type: "portfolio",
+    category: "Bordado em Toalha",
+    imageUrl: "/lovable-uploads/c43e1aa8-d406-4206-b941-3dd865acd9aa.png",
+    description: "Toalha de rosto personalizada com bordado dos nomes Ricardo e Lucas em verde água, com acabamento decorativo em padrão geométrico.",
+    price: "Sob consulta",
+    colors: ["Verde Água"],
+    sizes: ["Único"],
+    rating: 4.9,
+    isNew: true,
+    features: [
+      "Bordado personalizado com nomes",
+      "Tecido de alta qualidade",
+      "Acabamento decorativo em padrão geométrico",
+      "Perfeito para presente"
+    ],
+    images: [
+      "/lovable-uploads/c43e1aa8-d406-4206-b941-3dd865acd9aa.png",
+      "/lovable-uploads/3cfb9f69-f768-477e-9391-584df70c9466.png",
+      "/lovable-uploads/5ba554df-d78e-472a-bd0d-2a696f6dd018.png"
+    ],
+    tags: ["toalha", "bordado", "personalizado", "nome", "verde água"],
+    keywords: ["toalha de rosto", "bordado", "personalizado", "nome", "verde água", "ricardo", "lucas"]
+  },
 ];
