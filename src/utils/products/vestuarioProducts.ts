@@ -107,20 +107,32 @@ export const vestuarioProducts: Product[] = [
     name: "Robe",
     type: "product",
     category: "Vestuário",
-    imageUrl: "/lovable-uploads/c5a5f1e0-a7bb-49d6-bdc5-b6382ccdc453.png",
+    imageUrl: "/lovable-uploads/7209d481-e3c4-46e4-8fbe-78d1b8f8ba53.png",
     description: "Robe confortável para uso doméstico, perfeito para relaxar após o banho.",
     price: "R$ 59,90",
-    colors: ["Branco", "Bege", "Azul claro"],
+    colors: [
+      "Amarelo",
+      "Vermelho",
+      "Rosa Pink",
+      "Rosa Claro",
+      "Prata",
+      "Bege",
+      "Branco",
+      "Preto",
+      "Verde Água",
+      "Rose"
+    ],
     sizes: ["P", "M", "G", "GG"],
     rating: 4.6,
     isNew: false,
     features: [
-      "Material macio e absorvente",
+      "Material macio e acetinado",
       "Cinto ajustável",
-      "Confortável e elegante"
+      "Confortável e elegante",
+      "Diversas cores disponíveis"
     ],
     images: [
-      "/lovable-uploads/c5a5f1e0-a7bb-49d6-bdc5-b6382ccdc453.png"
+      "/lovable-uploads/7209d481-e3c4-46e4-8fbe-78d1b8f8ba53.png"
     ],
     keywords: ["robe", "roupão", "banho", "conforto"]
   },
