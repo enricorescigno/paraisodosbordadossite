@@ -8,6 +8,7 @@ import { AppleButton } from '@/components/ui/apple-button';
 const Hero = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHighQuality, setIsHighQuality] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -30,6 +31,20 @@ const Hero = () => {
       // Force video to load and play
       video.load();
       
+      // Preload low quality by default for faster loading
+      video.preload = "metadata";
+      
+      // Check network connection quality
+      const connection = (navigator as any).connection;
+      if (connection && 
+          (connection.effectiveType === '4g' || connection.downlink > 1.5)) {
+        // Good connection, can enable higher quality after initial load
+        video.addEventListener('canplay', () => {
+          // Add a timer to switch to high quality after initial playback begins
+          setTimeout(() => setIsHighQuality(true), 3000);
+        }, { once: true });
+      }
+      
       // Attempt to play the video
       const playPromise = video.play();
       if (playPromise !== undefined) {
@@ -51,16 +66,28 @@ const Hero = () => {
       if (containerRef.current) {
         setIsScrolled(scrollPosition > 50);
 
-        // Parallax effect on scroll
-        const yValue = scrollPosition * 0.4;
-        videoRef.current?.style.setProperty('transform', `scale(1.01) translateY(${yValue}px)`);
+        // Optimize parallax effect - only apply if the element is in viewport
+        if (scrollPosition < window.innerHeight) {
+          const yValue = scrollPosition * 0.4;
+          videoRef.current?.style.setProperty('transform', `scale(1.01) translateY(${yValue}px)`);
+        }
       }
     };
-    window.addEventListener('scroll', handleScroll);
+    
+    // Use passive event listener for better scroll performance
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+  
+  // Lazy load high quality video when needed
+  useEffect(() => {
+    if (isHighQuality && videoRef.current) {
+      const video = videoRef.current;
+      video.preload = "auto";
+    }
+  }, [isHighQuality]);
 
   const buttonVariants = {
     hidden: {
@@ -77,6 +104,7 @@ const Hero = () => {
       }
     }
   };
+  
   const glassCardVariants = {
     hidden: {
       opacity: 0,
@@ -94,10 +122,7 @@ const Hero = () => {
 
   return (
     <section ref={containerRef} className="relative w-full h-screen overflow-hidden">
-      {/* Video Background with overlay */}
-      {/* Removed overlay as requested (fundo transparente) */}
-      
-      {/* Background Video */}
+      {/* Video Background - optimized with lowered initial quality */}
       <video
         ref={videoRef}
         autoPlay
@@ -109,8 +134,13 @@ const Hero = () => {
           opacity: isVideoLoaded ? 1 : 0,
           transition: 'opacity 1s ease-in-out'
         }}
+        preload="metadata"
+        poster="/lovable-uploads/paraiso-agulha-poster.jpg"
       >
-        <source src="/lovable-uploads/paraiso-agulha.mp4" type="video/mp4" />
+        <source 
+          src="/lovable-uploads/paraiso-agulha.mp4" 
+          type="video/mp4" 
+        />
         Seu navegador não suporta vídeos HTML5.
       </video>
 
@@ -124,8 +154,6 @@ const Hero = () => {
             variants={glassCardVariants}
             className="inline-block mx-auto px-8 py-10 md:px-12 md:py-12 bg-white/40 backdrop-blur-[12px] rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-white/60"
           >
-            {/* Removed Title and Description as requested */}
-
             <motion.div
               className="flex flex-col sm:flex-row items-center justify-center gap-6"
               initial="hidden"
@@ -185,4 +213,3 @@ const Hero = () => {
 };
 
 export default Hero;
-

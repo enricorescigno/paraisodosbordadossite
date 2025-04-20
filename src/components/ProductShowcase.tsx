@@ -1,19 +1,25 @@
-import { useEffect, useState } from 'react';
+
+import { useEffect, useState, lazy, Suspense } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
-import BrowseByCategory from './common/BrowseByCategory';
-import ProductsCarousel from './product/ProductsCarousel';
 import { Product } from '@/types/product';
 import { bonesProducts, bordadosProducts } from '@/utils/productUtils';
+import SkeletonLoader from './common/SkeletonLoader';
+
+// Lazy load components that aren't needed immediately
+const BrowseByCategory = lazy(() => import('./common/BrowseByCategory'));
+const ProductsCarousel = lazy(() => import('./product/ProductsCarousel'));
 
 // Updated portfolio products showcase using actual products from our collection
-const portfolioProducts: Product[] = [...bonesProducts, ...bordadosProducts.slice(0, 2) // Only take 2 items from bordados to avoid overwhelming the showcase
-];
+const portfolioProducts: Product[] = [...bonesProducts, ...bordadosProducts.slice(0, 2)];
+
 const ProductShowcase = () => {
   const [activeCategory, setActiveCategory] = useState<string>("all");
+  const [componentsLoaded, setComponentsLoaded] = useState(false);
   const whatsappNumber = "+5581995970776";
+  
   const {
     ref: sectionRef,
     inView: sectionInView
@@ -21,7 +27,21 @@ const ProductShowcase = () => {
     triggerOnce: true,
     threshold: 0.1
   });
-  return <section ref={sectionRef} className="section-padding bg-[#f5f5f7] transition-all duration-500 py-12 md:py-20">
+
+  // Load components when section comes into view
+  useEffect(() => {
+    if (sectionInView && !componentsLoaded) {
+      // Small delay to prioritize initial view rendering
+      const timer = setTimeout(() => {
+        setComponentsLoaded(true);
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [sectionInView, componentsLoaded]);
+
+  return (
+    <section ref={sectionRef} className="section-padding bg-[#f5f5f7] transition-all duration-500 py-12 md:py-20">
       <div className="container-custom">
         <div className={`text-center mb-8 transform transition-all duration-700 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
           <h2 className="text-3xl mb-4 text-red-600 md:text-3xl font-medium">Nosso Portfólio de Bordados</h2>
@@ -30,16 +50,29 @@ const ProductShowcase = () => {
           </p>
         </div>
         
-        {/* BrowseByCategory configurado para redirecionamento */}
+        {/* BrowseByCategory with lazy loading */}
         <div className={`transform transition-all duration-700 delay-100 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <BrowseByCategory activeCategory={activeCategory} showOnlyPortfolio={true}
-        // Removemos onCategoryChange para utilizar o comportamento de navegação padrão
-        />
+          <Suspense fallback={<SkeletonLoader type="category" count={4} />}>
+            {componentsLoaded && (
+              <BrowseByCategory 
+                activeCategory={activeCategory} 
+                showOnlyPortfolio={true}
+              />
+            )}
+          </Suspense>
         </div>
         
-        {/* Carrossel de produtos */}
+        {/* Carrossel de produtos with lazy loading */}
         <div className={`transform transition-all duration-700 delay-200 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <ProductsCarousel products={portfolioProducts} whatsappNumber={whatsappNumber} isPortfolio={true} />
+          <Suspense fallback={<SkeletonLoader type="product" count={3} />}>
+            {componentsLoaded && (
+              <ProductsCarousel 
+                products={portfolioProducts} 
+                whatsappNumber={whatsappNumber} 
+                isPortfolio={true} 
+              />
+            )}
+          </Suspense>
         </div>
         
         <div className={`flex justify-center mt-12 transform transition-all duration-700 delay-300 ${sectionInView ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
@@ -49,6 +82,8 @@ const ProductShowcase = () => {
           </Link>
         </div>
       </div>
-    </section>;
+    </section>
+  );
 };
+
 export default ProductShowcase;

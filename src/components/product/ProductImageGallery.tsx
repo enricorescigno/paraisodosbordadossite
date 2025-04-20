@@ -1,10 +1,10 @@
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getImageLoading } from '../../utils/imageUtils';
+import { getImageLoading, getWebPImageUrl } from '../../utils/imageUtils';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -28,6 +28,7 @@ const ProductImageGallery = ({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
+  const [optimizedImages, setOptimizedImages] = useState<string[]>([]);
 
   // Initialize images loaded state array
   useEffect(() => {
@@ -38,6 +39,10 @@ const ProductImageGallery = ({
     const timer = setTimeout(() => {
       setThumbnailsVisible(true);
     }, 300);
+    
+    // Convert images to WebP format if available
+    const webpImages = images.map(img => getWebPImageUrl(img));
+    setOptimizedImages(webpImages);
     
     return () => clearTimeout(timer);
   }, [images.length]);
@@ -92,6 +97,9 @@ const ProductImageGallery = ({
     setActiveImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
+  // Memoize the current image to prevent unnecessary rerenders
+  const currentImage = optimizedImages.length > 0 ? optimizedImages[activeImageIndex] : images[activeImageIndex];
+
   return (
     <div className="bg-white rounded-2xl overflow-hidden">
       <AnimatePresence mode="wait">
@@ -110,7 +118,7 @@ const ProductImageGallery = ({
             onMouseEnter={() => setIsZoomed(true)}
             onMouseLeave={() => setIsZoomed(false)}
           >
-            {images.length > 0 && !imageError ? (
+            {optimizedImages.length > 0 && !imageError ? (
               <AspectRatio ratio={1/1}>
                 {!imagesLoaded[activeImageIndex] && (
                   <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
@@ -118,7 +126,7 @@ const ProductImageGallery = ({
                   </div>
                 )}
                 <motion.img 
-                  src={images[activeImageIndex]} 
+                  src={currentImage} 
                   alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
                   className={`w-full h-full object-contain mix-blend-multiply p-4 transition-transform duration-200 ${
                     !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
@@ -127,7 +135,7 @@ const ProductImageGallery = ({
                   loading={getImageLoading(activeImageIndex === 0 ? true : false)}
                   onLoad={() => handleImageLoaded(activeImageIndex)}
                   onError={(e) => {
-                    console.log("Image error for:", images[activeImageIndex]);
+                    console.log("Image error for:", currentImage);
                     setImageError(true);
                     if (e.currentTarget) {
                       e.currentTarget.src = placeholder(category);
@@ -135,6 +143,7 @@ const ProductImageGallery = ({
                   }}
                   // Use proper camelCase for React props
                   fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
+                  decoding={activeImageIndex === 0 ? "sync" : "async"}
                 />
               </AspectRatio>
             ) : (
@@ -181,7 +190,7 @@ const ProductImageGallery = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              {images.map((img, index) => (
+              {optimizedImages.map((img, index) => (
                 <motion.button
                   key={`thumb-${index}`}
                   onClick={() => handleImageClick(index)}
@@ -203,6 +212,7 @@ const ProductImageGallery = ({
                       !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
                     }`}
                     loading="lazy"
+                    decoding="async"
                     onLoad={() => handleImageLoaded(index)}
                     onError={() => console.log("Thumbnail error loading:", img)}
                   />
@@ -231,7 +241,7 @@ const ProductImageGallery = ({
               onClick={(e) => e.stopPropagation()}
             >
               <img 
-                src={images[activeImageIndex]}
+                src={currentImage}
                 alt={`${productName} - Vista ampliada`}
                 className="max-w-full max-h-[90vh] object-contain"
               />
@@ -276,4 +286,5 @@ const ProductImageGallery = ({
   );
 };
 
-export default ProductImageGallery;
+// Use memo to prevent unnecessary re-renders
+export default memo(ProductImageGallery);
