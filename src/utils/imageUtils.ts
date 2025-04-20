@@ -18,6 +18,9 @@ export const getSrcSet = (imageUrl: string): string => {
 
 // Function to get placeholder while images are loading
 export const getImagePlaceholder = (category: string = ''): string => {
+  if (category.toLowerCase().includes('bone') || category.toLowerCase().includes('bonés')) {
+    return '/placeholder.svg';
+  }
   return '/placeholder.svg';
 };
 
@@ -128,6 +131,14 @@ export const preloadImages = (urls: string[]): void => {
 // Fix image extension issues
 export const fixImageExtension = (url: string): string => {
   if (!url) return '';
+  
+  // Se for alguma das novas imagens de bonés, garanta que esteja correta
+  if (url.includes('afe9f856-920c-4f37-a090-e54c6d0eb85d') || 
+      url.includes('3a0d16aa-8bb6-45a1-92a5-352852950663') ||
+      url.includes('60729ca5-43f4-4c68-bc00-bdbf97652252') ||
+      url.includes('a521517c-0d8f-4061-88b7-b003cb7e2a92')) {
+    return url;
+  }
   
   // If the URL ends with .webp but we're having issues, try removing it
   if (url.endsWith('.webp')) {
