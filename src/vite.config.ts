@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -36,17 +35,16 @@ export default defineConfig(({ mode }) => ({
           components: ['@/components/ui/button', '@/components/ui/apple-button', '@/components/ui/card'],
           utils: ['@/lib/utils', '@/utils/imageUtils']
         },
-        // Add compression to assets
         assetFileNames: assetInfo => {
-          let extType = assetInfo.name.split('.').pop();
+          const assetName = assetInfo.name || 'unknown';
+          let extType = assetName.split('.').pop() || '';
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             extType = 'img';
           } else if (/woff|woff2|eot|ttf|otf/i.test(extType)) {
             extType = 'fonts';
           }
-          return `assets/${extType}/[name]-[hash][extname]`;
+          return `assets/${extType}/${assetName.replace(/\.[^/.]+$/, '')}-[hash][extname]`;
         },
-        // Add hashing to chunk names for better caching
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
       }
@@ -57,6 +55,8 @@ export default defineConfig(({ mode }) => ({
     // Enable these for production
     cssCodeSplit: true,
     modulePreload: true,
+    treeshake: true,
+    // publicPath: 'https://cdn.seudominio.com/', // personalize para CDN real
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],

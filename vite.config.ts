@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -32,19 +31,16 @@ export default defineConfig(({ mode }) => ({
           framer: ['framer-motion'],
           ui: ['@radix-ui/react-slot', '@radix-ui/react-separator']
         },
-        // Add compression to assets
         assetFileNames: assetInfo => {
-          if (!assetInfo.name) return 'assets/unknown/[hash][extname]';
-          
-          let extType = assetInfo.name.split('.').pop() || '';
+          const assetName = assetInfo.name || 'unknown';
+          let extType = assetName.split('.').pop() || '';
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             extType = 'img';
           } else if (/woff|woff2|eot|ttf|otf/i.test(extType)) {
             extType = 'fonts';
           }
-          return `assets/${extType}/[name]-[hash][extname]`;
+          return `assets/${extType}/${assetName.replace(/\.[^/.]+$/, '')}-[hash][extname]`;
         },
-        // Add hashing to chunk names for better caching
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
       }
@@ -52,9 +48,10 @@ export default defineConfig(({ mode }) => ({
     target: 'es2020',
     assetsInlineLimit: 4096, // 4kb
     chunkSizeWarningLimit: 1000, // 1000kb
-    // Enable these for production
     cssCodeSplit: true,
     modulePreload: true,
+    treeshake: true, // Eliminates unused code for JS/CSS
+    // publicPath: 'https://cdn.seudominio.com/', // uncomment and personalize for CDN
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
@@ -66,6 +63,5 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     host: true,
   },
-  // Add better file change detection
   cacheDir: '.vite-cache',
 }));
