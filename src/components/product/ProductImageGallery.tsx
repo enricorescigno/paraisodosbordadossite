@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getImageLoading } from '../../utils/imageUtils';
+import { getImageLoading, fixImageExtension } from '@/utils/imageUtils';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -92,8 +92,8 @@ const ProductImageGallery = ({
     setActiveImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // Get current image
-  const currentImage = images[activeImageIndex];
+  // Get current image and fix its extension if needed
+  const currentImage = images[activeImageIndex] ? fixImageExtension(images[activeImageIndex]) : '';
   
   // Preload adjacent images for smoother navigation
   useEffect(() => {
@@ -106,7 +106,7 @@ const ProductImageGallery = ({
     const preloadImages = [nextIdx, prevIdx].map(idx => {
       if (images[idx]) {
         const img = new Image();
-        img.src = images[idx];
+        img.src = fixImageExtension(images[idx]);
         return img;
       }
       return null;
@@ -228,7 +228,7 @@ const ProductImageGallery = ({
                     <Skeleton className="h-full w-full absolute inset-0" />
                   )}
                   <img 
-                    src={img} 
+                    src={fixImageExtension(img)} 
                     alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
                     className={`h-full w-full object-contain bg-[#FAFAFA] mix-blend-multiply p-1 ${
                       !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'

@@ -83,7 +83,7 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
   return url;
 };
 
-// Cache images in browser 
+// Cache images in browser - this was missing
 export const cacheImagesInBrowser = (imageUrls: string[]): void => {
   if (!('caches' in window)) return;
   
@@ -106,4 +106,38 @@ export const cacheImagesInBrowser = (imageUrls: string[]): void => {
       }
     });
   });
+};
+
+// Pre-load specific images for faster access
+export const preloadImages = (urls: string[]): void => {
+  if (!urls || urls.length === 0) return;
+  
+  urls.forEach(url => {
+    if (!url) return;
+    
+    const img = new Image();
+    img.src = url;
+    
+    // Optional: Set loading priority
+    if ('fetchPriority' in HTMLImageElement.prototype) {
+      (img as any).fetchPriority = urls.length < 5 ? 'high' : 'auto';
+    }
+  });
+};
+
+// Fix image extension issues
+export const fixImageExtension = (url: string): string => {
+  if (!url) return '';
+  
+  // If the URL ends with .webp but we're having issues, try removing it
+  if (url.endsWith('.webp')) {
+    return url.replace('.webp', '.png');
+  }
+  
+  // If there's no extension, add .png as fallback
+  if (!url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i) && !url.includes('?')) {
+    return `${url}.png`;
+  }
+  
+  return url;
 };

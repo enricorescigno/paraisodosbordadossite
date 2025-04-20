@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { Product } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
 import { useProductImageManager } from './useProductImageManager';
-import { cacheImagesInBrowser } from '@/utils/imageUtils';
+import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -50,6 +50,35 @@ export const useProductDetail = () => {
             };
           }
           
+          // Special case for product 300
+          if (productId === "300") {
+            foundProduct = {
+              id: 300,
+              name: "Toalha Lavabo Personalizada",
+              type: "product",
+              category: "Banho",
+              imageUrl: "/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png", 
+              description: "Toalha lavabo personalizada com bordado de alta qualidade.",
+              colors: ["Branco", "Bege", "Rosa", "Verde", "Azul"],
+              sizes: ["Pequena (30x45cm)", "Média (45x70cm)"],
+              rating: 4.8,
+              isNew: true,
+              features: [
+                "100% algodão", 
+                "Gramatura: 380g/m²", 
+                "Personalização com iniciais ou nome",
+                "Acabamento com barra em percal 200 fios",
+                "Alta absorção e durabilidade"
+              ],
+              keywords: ["toalha", "lavabo", "personalizado", "bordado"],
+              images: [
+                "/lovable-uploads/9abf1240-1fa3-432f-984b-3021528d165d.png",
+                "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png",
+                "/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png"
+              ]
+            };
+          }
+          
           if (foundProduct) {
             if (foundProduct.colors && foundProduct.colors.length > 0) {
               setSelectedColor(foundProduct.colors[0]);
@@ -70,8 +99,10 @@ export const useProductDetail = () => {
             // Preload images for better performance
             if (foundProduct.images && Array.isArray(foundProduct.images)) {
               cacheImagesInBrowser(foundProduct.images);
+              preloadImages(foundProduct.images.slice(0, 3)); // Preload first three images
             } else if (foundProduct.imageUrl) {
               cacheImagesInBrowser([foundProduct.imageUrl]);
+              preloadImages([foundProduct.imageUrl]);
             }
           } else {
             setProduct(null);
