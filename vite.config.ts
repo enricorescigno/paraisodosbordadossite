@@ -1,3 +1,4 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -29,7 +30,9 @@ export default defineConfig(({ mode }) => ({
           react: ['react', 'react-dom'],
           router: ['react-router-dom'],
           framer: ['framer-motion'],
-          ui: ['@radix-ui/react-slot', '@radix-ui/react-separator']
+          ui: ['@radix-ui/react-slot', '@radix-ui/react-separator'],
+          components: ['@/components/ui/button', '@/components/ui/apple-button', '@/components/ui/card'],
+          utils: ['@/lib/utils', '@/utils/imageUtils']
         },
         assetFileNames: assetInfo => {
           const assetName = assetInfo.name || 'unknown';
@@ -50,8 +53,9 @@ export default defineConfig(({ mode }) => ({
     chunkSizeWarningLimit: 1000, // 1000kb
     cssCodeSplit: true,
     modulePreload: true,
-    treeshake: true, // Eliminates unused code for JS/CSS
-    // publicPath: 'https://cdn.seudominio.com/', // uncomment and personalize for CDN
+    treeshake: true,
+    // Configuração para CDN (descomente e ajuste para seu CDN real)
+    // publicPath: 'https://cdn.paraisodosbordados.com.br/',
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
