@@ -136,8 +136,8 @@ const ProductImageGallery = ({
                       e.currentTarget.src = placeholder(category);
                     }
                   }}
-                  // Use lowercase for HTML attributes
-                  fetchpriority={activeImageIndex === 0 ? "high" : "auto"}
+                  // Changed fetchpriority to fetchPriority (camelCase)
+                  fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                   decoding={activeImageIndex === 0 ? "sync" : "async"}
                 />
               </AspectRatio>
