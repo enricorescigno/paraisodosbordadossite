@@ -34,7 +34,9 @@ export default defineConfig(({ mode }) => ({
         },
         // Add compression to assets
         assetFileNames: assetInfo => {
-          let extType = assetInfo.name.split('.').pop();
+          if (!assetInfo.name) return 'assets/unknown/[hash][extname]';
+          
+          let extType = assetInfo.name.split('.').pop() || '';
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             extType = 'img';
           } else if (/woff|woff2|eot|ttf|otf/i.test(extType)) {
