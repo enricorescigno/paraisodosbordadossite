@@ -12,12 +12,8 @@ export const getSrcSet = (imageUrl: string): string => {
     return imageUrl;
   }
   
-  // For local images, create WebP srcSet
-  // Extract base name without extension
-  const baseUrl = imageUrl.replace(/\.[^/.]+$/, "");
-  
-  // Create srcSet for WebP versions
-  return `${baseUrl}.webp 1x, ${baseUrl}@2x.webp 2x`;
+  // For local images, we won't try to use WebP for now due to conversion issues
+  return imageUrl;
 };
 
 // Function to get placeholder while images are loading
@@ -39,22 +35,12 @@ export const getOptimizedDimensions = (width: number, height?: number): { width:
   return { width: optimizedWidth, height: optimizedHeight };
 };
 
-// Function to return WebP version if available
+// Function to return image URL without WebP conversion
 export const getWebPImageUrl = (imageUrl: string): string => {
   if (!imageUrl) return '';
   
-  // Skip for external URLs
-  if (imageUrl.includes('unsplash.com') || (imageUrl.includes('http') && !imageUrl.includes(window.location.hostname))) {
-    return imageUrl;
-  }
-  
-  // Skip if already webp
-  if (imageUrl.toLowerCase().endsWith('.webp')) {
-    return imageUrl;
-  }
-  
-  // Replace extension with .webp
-  return imageUrl.replace(/\.[^/.]+$/, ".webp");
+  // Just return the original image URL - don't try to use WebP
+  return imageUrl;
 };
 
 // Function to detect connection speed and choose appropriate image quality

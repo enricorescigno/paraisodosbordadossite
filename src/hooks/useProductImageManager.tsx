@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
@@ -216,6 +217,7 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     }
   };
 
+  // Handle product changes
   useEffect(() => {
     if (product) {
       if (product.id.toString() === "205" || product.id.toString() === "902") {
@@ -378,6 +380,7 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     }
   }, [product, selectedColor]);
 
+  // Handle color changes
   useEffect(() => {
     if (!product) return;
     
@@ -571,17 +574,17 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       'Vestuário': '/images/placeholders/clothing.jpg',
       'Jaleco': '/images/placeholders/uniform.jpg',
       'Pantufas': '/images/placeholders/slippers.jpg',
-      'Bonés Bordados': '/images/placeholders/cap.jpg',
-      'Bordado em Necessaire': '/images/placeholders/necessaire.jpg',
-      'Bordado em Bolsa': '/images/placeholders/bag.jpg',
-      'Bordado em Toalha': '/images/placeholders/towel.jpg',
-      'Jalecos': '/images/placeholders/uniform.jpg',
-      'Roupões Infantis': '/images/placeholders/kids-embroidery.jpg',
-      'Toalhas Infantis': '/images/placeholders/towel.jpg',
-      'Bordados Infantis': '/images/placeholders/kids-embroidery.jpg'
+      'Bonés Bordados': '/placeholder.svg',
+      'Bordado em Necessaire': '/placeholder.svg',
+      'Bordado em Bolsa': '/placeholder.svg',
+      'Bordado em Toalha': '/placeholder.svg',
+      'Jalecos': '/placeholder.svg',
+      'Roupões Infantis': '/placeholder.svg',
+      'Toalhas Infantis': '/placeholder.svg',
+      'Bordados Infantis': '/placeholder.svg'
     };
     
-    return placeholders[category] || 'https://via.placeholder.com/500x500?text=Produto';
+    return placeholders[category] || '/placeholder.svg';
   };
 
   return {
