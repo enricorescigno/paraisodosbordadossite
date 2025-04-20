@@ -94,6 +94,34 @@ const ProductImageGallery = ({
 
   // Get current image
   const currentImage = images[activeImageIndex];
+  
+  // Preload adjacent images for smoother navigation
+  useEffect(() => {
+    if (images.length <= 1) return;
+    
+    const nextIdx = activeImageIndex === images.length - 1 ? 0 : activeImageIndex + 1;
+    const prevIdx = activeImageIndex === 0 ? images.length - 1 : activeImageIndex - 1;
+    
+    // Preload next and previous images
+    const preloadImages = [nextIdx, prevIdx].map(idx => {
+      if (images[idx]) {
+        const img = new Image();
+        img.src = images[idx];
+        return img;
+      }
+      return null;
+    });
+    
+    // Cleanup
+    return () => {
+      preloadImages.forEach(img => {
+        if (img) {
+          img.onload = null;
+          img.onerror = null;
+        }
+      });
+    };
+  }, [activeImageIndex, images]);
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden">
@@ -136,7 +164,6 @@ const ProductImageGallery = ({
                       e.currentTarget.src = placeholder(category);
                     }
                   }}
-                  // Changed fetchpriority to fetchPriority (camelCase)
                   fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                   decoding={activeImageIndex === 0 ? "sync" : "async"}
                 />

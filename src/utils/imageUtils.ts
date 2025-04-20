@@ -62,3 +62,48 @@ export const getImageQualityByConnection = (): 'low' | 'medium' | 'high' => {
   // Default to medium if Network Information API is not available
   return 'medium';
 };
+
+// New function to determine if an image should be preloaded
+export const shouldPreloadImage = (index: number, imageCount: number): boolean => {
+  // Only preload the first few images to improve initial page load
+  return index < 3 && imageCount > 0;
+};
+
+// Helper to create optimized image URL with size parameters
+export const getOptimizedImageUrl = (url: string, width?: number): string => {
+  if (!url) return '';
+  
+  // Don't modify external URLs
+  if (url.includes('http') && !url.includes(window.location.origin)) {
+    return url;
+  }
+  
+  // For local images, we'll just return the original since we aren't implementing
+  // a resizing server right now
+  return url;
+};
+
+// Cache images in browser 
+export const cacheImagesInBrowser = (imageUrls: string[]): void => {
+  if (!('caches' in window)) return;
+  
+  // Use Cache API to store images (if browser supports it)
+  const cacheName = 'paraiso-images-v1';
+  
+  caches.open(cacheName).then(cache => {
+    imageUrls.forEach(url => {
+      // Only cache local images
+      if (!url.includes('http') || url.includes(window.location.origin)) {
+        fetch(url, { mode: 'no-cors' })
+          .then(response => {
+            if (response.ok || response.type === 'opaque') {
+              cache.put(url, response);
+            }
+          })
+          .catch(() => {
+            // Silently fail if we can't cache the image
+          });
+      }
+    });
+  });
+};
