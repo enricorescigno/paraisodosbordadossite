@@ -64,10 +64,19 @@ export const infantilProducts: Product[] = [
     name: "Toalha de Banho com Capuz Velour Baby Love",
     type: "product",
     category: "infantil",
-    imageUrl: "/lovable-uploads/979b2ce8-93f3-4b1a-afee-992dd0bbabc4.png", // Using a placeholder image
-    description: "Toalha de banho com capuz em velour para bebês, modelo Baby Love.",
+    imageUrl: "/lovable-uploads/82024bd5-b905-4876-94c7-58650231e3bc.png",
+    description: "Toalha de banho com capuz em velour para bebês, modelo Baby Love. Confeccionada em tecido macio e absorvente com delicado bordado de girafinha no capuz.",
     price: "R$ 69,90",
-    keywords: ["infantil", "toalha", "banho", "capuz", "baby", "bebê", "velour"],
+    colors: ["Branco"],
+    features: [
+      "100% Algodão",
+      "Tecido velour extra macio",
+      "Capuz com bordado de girafinha",
+      "Alta absorção",
+      "Ideal para bebês"
+    ],
+    images: ["/lovable-uploads/82024bd5-b905-4876-94c7-58650231e3bc.png"],
+    keywords: ["infantil", "toalha", "banho", "capuz", "baby", "bebê", "velour", "girafinha"],
     slug: "toalha-de-banho-capuz-velour-baby-love"
   },
   {
