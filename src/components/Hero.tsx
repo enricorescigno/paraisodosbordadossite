@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -139,7 +138,7 @@ const Hero = () => {
           transition: 'opacity 1s ease-in-out'
         }}
       >
-        <source src="/lovable-uploads/video.mp4" type="video/mp4" />
+        <source src="/lovable-uploads/fundo-video.mp4" type="video/mp4" />
         Seu navegador não suporta vídeos HTML5.
       </video>
 
