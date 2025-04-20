@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -17,6 +16,10 @@ const Hero = () => {
         setIsVideoLoaded(true);
       };
       videoRef.current.addEventListener('loadeddata', onLoadedData);
+      
+      // Force video to load
+      videoRef.current.load();
+      
       return () => {
         if (videoRef.current) {
           videoRef.current.removeEventListener('loadeddata', onLoadedData);
@@ -103,33 +106,18 @@ const Hero = () => {
 
   return (
     <section ref={containerRef} className="relative w-full h-screen overflow-hidden">
-      {/* Image Background with overlay */}
+      {/* Video Background with overlay */}
       <div className="absolute inset-0 bg-black/40 z-10"></div>
-      <img
-        src="/lovable-uploads/3eac496f-461d-4e47-9cc8-af09ad0873a2.png"
-        alt="Bordado luxuoso com detalhes em vermelho e dourado"
-        className={`absolute inset-0 w-full h-full object-cover scale-[1.01] transition-opacity duration-1000 ${
-          isVideoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'
-        }`}
-        onError={(e) => {
-          // Fallback to video if image fails to load
-          e.currentTarget.style.display = 'none';
-          if (videoRef.current) videoRef.current.style.display = 'block';
-        }}
-      />
-
-      {/* Video Background as fallback */}
+      
+      {/* Background Video */}
       <video
         ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
-        className={`absolute inset-0 w-full h-full object-cover scale-[1.01] transition-opacity duration-1000 ${
-          isVideoLoaded ? 'opacity-100' : 'opacity-0'
-        }`}
+        className="absolute inset-0 w-full h-full object-cover scale-[1.01]"
         style={{
-          display: 'block',
           willChange: 'transform'
         }}
       >
@@ -224,4 +212,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
