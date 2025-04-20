@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 // Adding new Infantil products as requested
@@ -54,10 +53,23 @@ export const infantilProducts: Product[] = [
     name: "Toalha de Banho Baby Classic",
     type: "product",
     category: "infantil",
-    imageUrl: "/lovable-uploads/120d7ca4-3d83-432d-81df-5bcf1993da75.png", // Using a placeholder image
-    description: "Toalha de banho para bebês modelo clássico, super macia e absorvente.",
+    imageUrl: "/lovable-uploads/223b8c99-eef9-4173-8638-347721f7017f.png",
+    description: "Toalha de banho para bebês modelo clássico, feita em algodão macio com delicado bordado de coroa e acabamento em faixa decorativa. Disponível em cores suaves como azul, rosa, branco e verde.",
     price: "R$ 62,00",
-    keywords: ["infantil", "toalha", "banho", "baby", "bebê", "clássica"],
+    colors: ["Azul Bebê", "Rosa Bebê", "Branco", "Verde Suave"],
+    features: [
+      "100% Algodão",
+      "Bordado de coroa",
+      "Faixa decorativa",
+      "Alta absorção",
+      "Acabamento premium",
+      "Toque macio e delicado"
+    ],
+    images: [
+      "/lovable-uploads/223b8c99-eef9-4173-8638-347721f7017f.png",
+      "/lovable-uploads/16f3498a-46e3-4001-a28b-41ffdc04aa58.png"
+    ],
+    keywords: ["infantil", "toalha", "banho", "baby", "bebê", "clássica", "coroa"],
     slug: "toalha-de-banho-baby-classic"
   },
   {
