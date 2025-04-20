@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -61,35 +62,6 @@ const Hero = () => {
     };
   }, []);
 
-  const titleVariants = {
-    hidden: {
-      opacity: 0,
-      y: 20
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: [0.16, 1, 0.3, 1] // Apple-like ease curve
-      }
-    }
-  };
-  const descriptionVariants = {
-    hidden: {
-      opacity: 0,
-      y: 20
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        delay: 0.2,
-        ease: [0.16, 1, 0.3, 1]
-      }
-    }
-  };
   const buttonVariants = {
     hidden: {
       opacity: 0,
@@ -123,7 +95,7 @@ const Hero = () => {
   return (
     <section ref={containerRef} className="relative w-full h-screen overflow-hidden">
       {/* Video Background with overlay */}
-      <div className="absolute inset-0 bg-black/40 z-10"></div>
+      {/* Removed overlay as requested (fundo transparente) */}
       
       {/* Background Video */}
       <video
@@ -138,37 +110,21 @@ const Hero = () => {
           transition: 'opacity 1s ease-in-out'
         }}
       >
-        <source src="/lovable-uploads/fundo-video.mp4" type="video/mp4" />
+        <source src="/lovable-uploads/paraiso-agulha.mp4" type="video/mp4" />
         Seu navegador não suporta vídeos HTML5.
       </video>
 
       {/* Content */}
       <div className="relative z-20 flex items-center justify-center h-full">
         <div className="container-custom text-center">
-          {/* Frosted Glass Card */}
+          {/* Frosted Glass Card - Only the buttons now */}
           <motion.div
             initial="hidden"
             animate="visible"
             variants={glassCardVariants}
             className="inline-block mx-auto px-8 py-10 md:px-12 md:py-12 bg-white/40 backdrop-blur-[12px] rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.1)] border border-white/60"
           >
-            <motion.h1
-              initial="hidden"
-              animate="visible"
-              variants={titleVariants}
-              className="text-4xl md:text-5xl font-sans mb-6 text-red-600 lg:text-6xl tracking-tight font-extrabold"
-            >
-              Paraíso dos Bordados
-            </motion.h1>
-
-            <motion.p
-              initial="hidden"
-              animate="visible"
-              variants={descriptionVariants}
-              className="text-brand-dark/90 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-normal"
-            >
-              Transformamos linhas e agulhas em verdadeiras obras de arte. Conheça nossa coleção exclusiva de bordados feitos com paixão e maestria.
-            </motion.p>
+            {/* Removed Title and Description as requested */}
 
             <motion.div
               className="flex flex-col sm:flex-row items-center justify-center gap-6"
@@ -229,3 +185,4 @@ const Hero = () => {
 };
 
 export default Hero;
+
