@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Adding new Infantil products as requested
@@ -84,10 +85,19 @@ export const infantilProducts: Product[] = [
     name: "Roupão infantil Aristogatas",
     type: "product",
     category: "infantil",
-    imageUrl: "/lovable-uploads/c5a5f1e0-a7bb-49d6-bdc5-b6382ccdc453.png", // Using a placeholder image
-    description: "Roupão infantil temático dos Aristogatas, macio e confortável.",
+    imageUrl: "/lovable-uploads/153b71ed-c6b8-4b2b-8390-70ba00b585eb.png",
+    description: "Roupão infantil temático dos Aristogatas em tons de rosa, com estampa exclusiva e delicada dos personagens do filme. Confeccionado em material macio e absorvente.",
     price: "R$ 153,00",
-    keywords: ["infantil", "roupão", "criança", "aristogatas", "banho"],
+    colors: ["Rosa"],
+    features: [
+      "Material macio e absorvente",
+      "Estampa exclusiva dos Aristogatas",
+      "Bolsos frontais",
+      "Faixa para amarrar na cintura",
+      "Ideal para crianças"
+    ],
+    images: ["/lovable-uploads/153b71ed-c6b8-4b2b-8390-70ba00b585eb.png"],
+    keywords: ["infantil", "roupão", "criança", "aristogatas", "banho", "rosa"],
     slug: "roupao-infantil-aristogatas",
     isNew: true
   },
