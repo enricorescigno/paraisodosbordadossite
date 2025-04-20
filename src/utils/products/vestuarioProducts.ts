@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Vestuário Collection (regular clothing products)
@@ -7,6 +8,7 @@ export const vestuarioProducts: Product[] = [
     name: "Camisa Básica unisex 100% algodão adulto",
     type: "product",
     category: "Vestuário",
+    imageUrl: "/lovable-uploads/e627464a-ea49-431e-bdfe-61fdc8d0ade6.png",
     description: "Camisa básica unisex confeccionada em 100% algodão, confortável e de alta qualidade.",
     price: "R$ 29,90",
     colors: ["Preto", "Amarelo", "Azul Royal", "Verde Água", "Branco", "Cinza", "Vermelho"],
