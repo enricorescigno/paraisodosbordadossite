@@ -1,3 +1,4 @@
+
 import { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -12,18 +13,34 @@ const Hero = () => {
 
   useEffect(() => {
     if (videoRef.current) {
+      const video = videoRef.current;
+      
       const onLoadedData = () => {
         setIsVideoLoaded(true);
+        console.log("Video loaded successfully");
       };
-      videoRef.current.addEventListener('loadeddata', onLoadedData);
       
-      // Force video to load
-      videoRef.current.load();
+      const onError = (e: Event) => {
+        console.error("Video loading error:", e);
+      };
+      
+      video.addEventListener('loadeddata', onLoadedData);
+      video.addEventListener('error', onError);
+      
+      // Force video to load and play
+      video.load();
+      
+      // Attempt to play the video
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => console.log("Video playing"))
+          .catch(err => console.error("Video play error:", err));
+      }
       
       return () => {
-        if (videoRef.current) {
-          videoRef.current.removeEventListener('loadeddata', onLoadedData);
-        }
+        video.removeEventListener('loadeddata', onLoadedData);
+        video.removeEventListener('error', onError);
       };
     }
   }, []);
@@ -116,9 +133,10 @@ const Hero = () => {
         muted
         loop
         playsInline
-        className="absolute inset-0 w-full h-full object-cover scale-[1.01]"
+        className="absolute inset-0 w-full h-full object-cover"
         style={{
-          willChange: 'transform'
+          opacity: isVideoLoaded ? 1 : 0,
+          transition: 'opacity 1s ease-in-out'
         }}
       >
         <source src="/lovable-uploads/video.mp4" type="video/mp4" />

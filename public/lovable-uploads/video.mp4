@@ -1,2 +1,12 @@
 
-<!-- This is a placeholder for the video file. Since video files can't be created directly through text, we're just indicating that this file should exist in the public/lovable-uploads/ directory. -->
+<!-- 
+This is a placeholder for the video file. 
+Since actual video files can't be created directly through text interactions,
+please upload an MP4 video file named 'video.mp4' to the 'public/lovable-uploads/' directory.
+
+The video should:
+1. Be in MP4 format
+2. Have a 16:9 aspect ratio for best results
+3. Be optimized for web (ideally under 10MB)
+4. Be relevant to the "Paraíso dos Bordados" theme
+-->
