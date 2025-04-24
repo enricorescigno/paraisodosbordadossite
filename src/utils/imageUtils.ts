@@ -86,7 +86,7 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
   return url;
 };
 
-// Cache images in browser - this was missing
+// Cache images in browser
 export const cacheImagesInBrowser = (imageUrls: string[]): void => {
   if (!('caches' in window)) return;
   
