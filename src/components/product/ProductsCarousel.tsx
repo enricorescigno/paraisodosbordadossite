@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Product } from '@/types/product';
@@ -50,7 +49,6 @@ const ProductsCarousel = ({
                   showActionButton={false}
                 />
                 
-                {/* Botão Saiba Mais abaixo de cada produto */}
                 <Link 
                   to={`/produto/${product.id}`} 
                   className="mt-3 w-full"
@@ -77,7 +75,6 @@ const ProductsCarousel = ({
         </div>
       </Carousel>
       
-      {/* Add extra spacing at the bottom on mobile to prevent overlay with WhatsApp button */}
       {isMobile && <div className="h-16"></div>}
     </motion.div>
   );
