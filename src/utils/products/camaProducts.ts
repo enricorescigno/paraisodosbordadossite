@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 export const camaProducts: Product[] = [
@@ -8,10 +7,23 @@ export const camaProducts: Product[] = [
     type: "product",
     category: "Cama",
     price: "R$ 65,00",
-    description: "Jogo de cama solteiro com 180 fios, modelo Turin. Inclui 3 peças para maior conforto.",
-    imageUrl: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?q=80&w=500&auto=format&fit=crop",
+    description: "Jogo de cama solteiro com 180 fios, modelo Turin. Inclui 3 peças: 1 lençol com elástico, 1 lençol de cobrir e 1 fronha. Design elegante em xadrez nas cores bege, azul e caramelo.",
+    imageUrl: "/lovable-uploads/c0427b76-6f55-4bec-9c6d-36f7a0a3740a.png",
+    images: [
+      "/lovable-uploads/c0427b76-6f55-4bec-9c6d-36f7a0a3740a.png",
+      "/lovable-uploads/e2d02ef0-ffb8-4480-b3fe-2ed5f7d99d5d.png"
+    ],
     isNew: true,
-    keywords: ["cama", "jogo de cama", "solteiro", "turin", "180 fios"]
+    colors: ["Bege", "Azul", "Caramelo"],
+    features: [
+      "180 fios de alta qualidade",
+      "3 peças completas",
+      "Tecido 100% algodão",
+      "Design xadrez elegante",
+      "Acabamento premium",
+      "Durável e macio"
+    ],
+    keywords: ["cama", "jogo de cama", "solteiro", "turin", "180 fios", "xadrez"]
   },
   {
     id: "C002",
