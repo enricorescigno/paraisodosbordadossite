@@ -48,6 +48,10 @@ export const getWebPImageUrl = (imageUrl: string): string => {
 
 // Function to detect connection speed and choose appropriate image quality
 export const getImageQualityByConnection = (): 'low' | 'medium' | 'high' => {
+  if (typeof navigator === 'undefined' || !navigator) {
+    return 'medium';
+  }
+  
   const connection = (navigator as any).connection;
   
   if (connection) {
@@ -88,7 +92,7 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
 
 // Cache images in browser - this was missing
 export const cacheImagesInBrowser = (imageUrls: string[]): void => {
-  if (!('caches' in window)) return;
+  if (typeof window === 'undefined' || !('caches' in window)) return;
   
   // Use Cache API to store images (if browser supports it)
   const cacheName = 'paraiso-images-v1';
@@ -113,18 +117,13 @@ export const cacheImagesInBrowser = (imageUrls: string[]): void => {
 
 // Pre-load specific images for faster access
 export const preloadImages = (urls: string[]): void => {
-  if (!urls || urls.length === 0) return;
+  if (!urls || urls.length === 0 || typeof window === 'undefined') return;
   
   urls.forEach(url => {
     if (!url) return;
     
     const img = new Image();
     img.src = url;
-    
-    // Optional: Set loading priority
-    if ('fetchPriority' in HTMLImageElement.prototype) {
-      (img as any).fetchPriority = urls.length < 5 ? 'high' : 'auto';
-    }
   });
 };
 

@@ -3,6 +3,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
+import { 
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
+} from "@/components/ui/tooltip";
+import { fixImageExtension } from '@/utils/imageUtils';
 
 interface ProductCardProps {
   id: number | string;
@@ -117,6 +123,7 @@ const ProductCard = ({
   };
 
   const optimizedImageUrl = getImageUrl();
+  const safeImageUrl = fixImageExtension(optimizedImageUrl);
 
   return (
     <motion.div
@@ -141,7 +148,7 @@ const ProductCard = ({
     >
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
         <motion.img
-          src={optimizedImageUrl}
+          src={safeImageUrl}
           alt={`Produto: ${name}`}
           className="w-full h-full object-contain mix-blend-multiply"
           loading="lazy"
