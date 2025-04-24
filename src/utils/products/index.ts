@@ -5,7 +5,7 @@ import { bordadosProducts } from './bordadosProducts';
 import { bordadosInfantisProducts } from './bordadosInfantisProducts';
 import { vestuarioProducts, bordadoVestuarioProducts } from './vestuarioProducts';
 import { banhoProducts } from './banhoProducts';
-import { camaProducts } from './camaProducts';
+import { camaProducts } from './cama';
 import { mesaCozinhaProducts } from './mesaCozinhaProducts';
 import { tapeteCortinasProducts } from './tapeteCortinasProducts';
 import { 
