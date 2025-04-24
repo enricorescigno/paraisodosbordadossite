@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
@@ -29,12 +28,10 @@ const ProductImageGallery = ({
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
 
-  // Initialize images loaded state array
   useEffect(() => {
     setImagesLoaded(Array(images.length).fill(false));
     setImageError(false);
     
-    // Show thumbnails after slight delay for better perceived loading
     const timer = setTimeout(() => {
       setThumbnailsVisible(true);
     }, 300);
@@ -42,13 +39,11 @@ const ProductImageGallery = ({
     return () => clearTimeout(timer);
   }, [images.length]);
 
-  // Reset active image index when color or images change
   useEffect(() => {
     setActiveImageIndex(0);
     setImageError(false);
   }, [selectedColor, images]);
 
-  // Handle image loading complete
   const handleImageLoaded = useCallback((index: number) => {
     setImagesLoaded(prev => {
       const newState = [...prev];
@@ -92,17 +87,14 @@ const ProductImageGallery = ({
     setActiveImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // Get current image and fix its extension if needed
   const currentImage = images[activeImageIndex] ? fixImageExtension(images[activeImageIndex]) : '';
   
-  // Preload adjacent images for smoother navigation
   useEffect(() => {
     if (images.length <= 1) return;
     
     const nextIdx = activeImageIndex === images.length - 1 ? 0 : activeImageIndex + 1;
     const prevIdx = activeImageIndex === 0 ? images.length - 1 : activeImageIndex - 1;
     
-    // Preload next and previous images
     const preloadImages = [nextIdx, prevIdx].map(idx => {
       if (images[idx]) {
         const img = new Image();
@@ -112,7 +104,6 @@ const ProductImageGallery = ({
       return null;
     });
     
-    // Cleanup
     return () => {
       preloadImages.forEach(img => {
         if (img) {
@@ -134,7 +125,6 @@ const ProductImageGallery = ({
           transition={{ duration: 0.3 }}
           className="relative"
         >
-          {/* Main Image */}
           <div 
             className="relative overflow-hidden bg-[#FAFAFA] rounded-lg"
             onMouseMove={handleMouseMove}
@@ -164,7 +154,6 @@ const ProductImageGallery = ({
                       e.currentTarget.src = placeholder(category);
                     }
                   }}
-                  fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                   decoding={activeImageIndex === 0 ? "sync" : "async"}
                 />
               </AspectRatio>
@@ -178,12 +167,10 @@ const ProductImageGallery = ({
               </AspectRatio>
             )}
             
-            {/* Zoom indicator for desktop */}
             <div className="absolute bottom-3 right-3 bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm hidden md:flex items-center justify-center">
               <ZoomIn className="h-4 w-4 text-gray-600" />
             </div>
             
-            {/* Navigation Arrows */}
             {images.length > 1 && !imageError && (
               <>
                 <button 
@@ -204,7 +191,6 @@ const ProductImageGallery = ({
             )}
           </div>
           
-          {/* Thumbnails - only show when ready */}
           {images.length > 1 && !imageError && thumbnailsVisible && (
             <motion.div 
               className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar"
@@ -223,7 +209,6 @@ const ProductImageGallery = ({
                   }`}
                   aria-label={`Ver imagem ${index + 1}`}
                 >
-                  {/* Thumbnail skeleton */}
                   {!imagesLoaded[index] && (
                     <Skeleton className="h-full w-full absolute inset-0" />
                   )}
@@ -245,7 +230,6 @@ const ProductImageGallery = ({
         </motion.div>
       </AnimatePresence>
       
-      {/* Lightbox for zoomed view */}
       <AnimatePresence>
         {isLightboxOpen && images.length > 0 && (
           <motion.div
@@ -275,7 +259,6 @@ const ProductImageGallery = ({
                 <span className="text-white text-2xl">&times;</span>
               </button>
               
-              {/* Navigation buttons in lightbox */}
               {images.length > 1 && (
                 <>
                   <button
@@ -308,5 +291,4 @@ const ProductImageGallery = ({
   );
 };
 
-// Use memo to prevent unnecessary re-renders
 export default memo(ProductImageGallery);

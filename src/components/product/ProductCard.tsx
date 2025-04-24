@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -45,6 +46,10 @@ const ProductCard = ({
   };
 
   const getImageUrl = () => {
+    if (Number(id) === 1001) {
+      return "/lovable-uploads/f4081104-c422-44ea-9a18-e282baa1e084.png";
+    }
+    
     if (Number(id) === 2010) {
       if (images && Array.isArray(images) && images.length > 5) {
         return images[5];

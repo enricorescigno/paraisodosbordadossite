@@ -136,7 +136,9 @@ export const fixImageExtension = (url: string): string => {
   if (url.includes('afe9f856-920c-4f37-a090-e54c6d0eb85d') || 
       url.includes('3a0d16aa-8bb6-45a1-92a5-352852950663') ||
       url.includes('60729ca5-43f4-4c68-bc00-bdbf97652252') ||
-      url.includes('a521517c-0d8f-4061-88b7-b003cb7e2a92')) {
+      url.includes('a521517c-0d8f-4061-88b7-b003cb7e2a92') ||
+      url.includes('f4081104-c422-44ea-9a18-e282baa1e084') ||
+      url.includes('092178c1-5607-4b9f-bf81-372d811d380d')) {
     return url;
   }
   

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
 
@@ -84,9 +83,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     
     if (product.id.toString() === "1001") {
       setCurrentImages([
-        "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
-        "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
-        "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+        "/lovable-uploads/f4081104-c422-44ea-9a18-e282baa1e084.png",
+        "/lovable-uploads/092178c1-5607-4b9f-bf81-372d811d380d.png"
       ]);
       setActiveImageIndex(0);
       return;
@@ -217,7 +215,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     }
   };
 
-  // Handle product changes
   useEffect(() => {
     if (product) {
       if (product.id.toString() === "205" || product.id.toString() === "902") {
@@ -233,9 +230,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       
       if (product.id.toString() === "1001") {
         setCurrentImages([
-          "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
-          "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
-          "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+          "/lovable-uploads/f4081104-c422-44ea-9a18-e282baa1e084.png",
+          "/lovable-uploads/092178c1-5607-4b9f-bf81-372d811d380d.png"
         ]);
         setActiveImageIndex(0);
         return;
@@ -380,7 +376,6 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     }
   }, [product, selectedColor]);
 
-  // Handle color changes
   useEffect(() => {
     if (!product) return;
     
@@ -409,9 +404,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     
     if (product.id.toString() === "1001" && selectedColor === "Vermelho") {
       setCurrentImages([
-        "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
-        "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
-        "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
+        "/lovable-uploads/f4081104-c422-44ea-9a18-e282baa1e084.png",
+        "/lovable-uploads/092178c1-5607-4b9f-bf81-372d811d380d.png"
       ]);
       setActiveImageIndex(0);
       return;
