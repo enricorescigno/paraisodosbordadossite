@@ -33,8 +33,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <ScrollToTop />
         <TooltipProvider>
-          <ScrollToTop />
           <Layout>
             <Routes>
               <Route path="/" element={<Index />} />

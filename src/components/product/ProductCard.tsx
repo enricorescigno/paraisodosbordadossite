@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -116,9 +117,8 @@ const ProductCard = ({
 
   const optimizedImageUrl = getImageUrl();
   
-  React.useEffect(() => {
-    console.log(`ProductCard ${id} (${name}) - Image source:`, optimizedImageUrl);
-  }, [id, name, optimizedImageUrl]);
+  // Debug image source using console.log instead of useEffect
+  console.log(`ProductCard ${id} (${name}) - Image source:`, optimizedImageUrl);
 
   return (
     <motion.div
