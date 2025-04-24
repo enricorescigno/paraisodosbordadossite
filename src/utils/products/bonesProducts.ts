@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 export const bonesProducts: Product[] = [
@@ -33,7 +32,7 @@ export const bonesProducts: Product[] = [
     name: "Boné Bordado Logomarca Geométrica",
     type: "portfolio",
     category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/3a97e88b-e88e-46ff-af9a-f543b75ea08e.png",
+    imageUrl: "/lovable-uploads/816a9c12-79ad-47af-9fee-aa8b1fee30f9.png",
     description: "Boné com bordado de logomarca geométrica, design exclusivo e diferenciado com estilo contemporâneo.",
     price: "Sob consulta",
     colors: ["Preto"],
@@ -47,7 +46,7 @@ export const bonesProducts: Product[] = [
       "Design moderno"
     ],
     images: [
-      "/lovable-uploads/3a97e88b-e88e-46ff-af9a-f543b75ea08e.png"
+      "/lovable-uploads/816a9c12-79ad-47af-9fee-aa8b1fee30f9.png"
     ],
     keywords: ["boné", "bordado", "logomarca", "geométrico", "exclusivo"]
   },
@@ -75,4 +74,3 @@ export const bonesProducts: Product[] = [
     keywords: ["boné", "bordado", "logomarca", "corporativo", "uniforme"]
   }
 ];
-
