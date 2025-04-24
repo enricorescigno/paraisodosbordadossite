@@ -1,7 +1,6 @@
 
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
-import ScrollToTop from './ScrollToTop';
 
 interface LayoutProps {
   children: ReactNode;
@@ -14,7 +13,6 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      <ScrollToTop />
       <Navbar />
       <div className="flex-grow">
         {children}

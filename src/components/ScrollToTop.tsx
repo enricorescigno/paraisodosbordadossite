@@ -4,25 +4,19 @@ import { useLocation } from 'react-router-dom';
 
 /**
  * This component scrolls the window to the top when the route changes
- * It must be used inside a Layout component which is inside the Router
+ * It must be used inside a Router component
  */
 const ScrollToTop = () => {
-  // Get the current location using React Router's hook
-  const location = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    try {
-      // Scroll the page to the top with behavior instant for better UX
-      window.scrollTo({
-        top: 0,
-        behavior: 'instant'
-      });
-    } catch (error) {
-      console.error('Error scrolling to top:', error);
-    }
-  }, [location.pathname]);
+    // Scroll the page to the top with behavior instant for better UX
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
+  }, [pathname]);
 
-  // This component doesn't render anything
   return null;
 };
 

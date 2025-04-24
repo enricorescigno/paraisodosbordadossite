@@ -1,14 +1,7 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
-import { 
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger
-} from "@/components/ui/tooltip";
-import { fixImageExtension } from '@/utils/imageUtils';
 
 interface ProductCardProps {
   id: number | string;
@@ -52,10 +45,6 @@ const ProductCard = ({
   };
 
   const getImageUrl = () => {
-    if (Number(id) === 1001) {
-      return "/lovable-uploads/f4081104-c422-44ea-9a18-e282baa1e084.png";
-    }
-    
     if (Number(id) === 2010) {
       if (images && Array.isArray(images) && images.length > 5) {
         return images[5];
@@ -115,22 +104,6 @@ const ProductCard = ({
       return images["Branco"]?.[0];
     }
     
-    const getPlaceholderImage = (name: string) => {
-      const lowerName = name.toLowerCase();
-      if (lowerName.includes('necessaire') || lowerName.includes('bolsa')) {
-        return "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop";
-      } else if (lowerName.includes('toalha')) {
-        return "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop";
-      } else if (lowerName.includes('camisa') || lowerName.includes('fardamento') || lowerName.includes('avental')) {
-        return "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop";
-      } else if (lowerName.includes('infantil') || lowerName.includes('fralda') || lowerName.includes('macacão') || lowerName.includes('manta')) {
-        return "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop";
-      } else if (lowerName.includes('bordado')) {
-        return "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=500&auto=format&fit=crop";
-      }
-      return "https://via.placeholder.com/500x500?text=Sem+Imagem";
-    };
-    
     if (!imageUrl && (!images || (Array.isArray(images) && images.length === 0))) {
       return getPlaceholderImage(name);
     }
@@ -139,7 +112,6 @@ const ProductCard = ({
   };
 
   const optimizedImageUrl = getImageUrl();
-  const safeImageUrl = fixImageExtension(optimizedImageUrl);
 
   return (
     <motion.div
@@ -164,7 +136,7 @@ const ProductCard = ({
     >
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
         <motion.img
-          src={safeImageUrl}
+          src={optimizedImageUrl}
           alt={`Produto: ${name}`}
           className="w-full h-full object-contain mix-blend-multiply"
           loading="lazy"
