@@ -18,6 +18,8 @@ export const getSrcSet = (imageUrl: string): string => {
 
 // Function to get placeholder while images are loading
 export const getImagePlaceholder = (category: string = ''): string => {
+  if (!category) return '/placeholder.svg';
+  
   if (category.toLowerCase().includes('bone') || category.toLowerCase().includes('bonés')) {
     return '/placeholder.svg';
   }
@@ -52,18 +54,23 @@ export const getImageQualityByConnection = (): 'low' | 'medium' | 'high' => {
     return 'medium';
   }
   
-  const connection = (navigator as any).connection;
-  
-  if (connection) {
-    const { effectiveType, downlink, saveData } = connection;
+  // Safely check for navigator.connection
+  try {
+    const connection = (navigator as any).connection;
     
-    // Save data mode takes precedence
-    if (saveData) return 'low';
-    
-    // Based on effective connection type
-    if (effectiveType === '4g' && downlink > 1.5) return 'high';
-    if (effectiveType === '4g' || effectiveType === '3g') return 'medium';
-    return 'low';
+    if (connection) {
+      const { effectiveType, downlink, saveData } = connection;
+      
+      // Save data mode takes precedence
+      if (saveData) return 'low';
+      
+      // Based on effective connection type
+      if (effectiveType === '4g' && downlink > 1.5) return 'high';
+      if (effectiveType === '4g' || effectiveType === '3g') return 'medium';
+      return 'low';
+    }
+  } catch (e) {
+    console.log('Error detecting connection type:', e);
   }
   
   // Default to medium if Network Information API is not available
@@ -80,9 +87,13 @@ export const shouldPreloadImage = (index: number, imageCount: number): boolean =
 export const getOptimizedImageUrl = (url: string, width?: number): string => {
   if (!url) return '';
   
-  // Don't modify external URLs
-  if (url.includes('http') && !url.includes(window.location.origin)) {
-    return url;
+  try {
+    // Don't modify external URLs
+    if (url.includes('http') && typeof window !== 'undefined' && !url.includes(window.location.origin)) {
+      return url;
+    }
+  } catch (e) {
+    console.error('Error in getOptimizedImageUrl:', e);
   }
   
   // For local images, we'll just return the original since we aren't implementing
@@ -92,63 +103,82 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
 
 // Cache images in browser - this was missing
 export const cacheImagesInBrowser = (imageUrls: string[]): void => {
+  if (!imageUrls || !Array.isArray(imageUrls)) return;
+  
   if (typeof window === 'undefined' || !('caches' in window)) return;
   
-  // Use Cache API to store images (if browser supports it)
-  const cacheName = 'paraiso-images-v1';
-  
-  caches.open(cacheName).then(cache => {
-    imageUrls.forEach(url => {
-      // Only cache local images
-      if (!url.includes('http') || url.includes(window.location.origin)) {
-        fetch(url, { mode: 'no-cors' })
-          .then(response => {
-            if (response.ok || response.type === 'opaque') {
-              cache.put(url, response);
-            }
-          })
-          .catch(() => {
-            // Silently fail if we can't cache the image
-          });
-      }
+  try {
+    // Use Cache API to store images (if browser supports it)
+    const cacheName = 'paraiso-images-v1';
+    
+    caches.open(cacheName).then(cache => {
+      imageUrls.forEach(url => {
+        if (!url) return;
+        
+        // Only cache local images
+        if (!url.includes('http') || url.includes(window.location.origin)) {
+          fetch(url, { mode: 'no-cors' })
+            .then(response => {
+              if (response.ok || response.type === 'opaque') {
+                cache.put(url, response);
+              }
+            })
+            .catch(() => {
+              // Silently fail if we can't cache the image
+            });
+        }
+      });
+    }).catch(err => {
+      console.error('Error caching images:', err);
     });
-  });
+  } catch (e) {
+    console.error('Error in cacheImagesInBrowser:', e);
+  }
 };
 
 // Pre-load specific images for faster access
 export const preloadImages = (urls: string[]): void => {
-  if (!urls || urls.length === 0 || typeof window === 'undefined') return;
+  if (!urls || !Array.isArray(urls) || urls.length === 0 || typeof window === 'undefined') return;
   
-  urls.forEach(url => {
-    if (!url) return;
-    
-    const img = new Image();
-    img.src = url;
-  });
+  try {
+    urls.forEach(url => {
+      if (!url) return;
+      
+      const img = new Image();
+      img.src = url;
+    });
+  } catch (e) {
+    console.error('Error preloading images:', e);
+  }
 };
 
 // Fix image extension issues
 export const fixImageExtension = (url: string): string => {
   if (!url) return '';
   
-  // Se for alguma das novas imagens de bonés, garanta que esteja correta
-  if (url.includes('afe9f856-920c-4f37-a090-e54c6d0eb85d') || 
-      url.includes('3a0d16aa-8bb6-45a1-92a5-352852950663') ||
-      url.includes('60729ca5-43f4-4c68-bc00-bdbf97652252') ||
-      url.includes('a521517c-0d8f-4061-88b7-b003cb7e2a92') ||
-      url.includes('f4081104-c422-44ea-9a18-e282baa1e084') ||
-      url.includes('092178c1-5607-4b9f-bf81-372d811d380d')) {
-    return url;
-  }
-  
-  // If the URL ends with .webp but we're having issues, try removing it
-  if (url.endsWith('.webp')) {
-    return url.replace('.webp', '.png');
-  }
-  
-  // If there's no extension, add .png as fallback
-  if (!url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i) && !url.includes('?')) {
-    return `${url}.png`;
+  try {
+    // Se for alguma das novas imagens de bonés, garanta que esteja correta
+    if (url.includes('afe9f856-920c-4f37-a090-e54c6d0eb85d') || 
+        url.includes('3a0d16aa-8bb6-45a1-92a5-352852950663') ||
+        url.includes('60729ca5-43f4-4c68-bc00-bdbf97652252') ||
+        url.includes('a521517c-0d8f-4061-88b7-b003cb7e2a92') ||
+        url.includes('f4081104-c422-44ea-9a18-e282baa1e084') ||
+        url.includes('092178c1-5607-4b9f-bf81-372d811d380d')) {
+      return url;
+    }
+    
+    // If the URL ends with .webp but we're having issues, try removing it
+    if (url.endsWith('.webp')) {
+      return url.replace('.webp', '.png');
+    }
+    
+    // If there's no extension, add .png as fallback
+    if (!url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i) && !url.includes('?')) {
+      return `${url}.png`;
+    }
+  } catch (e) {
+    console.error('Error in fixImageExtension:', e);
+    return url || '';
   }
   
   return url;

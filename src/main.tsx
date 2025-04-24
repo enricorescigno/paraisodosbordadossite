@@ -4,6 +4,9 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
+// Ensure React is available globally for hooks
+window.React = React;
+
 const rootElement = document.getElementById("root");
 
 if (!rootElement) {
@@ -12,8 +15,4 @@ if (!rootElement) {
 
 const root = createRoot(rootElement);
 
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+root.render(<App />);

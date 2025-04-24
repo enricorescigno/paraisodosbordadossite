@@ -115,6 +115,22 @@ const ProductCard = ({
       return images["Branco"]?.[0];
     }
     
+    const getPlaceholderImage = (name: string) => {
+      const lowerName = name.toLowerCase();
+      if (lowerName.includes('necessaire') || lowerName.includes('bolsa')) {
+        return "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop";
+      } else if (lowerName.includes('toalha')) {
+        return "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop";
+      } else if (lowerName.includes('camisa') || lowerName.includes('fardamento') || lowerName.includes('avental')) {
+        return "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop";
+      } else if (lowerName.includes('infantil') || lowerName.includes('fralda') || lowerName.includes('macacão') || lowerName.includes('manta')) {
+        return "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop";
+      } else if (lowerName.includes('bordado')) {
+        return "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=500&auto=format&fit=crop";
+      }
+      return "https://via.placeholder.com/500x500?text=Sem+Imagem";
+    };
+    
     if (!imageUrl && (!images || (Array.isArray(images) && images.length === 0))) {
       return getPlaceholderImage(name);
     }
