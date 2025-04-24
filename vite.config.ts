@@ -13,7 +13,6 @@ export default defineConfig(({ mode }) => ({
   plugins: [
     react({
       // Ensure React refresh is enabled
-      refresh: true,
     }),
     mode === 'development' &&
     componentTagger(),

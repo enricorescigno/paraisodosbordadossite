@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -8,7 +9,7 @@ interface ProductCardProps {
   name: string;
   description?: string;
   imageUrl?: string;
-  images?: any;
+  images?: string[] | Record<string, string[]>;
   colors?: string[];
   isNew?: boolean;
   whatsappNumber: string;
@@ -28,6 +29,7 @@ const ProductCard = ({
   isPortfolio = false,
   showActionButton = true
 }: ProductCardProps) => {
+  // Função melhorada para obter imagem placeholder baseada na categoria do produto
   const getPlaceholderImage = (name: string) => {
     const lowerName = name.toLowerCase();
     if (lowerName.includes('necessaire') || lowerName.includes('bolsa')) {
@@ -41,10 +43,16 @@ const ProductCard = ({
     } else if (lowerName.includes('bordado')) {
       return "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=500&auto=format&fit=crop";
     }
-    return "https://via.placeholder.com/500x500?text=Sem+Imagem";
+    return "/placeholder.svg";
   };
 
+  // Lógica aprimorada para extrair a imagem correta do produto
   const getImageUrl = () => {
+    // Verifica IDs especiais primeiro (para casos específicos)
+    if (id === 204) {
+      return "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png"; 
+    }
+    
     if (Number(id) === 2010) {
       if (images && Array.isArray(images) && images.length > 5) {
         return images[5];
@@ -53,15 +61,11 @@ const ProductCard = ({
     }
     
     if (Number(id) === 1004) {
-      if (images && Array.isArray(images) && images.length > 0) {
-        return "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png";
-      }
+      return "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png";
     }
     
     if (Number(id) === 1005) {
-      if (images && Array.isArray(images) && images.length > 0) {
-        return "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png";
-      }
+      return "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png";
     }
     
     if (Number(id) === 2002 || Number(id) === 901) {
@@ -84,10 +88,6 @@ const ProductCard = ({
       return "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png";
     }
     
-    if (Number(id) === 204) {
-      return "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png";
-    }
-    
     if (Number(id) === 206) {
       return "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png";
     }
@@ -100,18 +100,35 @@ const ProductCard = ({
       return "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png";
     }
     
-    if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
-      return images["Branco"]?.[0];
+    // Verifica se existe imagens por cor (formato de objeto)
+    if (images && typeof images === 'object' && !Array.isArray(images)) {
+      // Seleciona a primeira cor disponível
+      const firstColor = Object.keys(images)[0];
+      if (firstColor && Array.isArray(images[firstColor]) && images[firstColor].length > 0) {
+        return images[firstColor][0];
+      }
     }
     
-    if (!imageUrl && (!images || (Array.isArray(images) && images.length === 0))) {
-      return getPlaceholderImage(name);
+    // Verifica se tem uma única URL de imagem definida
+    if (imageUrl) {
+      return imageUrl;
     }
     
-    return imageUrl || (Array.isArray(images) ? images[0] : null) || "https://via.placeholder.com/500x500?text=Sem+Imagem";
+    // Verifica se tem um array de imagens
+    if (images && Array.isArray(images) && images.length > 0) {
+      return images[0];
+    }
+    
+    // Retorna placeholder se nenhuma imagem foi encontrada
+    return getPlaceholderImage(name);
   };
 
   const optimizedImageUrl = getImageUrl();
+  
+  // Registra no console para depuração
+  React.useEffect(() => {
+    console.log(`ProductCard ${id} (${name}) - Image source:`, optimizedImageUrl);
+  }, [id, name, optimizedImageUrl]);
 
   return (
     <motion.div
@@ -149,7 +166,8 @@ const ProductCard = ({
           onError={e => {
             const target = e.target as HTMLImageElement;
             target.onerror = null;
-            target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
+            console.error(`Image error for product ${id} (${name}):`, optimizedImageUrl);
+            target.src = "/placeholder.svg";
           }}
         />
       </div>

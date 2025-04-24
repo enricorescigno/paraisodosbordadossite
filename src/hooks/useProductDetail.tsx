@@ -5,7 +5,7 @@ import { toast } from 'sonner';
 import { Product } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
 import { useProductImageManager } from './useProductImageManager';
-import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
+import { getImagePlaceholder, preloadImages } from '@/utils/imageUtils';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -51,6 +51,21 @@ export const useProductDetail = () => {
           }
           
           if (foundProduct) {
+            console.log(`Product details for ID ${productId}:`, foundProduct);
+            
+            // Verificar e registrar dados das imagens
+            if (foundProduct.images) {
+              if (Array.isArray(foundProduct.images)) {
+                console.log(`Product ${productId} has ${foundProduct.images.length} images (array)`, foundProduct.images);
+              } else {
+                console.log(`Product ${productId} has images by color:`, Object.keys(foundProduct.images));
+              }
+            } else if (foundProduct.imageUrl) {
+              console.log(`Product ${productId} has single imageUrl:`, foundProduct.imageUrl);
+            } else {
+              console.warn(`Product ${productId} has no images defined`);
+            }
+            
             if (foundProduct.colors && foundProduct.colors.length > 0) {
               setSelectedColor(foundProduct.colors[0]);
             }
@@ -68,11 +83,17 @@ export const useProductDetail = () => {
             setProduct(foundProduct);
             
             // Preload images for better performance
-            if (foundProduct.images && Array.isArray(foundProduct.images)) {
-              cacheImagesInBrowser(foundProduct.images);
-              preloadImages(foundProduct.images.slice(0, 3)); // Preload first three images
+            if (foundProduct.images) {
+              if (Array.isArray(foundProduct.images)) {
+                preloadImages(foundProduct.images.slice(0, 3)); // Preload first three images
+              } else {
+                // Preload first color images
+                const firstColor = Object.keys(foundProduct.images)[0];
+                if (firstColor && foundProduct.images[firstColor]) {
+                  preloadImages(foundProduct.images[firstColor].slice(0, 3));
+                }
+              }
             } else if (foundProduct.imageUrl) {
-              cacheImagesInBrowser([foundProduct.imageUrl]);
               preloadImages([foundProduct.imageUrl]);
             }
           } else {
