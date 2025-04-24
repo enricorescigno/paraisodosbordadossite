@@ -63,22 +63,9 @@ export const camaProducts: Product[] = [
     type: "product",
     category: "Cama",
     price: "R$ 65,00",
-    description: "Jogo de cama solteiro com 180 fios, modelo Brenno. O conjunto inclui 3 peças: 1 lençol com elástico, 1 lençol de cobrir e 1 fronha. Design geométrico elegante em tons de bege e verde musgo, com padrões de listras e formas geométricas que combinam espirais e triângulos.",
-    imageUrl: "/lovable-uploads/4fceddd0-c84a-4fca-8ae0-29da80efed0b.png",
-    images: [
-      "/lovable-uploads/4fceddd0-c84a-4fca-8ae0-29da80efed0b.png",
-      "/lovable-uploads/1cd8b10e-263e-4f74-86c2-e1ab4e8847ae.png"
-    ],
-    features: [
-      "180 fios de alta qualidade",
-      "3 peças completas",
-      "Tecido 100% algodão",
-      "Design geométrico moderno",
-      "Acabamento premium",
-      "Durável e macio"
-    ],
-    colors: ["Bege", "Verde Musgo"],
-    keywords: ["cama", "jogo de cama", "solteiro", "brenno", "180 fios", "geométrico"]
+    description: "Jogo de cama solteiro com 180 fios, modelo Brenno. Inclui 3 peças para maior conforto.",
+    imageUrl: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?q=80&w=500&auto=format&fit=crop",
+    keywords: ["cama", "jogo de cama", "solteiro", "brenno", "180 fios"]
   },
   {
     id: "C005",
