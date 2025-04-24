@@ -47,7 +47,7 @@ const ProductsCarousel = ({
                   isNew={product.isNew}
                   whatsappNumber={whatsappNumber}
                   isPortfolio={isPortfolio}
-                  showActionButton={false} // Não exibe o botão dentro do card
+                  showActionButton={false}
                 />
                 
                 {/* Botão Saiba Mais abaixo de cada produto */}

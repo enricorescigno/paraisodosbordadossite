@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -135,17 +134,11 @@ const ProductCard = ({
       }}
       className="flex flex-col h-full w-full"
     >
-      <div className={`w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300 ${
-        // Special class for the Bed Set to ensure full image coverage
-        id === 'C001' ? 'flex items-center justify-center' : ''
-      }`}>
+      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center">
         <motion.img
           src={optimizedImageUrl}
           alt={`Produto: ${name}`}
-          className={`w-full h-full object-cover ${
-            // Special class for the Bed Set to ensure centered and fully covered image
-            id === 'C001' ? 'absolute inset-0' : 'object-contain mix-blend-multiply'
-          }`}
+          className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
           loading="lazy"
           whileHover={{
             scale: 1.05
