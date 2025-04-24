@@ -16,7 +16,6 @@ export const useProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [isFromPortfolio, setIsFromPortfolio] = useState(false);
   
-  // Initialize product and check if special product 204
   useEffect(() => {
     setLoading(true);
     
@@ -25,7 +24,6 @@ export const useProductDetail = () => {
         try {
           let foundProduct = allProducts.find(p => p.id.toString() === productId);
           
-          // Special case for product 204
           if (productId === "204") {
             foundProduct = {
               id: 204,
@@ -59,17 +57,15 @@ export const useProductDetail = () => {
             
             setIsFromPortfolio(foundProduct.type === 'portfolio');
             
-            // Ensure default values for better UX
             if (!foundProduct.rating) foundProduct.rating = 4.8;
             if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
             if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
             
             setProduct(foundProduct);
             
-            // Preload images for better performance
             if (foundProduct.images && Array.isArray(foundProduct.images)) {
               cacheImagesInBrowser(foundProduct.images);
-              preloadImages(foundProduct.images.slice(0, 3)); // Preload first three images
+              preloadImages(foundProduct.images.slice(0, 3));
             } else if (foundProduct.imageUrl) {
               cacheImagesInBrowser([foundProduct.imageUrl]);
               preloadImages([foundProduct.imageUrl]);
@@ -85,12 +81,11 @@ export const useProductDetail = () => {
         }
       }
       setLoading(false);
-    }, 300); // Reduced timeout for faster loading
+    }, 300);
     
     return () => clearTimeout(timer);
   }, [productId]);
 
-  // Use product image manager for handling color and images
   const { 
     currentImages, 
     activeImageIndex, 
@@ -98,7 +93,6 @@ export const useProductDetail = () => {
     getPlaceholder 
   } = useProductImageManager(product, selectedColor);
 
-  // Functions to control quantity
   const incrementQuantity = () => {
     setQuantity(prev => prev + 1);
   };
@@ -107,7 +101,6 @@ export const useProductDetail = () => {
     setQuantity(prev => (prev > 1 ? prev - 1 : 1));
   };
 
-  // Generate WhatsApp link with product details
   const getWhatsAppLink = () => {
     if (!product) return '';
     
@@ -126,7 +119,6 @@ export const useProductDetail = () => {
     return `https://wa.me/5581995970776?text=${encodeURIComponent(message)}`;
   };
 
-  // Get back link based on product type and category
   const getBackLink = () => {
     if (isFromPortfolio || location.pathname.includes('/portfolio')) {
       return '/portfolio';

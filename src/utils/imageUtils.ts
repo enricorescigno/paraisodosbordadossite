@@ -1,3 +1,4 @@
+
 /**
  * Image optimization utilities
  */
@@ -47,6 +48,8 @@ export const getWebPImageUrl = (imageUrl: string): string => {
 
 // Function to detect connection speed and choose appropriate image quality
 export const getImageQualityByConnection = (): 'low' | 'medium' | 'high' => {
+  if (typeof navigator === 'undefined') return 'medium'; // Server-side rendering check
+  
   const connection = (navigator as any).connection;
   
   if (connection) {
@@ -85,44 +88,59 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
   return url;
 };
 
-// Updated cacheImagesInBrowser function with proper export
+// Updated cacheImagesInBrowser function with proper export and error handling
 export function cacheImagesInBrowser(imageUrls: string[]): void {
-  if (!('caches' in window)) return;
+  if (!imageUrls || !Array.isArray(imageUrls) || imageUrls.length === 0) return;
+  
+  // Check if running in browser environment
+  if (typeof window === 'undefined' || !('caches' in window)) return;
   
   // Use Cache API to store images (if browser supports it)
   const cacheName = 'paraiso-images-v1';
   
-  caches.open(cacheName).then(cache => {
-    imageUrls.forEach(url => {
-      // Only cache local images
-      if (!url.includes('http') || url.includes(window.location.origin)) {
-        fetch(url, { mode: 'no-cors' })
-          .then(response => {
-            if (response.ok || response.type === 'opaque') {
-              cache.put(url, response);
-            }
-          })
-          .catch(() => {
-            // Silently fail if we can't cache the image
-          });
-      }
+  try {
+    caches.open(cacheName).then(cache => {
+      imageUrls.forEach(url => {
+        // Skip empty URLs
+        if (!url) return;
+        
+        // Only cache local images
+        if (!url.includes('http') || url.includes(window.location.origin)) {
+          fetch(url, { mode: 'no-cors' })
+            .then(response => {
+              if (response.ok || response.type === 'opaque') {
+                cache.put(url, response);
+              }
+            })
+            .catch(() => {
+              // Silently fail if we can't cache the image
+            });
+        }
+      });
     });
-  });
+  } catch (error) {
+    // Silently fail if caching causes an error
+    console.error('Error caching images:', error);
+  }
 }
 
 // Pre-load specific images for faster access
 export const preloadImages = (urls: string[]): void => {
-  if (!urls || urls.length === 0) return;
+  if (!urls || urls.length === 0 || typeof window === 'undefined') return;
   
   urls.forEach(url => {
     if (!url) return;
     
-    const img = new Image();
-    img.src = url;
-    
-    // Optional: Set loading priority
-    if ('fetchPriority' in HTMLImageElement.prototype) {
-      (img as any).fetchPriority = urls.length < 5 ? 'high' : 'auto';
+    try {
+      const img = new Image();
+      img.src = url;
+      
+      // Optional: Set loading priority
+      if ('fetchPriority' in HTMLImageElement.prototype) {
+        (img as any).fetchPriority = urls.length < 5 ? 'high' : 'auto';
+      }
+    } catch (error) {
+      // Silently fail if preloading fails
     }
   });
 };
