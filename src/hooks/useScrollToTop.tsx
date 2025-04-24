@@ -17,3 +17,5 @@ export function useScrollToTop() {
     });
   }, [location.pathname]);
 }
+
+export default useScrollToTop;
