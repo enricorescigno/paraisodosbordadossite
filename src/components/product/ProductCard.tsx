@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -29,7 +28,6 @@ const ProductCard = ({
   isPortfolio = false,
   showActionButton = true
 }: ProductCardProps) => {
-  // Função melhorada para obter imagem placeholder baseada na categoria do produto
   const getPlaceholderImage = (name: string) => {
     const lowerName = name.toLowerCase();
     if (lowerName.includes('necessaire') || lowerName.includes('bolsa')) {
@@ -46,9 +44,7 @@ const ProductCard = ({
     return "/placeholder.svg";
   };
 
-  // Lógica aprimorada para extrair a imagem correta do produto
   const getImageUrl = () => {
-    // Verifica IDs especiais primeiro (para casos específicos)
     if (id === 204) {
       return "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png"; 
     }
@@ -100,32 +96,26 @@ const ProductCard = ({
       return "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png";
     }
     
-    // Verifica se existe imagens por cor (formato de objeto)
     if (images && typeof images === 'object' && !Array.isArray(images)) {
-      // Seleciona a primeira cor disponível
       const firstColor = Object.keys(images)[0];
       if (firstColor && Array.isArray(images[firstColor]) && images[firstColor].length > 0) {
         return images[firstColor][0];
       }
     }
     
-    // Verifica se tem uma única URL de imagem definida
     if (imageUrl) {
       return imageUrl;
     }
     
-    // Verifica se tem um array de imagens
     if (images && Array.isArray(images) && images.length > 0) {
       return images[0];
     }
     
-    // Retorna placeholder se nenhuma imagem foi encontrada
     return getPlaceholderImage(name);
   };
 
   const optimizedImageUrl = getImageUrl();
   
-  // Registra no console para depuração
   React.useEffect(() => {
     console.log(`ProductCard ${id} (${name}) - Image source:`, optimizedImageUrl);
   }, [id, name, optimizedImageUrl]);
