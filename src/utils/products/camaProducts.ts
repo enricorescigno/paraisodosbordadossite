@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 export const camaProducts: Product[] = [
@@ -8,20 +9,9 @@ export const camaProducts: Product[] = [
     category: "Cama",
     price: "R$ 65,00",
     description: "Jogo de cama solteiro com 180 fios, modelo Turin. Inclui 3 peças para maior conforto.",
-    imageUrl: "/lovable-uploads/54031bda-6e61-4301-8262-16bbe259f02c.png",
-    images: [
-      "/lovable-uploads/54031bda-6e61-4301-8262-16bbe259f02c.png",
-      "/lovable-uploads/0c5a11e7-1c3f-4c99-8a01-c3aeda11bd93.png"
-    ],
+    imageUrl: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?q=80&w=500&auto=format&fit=crop",
     isNew: true,
-    keywords: ["cama", "jogo de cama", "solteiro", "turin", "180 fios"],
-    colors: ["Bege", "Azul"],
-    features: [
-      "180 fios de alta qualidade",
-      "Tecido macio e confortável",
-      "Padrão xadrez elegante",
-      "Composição: 100% algodão"
-    ]
+    keywords: ["cama", "jogo de cama", "solteiro", "turin", "180 fios"]
   },
   {
     id: "C002",

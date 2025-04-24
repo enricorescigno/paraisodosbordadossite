@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Product } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
 import { useProductImageManager } from './useProductImageManager';
+import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -65,6 +65,15 @@ export const useProductDetail = () => {
             if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
             
             setProduct(foundProduct);
+            
+            // Preload images for better performance
+            if (foundProduct.images && Array.isArray(foundProduct.images)) {
+              cacheImagesInBrowser(foundProduct.images);
+              preloadImages(foundProduct.images.slice(0, 3)); // Preload first three images
+            } else if (foundProduct.imageUrl) {
+              cacheImagesInBrowser([foundProduct.imageUrl]);
+              preloadImages([foundProduct.imageUrl]);
+            }
           } else {
             setProduct(null);
             toast.error("Produto não encontrado.");
@@ -76,7 +85,7 @@ export const useProductDetail = () => {
         }
       }
       setLoading(false);
-    }, 500);
+    }, 300); // Reduced timeout for faster loading
     
     return () => clearTimeout(timer);
   }, [productId]);

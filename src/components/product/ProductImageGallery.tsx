@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getImageLoading } from '../../utils/imageUtils';
+import { getImageLoading, fixImageExtension } from '@/utils/imageUtils';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -92,8 +92,36 @@ const ProductImageGallery = ({
     setActiveImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // Get current image
-  const currentImage = images[activeImageIndex];
+  // Get current image and fix its extension if needed
+  const currentImage = images[activeImageIndex] ? fixImageExtension(images[activeImageIndex]) : '';
+  
+  // Preload adjacent images for smoother navigation
+  useEffect(() => {
+    if (images.length <= 1) return;
+    
+    const nextIdx = activeImageIndex === images.length - 1 ? 0 : activeImageIndex + 1;
+    const prevIdx = activeImageIndex === 0 ? images.length - 1 : activeImageIndex - 1;
+    
+    // Preload next and previous images
+    const preloadImages = [nextIdx, prevIdx].map(idx => {
+      if (images[idx]) {
+        const img = new Image();
+        img.src = fixImageExtension(images[idx]);
+        return img;
+      }
+      return null;
+    });
+    
+    // Cleanup
+    return () => {
+      preloadImages.forEach(img => {
+        if (img) {
+          img.onload = null;
+          img.onerror = null;
+        }
+      });
+    };
+  }, [activeImageIndex, images]);
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden">
@@ -136,7 +164,6 @@ const ProductImageGallery = ({
                       e.currentTarget.src = placeholder(category);
                     }
                   }}
-                  // Changed fetchpriority to fetchPriority (camelCase)
                   fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                   decoding={activeImageIndex === 0 ? "sync" : "async"}
                 />
@@ -201,7 +228,7 @@ const ProductImageGallery = ({
                     <Skeleton className="h-full w-full absolute inset-0" />
                   )}
                   <img 
-                    src={img} 
+                    src={fixImageExtension(img)} 
                     alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
                     className={`h-full w-full object-contain bg-[#FAFAFA] mix-blend-multiply p-1 ${
                       !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'

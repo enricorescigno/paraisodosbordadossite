@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 export const bonesProducts: Product[] = [
@@ -6,8 +7,8 @@ export const bonesProducts: Product[] = [
     name: "Boné Bordado Frase",
     type: "portfolio",
     category: "Bonés Bordados",
-    imageUrl: "/lovable-uploads/bone-vermelho.png",
-    description: "Boné casual com bordado, confeccionado em tecido macio e ajuste regulável.",
+    imageUrl: "/lovable-uploads/3a0d16aa-8bb6-45a1-92a5-352852950663.png", // Boné branco com "Estilo"
+    description: "Boné casual com bordado de frases personalizadas, confeccionado em tecido macio e ajuste regulável.",
     price: "Sob consulta",
     colors: ["Vermelho", "Azul", "Branco", "Preto"],
     sizes: ["Único"],
@@ -20,10 +21,10 @@ export const bonesProducts: Product[] = [
       "Design moderno"
     ],
     images: [
-      "/lovable-uploads/bone-vermelho.png",
-      "/lovable-uploads/bone-azul.png",
-      "/lovable-uploads/bone-branco.png",
-      "/lovable-uploads/bone-preto.png"
+      "/lovable-uploads/3a0d16aa-8bb6-45a1-92a5-352852950663.png", // Boné branco com "Estilo"
+      "/lovable-uploads/afe9f856-920c-4f37-a090-e54c6d0eb85d.png", // Boné azul com "Vibes"
+      "/lovable-uploads/a521517c-0d8f-4061-88b7-b003cb7e2a92.png", // Boné preto com "Original"
+      "/lovable-uploads/60729ca5-43f4-4c68-bc00-bdbf97652252.png"  // Boné vermelho com "Paraíso"
     ],
     keywords: ["boné", "bordado", "respira", "casual", "acessório"]
   },
@@ -74,3 +75,4 @@ export const bonesProducts: Product[] = [
     keywords: ["boné", "bordado", "logomarca", "corporativo", "uniforme"]
   }
 ];
+
