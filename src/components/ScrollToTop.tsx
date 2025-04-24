@@ -10,15 +10,11 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    try {
-      // Scroll the page to the top with behavior instant for better UX
-      window.scrollTo({
-        top: 0,
-        behavior: 'instant'
-      });
-    } catch (error) {
-      console.error("Failed to scroll to top:", error);
-    }
+    // Scroll the page to the top with behavior instant for better UX
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
   }, [pathname]);
 
   return null;

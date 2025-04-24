@@ -10,14 +10,10 @@ export function useScrollToTop() {
   const location = useLocation();
   
   useEffect(() => {
-    try {
-      // Scroll to top immediately when the route changes
-      window.scrollTo({
-        top: 0,
-        behavior: 'instant'
-      });
-    } catch (error) {
-      console.error("Failed to scroll to top:", error);
-    }
+    // Scroll to top immediately when the route changes
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant'
+    });
   }, [location.pathname]);
 }
