@@ -74,4 +74,5 @@ export default defineConfig(({ mode }) => ({
     }
   },
   cacheDir: '.vite-cache',
+  publicDir: 'public', // Ensure public directory is correctly set
 }));

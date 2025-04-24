@@ -166,6 +166,16 @@ export const fixImageExtension = (url: string): string => {
     return url;
   }
   
+  // Check if URL has lovable-uploads and verify path is correct
+  if (url.includes('lovable-uploads') && !url.startsWith('/')) {
+    return `/${url}`;
+  }
+  
+  // Check for absolute path issues
+  if (url.startsWith('lovable-uploads/')) {
+    return `/${url}`;
+  }
+  
   // If the URL ends with .webp but we're having issues, try removing it
   if (url.endsWith('.webp')) {
     return url.replace('.webp', '.png');
