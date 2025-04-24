@@ -54,8 +54,8 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     modulePreload: true,
     treeshake: true,
-    // Image compression settings (max compression level)
-    assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp', '**/*.svg'],
+    // Configuração para CDN (descomente e ajuste para seu CDN real)
+    // publicPath: 'https://cdn.paraisodosbordados.com.br/',
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
@@ -66,10 +66,6 @@ export default defineConfig(({ mode }) => ({
   preview: {
     port: 8080,
     host: true,
-    headers: {
-      // Add cache control headers for better performance
-      'Cache-Control': 'public, max-age=86400',
-    }
   },
   cacheDir: '.vite-cache',
 }));
