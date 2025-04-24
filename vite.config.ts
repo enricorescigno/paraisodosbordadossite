@@ -11,9 +11,7 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   plugins: [
-    react({
-      // Ensure React refresh is enabled
-    }),
+    react(),
     mode === 'development' &&
     componentTagger(),
   ].filter(Boolean),
@@ -74,5 +72,4 @@ export default defineConfig(({ mode }) => ({
     }
   },
   cacheDir: '.vite-cache',
-  publicDir: 'public', // Ensure public directory is correctly set
 }));

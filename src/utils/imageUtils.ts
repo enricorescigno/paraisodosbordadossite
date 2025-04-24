@@ -1,4 +1,3 @@
-
 /**
  * Image optimization utilities
  */
@@ -18,28 +17,10 @@ export const getSrcSet = (imageUrl: string): string => {
 
 // Function to get placeholder while images are loading
 export const getImagePlaceholder = (category: string = ''): string => {
-  const lowerCategory = category.toLowerCase();
-  
-  if (lowerCategory.includes('bone') || lowerCategory.includes('bonés')) {
-    return "/placeholder.svg";
-  } 
-  else if (lowerCategory.includes('cama')) {
-    return "https://images.unsplash.com/photo-1584100936595-c0654b55a2e2?q=80&w=500&auto=format&fit=crop";
+  if (category.toLowerCase().includes('bone') || category.toLowerCase().includes('bonés')) {
+    return '/placeholder.svg';
   }
-  else if (lowerCategory.includes('mesa') || lowerCategory.includes('cozinha')) {
-    return "https://images.unsplash.com/photo-1556911899-5df3189a6e32?q=80&w=500&auto=format&fit=crop";
-  }
-  else if (lowerCategory.includes('banho') || lowerCategory.includes('toalha')) {
-    return "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop";
-  }
-  else if (lowerCategory.includes('vestuário') || lowerCategory.includes('camisa')) {
-    return "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop";
-  }
-  else if (lowerCategory.includes('infantil')) {
-    return "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop";
-  }
-  
-  return "/placeholder.svg";
+  return '/placeholder.svg';
 };
 
 // Function to optimize image loading attributes
@@ -104,8 +85,8 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
   return url;
 };
 
-// Cache images in browser for faster subsequent loads
-export const cacheImagesInBrowser = (imageUrls: string[]): void => {
+// Updated cacheImagesInBrowser function with proper export
+export function cacheImagesInBrowser(imageUrls: string[]): void {
   if (!('caches' in window)) return;
   
   // Use Cache API to store images (if browser supports it)
@@ -113,8 +94,6 @@ export const cacheImagesInBrowser = (imageUrls: string[]): void => {
   
   caches.open(cacheName).then(cache => {
     imageUrls.forEach(url => {
-      if (!url) return;
-      
       // Only cache local images
       if (!url.includes('http') || url.includes(window.location.origin)) {
         fetch(url, { mode: 'no-cors' })
@@ -128,10 +107,8 @@ export const cacheImagesInBrowser = (imageUrls: string[]): void => {
           });
       }
     });
-  }).catch(err => {
-    console.error('Failed to open cache:', err);
   });
-};
+}
 
 // Pre-load specific images for faster access
 export const preloadImages = (urls: string[]): void => {
@@ -147,10 +124,6 @@ export const preloadImages = (urls: string[]): void => {
     if ('fetchPriority' in HTMLImageElement.prototype) {
       (img as any).fetchPriority = urls.length < 5 ? 'high' : 'auto';
     }
-    
-    // Log success or failure
-    img.onload = () => console.log(`Preloaded: ${url}`);
-    img.onerror = () => console.error(`Failed to preload: ${url}`);
   });
 };
 
@@ -164,16 +137,6 @@ export const fixImageExtension = (url: string): string => {
       url.includes('60729ca5-43f4-4c68-bc00-bdbf97652252') ||
       url.includes('a521517c-0d8f-4061-88b7-b003cb7e2a92')) {
     return url;
-  }
-  
-  // Check if URL has lovable-uploads and verify path is correct
-  if (url.includes('lovable-uploads') && !url.startsWith('/')) {
-    return `/${url}`;
-  }
-  
-  // Check for absolute path issues
-  if (url.startsWith('lovable-uploads/')) {
-    return `/${url}`;
   }
   
   // If the URL ends with .webp but we're having issues, try removing it

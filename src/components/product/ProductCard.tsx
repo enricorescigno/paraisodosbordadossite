@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,7 @@ interface ProductCardProps {
   name: string;
   description?: string;
   imageUrl?: string;
-  images?: string[] | Record<string, string[]>;
+  images?: any;
   colors?: string[];
   isNew?: boolean;
   whatsappNumber: string;
@@ -42,14 +41,10 @@ const ProductCard = ({
     } else if (lowerName.includes('bordado')) {
       return "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=500&auto=format&fit=crop";
     }
-    return "/placeholder.svg";
+    return "https://via.placeholder.com/500x500?text=Sem+Imagem";
   };
 
   const getImageUrl = () => {
-    if (id === 204) {
-      return "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png"; 
-    }
-    
     if (Number(id) === 2010) {
       if (images && Array.isArray(images) && images.length > 5) {
         return images[5];
@@ -58,11 +53,15 @@ const ProductCard = ({
     }
     
     if (Number(id) === 1004) {
-      return "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png";
+      if (images && Array.isArray(images) && images.length > 0) {
+        return "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png";
+      }
     }
     
     if (Number(id) === 1005) {
-      return "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png";
+      if (images && Array.isArray(images) && images.length > 0) {
+        return "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png";
+      }
     }
     
     if (Number(id) === 2002 || Number(id) === 901) {
@@ -85,6 +84,10 @@ const ProductCard = ({
       return "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png";
     }
     
+    if (Number(id) === 204) {
+      return "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png";
+    }
+    
     if (Number(id) === 206) {
       return "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png";
     }
@@ -97,53 +100,56 @@ const ProductCard = ({
       return "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png";
     }
     
-    if (images && typeof images === 'object' && !Array.isArray(images)) {
-      const firstColor = Object.keys(images)[0];
-      if (firstColor && Array.isArray(images[firstColor]) && images[firstColor].length > 0) {
-        return images[firstColor][0];
-      }
+    if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
+      return images["Branco"]?.[0];
     }
     
-    if (imageUrl) {
-      return imageUrl;
+    if (!imageUrl && (!images || (Array.isArray(images) && images.length === 0))) {
+      return getPlaceholderImage(name);
     }
     
-    if (images && Array.isArray(images) && images.length > 0) {
-      return images[0];
-    }
-    
-    return getPlaceholderImage(name);
+    return imageUrl || (Array.isArray(images) ? images[0] : null) || "https://via.placeholder.com/500x500?text=Sem+Imagem";
   };
 
   const optimizedImageUrl = getImageUrl();
-  
-  // Debug image source using console.log instead of useEffect
-  console.log(`ProductCard ${id} (${name}) - Image source:`, optimizedImageUrl);
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
+      initial={{
+        opacity: 0,
+        y: 20
+      }}
+      animate={{
+        opacity: 1,
+        y: 0
+      }}
+      transition={{
+        duration: 0.5
+      }}
       whileHover={{
         y: -5,
-        transition: { duration: 0.2 }
+        transition: {
+          duration: 0.2
+        }
       }}
       className="flex flex-col h-full w-full"
     >
-      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
+      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center">
         <motion.img
           src={optimizedImageUrl}
           alt={`Produto: ${name}`}
           className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
           loading="lazy"
-          whileHover={{ scale: 1.05 }}
-          transition={{ duration: 0.3 }}
+          whileHover={{
+            scale: 1.05
+          }}
+          transition={{
+            duration: 0.3
+          }}
           onError={e => {
             const target = e.target as HTMLImageElement;
             target.onerror = null;
-            console.error(`Image error for product ${id} (${name}):`, optimizedImageUrl);
-            target.src = "/placeholder.svg";
+            target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
           }}
         />
       </div>
