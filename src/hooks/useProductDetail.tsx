@@ -4,7 +4,7 @@ import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Product, ProductColor, ProductSize } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
-import { useProductImageManager } from '@/hooks/useProductImageManager'; // Updated import
+import useProductImageManager from '@/hooks/useProductImageManager'; // Use default import 
 import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
 
 export const useProductDetail = () => {
@@ -114,12 +114,19 @@ export const useProductDetail = () => {
     return () => clearTimeout(timer);
   }, [productId]);
 
+  // Use the hook with only one argument
+  const productImageManager = useProductImageManager({
+    images: product?.images || [],
+    mainImage: product?.imageUrl
+  });
+
+  // Extract the needed properties
   const { 
     currentImages, 
     activeImageIndex, 
-    setActiveImageIndex,
+    setActiveImageIndex, 
     getPlaceholder 
-  } = useProductImageManager(product, selectedColor);
+  } = productImageManager;
 
   const incrementQuantity = () => {
     setQuantity(prev => prev + 1);
@@ -185,58 +192,14 @@ export const useProductDetail = () => {
     selectedSize,
     setSelectedSize,
     quantity,
-    incrementQuantity: () => setQuantity(prev => prev + 1),
-    decrementQuantity: () => setQuantity(prev => (prev > 1 ? prev - 1 : 1)),
+    incrementQuantity,
+    decrementQuantity,
     isFromPortfolio,
     currentImages,
     activeImageIndex,
     setActiveImageIndex,
-    getWhatsAppLink: () => {
-      if (!product) return '';
-      
-      let message = `Olá! Vi o ${product.name} e gostaria de fazer um orçamento!`;
-      
-      if (selectedColor) {
-        message += ` Cor: ${selectedColor}.`;
-      }
-      
-      if (selectedSize) {
-        message += ` Tamanho: ${selectedSize}.`;
-      }
-      
-      message += ` Quantidade: ${quantity}.`;
-      
-      return `https://wa.me/5581995970776?text=${encodeURIComponent(message)}`;
-    },
-    getBackLink: () => {
-      if (isFromPortfolio || location.pathname.includes('/portfolio')) {
-        return '/portfolio';
-      }
-      
-      if (product && product.category) {
-        const category = product.category.toLowerCase().replace(/\s+/g, '-');
-        
-        const categoryMap: Record<string, string> = {
-          'cama': '/categoria/cama',
-          'mesa e cozinha': '/categoria/mesa-cozinha',
-          'banho': '/categoria/banho',
-          'infantil': '/categoria/infantil',
-          'vestuário': '/categoria/vestuario',
-          'jaleco': '/categoria/jaleco',
-          'pantufa': '/categoria/pantufa',
-          'bonés bordados': '/portfolio/bordado-bone',
-          'bordado em necessaire': '/portfolio/bordado-necessaire',
-          'bordado em bolsa': '/portfolio/bordado-bolsa',
-          'jalecos': '/portfolio/bordado-jaleco',
-          'roupões infantis': '/portfolio/bordado-infantis',
-          'toalhas infantis': '/portfolio/bordado-toalha-banho'
-        };
-        
-        return categoryMap[product.category.toLowerCase()] || '/produtos';
-      }
-      
-      return '/produtos';
-    },
+    getWhatsAppLink,
+    getBackLink,
     placeholder: getPlaceholder
   };
 };

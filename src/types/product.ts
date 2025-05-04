@@ -54,11 +54,14 @@ export interface Product {
   relatedProducts?: string[];
   keywords?: string[];
   materials?: string[];
-  dimensions?: string;
+  dimensions?: string | Record<string, number>;  // Support both string and object formats
   weight?: string;
   sku?: string;
   barcode?: string;
   tags?: string[];
+  slug?: string;  // Add slug field
+  originalPrice?: string; // Add originalPrice field
+  discount?: string; // Add discount field
 }
 
 export interface ProductReview {

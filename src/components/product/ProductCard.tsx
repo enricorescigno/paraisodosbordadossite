@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
+import { ProductColor } from '@/types/product';
 
 interface ProductCardProps {
   id: number | string;
@@ -9,7 +11,7 @@ interface ProductCardProps {
   description?: string;
   imageUrl?: string;
   images?: any;
-  colors?: string[];
+  colors?: (ProductColor[] | string[]);
   isNew?: boolean;
   whatsappNumber: string;
   isPortfolio?: boolean;
