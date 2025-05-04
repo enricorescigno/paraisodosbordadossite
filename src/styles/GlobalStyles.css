@@ -1,7 +1,10 @@
 
+/* Main Tailwind directives - these must come before any @layer directives */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* Import other style files */
 @import "./apple-ui.css";
+@import "./product-pages.css";
+@import "./typography.css";

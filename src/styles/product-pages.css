@@ -1,4 +1,5 @@
 
+/* No need for duplicate Tailwind directives since they're in GlobalStyles.css */
 @layer components {
   /* Apple-style product card */
   .apple-product-card {
