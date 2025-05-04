@@ -6,8 +6,8 @@ import WhatsAppSupport from './WhatsAppSupport';
 import { AppleButton } from '@/components/ui/apple-button';
 import { motion } from 'framer-motion';
 import { useProductDetail } from '@/hooks/useProductDetail';
-import { useIsMobile } from '@/hooks/useMobile'; // Updated import path
-import useScrollToTop from '@/hooks/useScrollToTop'; // Updated import
+import { useIsMobile } from '@/hooks/useMobile';
+import useScrollToTop from '@/hooks/useScrollToTop';
 import { Toaster } from 'sonner';
 
 // Importing our product components

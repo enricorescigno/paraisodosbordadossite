@@ -2,9 +2,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { ProductColor } from '@/types/product';
 
 interface ColorSelectorProps {
-  colors: string[];
+  colors: ProductColor[] | string[];
   selectedColor: string;
   onColorChange: (color: string) => void;
 }
@@ -35,27 +36,35 @@ const ColorSelector = ({ colors, selectedColor, onColorChange }: ColorSelectorPr
     "Sob consulta": "#f5f5f7",
   };
   
+  // Convert colors to a consistent format for rendering
+  const normalizedColors = colors.map(color => {
+    if (typeof color === 'string') {
+      return { name: color, value: colorMap[color] || "#f5f5f7" };
+    }
+    return color;
+  });
+  
   return (
     <div className="mb-6">
       <h3 className="font-semibold mb-3 text-[#1D1D1F]">Cor:</h3>
       <div className="flex flex-wrap gap-3">
-        {colors.map((color) => {
-          const bgColor = colorMap[color] || "#f5f5f7";
-          const isSelected = selectedColor === color;
-          const isDarkColor = ['Preto', 'Azul', 'Verde', 'Vermelho', 'Roxo', 'Vinho', 'Marrom'].includes(color);
+        {normalizedColors.map((color) => {
+          const bgColor = color.value || colorMap[color.name] || "#f5f5f7";
+          const isSelected = selectedColor === color.name;
+          const isDarkColor = ['Preto', 'Azul', 'Verde', 'Vermelho', 'Roxo', 'Vinho', 'Marrom'].includes(color.name);
           
           return (
             <motion.button
-              key={color}
-              onClick={() => onColorChange(color)}
+              key={color.name}
+              onClick={() => onColorChange(color.name)}
               whileTap={{ scale: 0.95 }}
               className={cn(
                 "relative h-11 w-11 md:h-10 md:w-10 rounded-full transition-all duration-200",
                 isSelected ? "ring-2 ring-offset-2 ring-[#0071E3]" : "hover:ring-1 hover:ring-gray-300 hover:ring-offset-1"
               )}
-              title={color}
-              aria-label={`Selecionar cor ${color}`}
-              data-testid={`color-button-${color.toLowerCase().replace(/\s+/g, '-')}`}
+              title={color.name}
+              aria-label={`Selecionar cor ${color.name}`}
+              data-testid={`color-button-${color.name.toLowerCase().replace(/\s+/g, '-')}`}
             >
               <span 
                 className="absolute inset-0 rounded-full border border-gray-200"

@@ -62,6 +62,12 @@ export interface Product {
   slug?: string;  // Add slug field
   originalPrice?: string; // Add originalPrice field
   discount?: string; // Add discount field
+  isAvailable?: boolean; // Add isAvailable field
+  isCustomizable?: boolean; // Add isCustomizable field since it's used in vestuarioProducts
+  stockQuantity?: number; // Add stockQuantity field
+  minPurchaseQuantity?: number; // Add minPurchaseQuantity field
+  featured?: boolean; // Add featured field
+  createdAt?: string; // Add createdAt field
 }
 
 export interface ProductReview {
