@@ -24,6 +24,7 @@ export default defineConfig(({ mode }) => ({
     minify: true,
     sourcemap: false,
     cssMinify: true,
+    reportCompressedSize: false, // Disable size reporting to optimize build time
     rollupOptions: {
       output: {
         manualChunks: {
@@ -56,6 +57,9 @@ export default defineConfig(({ mode }) => ({
     treeshake: true,
     // Image compression settings (max compression level)
     assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp', '**/*.svg'],
+  },
+  define: { 
+    "process.env": {} // Add process.env define for compatibility
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],

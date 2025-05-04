@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Search, ShoppingCart, Menu, X } from 'lucide-react';
 import MenubarNav from './MenubarNav';
 import SearchBox from './SearchBox';
-import { useIsMobile } from '../hooks/use-mobile';
+import { useIsMobile } from '@/hooks/useMobile'; // Updated import path
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";

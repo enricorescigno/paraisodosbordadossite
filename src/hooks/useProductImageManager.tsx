@@ -13,7 +13,7 @@ interface UseProductImageManagerReturn {
   allImages: string[];
 }
 
-const useProductImageManager = ({ 
+export const useProductImageManager = ({ 
   images = [], 
   mainImage 
 }: UseProductImageManagerParams): UseProductImageManagerReturn => {
@@ -51,4 +51,5 @@ const useProductImageManager = ({
   };
 };
 
+// Export as default for backward compatibility
 export default useProductImageManager;

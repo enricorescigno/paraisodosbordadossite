@@ -28,7 +28,7 @@ export type ProductVariant = {
 
 // Define full product type
 export interface Product {
-  id: string;
+  id: string | number;  // Allow both string and number IDs
   name: string;
   type: 'product' | 'portfolio' | 'service';
   category: string;
@@ -40,8 +40,8 @@ export interface Product {
   imageUrl: string;
   images?: string[];
   features?: string[];
-  colors?: ProductColor[];
-  sizes?: ProductSize[];
+  colors?: ProductColor[] | string[];  // Allow both complex and simple color formats
+  sizes?: ProductSize[] | string[];   // Allow both complex and simple size formats
   variants?: ProductVariant[];
   specifications?: Record<string, string>;
   reviews?: ProductReview[];

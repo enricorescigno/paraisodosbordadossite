@@ -1,9 +1,10 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Product } from '@/types/product';
+import { Product, ProductColor, ProductSize } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
-import { useProductImageManager } from './useProductImageManager';
+import { useProductImageManager } from '@/hooks/useProductImageManager'; // Updated import
 import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
 
 export const useProductDetail = () => {
@@ -26,13 +27,21 @@ export const useProductDetail = () => {
           
           if (productId === "204") {
             foundProduct = {
-              id: 204,
+              id: "204", // Changed to string to match type
               name: "Jogo Americano Requinte Ondulado",
               type: "product",
               category: "Mesa e Cozinha",
               imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
               description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
-              colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
+              colors: [
+                { name: "Branco", value: "#FFFFFF" },
+                { name: "Dourado", value: "#DAA520" },
+                { name: "Bege", value: "#F5F5DC" },
+                { name: "Marrom", value: "#8B4513" },
+                { name: "Rosa", value: "#FFC0CB" },
+                { name: "Verde", value: "#008000" },
+                { name: "Vinho", value: "#800020" }
+              ],
               sizes: [],
               rating: 4.9,
               isNew: true,
@@ -48,11 +57,30 @@ export const useProductDetail = () => {
           }
           
           if (foundProduct) {
-            if (foundProduct.colors && foundProduct.colors.length > 0) {
-              setSelectedColor(foundProduct.colors[0]);
+            // Handle simple string arrays for colors and sizes by converting to object format
+            if (foundProduct.colors && Array.isArray(foundProduct.colors) && typeof foundProduct.colors[0] === 'string') {
+              foundProduct.colors = (foundProduct.colors as string[]).map(color => ({
+                name: color,
+                value: color
+              })) as ProductColor[];
             }
+            
+            if (foundProduct.sizes && Array.isArray(foundProduct.sizes) && typeof foundProduct.sizes[0] === 'string') {
+              foundProduct.sizes = (foundProduct.sizes as string[]).map(size => ({
+                name: size,
+                value: size,
+                available: true
+              })) as ProductSize[];
+            }
+            
+            if (foundProduct.colors && foundProduct.colors.length > 0) {
+              const firstColor = (foundProduct.colors as ProductColor[])[0];
+              setSelectedColor(firstColor.name);
+            }
+            
             if (foundProduct.sizes && foundProduct.sizes.length > 0) {
-              setSelectedSize(foundProduct.sizes[0]);
+              const firstSize = (foundProduct.sizes as ProductSize[])[0];
+              setSelectedSize(firstSize.name);
             }
             
             setIsFromPortfolio(foundProduct.type === 'portfolio');
@@ -157,14 +185,60 @@ export const useProductDetail = () => {
     selectedSize,
     setSelectedSize,
     quantity,
-    incrementQuantity,
-    decrementQuantity,
+    incrementQuantity: () => setQuantity(prev => prev + 1),
+    decrementQuantity: () => setQuantity(prev => (prev > 1 ? prev - 1 : 1)),
     isFromPortfolio,
     currentImages,
     activeImageIndex,
     setActiveImageIndex,
-    getWhatsAppLink,
-    getBackLink,
+    getWhatsAppLink: () => {
+      if (!product) return '';
+      
+      let message = `Olá! Vi o ${product.name} e gostaria de fazer um orçamento!`;
+      
+      if (selectedColor) {
+        message += ` Cor: ${selectedColor}.`;
+      }
+      
+      if (selectedSize) {
+        message += ` Tamanho: ${selectedSize}.`;
+      }
+      
+      message += ` Quantidade: ${quantity}.`;
+      
+      return `https://wa.me/5581995970776?text=${encodeURIComponent(message)}`;
+    },
+    getBackLink: () => {
+      if (isFromPortfolio || location.pathname.includes('/portfolio')) {
+        return '/portfolio';
+      }
+      
+      if (product && product.category) {
+        const category = product.category.toLowerCase().replace(/\s+/g, '-');
+        
+        const categoryMap: Record<string, string> = {
+          'cama': '/categoria/cama',
+          'mesa e cozinha': '/categoria/mesa-cozinha',
+          'banho': '/categoria/banho',
+          'infantil': '/categoria/infantil',
+          'vestuário': '/categoria/vestuario',
+          'jaleco': '/categoria/jaleco',
+          'pantufa': '/categoria/pantufa',
+          'bonés bordados': '/portfolio/bordado-bone',
+          'bordado em necessaire': '/portfolio/bordado-necessaire',
+          'bordado em bolsa': '/portfolio/bordado-bolsa',
+          'jalecos': '/portfolio/bordado-jaleco',
+          'roupões infantis': '/portfolio/bordado-infantis',
+          'toalhas infantis': '/portfolio/bordado-toalha-banho'
+        };
+        
+        return categoryMap[product.category.toLowerCase()] || '/produtos';
+      }
+      
+      return '/produtos';
+    },
     placeholder: getPlaceholder
   };
 };
+
+export default useProductDetail;

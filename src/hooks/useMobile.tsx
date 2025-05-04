@@ -24,3 +24,6 @@ export const useIsMobile = (): boolean => {
 
   return isMobile;
 };
+
+// Also export as default for backward compatibility
+export default useIsMobile;

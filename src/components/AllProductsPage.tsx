@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { useIsMobile } from '../hooks/use-mobile';
+import { useIsMobile } from '@/hooks/useMobile'; // Updated import path
 import { products } from '../utils/searchUtils';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';

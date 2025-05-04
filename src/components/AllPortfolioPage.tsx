@@ -1,9 +1,8 @@
-
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { useIsMobile } from '../hooks/use-mobile';
+import { useIsMobile } from '@/hooks/useMobile';
 import { allProducts, bordadosProducts, bordadosInfantisProducts } from '../utils/productUtils';
 import { bordadoVestuarioProducts } from '../utils/products/vestuarioProducts';
 import { bonesProducts } from '../utils/products/bonesProducts';
@@ -50,7 +49,7 @@ const AllPortfolioPage = () => {
         // Original portfolio items
         ...allProducts.filter(product => 
           // Exclui explicitamente o produto 204
-          Number(product.id) !== 204 && 
+          product.id !== 204 && 
           (
             // Include items explicitly marked as portfolio type
             (product.type === 'portfolio') ||

@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuContent, NavigationMenuTrigger, NavigationMenuLink } from "@/components/ui/navigation-menu";
-import { useIsMobile } from '../hooks/use-mobile';
+import { useIsMobile } from '@/hooks/useMobile'; // Updated import path
 import { cn } from '@/lib/utils';
+
 const MenubarNav = () => {
   const isMobile = useIsMobile();
   if (isMobile) return null;
