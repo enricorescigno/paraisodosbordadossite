@@ -8,3 +8,43 @@
 @import "./apple-ui.css";
 @import "./product-pages.css";
 @import "./typography.css";
+
+/* Custom global styles */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Shimmer loading effect for images */
+.shimmer {
+  background: linear-gradient(
+    to right,
+    rgba(240, 240, 240, 0.5) 0%,
+    rgba(240, 240, 240, 0.8) 50%,
+    rgba(240, 240, 240, 0.5) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Accessibility enhancements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

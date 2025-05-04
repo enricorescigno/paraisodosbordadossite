@@ -1,9 +1,11 @@
-import { useState, useEffect, useCallback, memo } from 'react';
+
+import { useState, useEffect, useCallback, memo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getImageLoading, fixImageExtension } from '@/utils/imageUtils';
+import { useInView } from 'react-intersection-observer';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -27,6 +29,30 @@ const ProductImageGallery = ({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
+  const galleryRef = useRef<HTMLDivElement>(null);
+  
+  // Touch handling for swipe gestures
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') {
+        nextImage();
+      } else if (e.key === 'ArrowLeft') {
+        prevImage();
+      }
+    };
+    
+    if (!isLightboxOpen) { // Only add listeners when not in lightbox mode
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeImageIndex, images.length, isLightboxOpen]);
 
   useEffect(() => {
     setImagesLoaded(Array(images.length).fill(false));
@@ -87,8 +113,35 @@ const ProductImageGallery = ({
     setActiveImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
+  // Touch handlers for swipe gestures
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    const diff = touchStartX.current - touchEndX.current;
+    const threshold = 50; // minimum distance to be considered as swipe
+    
+    if (diff > threshold) {
+      // Swiped left, go to next image
+      nextImage();
+    } else if (diff < -threshold) {
+      // Swiped right, go to previous image
+      prevImage();
+    }
+    
+    // Reset values
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
   const currentImage = images[activeImageIndex] ? fixImageExtension(images[activeImageIndex]) : '';
   
+  // Pre-load next and previous images using IntersectionObserver
   useEffect(() => {
     if (images.length <= 1) return;
     
@@ -114,8 +167,30 @@ const ProductImageGallery = ({
     };
   }, [activeImageIndex, images]);
 
+  // Use IntersectionObserver for lazy loading thumbnails
+  const { ref: galleryInViewRef } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+  
+  // Create a combined ref function
+  const setCombinedRef = (element: HTMLDivElement | null) => {
+    galleryRef.current = element;
+    if (typeof galleryInViewRef === 'function') {
+      galleryInViewRef(element);
+    }
+  };
+
+  // Generate dynamic alt text
+  const getImageAlt = (index: number) => {
+    return `${productName} - ${selectedColor} - ${index === 0 ? 'Principal' : `Detalhe ${index}`}`
+  };
+
   return (
-    <div className="bg-white rounded-2xl overflow-hidden">
+    <div 
+      className="bg-white rounded-2xl overflow-hidden"
+      ref={setCombinedRef}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={`${selectedColor}-${activeImageIndex}`} 
@@ -130,17 +205,20 @@ const ProductImageGallery = ({
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsZoomed(true)}
             onMouseLeave={() => setIsZoomed(false)}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
             {images.length > 0 && !imageError ? (
               <AspectRatio ratio={1/1}>
                 {!imagesLoaded[activeImageIndex] && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
-                    <Skeleton className="h-full w-full" />
+                  <div className="absolute inset-0 animate-pulse">
+                    <div className="h-full w-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
                   </div>
                 )}
                 <motion.img 
                   src={currentImage} 
-                  alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
+                  alt={getImageAlt(activeImageIndex)}
                   className={`w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4 transition-transform duration-200 ${
                     !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
                   }`}
@@ -156,6 +234,7 @@ const ProductImageGallery = ({
                   }}
                   fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                   decoding={activeImageIndex === 0 ? "sync" : "async"}
+                  aria-label={`Visualizar ${productName} na cor ${selectedColor}`}
                 />
               </AspectRatio>
             ) : (
@@ -199,33 +278,44 @@ const ProductImageGallery = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              {images.map((img, index) => (
-                <motion.button
-                  key={`thumb-${index}`}
-                  onClick={() => handleImageClick(index)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`relative h-16 w-16 rounded-md overflow-hidden border ${
-                    index === activeImageIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
-                  }`}
-                  aria-label={`Ver imagem ${index + 1}`}
-                >
-                  {!imagesLoaded[index] && (
-                    <Skeleton className="h-full w-full absolute inset-0" />
-                  )}
-                  <img 
-                    src={fixImageExtension(img)} 
-                    alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
-                    className={`h-full w-full object-cover object-center absolute inset-0 mix-blend-multiply p-1 ${
-                      !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
+              {images.map((img, index) => {
+                // Use IntersectionObserver for each thumbnail
+                const { ref, inView } = useInView({
+                  triggerOnce: true,
+                  rootMargin: '200px 0px',
+                });
+                
+                return (
+                  <motion.button
+                    ref={ref}
+                    key={`thumb-${index}`}
+                    onClick={() => handleImageClick(index)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`relative h-16 w-16 rounded-md overflow-hidden border ${
+                      index === activeImageIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
                     }`}
-                    loading="lazy"
-                    decoding="async"
-                    onLoad={() => handleImageLoaded(index)}
-                    onError={() => console.log("Thumbnail error loading:", img)}
-                  />
-                </motion.button>
-              ))}
+                    aria-label={`Ver imagem ${index + 1} de ${images.length}`}
+                  >
+                    {!imagesLoaded[index] && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
+                    )}
+                    {(inView || index < 5) && (
+                      <img 
+                        src={fixImageExtension(img)} 
+                        alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
+                        className={`h-full w-full object-cover object-center absolute inset-0 mix-blend-multiply p-1 ${
+                          !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
+                        }`}
+                        loading="lazy"
+                        decoding="async"
+                        onLoad={() => handleImageLoaded(index)}
+                        onError={() => console.log("Thumbnail error loading:", img)}
+                      />
+                    )}
+                  </motion.button>
+                );
+              })}
             </motion.div>
           )}
         </motion.div>
@@ -288,6 +378,18 @@ const ProductImageGallery = ({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Add shimmer animation style */}
+      <style jsx global>{`
+        .background-animate {
+          background-size: 200% 200%;
+          animation: shimmer 1.5s linear infinite;
+        }
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}</style>
     </div>
   );
 };
