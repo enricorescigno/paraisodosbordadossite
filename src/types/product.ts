@@ -1,33 +1,75 @@
 
-export interface Product {
-  id: number | string;
+// Define color options
+export type ProductColor = {
   name: string;
-  type: string;
-  category: string;
-  imageUrl: string;
-  description?: string;
+  value: string;
+  image?: string;
+};
+
+// Define size options
+export type ProductSize = {
+  name: string;
+  value: string;
+  available: boolean;
+};
+
+// Define variant options
+export type ProductVariant = {
+  id: string;
+  name?: string;
+  sku?: string;
+  colors?: ProductColor[];
+  sizes?: ProductSize[];
   price?: string;
-  originalPrice?: string;
-  discount?: string;
-  colors?: string[];
-  sizes?: string[];
-  rating?: number;
-  isNew?: boolean;
-  isAvailable?: boolean;
-  isCustomizable?: boolean;
-  stockQuantity?: number;
-  minPurchaseQuantity?: number;
-  tags?: string[];
-  featured?: boolean;
-  dimensions?: {
-    width: number;
-    height: number;
-    depth: number;
-    weight: number;
-  };
-  createdAt?: string;
+  comparePrice?: string;
+  inventory?: number;
+  images?: string[];
+};
+
+// Define full product type
+export interface Product {
+  id: string;
+  name: string;
+  type: 'product' | 'portfolio' | 'service';
+  category: string;
+  subcategory?: string;
+  price?: string;
+  comparePrice?: string;
+  description: string;
+  shortDescription?: string;
+  imageUrl: string;
+  images?: string[];
   features?: string[];
+  colors?: ProductColor[];
+  sizes?: ProductSize[];
+  variants?: ProductVariant[];
+  specifications?: Record<string, string>;
+  reviews?: ProductReview[];
+  rating?: number;
+  ratingCount?: number;
+  inventory?: number;
+  isNew?: boolean;
+  isFeatured?: boolean;
+  isOnSale?: boolean;
+  relatedProducts?: string[];
   keywords?: string[];
-  slug?: string;
-  images?: string[] | Record<string, string[]>; // Pode ser um array ou um objeto com chaves de cores
+  materials?: string[];
+  dimensions?: string;
+  weight?: string;
+  sku?: string;
+  barcode?: string;
+  tags?: string[];
+}
+
+export interface ProductReview {
+  id: string;
+  name: string;
+  email?: string;
+  date: string;
+  rating: number;
+  comment: string;
+  images?: string[];
+  verified?: boolean;
+  likes?: number;
+  productId: string;
 }

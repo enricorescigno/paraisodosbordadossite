@@ -1,5 +1,5 @@
-
 import type { Config } from "tailwindcss";
+import typography from "@tailwindcss/typography";
 
 export default {
 	darkMode: ["class"],
@@ -23,26 +23,57 @@ export default {
 			}
 		},
 		extend: {
+			spacing: {
+				'72': '18rem',
+				'80': '20rem',
+				'96': '24rem',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
+				primary: {
+					DEFAULT: 'hsl(var(--primary))',
+					foreground: 'hsl(var(--primary-foreground))',
+					50: '#f0f9ff',
+					100: '#e0f2fe',
+					200: '#bae6fd',
+					300: '#7dd3fc',
+					400: '#38bdf8',
+					500: '#0ea5e9',
+					600: '#0284c7',
+					700: '#0369a1',
+					800: '#075985',
+					900: '#0c4a6e',
+				},
+				secondary: {
+					DEFAULT: 'hsl(var(--secondary))',
+					foreground: 'hsl(var(--secondary-foreground))',
+					50: '#f5f5f5',
+					100: '#e5e5e5',
+					200: '#cccccc',
+					300: '#b3b3b3',
+					400: '#9a9a9a',
+					500: '#808080',
+					600: '#666666',
+					700: '#4d4d4d',
+					800: '#333333',
+					900: '#1a1a1a',
+				},
+				text: {
+					DEFAULT: '#212121',
+					muted: '#6b7280',
+					light: '#9ca3af',
+					inverted: '#ffffff',
+				},
 				brand: {
 					red: '#E30613', // Mantendo a cor vermelha principal da marca
 					green: '#006400',
 					white: '#FFFFFF',
 					light: '#F8F8F8',
 					dark: '#212121'
-				},
-				primary: {
-					DEFAULT: 'hsl(var(--primary))',
-					foreground: 'hsl(var(--primary-foreground))'
-				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
 				},
 				destructive: {
 					DEFAULT: 'hsl(var(--destructive))',
@@ -161,8 +192,86 @@ export default {
 				normal: '400',
 				medium: '500',
 				semibold: '600',
+			},
+			typography: {
+				DEFAULT: {
+					css: {
+						maxWidth: '65ch',
+						color: 'var(--tw-prose-body)',
+						'[class~="lead"]': {
+							color: 'var(--tw-prose-lead)',
+						},
+						a: {
+							color: 'var(--tw-prose-links)',
+							textDecoration: 'underline',
+							fontWeight: '500',
+						},
+						strong: {
+							color: 'var(--tw-prose-bold)',
+							fontWeight: '600',
+						},
+						'ol[type="A"]': {
+							listStyleType: 'upper-alpha',
+						},
+						'ol[type="a"]': {
+							listStyleType: 'lower-alpha',
+						},
+						'ol[type="A" s]': {
+							listStyleType: 'upper-alpha',
+						},
+						'ol[type="a" s]': {
+							listStyleType: 'lower-alpha',
+						},
+						'ol[type="I"]': {
+							listStyleType: 'upper-roman',
+						},
+						'ol[type="i"]': {
+							listStyleType: 'lower-roman',
+						},
+						'ol[type="I" s]': {
+							listStyleType: 'upper-roman',
+						},
+						'ol[type="i" s]': {
+							listStyleType: 'lower-roman',
+						},
+						'ol[type="1"]': {
+							listStyleType: 'decimal',
+						},
+						h1: {
+							color: 'var(--tw-prose-headings)',
+							fontWeight: '800',
+							fontSize: '2.25em',
+							marginTop: '0',
+							marginBottom: '0.8888889em',
+							lineHeight: '1.1111111',
+						},
+						h2: {
+							color: 'var(--tw-prose-headings)',
+							fontWeight: '700',
+							fontSize: '1.5em',
+							marginTop: '2em',
+							marginBottom: '1em',
+							lineHeight: '1.3333333',
+						},
+						h3: {
+							color: 'var(--tw-prose-headings)',
+							fontWeight: '600',
+							fontSize: '1.25em',
+							marginTop: '1.6em',
+							marginBottom: '0.6em',
+							lineHeight: '1.6',
+						},
+						h4: {
+							color: 'var(--tw-prose-headings)',
+							fontWeight: '600',
+							marginTop: '1.5em',
+							marginBottom: '0.5em',
+							lineHeight: '1.5',
+						},
+					}
+				}
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"), typography],
 } satisfies Config;
