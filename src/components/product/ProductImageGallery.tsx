@@ -379,8 +379,9 @@ const ProductImageGallery = ({
         )}
       </AnimatePresence>
 
-      {/* Add shimmer animation style */}
-      <style jsx global>{`
+      {/* Use a standard style element without jsx/global props */}
+      <style>
+        {`
         .background-animate {
           background-size: 200% 200%;
           animation: shimmer 1.5s linear infinite;
@@ -389,9 +390,11 @@ const ProductImageGallery = ({
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
         }
-      `}</style>
+        `}
+      </style>
     </div>
   );
 };
 
 export default memo(ProductImageGallery);
+
