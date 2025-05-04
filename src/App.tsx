@@ -20,10 +20,6 @@ import TributacoesPage from '@/pages/TributacoesPage';
 import PrazosPagamentoPage from '@/pages/PrazosPagamentoPage';
 
 import './App.css';
-import '@/styles/apple-ui.css';
-import '@/styles/typography.css';
-import '@/styles/product-pages.css';
-import '@/styles/mobile-optimizations.css';
 
 const App = () => {
   return (
