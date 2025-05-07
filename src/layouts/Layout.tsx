@@ -10,22 +10,20 @@ import WhatsAppSupport from '@/components/WhatsAppSupport';
 
 const Layout = () => {
   return (
-    <React.StrictMode>
-      <TooltipProvider delayDuration={0}>
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
-          
-          <main className="flex-grow">
-            <Outlet />
-          </main>
-          
-          <Footer />
-          <ScrollToTop />
-          <WhatsAppSupport />
-          <Toaster />
-        </div>
-      </TooltipProvider>
-    </React.StrictMode>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      
+      <main className="flex-grow">
+        <TooltipProvider>
+          <Outlet />
+        </TooltipProvider>
+      </main>
+      
+      <Footer />
+      <ScrollToTop />
+      <WhatsAppSupport />
+      <Toaster />
+    </div>
   );
 };
 
