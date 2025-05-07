@@ -26,29 +26,31 @@ import './App.css';
 const App = () => {
   return (
     <Router>
-      <TooltipProvider>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Index />} />
-            <Route path="produtos" element={<AllProductsPage />} />
-            <Route path="produto/:productId" element={<ProductDetailPage />} />
-            <Route path="categoria/:category" element={<ProductPage />} />
-            <Route path="portfolio" element={<AllPortfolioPage />} />
-            <Route path="portfolio/:category" element={<PortfolioPage />} />
-            <Route path="sobre-nos" element={<AboutUs />} />
-            <Route path="nossos-parceiros" element={<OurPartners />} />
-            <Route path="politica-de-privacidade" element={<PrivacyPolicy />} />
-            <Route path="estoque" element={<EstoquePage />} />
-            <Route path="vendas" element={<VendasPage />} />
-            <Route path="pedidos-compra-status" element={<PedidosCompraStatusPage />} />
-            <Route path="pedidos-compra-produtos" element={<PedidosCompraProdutosPage />} />
-            <Route path="pedidos-compra-distribuicao" element={<PedidosCompraDistribuicaoPage />} />
-            <Route path="tributacoes" element={<TributacoesPage />} />
-            <Route path="prazos-pagamento" element={<PrazosPagamentoPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </TooltipProvider>
+      <React.StrictMode>
+        <TooltipProvider>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Index />} />
+              <Route path="produtos" element={<AllProductsPage />} />
+              <Route path="produto/:productId" element={<ProductDetailPage />} />
+              <Route path="categoria/:category" element={<ProductPage />} />
+              <Route path="portfolio" element={<AllPortfolioPage />} />
+              <Route path="portfolio/:category" element={<PortfolioPage />} />
+              <Route path="sobre-nos" element={<AboutUs />} />
+              <Route path="nossos-parceiros" element={<OurPartners />} />
+              <Route path="politica-de-privacidade" element={<PrivacyPolicy />} />
+              <Route path="estoque" element={<EstoquePage />} />
+              <Route path="vendas" element={<VendasPage />} />
+              <Route path="pedidos-compra-status" element={<PedidosCompraStatusPage />} />
+              <Route path="pedidos-compra-produtos" element={<PedidosCompraProdutosPage />} />
+              <Route path="pedidos-compra-distribuicao" element={<PedidosCompraDistribuicaoPage />} />
+              <Route path="tributacoes" element={<TributacoesPage />} />
+              <Route path="prazos-pagamento" element={<PrazosPagamentoPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </TooltipProvider>
+      </React.StrictMode>
     </Router>
   );
 };
