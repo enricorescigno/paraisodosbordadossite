@@ -263,6 +263,7 @@ const ProductImageGallery = ({
                   }}
                   decoding={safeActiveIndex === 0 ? "sync" : "async"}
                   aria-label={`Visualizar ${productName || 'produto'} na cor ${selectedColor || 'padrão'}`}
+                  fetchpriority={safeActiveIndex === 0 ? "high" : "low"}
                 />
               </AspectRatio>
             ) : (
