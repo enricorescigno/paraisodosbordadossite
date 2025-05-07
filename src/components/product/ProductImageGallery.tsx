@@ -250,17 +250,20 @@ const ProductImageGallery = ({
                     !imagesLoaded[safeActiveIndex] ? 'opacity-0' : 'opacity-100'
                   }`}
                   style={imageStyle}
-                  loading={getImageLoading ? getImageLoading(safeActiveIndex === 0) : "lazy"}
+                  loading={safeActiveIndex === 0 ? "eager" : "lazy"}
+                  decoding={safeActiveIndex === 0 ? "sync" : "async"}
+                  // Use lowercase fetchpriority
+                  fetchpriority={safeActiveIndex === 0 ? "high" : "low"}
                   onLoad={() => handleImageLoaded(safeActiveIndex)}
                   onError={(e) => {
                     console.log("Image error for:", currentImage);
                     setImageError(true);
-                    if (e.currentTarget) {
-                      e.currentTarget.src = fallbackImage;
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (target) {
+                      target.src = fallbackImage;
                       handleImageLoaded(safeActiveIndex);
                     }
                   }}
-                  decoding={safeActiveIndex === 0 ? "sync" : "async"}
                   aria-label={`Visualizar ${productName || 'produto'} na cor ${selectedColor || 'padrão'}`}
                 />
               </AspectRatio>
@@ -270,6 +273,9 @@ const ProductImageGallery = ({
                   src={fallbackImage}
                   alt={productName || "Produto"}
                   className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4"
+                  loading="eager"
+                  decoding="sync"
+                  fetchpriority="high"
                 />
               </AspectRatio>
             )}
@@ -365,8 +371,9 @@ const ProductImageGallery = ({
                 alt={`${productName || 'Produto'} - Vista ampliada`}
                 className="max-w-full max-h-[90vh] object-contain"
                 onError={(e) => {
-                  if (e.currentTarget) {
-                    e.currentTarget.src = fallbackImage;
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (target) {
+                    target.src = fallbackImage;
                   }
                 }}
               />

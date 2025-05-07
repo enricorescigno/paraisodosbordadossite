@@ -90,6 +90,8 @@ const ProductCard = ({
             className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
             loading="lazy"
             decoding="async"
+            // Using lowercase fetchpriority
+            fetchpriority={optimizedImageUrl === productImages?.[0] ? "high" : "auto"}
             whileHover={{
               scale: 1.05
             }}
@@ -98,8 +100,10 @@ const ProductCard = ({
             }}
             onError={e => {
               const target = e.target as HTMLImageElement;
-              target.onerror = null;
-              target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
+              if (target) {
+                target.onerror = null;
+                target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
+              }
             }}
           />
         </AspectRatio>
