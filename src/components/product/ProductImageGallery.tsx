@@ -22,10 +22,10 @@ const ProductImageGallery = ({
   placeholder,
   category
 }: ProductImageGalleryProps) => {
-  // Verificar e validar o array de imagens
-  const validImages = images && Array.isArray(images) ? images : [];
+  // Safe validation for images array
+  const validImages = Array.isArray(images) && images.length > 0 ? images.filter(img => img) : [];
   
-  // Log de debug para verificar as imagens recebidas
+  // Debug logging
   console.log("ProductImageGallery - Received images:", images);
   console.log("ProductImageGallery - Valid images:", validImages);
   console.log("ProductImageGallery - Is images array?", Array.isArray(images));
@@ -38,21 +38,42 @@ const ProductImageGallery = ({
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
   
-  // Gerar um fallback se não houver imagens válidas
+  // Generate fallback if there are no valid images
   const fallbackImage = placeholder(category);
   const displayImages = validImages.length > 0 ? validImages : [fallbackImage];
   
-  // Use InView hook for the gallery container
+  // Use InView hook with proper initialization
   const { ref: inViewRef, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
+  const galleryRef = useRef<HTMLDivElement>(null);
+  
   // Touch handling for swipe gestures
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
-  // Keyboard navigation
+  // Reset loaded state when images change
+  useEffect(() => {
+    setImagesLoaded(Array(displayImages.length).fill(false));
+    setImageError(false);
+    
+    const timer = setTimeout(() => {
+      setThumbnailsVisible(true);
+    }, 300);
+    
+    return () => clearTimeout(timer);
+  }, [displayImages.length]);
+
+  // Reset active index when images or color changes
+  useEffect(() => {
+    setActiveImageIndex(0);
+    setImageError(false);
+    console.log("ProductImageGallery - Resetting active image index due to color/images change");
+  }, [selectedColor, images]);
+
+  // Key navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') {
@@ -70,23 +91,6 @@ const ProductImageGallery = ({
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [activeImageIndex, displayImages.length, isLightboxOpen]);
-
-  useEffect(() => {
-    setImagesLoaded(Array(displayImages.length).fill(false));
-    setImageError(false);
-    
-    const timer = setTimeout(() => {
-      setThumbnailsVisible(true);
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, [displayImages.length]);
-
-  useEffect(() => {
-    setActiveImageIndex(0);
-    setImageError(false);
-    console.log("ProductImageGallery - Resetting active image index due to color/images change");
-  }, [selectedColor, images]);
 
   const handleImageLoaded = useCallback((index: number) => {
     setImagesLoaded(prev => {
@@ -158,18 +162,21 @@ const ProductImageGallery = ({
     touchEndX.current = 0;
   };
 
-  // Garantir que temos uma imagem válida
-  const currentImage = displayImages[activeImageIndex] ? fixImageExtension(displayImages[activeImageIndex]) : fallbackImage;
+  // Ensure we have a valid image
+  const safeActiveIndex = activeImageIndex >= 0 && activeImageIndex < displayImages.length 
+    ? activeImageIndex 
+    : 0;
+  const currentImage = displayImages[safeActiveIndex] ? fixImageExtension(displayImages[safeActiveIndex]) : fallbackImage;
   
-  // Log para debug da imagem atual
+  // Debug log for current image
   console.log("ProductImageGallery - Current image:", currentImage);
   
-  // Pre-load next and previous images using IntersectionObserver
+  // Pre-load next and previous images
   useEffect(() => {
     if (displayImages.length <= 1) return;
     
-    const nextIdx = activeImageIndex === displayImages.length - 1 ? 0 : activeImageIndex + 1;
-    const prevIdx = activeImageIndex === 0 ? displayImages.length - 1 : activeImageIndex - 1;
+    const nextIdx = safeActiveIndex === displayImages.length - 1 ? 0 : safeActiveIndex + 1;
+    const prevIdx = safeActiveIndex === 0 ? displayImages.length - 1 : safeActiveIndex - 1;
     
     const preloadImages = [nextIdx, prevIdx].map(idx => {
       if (displayImages[idx]) {
@@ -188,21 +195,37 @@ const ProductImageGallery = ({
         }
       });
     };
-  }, [activeImageIndex, displayImages]);
+  }, [safeActiveIndex, displayImages]);
 
   // Generate dynamic alt text
   const getImageAlt = (index: number) => {
     return `${productName} - ${selectedColor} - ${index === 0 ? 'Principal' : `Detalhe ${index}`}`
   };
 
+  // Combine refs
+  const setRefs = useCallback(
+    (node: HTMLDivElement | null) => {
+      // Save ref locally
+      if (galleryRef) {
+        galleryRef.current = node;
+      }
+      
+      // Forward to inView
+      if (typeof inViewRef === 'function') {
+        inViewRef(node);
+      }
+    },
+    [inViewRef]
+  );
+
   return (
     <div 
       className="bg-white rounded-2xl overflow-hidden"
-      ref={inViewRef}
+      ref={setRefs}
     >
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${selectedColor}-${activeImageIndex}`} 
+          key={`${selectedColor}-${safeActiveIndex}`} 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -220,29 +243,29 @@ const ProductImageGallery = ({
           >
             {displayImages.length > 0 && !imageError ? (
               <AspectRatio ratio={1/1}>
-                {!imagesLoaded[activeImageIndex] && (
+                {!imagesLoaded[safeActiveIndex] && (
                   <div className="absolute inset-0 animate-pulse">
                     <div className="h-full w-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
                   </div>
                 )}
                 <motion.img 
                   src={currentImage} 
-                  alt={getImageAlt(activeImageIndex)}
+                  alt={getImageAlt(safeActiveIndex)}
                   className={`w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4 transition-transform duration-200 ${
-                    !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
+                    !imagesLoaded[safeActiveIndex] ? 'opacity-0' : 'opacity-100'
                   }`}
                   style={imageStyle}
-                  loading={getImageLoading(activeImageIndex === 0 ? true : false)}
-                  onLoad={() => handleImageLoaded(activeImageIndex)}
+                  loading={getImageLoading(safeActiveIndex === 0 ? true : false)}
+                  onLoad={() => handleImageLoaded(safeActiveIndex)}
                   onError={(e) => {
                     console.log("Image error for:", currentImage);
                     setImageError(true);
                     if (e.currentTarget) {
                       e.currentTarget.src = fallbackImage;
-                      handleImageLoaded(activeImageIndex); // Marcar como carregado mesmo com erro
+                      handleImageLoaded(safeActiveIndex);
                     }
                   }}
-                  decoding={activeImageIndex === 0 ? "sync" : "async"}
+                  decoding={safeActiveIndex === 0 ? "sync" : "async"}
                   aria-label={`Visualizar ${productName} na cor ${selectedColor}`}
                 />
               </AspectRatio>
@@ -294,7 +317,7 @@ const ProductImageGallery = ({
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={`relative h-16 w-16 rounded-md overflow-hidden border ${
-                    index === activeImageIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
+                    index === safeActiveIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
                   }`}
                   aria-label={`Ver imagem ${index + 1} de ${displayImages.length}`}
                 >

@@ -1,9 +1,10 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Product, ProductColor, ProductSize } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
-import useProductImageManager from '@/hooks/useProductImageManager'; // Use default import 
+import useProductImageManager from '@/hooks/useProductImageManager';
 import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
 
 export const useProductDetail = () => {
@@ -27,7 +28,7 @@ export const useProductDetail = () => {
           
           if (productId === "204") {
             foundProduct = {
-              id: "204", // Changed to string to match type
+              id: "204",
               name: "Jogo Americano Requinte Ondulado",
               type: "product",
               category: "Mesa e Cozinha",
@@ -92,17 +93,23 @@ export const useProductDetail = () => {
             if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
             if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
             
-            // Garantir que images sempre seja um array
+            // Ensure images is always an array
             if (!foundProduct.images) {
               foundProduct.images = [];
             }
             
+            // Ensure imageUrl is added to images if not already present
+            if (foundProduct.imageUrl && !foundProduct.images.includes(foundProduct.imageUrl)) {
+              foundProduct.images = [foundProduct.imageUrl, ...foundProduct.images];
+            }
+            
             setProduct(foundProduct);
             
-            // Log de debug para verificar as imagens
+            // Debug logs to verify images
             console.log("useProductDetail - Final product images array:", foundProduct.images);
             console.log("useProductDetail - Is images an array?", Array.isArray(foundProduct.images));
             
+            // Cache and preload images
             if (foundProduct.images && Array.isArray(foundProduct.images)) {
               cacheImagesInBrowser(foundProduct.images);
               preloadImages(foundProduct.images.slice(0, 3));
@@ -126,11 +133,16 @@ export const useProductDetail = () => {
     return () => clearTimeout(timer);
   }, [productId]);
 
-  // Use o hook com informações adicionais para melhor fallback
+  // Get product images in a safe way for the hook
+  const safeImages = product?.images && Array.isArray(product.images) ? product.images : [];
+  const safeImageUrl = product?.imageUrl || '';
+  const safeCategory = product?.category || '';
+  
+  // Use the hook with additional information for better fallback
   const productImageManager = useProductImageManager({
-    images: product?.images || [],
-    mainImage: product?.imageUrl,
-    category: product?.category || ''
+    images: safeImages,
+    mainImage: safeImageUrl,
+    category: safeCategory
   });
 
   // Extract the needed properties
@@ -197,7 +209,7 @@ export const useProductDetail = () => {
     return '/produtos';
   };
 
-  // Log adicional quando as imagens mudam
+  // Log additional debug info when images change
   useEffect(() => {
     if (product) {
       console.log("useProductDetail - Current images being passed to gallery:", currentImages);

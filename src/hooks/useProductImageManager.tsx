@@ -23,20 +23,26 @@ export const useProductImageManager = ({
   mainImage,
   category = ''
 }: UseProductImageManagerParams): UseProductImageManagerReturn => {
-  // Validar as imagens recebidas
+  // Validate received images
   const validImages = useMemo(() => {
-    // Verifica se images é um array válido e não vazio
+    // Check if images is a valid and non-empty array
     const isValidImagesArray = Array.isArray(images) && images.length > 0;
     console.log("useProductImageManager - Received images:", images);
     console.log("useProductImageManager - Images validity:", isValidImagesArray);
-    return isValidImagesArray ? images : [];
+    
+    // Make sure we never return undefined or null values in the array
+    if (isValidImagesArray) {
+      return images.filter(img => img != null && img !== '');
+    }
+    return [];
   }, [images]);
   
   // Combine mainImage and other images into a single array
   const allImages = useMemo(() => {
+    // Ensure we have valid images before proceeding
     if (!mainImage && validImages.length === 0) {
       console.log("No valid images or mainImage, using fallback placeholders");
-      // Se não temos imagens válidas, usamos placeholders baseados na categoria
+      // If we don't have valid images, use placeholders based on category
       return getDefaultPlaceholders(category);
     }
     
@@ -55,15 +61,20 @@ export const useProductImageManager = ({
   
   // Reset image index when images change
   useEffect(() => {
-    setImageIndex(0);
+    if (allImages && allImages.length > 0) {
+      setImageIndex(0);
+    }
   }, [allImages]);
   
-  // Get the current image based on the index
-  const currentImage = allImages[imageIndex] || getDefaultPlaceholder(category);
+  // Ensure imageIndex is valid before accessing allImages
+  const safeImageIndex = imageIndex >= 0 && imageIndex < allImages.length ? imageIndex : 0;
   
-  // Function to change the current image
+  // Get the current image based on the index
+  const currentImage = allImages[safeImageIndex] || getDefaultPlaceholder(category);
+  
+  // Function to safely change the current image
   const changeImage = (index: number) => {
-    if (index >= 0 && index < allImages.length) {
+    if (allImages && index >= 0 && index < allImages.length) {
       setImageIndex(index);
     }
   };
@@ -73,7 +84,7 @@ export const useProductImageManager = ({
     return getDefaultPlaceholder(name);
   };
   
-  // Log para debug
+  // Debug log
   useEffect(() => {
     console.log("useProductImageManager - Final images array:", allImages);
   }, [allImages]);
@@ -81,10 +92,10 @@ export const useProductImageManager = ({
   return {
     currentImage,
     changeImage,
-    imageIndex,
-    allImages,
+    imageIndex: safeImageIndex,
+    allImages: allImages || [],
     currentImages: allImages,
-    activeImageIndex: imageIndex,
+    activeImageIndex: safeImageIndex,
     setActiveImageIndex: changeImage,
     getPlaceholder
   };
@@ -101,16 +112,16 @@ const getDefaultPlaceholder = (category: string): string => {
     return "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop";
   } else if (lowerName.includes('infantil') || lowerName.includes('fralda') || lowerName.includes('macacão') || lowerName.includes('manta')) {
     return "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop";
-  } else if (lowerName.includes('bordado')) {
+  } else if (lowerName.includes('bordado') || lowerName.includes('bonés') || lowerName.includes('bones')) {
     return "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=500&auto=format&fit=crop";
   }
   return "https://via.placeholder.com/500x500?text=Sem+Imagem";
 };
 
-// Gera um array de placeholders default baseado na categoria
+// Generate a default placeholders array based on category
 const getDefaultPlaceholders = (category: string): string[] => {
   const mainPlaceholder = getDefaultPlaceholder(category);
-  // Retorna um array com 2 imagens placeholder para garantir uma galeria mínima
+  // Return an array with a placeholder to ensure a minimum gallery
   return [mainPlaceholder];
 };
 
