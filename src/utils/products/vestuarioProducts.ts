@@ -1,3 +1,4 @@
+
 import { Product } from '../types/product';
 import { toAbsoluteURL } from '../imageUtils';
 
@@ -55,7 +56,7 @@ export const vestuarioProducts: Product[] = [
     images: [
       toAbsoluteURL("/lovable-uploads/7d78953f-1496-4f4c-ba23-5acf30512358.png"),
       toAbsoluteURL("/lovable-uploads/0220db3b-aa3e-48cd-9637-a4a532a17de8.png"),
-      toAbsoluteURL("/lovable-uploads/8b1f7b0c-0709-4fd7-8b32-400b0aa610de.png"
+      toAbsoluteURL("/lovable-uploads/8b1f7b0c-0709-4fd7-8b32-400b0aa610de.png")
     ],
     keywords: ["camisa", "polo", "masculina"]
   },
@@ -77,7 +78,7 @@ export const vestuarioProducts: Product[] = [
     ],
     images: [
       toAbsoluteURL("/lovable-uploads/deffe1d3-4ea9-4bac-af0b-968592271c09.png"),
-      toAbsoluteURL("/lovable-uploads/8ef339fb-f352-446f-8084-fc4f47afb4cd.png"
+      toAbsoluteURL("/lovable-uploads/8ef339fb-f352-446f-8084-fc4f47afb4cd.png")
     ],
     keywords: ["pantufa", "cotele", "calçado", "conforto"]
   },
@@ -100,7 +101,7 @@ export const vestuarioProducts: Product[] = [
     ],
     images: [
       toAbsoluteURL("/lovable-uploads/c7a9518a-56f6-41c6-9797-b1f9e0fb7c34.png"),
-      toAbsoluteURL("/lovable-uploads/b7fa37c5-9cee-4599-abbc-d07300366e9e.png"
+      toAbsoluteURL("/lovable-uploads/b7fa37c5-9cee-4599-abbc-d07300366e9e.png")
     ],
     keywords: ["pantufa", "popom", "pompom", "calçado", "conforto"]
   },
@@ -157,7 +158,7 @@ export const vestuarioProducts: Product[] = [
     ],
     images: [
       toAbsoluteURL("/lovable-uploads/ae9237f1-d928-455a-aef3-cd6ec98152b5.png"),
-      toAbsoluteURL("/lovable-uploads/9a19c748-b91d-49a9-afae-c0661b497dfa.png"
+      toAbsoluteURL("/lovable-uploads/9a19c748-b91d-49a9-afae-c0661b497dfa.png")
     ],
     keywords: ["camisa", "básica", "infantil", "criança"]
   },
@@ -252,7 +253,7 @@ export const bordadoVestuarioProducts: Product[] = [
     featured: false,
     images: [
       toAbsoluteURL("/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png"),
-      toAbsoluteURL("/lovable-uploads/652a8949-cb0d-4fd6-8ac2-d73fdd4cd81e.png"]
+      toAbsoluteURL("/lovable-uploads/652a8949-cb0d-4fd6-8ac2-d73fdd4cd81e.png")
     ],
     dimensions: {
       width: 0,
@@ -281,7 +282,7 @@ export const bordadoVestuarioProducts: Product[] = [
     featured: true,
     images: [
       toAbsoluteURL("/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png"),
-      toAbsoluteURL("/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png"]
+      toAbsoluteURL("/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png")
     ],
     dimensions: {
       width: 0,
@@ -335,10 +336,10 @@ export const bordadoVestuarioProducts: Product[] = [
     tags: ["fardamento", "bordado", "futebol", "time", "esporte", "psg", "marseille", "montpellier"],
     featured: true,
     images: [
-      toAbsoluteURL("/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png"), // Overview de todos os times
-      toAbsoluteURL("/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png"), // Montpellier detalhe
-      toAbsoluteURL("/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png"), // PSG detalhe
-      toAbsoluteURL("/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"  // Marseille detalhe
+      toAbsoluteURL("/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png"), 
+      toAbsoluteURL("/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png"), 
+      toAbsoluteURL("/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png"), 
+      toAbsoluteURL("/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png")
     ],
     dimensions: {
       width: 0,
@@ -367,7 +368,7 @@ export const bordadoVestuarioProducts: Product[] = [
     featured: true,
     images: [
       toAbsoluteURL("/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png"),
-      toAbsoluteURL("/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png"]
+      toAbsoluteURL("/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png")
     ],
     dimensions: {
       width: 0,
@@ -424,7 +425,7 @@ export const bordadoVestuarioProducts: Product[] = [
       toAbsoluteURL("/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png"),
       toAbsoluteURL("/lovable-uploads/d5b5532a-f97b-4e54-b83a-e67256cb21dc.png"),
       toAbsoluteURL("/lovable-uploads/4a3d432f-60d7-4543-b6f8-bc13a8a3c870.png"),
-      toAbsoluteURL("/lovable-uploads/135d959f-0f03-4169-a803-d49bc2b1ea43.png"
+      toAbsoluteURL("/lovable-uploads/135d959f-0f03-4169-a803-d49bc2b1ea43.png")
     ],
     dimensions: {
       width: 0,
