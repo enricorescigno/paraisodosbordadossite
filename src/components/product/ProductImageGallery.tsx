@@ -182,7 +182,7 @@ const ProductImageGallery = ({
   const safeActiveIndex = activeImageIndex >= 0 && activeImageIndex < displayImages.length 
     ? activeImageIndex 
     : 0;
-  // CHANGED: No more using fixImageExtension here
+    
   const currentImage = displayImages[safeActiveIndex] || fallbackImage;
   
   // Debug log for current image
@@ -198,7 +198,7 @@ const ProductImageGallery = ({
     const preloadImages = [nextIdx, prevIdx].map(idx => {
       if (displayImages[idx]) {
         const img = new Image();
-        img.src = fixImageExtension(displayImages[idx]);
+        img.src = displayImages[idx];
         return img;
       }
       return null;
@@ -266,7 +266,6 @@ const ProductImageGallery = ({
                   </div>
                 )}
                 <motion.img 
-                  // CHANGED: Updated source attribute to use displayImages directly
                   src={displayImages[safeActiveIndex]} 
                   alt={getImageAlt(safeActiveIndex)}
                   className={`w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4 transition-transform duration-200 ${
@@ -343,7 +342,7 @@ const ProductImageGallery = ({
                     <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
                   )}
                   <img 
-                    src={fixImageExtension(img)} 
+                    src={img}
                     alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
                     className={`h-full w-full object-cover object-center absolute inset-0 mix-blend-multiply p-1 ${
                       !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
@@ -384,7 +383,6 @@ const ProductImageGallery = ({
               onClick={(e) => e.stopPropagation()}
             >
               <img 
-                // CHANGED: Using displayImages directly for the lightbox too
                 src={displayImages[safeActiveIndex]}
                 alt={`${productName} - Vista ampliada`}
                 className="max-w-full max-h-[90vh] object-contain"
