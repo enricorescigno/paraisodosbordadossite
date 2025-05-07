@@ -23,7 +23,7 @@ export const toAbsoluteURL = (path: string): string => {
  * @param isImportant Whether the image is important (above the fold)
  * @returns Loading attribute for image tag
  */
-export const getImageLoading = (isImportant: boolean): "eager" | "lazy" => {
+export const getImageLoading = (isImportant: boolean = false): "eager" | "lazy" => {
   return isImportant ? "eager" : "lazy";
 };
 
@@ -69,9 +69,9 @@ export const getImagePlaceholder = (category: string = ''): string => {
  * Caches images in browser for faster loading
  * @param images Array of image URLs to cache
  */
-export const cacheImagesInBrowser = (images: string[]): void => {
+export const cacheImagesInBrowser = (images: string[] | undefined | null): void => {
   try {
-    if (!Array.isArray(images)) return;
+    if (!images || !Array.isArray(images)) return;
     
     images.forEach(src => {
       if (typeof src !== 'string') return;
@@ -88,9 +88,9 @@ export const cacheImagesInBrowser = (images: string[]): void => {
  * Preloads important images
  * @param images Array of image URLs to preload
  */
-export const preloadImages = (images: string[]): void => {
+export const preloadImages = (images: string[] | undefined | null): void => {
   try {
-    if (!Array.isArray(images) || images.length === 0) return;
+    if (!images || !Array.isArray(images) || images.length === 0) return;
     
     images.forEach(src => {
       if (typeof src !== 'string') return;

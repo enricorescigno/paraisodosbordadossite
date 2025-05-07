@@ -8,7 +8,7 @@ import Partners from "../components/Partners";
 import Testimonials from "../components/Testimonials";
 import Newsletter from "../components/Newsletter";
 
-const Index = () => {
+const Index: React.FC = () => {
   return (
     <motion.div 
       className="min-h-screen bg-white"
