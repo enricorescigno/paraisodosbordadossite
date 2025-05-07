@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback, memo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
@@ -181,7 +182,8 @@ const ProductImageGallery = ({
   const safeActiveIndex = activeImageIndex >= 0 && activeImageIndex < displayImages.length 
     ? activeImageIndex 
     : 0;
-  const currentImage = displayImages[safeActiveIndex] ? fixImageExtension(displayImages[safeActiveIndex]) : fallbackImage;
+  // CHANGED: No more using fixImageExtension here
+  const currentImage = displayImages[safeActiveIndex] || fallbackImage;
   
   // Debug log for current image
   console.log("ProductImageGallery - Current image:", currentImage);
@@ -264,7 +266,8 @@ const ProductImageGallery = ({
                   </div>
                 )}
                 <motion.img 
-                  src={currentImage} 
+                  // CHANGED: Updated source attribute to use displayImages directly
+                  src={displayImages[safeActiveIndex]} 
                   alt={getImageAlt(safeActiveIndex)}
                   className={`w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4 transition-transform duration-200 ${
                     !imagesLoaded[safeActiveIndex] ? 'opacity-0' : 'opacity-100'
@@ -381,7 +384,8 @@ const ProductImageGallery = ({
               onClick={(e) => e.stopPropagation()}
             >
               <img 
-                src={currentImage}
+                // CHANGED: Using displayImages directly for the lightbox too
+                src={displayImages[safeActiveIndex]}
                 alt={`${productName} - Vista ampliada`}
                 className="max-w-full max-h-[90vh] object-contain"
                 onError={(e) => {
