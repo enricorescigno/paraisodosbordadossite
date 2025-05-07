@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
@@ -7,7 +6,7 @@ import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { useProductDetail } from '@/hooks/useProductDetail';
 import { useIsMobile } from '@/hooks/useMobile';
-import useScrollToTop from '@/hooks/useScrollToTop';
+import { useScrollToTop } from '@/hooks/useScrollToTop';
 import { Toaster } from 'sonner';
 
 // Importing our refactored components
