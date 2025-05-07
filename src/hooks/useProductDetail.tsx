@@ -1,15 +1,49 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Product, ProductColor, ProductSize } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
 import useProductImageManager from '@/hooks/useProductImageManager';
-import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
+
+// Safety functions for image handling
+const safePreloadImages = (images: string[] = []) => {
+  try {
+    if (!Array.isArray(images) || images.length === 0) return;
+    
+    images.slice(0, 3).forEach(src => {
+      if (typeof src !== 'string') return;
+      
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = src;
+      document.head.appendChild(link);
+    });
+  } catch (error) {
+    console.error("Error preloading images:", error);
+  }
+};
+
+const safeCacheImages = (images: string[] = []) => {
+  try {
+    if (!Array.isArray(images)) return;
+    
+    images.forEach(src => {
+      if (typeof src !== 'string') return;
+      
+      const img = new Image();
+      img.src = src;
+    });
+  } catch (error) {
+    console.error("Error caching images:", error);
+  }
+};
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string>("");
@@ -22,7 +56,13 @@ export const useProductDetail = () => {
     // Set mounting flag
     isMountedRef.current = true;
     
-    if (productId) {
+    const fetchProduct = async () => {
+      if (!productId) {
+        setLoading(false);
+        setProduct(null);
+        return;
+      }
+    
       setLoading(true);
       
       try {
@@ -119,16 +159,24 @@ export const useProductDetail = () => {
             // Cache and preload images
             if (safeProduct.images && Array.isArray(safeProduct.images)) {
               try {
-                cacheImagesInBrowser(safeProduct.images);
-                preloadImages(safeProduct.images.slice(0, 3));
+                safeCacheImages(safeProduct.images);
+                safePreloadImages(safeProduct.images.slice(0, 3));
               } catch (error) {
                 console.error("Error caching/preloading images:", error);
               }
             }
           }
         } else if (isMountedRef.current) {
+          console.log("Product not found with ID:", productId);
           setProduct(null);
           toast.error("Produto não encontrado.");
+          
+          // Optional: redirect to products page after a delay
+          setTimeout(() => {
+            if (isMountedRef.current) {
+              navigate('/produtos');
+            }
+          }, 3000);
         }
       } catch (error) {
         console.error("Erro ao carregar produto:", error);
@@ -141,13 +189,15 @@ export const useProductDetail = () => {
           setLoading(false);
         }
       }
-    }
+    };
+    
+    fetchProduct();
     
     // Cleanup function to prevent memory leaks
     return () => {
       isMountedRef.current = false;
     };
-  }, [productId]);
+  }, [productId, navigate]);
 
   // Get product images in a safe way for the hook
   const safeImages = useMemo(() => {

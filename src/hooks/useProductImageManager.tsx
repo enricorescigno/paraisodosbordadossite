@@ -1,6 +1,5 @@
 
 import { useState, useMemo, useCallback } from 'react';
-import { getImagePlaceholder } from '@/utils/imageUtils';
 import useSafeImages from './useSafeImages';
 
 interface ProductImageManagerProps {
@@ -25,11 +24,21 @@ const useProductImageManager = ({ images, category = '' }: ProductImageManagerPr
   
   // Memoized placeholder getter
   const getPlaceholder = useCallback((categoryName?: string) => {
-    const fallbackCategory = categoryName || category;
     try {
-      return getImagePlaceholder(fallbackCategory);
+      const fallbackCategory = categoryName || category || '';
+      const categoryPlaceholders: Record<string, string> = {
+        'Cama': 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=250',
+        'Banho': 'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?q=80&w=250',
+        'Mesa e Cozinha': 'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=250',
+        'Vestuário': 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=250',
+        'Infantil': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
+        'Bordados Infantis': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
+        'Tapete e Cortinas': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=250'
+      };
+      
+      return categoryPlaceholders[fallbackCategory] || '/placeholder.svg';
     } catch (error) {
-      console.error("Error getting placeholder for category:", fallbackCategory, error);
+      console.error("Error getting placeholder for category:", category, error);
       return '/placeholder.svg';
     }
   }, [category]);

@@ -45,11 +45,11 @@ export const getImagePlaceholder = (category: string): string => {
   if (!category) return defaultPlaceholder;
   
   const categoryPlaceholders: Record<string, string> = {
-    'Cama': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
-    'Banho': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
-    'Mesa e Cozinha': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
-    'Vestuário': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
-    'Infantil': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
+    'Cama': 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=250',
+    'Banho': 'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?q=80&w=250',
+    'Mesa e Cozinha': 'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=250',
+    'Vestuário': 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=250',
+    'Infantil': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
     'Bordados Infantis': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
     'Tapete e Cortinas': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=250'
   };
