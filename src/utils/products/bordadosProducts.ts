@@ -1,5 +1,5 @@
 
-import { Product } from '../types/product';
+import { Product } from '../../types/product';
 import { toAbsoluteURL } from '../imageUtils';
 
 // Bordados em Bolsas Collection
