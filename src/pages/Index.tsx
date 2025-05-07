@@ -6,8 +6,6 @@ import Features from "../components/Features";
 import Partners from "../components/Partners";
 import Testimonials from "../components/Testimonials";
 import Newsletter from "../components/Newsletter";
-import Footer from "../components/Footer";
-import WhatsAppSupport from "../components/WhatsAppSupport";
 
 const Index = () => {
   return (
@@ -23,8 +21,6 @@ const Index = () => {
       <Partners />
       <Testimonials />
       <Newsletter />
-      <Footer />
-      <WhatsAppSupport />
     </motion.div>
   );
 };
