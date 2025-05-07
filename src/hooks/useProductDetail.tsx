@@ -71,10 +71,10 @@ export const useProductDetail = () => {
         // First, check if this is the specific ID we're having issues with
         if (productId === "1001") {
           console.log("Loading special product ID 1001");
-          const infantProduct = {
+          const infantProduct: Product = {
             id: "1001",
             name: "Bordado em Camisa Infantil - Caminhão",
-            type: "product",
+            type: "product" as const, // Explicitly type this as "product"
             category: "Bordados Infantis",
             imageUrl: "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
             description: "Camisa infantil com bordado de caminhão, ideal para crianças aventureiras. Bordado detalhado com caminhão vermelho em tecido de alta qualidade.",
@@ -114,7 +114,7 @@ export const useProductDetail = () => {
           foundProduct = {
             id: "204",
             name: "Jogo Americano Requinte Ondulado",
-            type: "product",
+            type: "product" as const, // Explicitly type this as "product"
             category: "Mesa e Cozinha",
             imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
             description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
@@ -151,7 +151,7 @@ export const useProductDetail = () => {
             imageUrl: foundProduct.imageUrl || "/placeholder.svg",
             description: foundProduct.description || "Produto de alta qualidade da Paraíso dos Bordados.",
             features: foundProduct.features || ["Qualidade premium"],
-            type: foundProduct.type || "product",
+            type: foundProduct.type || ("product" as const), // Explicitly type as "product"
             category: foundProduct.category || "Diversos"
           };
           
@@ -342,3 +342,4 @@ export const useProductDetail = () => {
 };
 
 export default useProductDetail;
+
