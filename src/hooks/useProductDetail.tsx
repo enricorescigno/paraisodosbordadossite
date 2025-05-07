@@ -64,15 +64,13 @@ export const useProductDetail = () => {
         if (foundProduct) {
           console.log("useProductDetail - Found product:", foundProduct);
           
-          // Ensure product has an images array
-          if (!foundProduct.images || !Array.isArray(foundProduct.images) || foundProduct.images.length === 0) {
-            console.log("useProductDetail - Creating images array for product:", productId);
-            foundProduct.images = [`/lovable-uploads/${foundProduct.id}.png`];
-            
-            // If we have an imageUrl, add it to images array too
-            if (foundProduct.imageUrl && !foundProduct.images.includes(foundProduct.imageUrl)) {
-              foundProduct.images.unshift(foundProduct.imageUrl);
-            }
+          // Corrigir estrutura de imagens baseada no imageUrl já existente
+          if (
+            !foundProduct.images ||
+            !Array.isArray(foundProduct.images) ||
+            foundProduct.images.length === 0
+          ) {
+            foundProduct.images = [foundProduct.imageUrl || "/placeholder.png"];
           }
           
           // Safe state updates with mounted check
