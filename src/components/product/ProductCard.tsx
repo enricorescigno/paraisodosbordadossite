@@ -33,6 +33,8 @@ const ProductCard = ({
   showActionButton = true
 }: ProductCardProps) => {
   const getPlaceholderImage = (name: string) => {
+    if (!name) return "https://via.placeholder.com/500x500?text=Sem+Imagem";
+    
     const lowerName = name.toLowerCase();
     if (lowerName.includes('necessaire') || lowerName.includes('bolsa')) {
       return "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop";
@@ -49,15 +51,15 @@ const ProductCard = ({
   };
 
   // Use the fallback URL based on ID
-  const fallbackImage = `/lovable-uploads/${id}.png`;
+  const fallbackImage = id ? `/lovable-uploads/${id}.png` : "/placeholder.svg";
 
   // Use our safe images hook
   const productImages = useSafeImages(images, imageUrl || fallbackImage);
   
   // Get the main image to display with proper fallbacks
-  const optimizedImageUrl = productImages.length > 0 ? 
+  const optimizedImageUrl = productImages?.length > 0 ? 
     productImages[0] : 
-    (imageUrl || fallbackImage || getPlaceholderImage(name));
+    (imageUrl || fallbackImage || getPlaceholderImage(name || ""));
 
   return (
     <motion.div
@@ -84,7 +86,7 @@ const ProductCard = ({
         <AspectRatio ratio={1/1} className="w-full h-full">
           <motion.img
             src={optimizedImageUrl}
-            alt={`Produto: ${name}`}
+            alt={`Produto: ${name || ""}`}
             className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
             loading="lazy"
             decoding="async"
@@ -105,7 +107,7 @@ const ProductCard = ({
       
       <div className="flex flex-col flex-grow w-full">
         <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">
-          {name}
+          {name || "Produto"}
         </h3>
         
         {description && (
@@ -122,7 +124,7 @@ const ProductCard = ({
               variant="default" 
               size="lg" 
               className="rounded-full px-8 w-full max-w-[200px] min-h-[48px]" 
-              aria-label={`Ver detalhes de ${name}`}
+              aria-label={`Ver detalhes de ${name || "Produto"}`}
             >
               {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
             </Button>

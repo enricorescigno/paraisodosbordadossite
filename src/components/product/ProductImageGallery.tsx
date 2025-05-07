@@ -7,9 +7,6 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getImageLoading, fixImageExtension } from '@/utils/imageUtils';
 import { useInView } from 'react-intersection-observer';
 
-console.log("DEBUG - getImageLoading:", getImageLoading);
-console.log("DEBUG - fixImageExtension:", fixImageExtension);
-
 interface ProductImageGalleryProps {
   images: string[];
   productName: string;
@@ -37,7 +34,7 @@ const ProductImageGallery = ({
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
   
   // Generate fallback if there are no valid images
-  const fallbackImage = validImages.length > 0 ? validImages[0] : placeholder(category);
+  const fallbackImage = validImages.length > 0 ? validImages[0] : placeholder(category || '');
                         
   // Make sure displayImages is always a valid array
   const displayImages = validImages.length > 0 ? validImages : [fallbackImage];
@@ -127,10 +124,12 @@ const ProductImageGallery = ({
   };
 
   const nextImage = () => {
+    if (!displayImages || displayImages.length <= 1) return;
     setActiveImageIndex(prev => (prev === displayImages.length - 1 ? 0 : prev + 1));
   };
 
   const prevImage = () => {
+    if (!displayImages || displayImages.length <= 1) return;
     setActiveImageIndex(prev => (prev === 0 ? displayImages.length - 1 : prev - 1));
   };
 
@@ -165,11 +164,11 @@ const ProductImageGallery = ({
     ? activeImageIndex 
     : 0;
     
-  const currentImage = displayImages[safeActiveIndex] || fallbackImage;
+  const currentImage = displayImages?.[safeActiveIndex] || fallbackImage;
   
   // Pre-load next and previous images
   useEffect(() => {
-    if (displayImages.length <= 1) return;
+    if (!displayImages || displayImages.length <= 1) return;
     
     const nextIdx = safeActiveIndex === displayImages.length - 1 ? 0 : safeActiveIndex + 1;
     const prevIdx = safeActiveIndex === 0 ? displayImages.length - 1 : safeActiveIndex - 1;
@@ -251,7 +250,7 @@ const ProductImageGallery = ({
                     !imagesLoaded[safeActiveIndex] ? 'opacity-0' : 'opacity-100'
                   }`}
                   style={imageStyle}
-                  loading={getImageLoading(safeActiveIndex === 0 ? true : false)}
+                  loading={getImageLoading ? getImageLoading(safeActiveIndex === 0) : "lazy"}
                   onLoad={() => handleImageLoaded(safeActiveIndex)}
                   onError={(e) => {
                     console.log("Image error for:", currentImage);

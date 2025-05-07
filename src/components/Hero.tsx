@@ -31,7 +31,12 @@ const Hero = () => {
       video.addEventListener('error', onError);
       
       // Force video to load and play
-      video.load();
+      try {
+        video.load();
+      } catch (err) {
+        console.error("Error loading video:", err);
+        setFallback(true);
+      }
       
       // Preload low quality by default for faster loading
       video.preload = "metadata";
@@ -48,14 +53,20 @@ const Hero = () => {
       }
       
       // Attempt to play the video
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => console.log("Video playing"))
-          .catch(err => {
-            console.error("Video play error:", err);
-            setFallback(true);
-          });
+      try {
+        const playPromise = video.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => console.log("Video playing"))
+            .catch(err => {
+              console.error("Video play error:", err);
+              // Don't set fallback immediately on play error
+              // Some browsers require user interaction before video can play
+            });
+        }
+      } catch (err) {
+        console.error("Error playing video:", err);
+        // Don't set fallback here either to give it another chance
       }
       
       return () => {
@@ -72,9 +83,9 @@ const Hero = () => {
         setIsScrolled(scrollPosition > 50);
 
         // Optimize parallax effect - only apply if the element is in viewport
-        if (scrollPosition < window.innerHeight) {
+        if (scrollPosition < window.innerHeight && videoRef.current) {
           const yValue = scrollPosition * 0.4;
-          videoRef.current?.style.setProperty('transform', `scale(1.01) translateY(${yValue}px)`);
+          videoRef.current.style.setProperty('transform', `scale(1.01) translateY(${yValue}px)`);
         }
       }
     };
