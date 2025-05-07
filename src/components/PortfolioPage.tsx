@@ -1,4 +1,5 @@
 
+
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -12,7 +13,7 @@ import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
-import useScrollToTop from '../hooks/useScrollToTop'; // Updated import
+import { useScrollToTop } from '../hooks/useScrollToTop'; // Updated import
 import BrowseByCategory from './common/BrowseByCategory';
 
 // Portfolio categories mapping
@@ -179,3 +180,4 @@ const PortfolioPage = () => {
 };
 
 export default PortfolioPage;
+
