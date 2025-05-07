@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { Product, ProductColor, ProductSize } from '@/types/product';
@@ -15,65 +16,67 @@ export const useProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [isFromPortfolio, setIsFromPortfolio] = useState(false);
+  const isMountedRef = useRef(true);
   
   useEffect(() => {
-    setLoading(true);
+    // Set mounting flag
+    isMountedRef.current = true;
     
-    const timer = setTimeout(() => {
-      if (productId) {
-        try {
-          console.log("useProductDetail - Looking for product with ID:", productId);
-          let foundProduct = allProducts.find(p => p.id.toString() === productId);
+    if (productId) {
+      setLoading(true);
+      
+      try {
+        console.log("useProductDetail - Looking for product with ID:", productId);
+        let foundProduct = allProducts.find(p => p.id.toString() === productId);
+        
+        // Special handling for product 204 (could be moved to a config)
+        if (productId === "204") {
+          foundProduct = {
+            id: "204",
+            name: "Jogo Americano Requinte Ondulado",
+            type: "product",
+            category: "Mesa e Cozinha",
+            imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
+            description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
+            colors: [
+              { name: "Branco", value: "#FFFFFF" },
+              { name: "Dourado", value: "#DAA520" },
+              { name: "Bege", value: "#F5F5DC" },
+              { name: "Marrom", value: "#8B4513" },
+              { name: "Rosa", value: "#FFC0CB" },
+              { name: "Verde", value: "#008000" },
+              { name: "Vinho", value: "#800020" }
+            ],
+            sizes: [],
+            rating: 4.9,
+            isNew: true,
+            features: [
+              "Composição: 75% polipropileno e 25% poliéster", 
+              "Diâmetro: 38cm", 
+              "Conjunto com 4 unidades",
+              "Fácil lavagem e secagem rápida",
+              "Resistente para uso diário"
+            ],
+            keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
+          };
+        }
+        
+        if (foundProduct) {
+          console.log("useProductDetail - Found product:", foundProduct);
           
-          // Special handling for product 204 (could be moved to a config)
-          if (productId === "204") {
-            foundProduct = {
-              id: "204",
-              name: "Jogo Americano Requinte Ondulado",
-              type: "product",
-              category: "Mesa e Cozinha",
-              imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
-              description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
-              colors: [
-                { name: "Branco", value: "#FFFFFF" },
-                { name: "Dourado", value: "#DAA520" },
-                { name: "Bege", value: "#F5F5DC" },
-                { name: "Marrom", value: "#8B4513" },
-                { name: "Rosa", value: "#FFC0CB" },
-                { name: "Verde", value: "#008000" },
-                { name: "Vinho", value: "#800020" }
-              ],
-              sizes: [],
-              rating: 4.9,
-              isNew: true,
-              features: [
-                "Composição: 75% polipropileno e 25% poliéster", 
-                "Diâmetro: 38cm", 
-                "Conjunto com 4 unidades",
-                "Fácil lavagem e secagem rápida",
-                "Resistente para uso diário"
-              ],
-              keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
-            };
+          // Ensure product has an images array
+          if (!foundProduct.images || !Array.isArray(foundProduct.images) || foundProduct.images.length === 0) {
+            console.log("useProductDetail - Creating images array for product:", productId);
+            foundProduct.images = [`/lovable-uploads/${foundProduct.id}.png`];
+            
+            // If we have an imageUrl, add it to images array too
+            if (foundProduct.imageUrl && !foundProduct.images.includes(foundProduct.imageUrl)) {
+              foundProduct.images.unshift(foundProduct.imageUrl);
+            }
           }
           
-          if (foundProduct) {
-            console.log("useProductDetail - Found product:", foundProduct);
-            
-            // Ensure product has an images array
-            if (!foundProduct.images || !Array.isArray(foundProduct.images) || foundProduct.images.length === 0) {
-              console.log("useProductDetail - Creating images array for product:", productId);
-              foundProduct.images = [`/lovable-uploads/${foundProduct.id}.png`];
-              
-              // If we have an imageUrl, add it to images array too
-              if (foundProduct.imageUrl && !foundProduct.images.includes(foundProduct.imageUrl)) {
-                foundProduct.images.unshift(foundProduct.imageUrl);
-              }
-            }
-            
-            console.log("useProductDetail - Product images after fallback:", foundProduct.images);
-            console.log("useProductDetail - Product imageUrl:", foundProduct.imageUrl);
-            
+          // Safe state updates with mounted check
+          if (isMountedRef.current) {
             // Convert string colors to color objects
             if (foundProduct.colors && Array.isArray(foundProduct.colors) && typeof foundProduct.colors[0] === 'string') {
               foundProduct.colors = (foundProduct.colors as string[]).map(color => ({
@@ -115,49 +118,53 @@ export const useProductDetail = () => {
             
             setProduct(foundProduct);
             
-            // Debug logs to verify images
-            console.log("useProductDetail - Final product images array:", foundProduct.images);
-            console.log("useProductDetail - Is images an array?", Array.isArray(foundProduct.images));
-            
             // Cache and preload images
             if (foundProduct.images && Array.isArray(foundProduct.images)) {
               cacheImagesInBrowser(foundProduct.images);
               preloadImages(foundProduct.images.slice(0, 3));
             }
-          } else {
-            setProduct(null);
-            toast.error("Produto não encontrado.");
           }
-        } catch (error) {
-          console.error("Erro ao carregar produto:", error);
+        } else if (isMountedRef.current) {
+          setProduct(null);
+          toast.error("Produto não encontrado.");
+        }
+      } catch (error) {
+        console.error("Erro ao carregar produto:", error);
+        if (isMountedRef.current) {
           toast.error("Erro ao carregar o produto. Tente novamente mais tarde.");
           setProduct(null);
         }
+      } finally {
+        if (isMountedRef.current) {
+          setLoading(false);
+        }
       }
-      setLoading(false);
-    }, 300);
+    }
     
-    return () => clearTimeout(timer);
+    // Cleanup function to prevent memory leaks
+    return () => {
+      isMountedRef.current = false;
+    };
   }, [productId]);
 
   // Get product images in a safe way for the hook
-  const safeImages = product?.images && Array.isArray(product.images) ? product.images : 
-                   (product?.id ? [`/lovable-uploads/${product.id}.png`] : []);
+  const safeImages = useMemo(() => {
+    return product?.images && Array.isArray(product.images) ? product.images.filter(Boolean) : 
+           (product?.id ? [`/lovable-uploads/${product.id}.png`] : []);
+  }, [product]);
+  
   const safeCategory = product?.category || '';
   
   // Use the hook with product images and category for better fallback
-  const productImageManager = useProductImageManager({
-    images: safeImages,
-    category: safeCategory
-  });
-
-  // Extract the needed properties
   const { 
     currentImages, 
     activeImageIndex, 
     setActiveImageIndex, 
     getPlaceholder 
-  } = productImageManager;
+  } = useProductImageManager({
+    images: safeImages,
+    category: safeCategory
+  });
 
   const incrementQuantity = () => {
     setQuantity(prev => prev + 1);
@@ -214,13 +221,6 @@ export const useProductDetail = () => {
     
     return '/produtos';
   };
-
-  // Log additional debug info when images change
-  useEffect(() => {
-    if (product) {
-      console.log("useProductDetail - Current images being passed to gallery:", currentImages);
-    }
-  }, [product, currentImages]);
 
   return {
     product,

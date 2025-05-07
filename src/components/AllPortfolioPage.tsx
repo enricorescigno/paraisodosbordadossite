@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Footer from './Footer';
@@ -12,6 +13,7 @@ import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
 import BrowseByCategory from './common/BrowseByCategory';
+import useMountedState from '@/hooks/useMountedState';
 
 // Portfolio categories mapping
 const PORTFOLIO_CATEGORIES = {
@@ -40,10 +42,14 @@ const AllPortfolioPage = () => {
   const [allPortfolioItems, setAllPortfolioItems] = useState<Product[]>([]);
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
+  const isMounted = useMountedState();
   
   useEffect(() => {
     setLoading(true);
-    setTimeout(() => {
+    
+    const timer = setTimeout(() => {
+      if (!isMounted.current) return;
+      
       // Use both the existing allProducts filter and the specific category products
       const portfolioItems = [
         // Original portfolio items
@@ -77,9 +83,15 @@ const AllPortfolioPage = () => {
         !product.name.toLowerCase().includes('necessaire + toalha')
       );
       
-      setAllPortfolioItems(filteredProducts);
-      setLoading(false);
+      if (isMounted.current) {
+        setAllPortfolioItems(filteredProducts);
+        setLoading(false);
+      }
     }, 300);
+    
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   return (

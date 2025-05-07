@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { ProductColor } from '@/types/product';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
+import useSafeImages from '@/hooks/useSafeImages';
 
 interface ProductCardProps {
   id: number | string;
@@ -47,28 +48,16 @@ const ProductCard = ({
     return "https://via.placeholder.com/500x500?text=Sem+Imagem";
   };
 
-  const getImageUrl = () => {
-    console.log(`ProductCard - Processing product ${id} with images:`, images);
-    
-    // First, prioritize images array if it's valid
-    if (Array.isArray(images) && images.length > 0) {
-      return images[0];
-    }
-    
-    // Second priority: imageUrl if it exists
-    if (imageUrl) {
-      return imageUrl;
-    }
-    
-    // If we have an ID, create a fallback path
-    const fallbackImage = `/lovable-uploads/${id}.png`;
-    console.log(`ProductCard - Using fallback image: ${fallbackImage}`);
-    
-    // Last resort: placeholder image based on product name
-    return fallbackImage || getPlaceholderImage(name);
-  };
+  // Use the fallback URL based on ID
+  const fallbackImage = `/lovable-uploads/${id}.png`;
 
-  const optimizedImageUrl = getImageUrl();
+  // Use our safe images hook
+  const productImages = useSafeImages(images, imageUrl || fallbackImage);
+  
+  // Get the main image to display with proper fallbacks
+  const optimizedImageUrl = productImages.length > 0 ? 
+    productImages[0] : 
+    (imageUrl || fallbackImage || getPlaceholderImage(name));
 
   return (
     <motion.div

@@ -13,6 +13,7 @@ import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
 import BrowseByCategory from './common/BrowseByCategory';
 import { Skeleton } from './ui/skeleton';
+import useMountedState from '@/hooks/useMountedState';
 
 // Category name translations for titles
 const categoryTitles: Record<string, string> = {
@@ -72,6 +73,7 @@ const ProductPage = () => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const whatsappNumber = "+5581995970776";
+  const isMounted = useMountedState();
   useScrollToTop();
   
   // Extract the category from the URL path for title and active category
@@ -84,10 +86,12 @@ const ProductPage = () => {
     setLoading(true);
     
     // Simulate faster initial loading with a skeleton
-    let initialTimer: number;
+    let initialTimer: number | undefined;
     if (initialLoading) {
       initialTimer = window.setTimeout(() => {
-        setInitialLoading(false);
+        if (isMounted.current) {
+          setInitialLoading(false);
+        }
       }, 300);
     }
     
@@ -134,9 +138,11 @@ const ProductPage = () => {
         return product;
       });
       
-      setProducts(productsWithImages);
-      setFilteredProducts(productsWithImages);
-      setLoading(false);
+      if (isMounted.current) {
+        setProducts(productsWithImages);
+        setFilteredProducts(productsWithImages);
+        setLoading(false);
+      }
     };
     
     // Execute with slight delay to let initial render complete
