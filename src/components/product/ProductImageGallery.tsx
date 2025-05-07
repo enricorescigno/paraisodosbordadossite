@@ -7,6 +7,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { getImageLoading, fixImageExtension } from '@/utils/imageUtils';
 import { useInView } from 'react-intersection-observer';
 
+console.log("DEBUG - getImageLoading:", getImageLoading);
+console.log("DEBUG - fixImageExtension:", fixImageExtension);
+
 interface ProductImageGalleryProps {
   images: string[];
   productName: string;
