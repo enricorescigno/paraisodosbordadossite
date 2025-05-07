@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import { TooltipProvider } from '@/components/ui/tooltip';
 import { Toaster } from '@/components/ui/toaster';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
@@ -14,9 +13,7 @@ const Layout = () => {
       <Navbar />
       
       <main className="flex-grow">
-        <TooltipProvider>
-          <Outlet />
-        </TooltipProvider>
+        <Outlet />
       </main>
       
       <Footer />
