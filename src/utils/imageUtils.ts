@@ -42,7 +42,7 @@ export const fixImageExtension = (url: string): string => {
  * @param category Product category
  * @returns Placeholder image URL
  */
-export const getImagePlaceholder = (category: string): string => {
+export const getImagePlaceholder = (category: string = ''): string => {
   const defaultPlaceholder = '/placeholder.svg';
   
   if (!category) return defaultPlaceholder;

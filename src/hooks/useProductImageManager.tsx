@@ -14,8 +14,12 @@ interface ProductImageManagerProps {
 const useProductImageManager = ({ images, category = '' }: ProductImageManagerProps) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   
+  // Get placeholder based on category
+  const defaultPlaceholder = useMemo(() => 
+    getImagePlaceholder(category), [category]);
+  
   // Use our safe images hook with additional error handling
-  const validImages = useSafeImages(images, getImagePlaceholder(category));
+  const validImages = useSafeImages(images, defaultPlaceholder);
   
   // Get current images using useMemo to prevent unnecessary recalculations
   const currentImages = useMemo(() => {
@@ -23,12 +27,12 @@ const useProductImageManager = ({ images, category = '' }: ProductImageManagerPr
       // Ensure we always return a valid array
       return validImages && validImages.length > 0 
         ? validImages 
-        : [getImagePlaceholder(category)];
+        : [defaultPlaceholder];
     } catch (error) {
       console.error("Error getting current images:", error);
-      return [getImagePlaceholder(category)];
+      return [defaultPlaceholder];
     }
-  }, [validImages, category]);
+  }, [validImages, defaultPlaceholder]);
   
   // Memoized placeholder getter
   const getPlaceholder = useCallback((categoryName?: string) => {

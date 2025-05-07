@@ -23,12 +23,7 @@ const ProductImageGallery = ({
   category
 }: ProductImageGalleryProps) => {
   // Safe validation for images array
-  const validImages = Array.isArray(images) && images.length > 0 ? images.filter(img => img) : [];
-  
-  // Debug logging
-  console.log("ProductImageGallery - Received images:", images);
-  console.log("ProductImageGallery - Valid images:", validImages);
-  console.log("ProductImageGallery - Is images array?", Array.isArray(images));
+  const validImages = Array.isArray(images) && images.length > 0 ? images.filter(Boolean) : [];
   
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
@@ -38,25 +33,11 @@ const ProductImageGallery = ({
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
   
-  // Extract product ID for fallback image if needed
-  const extractProductId = () => {
-    if (validImages.length > 0) {
-      const firstImagePath = validImages[0];
-      const idMatch = firstImagePath.match(/\/(\d+)\.png$/);
-      return idMatch ? idMatch[1] : '';
-    }
-    return '';
-  };
-  
   // Generate fallback if there are no valid images
-  const fallbackImage = validImages.length > 0 ? validImages[0] : 
-                        (extractProductId() ? `/lovable-uploads/${extractProductId()}.png` : placeholder(category));
+  const fallbackImage = validImages.length > 0 ? validImages[0] : placeholder(category);
                         
   // Make sure displayImages is always a valid array
   const displayImages = validImages.length > 0 ? validImages : [fallbackImage];
-  
-  console.log("ProductImageGallery - Using fallback image:", fallbackImage);
-  console.log("ProductImageGallery - Display images:", displayImages);
   
   // Use InView hook with proper initialization
   const { ref: inViewRef, inView } = useInView({
@@ -86,7 +67,6 @@ const ProductImageGallery = ({
   useEffect(() => {
     setActiveImageIndex(0);
     setImageError(false);
-    console.log("ProductImageGallery - Resetting active image index due to color/images change");
   }, [selectedColor, images]);
 
   // Key navigation
@@ -114,7 +94,6 @@ const ProductImageGallery = ({
       newState[index] = true;
       return newState;
     });
-    console.log(`ProductImageGallery - Image ${index} loaded successfully`);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -185,9 +164,6 @@ const ProductImageGallery = ({
     
   const currentImage = displayImages[safeActiveIndex] || fallbackImage;
   
-  // Debug log for current image
-  console.log("ProductImageGallery - Current image:", currentImage);
-  
   // Pre-load next and previous images
   useEffect(() => {
     if (displayImages.length <= 1) return;
@@ -216,7 +192,7 @@ const ProductImageGallery = ({
 
   // Generate dynamic alt text
   const getImageAlt = (index: number) => {
-    return `${productName} - ${selectedColor} - ${index === 0 ? 'Principal' : `Detalhe ${index}`}`
+    return `${productName || 'Produto'} - ${selectedColor || 'Padrão'} - ${index === 0 ? 'Principal' : `Detalhe ${index}`}`
   };
 
   // Combine refs
@@ -242,7 +218,7 @@ const ProductImageGallery = ({
     >
       <AnimatePresence mode="wait">
         <motion.div
-          key={`${selectedColor}-${safeActiveIndex}`} 
+          key={`${selectedColor || 'default'}-${safeActiveIndex}`} 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -266,7 +242,7 @@ const ProductImageGallery = ({
                   </div>
                 )}
                 <motion.img 
-                  src={displayImages[safeActiveIndex]} 
+                  src={currentImage} 
                   alt={getImageAlt(safeActiveIndex)}
                   className={`w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4 transition-transform duration-200 ${
                     !imagesLoaded[safeActiveIndex] ? 'opacity-0' : 'opacity-100'
@@ -283,14 +259,14 @@ const ProductImageGallery = ({
                     }
                   }}
                   decoding={safeActiveIndex === 0 ? "sync" : "async"}
-                  aria-label={`Visualizar ${productName} na cor ${selectedColor}`}
+                  aria-label={`Visualizar ${productName || 'produto'} na cor ${selectedColor || 'padrão'}`}
                 />
               </AspectRatio>
             ) : (
               <AspectRatio ratio={1/1}>
                 <img 
                   src={fallbackImage}
-                  alt={productName}
+                  alt={productName || "Produto"}
                   className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4"
                 />
               </AspectRatio>
@@ -343,7 +319,7 @@ const ProductImageGallery = ({
                   )}
                   <img 
                     src={img}
-                    alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
+                    alt={`${productName || 'Produto'} - ${selectedColor || 'Padrão'} - Miniatura ${index + 1}`}
                     className={`h-full w-full object-cover object-center absolute inset-0 mix-blend-multiply p-1 ${
                       !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
                     }`}
@@ -351,7 +327,6 @@ const ProductImageGallery = ({
                     decoding="async"
                     onLoad={() => handleImageLoaded(index)}
                     onError={() => {
-                      console.log("Thumbnail error loading:", img);
                       setImagesLoaded(prev => {
                         const newState = [...prev];
                         newState[index] = true;
@@ -366,6 +341,7 @@ const ProductImageGallery = ({
         </motion.div>
       </AnimatePresence>
       
+      {/* Lightbox implementation */}
       <AnimatePresence>
         {isLightboxOpen && displayImages.length > 0 && (
           <motion.div
@@ -384,7 +360,7 @@ const ProductImageGallery = ({
             >
               <img 
                 src={displayImages[safeActiveIndex]}
-                alt={`${productName} - Vista ampliada`}
+                alt={`${productName || 'Produto'} - Vista ampliada`}
                 className="max-w-full max-h-[90vh] object-contain"
                 onError={(e) => {
                   if (e.currentTarget) {
@@ -438,6 +414,13 @@ const ProductImageGallery = ({
         @keyframes shimmer {
           0% { background-position: -200% 0; }
           100% { background-position: 200% 0; }
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
         }
         `}
       </style>
