@@ -6,25 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ErrorBoundary } from 'react-error-boundary'
 import App from './App.tsx'
 import './index.css'
-
-// Global fallback UI for any uncaught errors
-const FallbackComponent = ({ error }: { error: Error }) => {
-  return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md text-center">
-        <h2 className="text-2xl font-semibold mb-4 text-red-600">Erro ao carregar a aplicação</h2>
-        <p className="mb-4 text-gray-600">Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.</p>
-        <p className="text-sm text-gray-500 mb-4">{error.message || 'Erro desconhecido'}</p>
-        <button
-          onClick={() => window.location.reload()}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          Recarregar página
-        </button>
-      </div>
-    </div>
-  )
-}
+import FallbackErrorComponent from './components/common/FallbackErrorComponent.tsx'
 
 // Create a client with error handling
 const queryClient = new QueryClient({
@@ -34,8 +16,10 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       staleTime: 30000,
       meta: {
-        onError: (error: any) => {
-          console.error('Query error:', error);
+        onSettled: (data: any, error: any) => {
+          if (error) {
+            console.error('Query error:', error);
+          }
         },
       },
     },
@@ -55,7 +39,7 @@ try {
 
   root.render(
     <React.StrictMode>
-      <ErrorBoundary FallbackComponent={FallbackComponent}>
+      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
         <QueryClientProvider client={queryClient}>
           <HelmetProvider>
             <App />

@@ -6,6 +6,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getImageLoading, fixImageExtension } from '@/utils/imageUtils';
 import { useInView } from 'react-intersection-observer';
+import { ErrorBoundary } from 'react-error-boundary';
+import FallbackErrorComponent from '../common/FallbackErrorComponent';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -214,223 +216,225 @@ const ProductImageGallery = ({
   );
 
   return (
-    <div 
-      className="bg-white rounded-2xl overflow-hidden"
-      ref={setRefs}
-    >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${selectedColor || 'default'}-${safeActiveIndex}`} 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="relative"
-        >
-          <div 
-            className="relative overflow-hidden bg-[#FAFAFA] rounded-lg"
-            onMouseMove={handleMouseMove}
-            onMouseEnter={() => setIsZoomed(true)}
-            onMouseLeave={() => setIsZoomed(false)}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-          >
-            {displayImages.length > 0 && !imageError ? (
-              <AspectRatio ratio={1/1}>
-                {!imagesLoaded[safeActiveIndex] && (
-                  <div className="absolute inset-0 animate-pulse">
-                    <div className="h-full w-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
-                  </div>
-                )}
-                <motion.img 
-                  src={currentImage} 
-                  alt={getImageAlt(safeActiveIndex)}
-                  className={`w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4 transition-transform duration-200 ${
-                    !imagesLoaded[safeActiveIndex] ? 'opacity-0' : 'opacity-100'
-                  }`}
-                  style={imageStyle}
-                  loading={safeActiveIndex === 0 ? "eager" : "lazy"}
-                  decoding={safeActiveIndex === 0 ? "sync" : "async"}
-                  onLoad={() => handleImageLoaded(safeActiveIndex)}
-                  onError={(e) => {
-                    console.log("Image error for:", currentImage);
-                    setImageError(true);
-                    const target = e.currentTarget as HTMLImageElement;
-                    if (target) {
-                      target.src = fallbackImage;
-                      handleImageLoaded(safeActiveIndex);
-                    }
-                  }}
-                  aria-label={`Visualizar ${productName || 'produto'} na cor ${selectedColor || 'padrão'}`}
-                />
-              </AspectRatio>
-            ) : (
-              <AspectRatio ratio={1/1}>
-                <img 
-                  src={fallbackImage}
-                  alt={productName || "Produto"}
-                  className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4"
-                  loading="eager"
-                  decoding="sync"
-                />
-              </AspectRatio>
-            )}
-            
-            <div className="absolute bottom-3 right-3 bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm hidden md:flex items-center justify-center">
-              <ZoomIn className="h-4 w-4 text-gray-600" />
-            </div>
-            
-            {displayImages.length > 1 && !imageError && (
-              <>
-                <button 
-                  onClick={prevImage}
-                  className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
-                  aria-label="Imagem anterior"
-                >
-                  <ChevronLeft className="h-5 w-5 text-gray-700" />
-                </button>
-                <button 
-                  onClick={nextImage}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
-                  aria-label="Próxima imagem"
-                >
-                  <ChevronRight className="h-5 w-5 text-gray-700" />
-                </button>
-              </>
-            )}
-          </div>
-          
-          {displayImages.length > 1 && !imageError && thumbnailsVisible && (
-            <motion.div 
-              className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar"
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.4 }}
-            >
-              {displayImages.map((img, index) => (
-                <motion.button
-                  key={`thumb-${index}`}
-                  onClick={() => handleImageClick(index)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`relative h-16 w-16 rounded-md overflow-hidden border ${
-                    index === safeActiveIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
-                  }`}
-                  aria-label={`Ver imagem ${index + 1} de ${displayImages.length}`}
-                >
-                  {!imagesLoaded[index] && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
-                  )}
-                  <img 
-                    src={img}
-                    alt={`${productName || 'Produto'} - ${selectedColor || 'Padrão'} - Miniatura ${index + 1}`}
-                    className={`h-full w-full object-cover object-center absolute inset-0 mix-blend-multiply p-1 ${
-                      !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
-                    }`}
-                    loading="lazy"
-                    decoding="async"
-                    onLoad={() => handleImageLoaded(index)}
-                    onError={() => {
-                      setImagesLoaded(prev => {
-                        const newState = [...prev];
-                        newState[index] = true;
-                        return newState;
-                      });
-                    }}
-                  />
-                </motion.button>
-              ))}
-            </motion.div>
-          )}
-        </motion.div>
-      </AnimatePresence>
-      
-      {/* Lightbox implementation */}
-      <AnimatePresence>
-        {isLightboxOpen && displayImages.length > 0 && (
+    <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+      <div 
+        className="bg-white rounded-2xl overflow-hidden"
+        ref={setRefs}
+      >
+        <AnimatePresence mode="wait">
           <motion.div
+            key={`${selectedColor || 'default'}-${safeActiveIndex}`} 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-            onClick={closeLightbox}
+            transition={{ duration: 0.3 }}
+            className="relative"
           >
-            <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              className="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"
-              onClick={(e) => e.stopPropagation()}
+            <div 
+              className="relative overflow-hidden bg-[#FAFAFA] rounded-lg"
+              onMouseMove={handleMouseMove}
+              onMouseEnter={() => setIsZoomed(true)}
+              onMouseLeave={() => setIsZoomed(false)}
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
             >
-              <img 
-                src={displayImages[safeActiveIndex]}
-                alt={`${productName || 'Produto'} - Vista ampliada`}
-                className="max-w-full max-h-[90vh] object-contain"
-                onError={(e) => {
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (target) {
-                    target.src = fallbackImage;
-                  }
-                }}
-              />
-              <button
-                onClick={closeLightbox}
-                className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2"
-                aria-label="Fechar visualização ampliada"
-              >
-                <span className="text-white text-2xl">&times;</span>
-              </button>
-              
-              {displayImages.length > 1 && (
-                <>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      prevImage();
+              {displayImages.length > 0 && !imageError ? (
+                <AspectRatio ratio={1/1}>
+                  {!imagesLoaded[safeActiveIndex] && (
+                    <div className="absolute inset-0 animate-pulse">
+                      <div className="h-full w-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
+                    </div>
+                  )}
+                  <motion.img 
+                    src={currentImage} 
+                    alt={getImageAlt(safeActiveIndex)}
+                    className={`w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4 transition-transform duration-200 ${
+                      !imagesLoaded[safeActiveIndex] ? 'opacity-0' : 'opacity-100'
+                    }`}
+                    style={imageStyle}
+                    loading={safeActiveIndex === 0 ? "eager" : "lazy"}
+                    decoding={safeActiveIndex === 0 ? "sync" : "async"}
+                    onLoad={() => handleImageLoaded(safeActiveIndex)}
+                    onError={(e) => {
+                      console.log("Image error for:", currentImage);
+                      setImageError(true);
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (target) {
+                        target.src = fallbackImage;
+                        handleImageLoaded(safeActiveIndex);
+                      }
                     }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                    aria-label={`Visualizar ${productName || 'produto'} na cor ${selectedColor || 'padrão'}`}
+                  />
+                </AspectRatio>
+              ) : (
+                <AspectRatio ratio={1/1}>
+                  <img 
+                    src={fallbackImage}
+                    alt={productName || "Produto"}
+                    className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4"
+                    loading="eager"
+                    decoding="sync"
+                  />
+                </AspectRatio>
+              )}
+              
+              <div className="absolute bottom-3 right-3 bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm hidden md:flex items-center justify-center">
+                <ZoomIn className="h-4 w-4 text-gray-600" />
+              </div>
+              
+              {displayImages.length > 1 && !imageError && (
+                <>
+                  <button 
+                    onClick={prevImage}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
                     aria-label="Imagem anterior"
                   >
-                    <ChevronLeft className="h-6 w-6 text-white" />
+                    <ChevronLeft className="h-5 w-5 text-gray-700" />
                   </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      nextImage();
-                    }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                  <button 
+                    onClick={nextImage}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-white/80 backdrop-blur-sm border border-gray-200 flex items-center justify-center shadow-sm hover:bg-white transition-colors"
                     aria-label="Próxima imagem"
                   >
-                    <ChevronRight className="h-6 w-6 text-white" />
+                    <ChevronRight className="h-5 w-5 text-gray-700" />
                   </button>
                 </>
               )}
-            </motion.div>
+            </div>
+            
+            {displayImages.length > 1 && !imageError && thumbnailsVisible && (
+              <motion.div 
+                className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+              >
+                {displayImages.map((img, index) => (
+                  <motion.button
+                    key={`thumb-${index}`}
+                    onClick={() => handleImageClick(index)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className={`relative h-16 w-16 rounded-md overflow-hidden border ${
+                      index === safeActiveIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
+                    }`}
+                    aria-label={`Ver imagem ${index + 1} de ${displayImages.length}`}
+                  >
+                    {!imagesLoaded[index] && (
+                      <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
+                    )}
+                    <img 
+                      src={img}
+                      alt={`${productName || 'Produto'} - ${selectedColor || 'Padrão'} - Miniatura ${index + 1}`}
+                      className={`h-full w-full object-cover object-center absolute inset-0 mix-blend-multiply p-1 ${
+                        !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
+                      }`}
+                      loading="lazy"
+                      decoding="async"
+                      onLoad={() => handleImageLoaded(index)}
+                      onError={() => {
+                        setImagesLoaded(prev => {
+                          const newState = [...prev];
+                          newState[index] = true;
+                          return newState;
+                        });
+                      }}
+                    />
+                  </motion.button>
+                ))}
+              </motion.div>
+            )}
           </motion.div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>
+        
+        {/* Lightbox implementation */}
+        <AnimatePresence>
+          {isLightboxOpen && displayImages.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+              onClick={closeLightbox}
+            >
+              <motion.div
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.9 }}
+                className="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <img 
+                  src={displayImages[safeActiveIndex]}
+                  alt={`${productName || 'Produto'} - Vista ampliada`}
+                  className="max-w-full max-h-[90vh] object-contain"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (target) {
+                      target.src = fallbackImage;
+                    }
+                  }}
+                />
+                <button
+                  onClick={closeLightbox}
+                  className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2"
+                  aria-label="Fechar visualização ampliada"
+                >
+                  <span className="text-white text-2xl">&times;</span>
+                </button>
+                
+                {displayImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        prevImage();
+                      }}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                      aria-label="Imagem anterior"
+                    >
+                      <ChevronLeft className="h-6 w-6 text-white" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        nextImage();
+                      }}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
+                      aria-label="Próxima imagem"
+                    >
+                      <ChevronRight className="h-6 w-6 text-white" />
+                    </button>
+                  </>
+                )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-      <style>
-        {`
-        .background-animate {
-          background-size: 200% 200%;
-          animation: shimmer 1.5s linear infinite;
-        }
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        `}
-      </style>
-    </div>
+        <style>
+          {`
+          .background-animate {
+            background-size: 200% 200%;
+            animation: shimmer 1.5s linear infinite;
+          }
+          @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+          }
+          .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+          .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+          }
+          `}
+        </style>
+      </div>
+    </ErrorBoundary>
   );
 };
 

@@ -67,7 +67,7 @@ export default defineConfig(({ mode }) => ({
     "process.env": {} // Add process.env define for compatibility
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'react-error-boundary'],
     esbuildOptions: {
       target: 'es2020',
     }

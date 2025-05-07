@@ -22,57 +22,97 @@ import PedidosCompraProdutosPage from '@/pages/PedidosCompraProdutosPage';
 import PedidosCompraDistribuicaoPage from '@/pages/PedidosCompraDistribuicaoPage';
 import TributacoesPage from '@/pages/TributacoesPage';
 import PrazosPagamentoPage from '@/pages/PrazosPagamentoPage';
+import FallbackErrorComponent from '@/components/common/FallbackErrorComponent';
 
 import './App.css';
 
-// Fallback component for error boundaries
-const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => {
-  return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50">
-      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md text-center">
-        <h2 className="text-2xl font-semibold mb-4 text-red-600">Erro ao carregar a aplicação</h2>
-        <p className="mb-4 text-gray-600">Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.</p>
-        <p className="text-sm text-gray-500 mb-4">{error?.message || 'Erro desconhecido'}</p>
-        <button
-          onClick={() => {
-            if (typeof resetErrorBoundary === 'function') {
-              resetErrorBoundary();
-            } else {
-              window.location.reload();
-            }
-          }}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-        >
-          Recarregar página
-        </button>
-      </div>
-    </div>
-  );
-};
-
 const App = () => {
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
+    <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
       <Router>
         <TooltipProvider>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Index />} />
-              <Route path="produtos" element={<AllProductsPage />} />
-              <Route path="produto/:productId" element={<ProductDetailPage />} />
-              <Route path="categoria/:category" element={<ProductPage />} />
-              <Route path="portfolio" element={<AllPortfolioPage />} />
-              <Route path="portfolio/:category" element={<PortfolioPage />} />
-              <Route path="sobre-nos" element={<AboutUs />} />
-              <Route path="nossos-parceiros" element={<OurPartners />} />
-              <Route path="politica-de-privacidade" element={<PrivacyPolicy />} />
-              <Route path="estoque" element={<EstoquePage />} />
-              <Route path="vendas" element={<VendasPage />} />
-              <Route path="pedidos-compra-status" element={<PedidosCompraStatusPage />} />
-              <Route path="pedidos-compra-produtos" element={<PedidosCompraProdutosPage />} />
-              <Route path="pedidos-compra-distribuicao" element={<PedidosCompraDistribuicaoPage />} />
-              <Route path="tributacoes" element={<TributacoesPage />} />
-              <Route path="prazos-pagamento" element={<PrazosPagamentoPage />} />
+              <Route index element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <Index />
+                </ErrorBoundary>
+              } />
+              <Route path="produtos" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <AllProductsPage />
+                </ErrorBoundary>
+              } />
+              <Route path="produto/:productId" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <ProductDetailPage />
+                </ErrorBoundary>
+              } />
+              <Route path="categoria/:category" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <ProductPage />
+                </ErrorBoundary>
+              } />
+              <Route path="portfolio" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <AllPortfolioPage />
+                </ErrorBoundary>
+              } />
+              <Route path="portfolio/:category" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <PortfolioPage />
+                </ErrorBoundary>
+              } />
+              <Route path="sobre-nos" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <AboutUs />
+                </ErrorBoundary>
+              } />
+              <Route path="nossos-parceiros" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <OurPartners />
+                </ErrorBoundary>
+              } />
+              <Route path="politica-de-privacidade" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <PrivacyPolicy />
+                </ErrorBoundary>
+              } />
+              <Route path="estoque" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <EstoquePage />
+                </ErrorBoundary>
+              } />
+              <Route path="vendas" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <VendasPage />
+                </ErrorBoundary>
+              } />
+              <Route path="pedidos-compra-status" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <PedidosCompraStatusPage />
+                </ErrorBoundary>
+              } />
+              <Route path="pedidos-compra-produtos" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <PedidosCompraProdutosPage />
+                </ErrorBoundary>
+              } />
+              <Route path="pedidos-compra-distribuicao" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <PedidosCompraDistribuicaoPage />
+                </ErrorBoundary>
+              } />
+              <Route path="tributacoes" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <TributacoesPage />
+                </ErrorBoundary>
+              } />
+              <Route path="prazos-pagamento" element={
+                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
+                  <PrazosPagamentoPage />
+                </ErrorBoundary>
+              } />
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

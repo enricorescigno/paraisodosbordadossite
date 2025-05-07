@@ -9,29 +9,7 @@ import Partners from "../components/Partners";
 import Testimonials from "../components/Testimonials";
 import Newsletter from "../components/Newsletter";
 import LoadingSpinner from "../components/common/LoadingSpinner";
-
-// Fallback component for error boundaries
-const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => {
-  return (
-    <div className="text-center py-10 px-4">
-      <h2 className="text-xl font-semibold mb-2">Oops, algo deu errado!</h2>
-      <p>Estamos trabalhando para resolver o problema.</p>
-      <p className="text-red-600 text-sm mt-2">{error?.message || "Erro desconhecido"}</p>
-      <button
-        onClick={() => {
-          if (typeof resetErrorBoundary === 'function') {
-            resetErrorBoundary();
-          } else {
-            window.location.reload();
-          }
-        }}
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
-      >
-        Tentar novamente
-      </button>
-    </div>
-  );
-};
+import FallbackErrorComponent from "../components/common/FallbackErrorComponent";
 
 const Index: React.FC = () => {
   return (
@@ -41,37 +19,37 @@ const Index: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
         <React.Suspense fallback={<LoadingSpinner />}>
           <Hero />
         </React.Suspense>
       </ErrorBoundary>
 
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
         <React.Suspense fallback={<LoadingSpinner />}>
           <ProductShowcase />
         </React.Suspense>
       </ErrorBoundary>
 
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
         <React.Suspense fallback={<LoadingSpinner />}>
           <Features />
         </React.Suspense>
       </ErrorBoundary>
 
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
         <React.Suspense fallback={<LoadingSpinner />}>
           <Partners />
         </React.Suspense>
       </ErrorBoundary>
 
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
         <React.Suspense fallback={<LoadingSpinner />}>
           <Testimonials />
         </React.Suspense>
       </ErrorBoundary>
 
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
         <React.Suspense fallback={<LoadingSpinner />}>
           <Newsletter />
         </React.Suspense>
