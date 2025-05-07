@@ -1,12 +1,17 @@
+
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuContent, NavigationMenuTrigger, NavigationMenuLink } from "@/components/ui/navigation-menu";
-import { useIsMobile } from '@/hooks/useMobile'; // Updated import path
+import { useIsMobile } from '@/hooks/useMobile';
 import { cn } from '@/lib/utils';
 
 const MenubarNav = () => {
   const isMobile = useIsMobile();
+  
   if (isMobile) return null;
-  return <div className="flex justify-center pb-2">
+  
+  return (
+    <div className="flex justify-center pb-2">
       <NavigationMenu>
         <NavigationMenuList className="flex space-x-6">
           <NavigationMenuItem>
@@ -131,6 +136,8 @@ const MenubarNav = () => {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-    </div>;
+    </div>
+  );
 };
+
 export default MenubarNav;
