@@ -88,7 +88,6 @@ const ProductCard = ({
             className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
             loading="lazy"
             decoding="async"
-            fetchpriority="low"
             whileHover={{
               scale: 1.05
             }}
