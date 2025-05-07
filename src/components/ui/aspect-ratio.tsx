@@ -1,21 +1,34 @@
 
 import * as React from "react"
-import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio"
 
-const AspectRatio = React.forwardRef<
-  React.ElementRef<typeof AspectRatioPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AspectRatioPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <div className={`relative w-full overflow-hidden ${className || ''}`} ref={ref}>
-    <div style={{ 
-      paddingBottom: `${100 / (props.ratio || 1)}%`,
-      height: 0 
-    }} />
-    <div className="absolute inset-0">
-      {props.children}
-    </div>
-  </div>
-))
-AspectRatio.displayName = "AspectRatio"
+interface AspectRatioProps extends React.HTMLAttributes<HTMLDivElement> {
+  ratio?: number;
+  className?: string;
+  children?: React.ReactNode;
+}
 
-export { AspectRatio }
+const AspectRatio = React.forwardRef<HTMLDivElement, AspectRatioProps>(
+  ({ className, ratio = 1, children, ...props }, ref) => {
+    return (
+      <div 
+        className={`relative w-full overflow-hidden ${className || ''}`} 
+        ref={ref} 
+        {...props}
+      >
+        <div 
+          style={{ 
+            paddingBottom: `${100 / ratio}%`,
+            height: 0 
+          }} 
+        />
+        <div className="absolute inset-0">
+          {children}
+        </div>
+      </div>
+    );
+  }
+);
+
+AspectRatio.displayName = "AspectRatio";
+
+export { AspectRatio };

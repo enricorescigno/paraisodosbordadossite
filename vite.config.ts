@@ -20,6 +20,12 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  css: {
+    preprocessorOptions: {
+      // Fix for CSS @import error
+      order: 'preAndPostParsing'
+    }
+  },
   build: {
     minify: true,
     sourcemap: false,
@@ -32,8 +38,6 @@ export default defineConfig(({ mode }) => ({
           router: ['react-router-dom'],
           framer: ['framer-motion'],
           ui: ['@radix-ui/react-dialog', '@radix-ui/react-tooltip', '@radix-ui/react-avatar', '@radix-ui/react-select', '@radix-ui/react-tabs', '@radix-ui/react-dropdown-menu'],
-          components: ['@/components/ui/button', '@/components/ui/dropdown-menu', '@/components/ui/tabs'],
-          utils: ['@/lib/utils', '@/utils/imageUtils']
         },
         assetFileNames: assetInfo => {
           const assetName = assetInfo.name || 'unknown';

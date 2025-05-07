@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
@@ -61,7 +62,7 @@ const ProductDetailPage = () => {
     // Use first image from gallery or main product image
     return (currentImages && currentImages.length > 0) 
       ? currentImages[0]
-      : product.imageUrl;
+      : (product.images && product.images.length > 0 ? product.images[0] : '');
   };
   
   return (

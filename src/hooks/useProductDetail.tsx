@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -26,6 +25,7 @@ export const useProductDetail = () => {
           console.log("useProductDetail - Looking for product with ID:", productId);
           let foundProduct = allProducts.find(p => p.id.toString() === productId);
           
+          // Special handling for product 204 (could be moved to a config)
           if (productId === "204") {
             foundProduct = {
               id: "204",
@@ -60,15 +60,21 @@ export const useProductDetail = () => {
           if (foundProduct) {
             console.log("useProductDetail - Found product:", foundProduct);
             
-            // Implement fallback for images if they're missing or not an array
+            // Ensure product has an images array
             if (!foundProduct.images || !Array.isArray(foundProduct.images) || foundProduct.images.length === 0) {
-              console.log("useProductDetail - Using fallback image path for product:", productId);
+              console.log("useProductDetail - Creating images array for product:", productId);
               foundProduct.images = [`/lovable-uploads/${foundProduct.id}.png`];
+              
+              // If we have an imageUrl, add it to images array too
+              if (foundProduct.imageUrl && !foundProduct.images.includes(foundProduct.imageUrl)) {
+                foundProduct.images.unshift(foundProduct.imageUrl);
+              }
             }
             
             console.log("useProductDetail - Product images after fallback:", foundProduct.images);
             console.log("useProductDetail - Product imageUrl:", foundProduct.imageUrl);
             
+            // Convert string colors to color objects
             if (foundProduct.colors && Array.isArray(foundProduct.colors) && typeof foundProduct.colors[0] === 'string') {
               foundProduct.colors = (foundProduct.colors as string[]).map(color => ({
                 name: color,
@@ -76,6 +82,7 @@ export const useProductDetail = () => {
               })) as ProductColor[];
             }
             
+            // Convert string sizes to size objects
             if (foundProduct.sizes && Array.isArray(foundProduct.sizes) && typeof foundProduct.sizes[0] === 'string') {
               foundProduct.sizes = (foundProduct.sizes as string[]).map(size => ({
                 name: size,
@@ -96,6 +103,7 @@ export const useProductDetail = () => {
             
             setIsFromPortfolio(foundProduct.type === 'portfolio');
             
+            // Provide fallback values for missing fields
             if (!foundProduct.rating) foundProduct.rating = 4.8;
             if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
             if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
@@ -115,9 +123,6 @@ export const useProductDetail = () => {
             if (foundProduct.images && Array.isArray(foundProduct.images)) {
               cacheImagesInBrowser(foundProduct.images);
               preloadImages(foundProduct.images.slice(0, 3));
-            } else if (foundProduct.imageUrl) {
-              cacheImagesInBrowser([foundProduct.imageUrl]);
-              preloadImages([foundProduct.imageUrl]);
             }
           } else {
             setProduct(null);
@@ -138,13 +143,11 @@ export const useProductDetail = () => {
   // Get product images in a safe way for the hook
   const safeImages = product?.images && Array.isArray(product.images) ? product.images : 
                    (product?.id ? [`/lovable-uploads/${product.id}.png`] : []);
-  const safeImageUrl = product?.imageUrl || '';
   const safeCategory = product?.category || '';
   
-  // Use the hook with additional information for better fallback
+  // Use the hook with product images and category for better fallback
   const productImageManager = useProductImageManager({
     images: safeImages,
-    mainImage: safeImageUrl,
     category: safeCategory
   });
 

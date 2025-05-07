@@ -133,21 +133,16 @@ export const getProductsByCategory = (categorySlug: string) => {
   });
 };
 
-// Mock de produtos
+// Mock de produtos - Update to ensure all products have images arrays
 export const allProducts: Product[] = [
   {
     id: 204,
     name: "Jogo Americano Requinte Ondulado",
     description: "Eleve sua experiência à mesa com o jogo americano Tessi.",
     category: "Mesa e Cozinha",
-    images: {
-      "Branco": [
-        "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png"
-      ],
-      "Bege": [
-        "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png"
-      ]
-    },
+    images: [
+      "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png"
+    ],
     tags: ["novo"],
     type: "product",
     isNew: true,

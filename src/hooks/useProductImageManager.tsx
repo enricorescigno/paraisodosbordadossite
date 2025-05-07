@@ -30,14 +30,14 @@ export const useProductImageManager = ({
     category 
   });
 
-  // Validate received images
+  // Ensure images is always a valid array
   const validImages = useMemo(() => {
-    // Check if images is a valid and non-empty array
+    // Make sure images is a valid array or default to empty array
     const isValidImagesArray = Array.isArray(images) && images.length > 0;
     console.log("useProductImageManager - Received images:", images);
     console.log("useProductImageManager - Images validity:", isValidImagesArray);
     
-    // Make sure we never return undefined or null values in the array
+    // Filter out any null or empty values
     if (isValidImagesArray) {
       return images.filter(img => img != null && img !== '');
     }
