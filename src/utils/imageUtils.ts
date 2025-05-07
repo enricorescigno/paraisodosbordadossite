@@ -88,7 +88,7 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
   return url;
 };
 
-// Updated cacheImagesInBrowser function with proper export and error handling
+// Export cacheImagesInBrowser function with proper export statement
 export function cacheImagesInBrowser(imageUrls: string[]): void {
   if (!imageUrls || !Array.isArray(imageUrls) || imageUrls.length === 0) return;
   

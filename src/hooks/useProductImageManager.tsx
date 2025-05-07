@@ -23,6 +23,13 @@ export const useProductImageManager = ({
   mainImage,
   category = ''
 }: UseProductImageManagerParams): UseProductImageManagerReturn => {
+  // Debug log the input parameters
+  console.log("useProductImageManager - Init with params:", { 
+    imagesLength: images?.length || 0, 
+    mainImage: mainImage || 'none', 
+    category 
+  });
+
   // Validate received images
   const validImages = useMemo(() => {
     // Check if images is a valid and non-empty array
