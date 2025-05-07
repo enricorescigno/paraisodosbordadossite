@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import * as React from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 
@@ -9,9 +9,9 @@ import { ArrowUp } from 'lucide-react';
  */
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-  const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Scroll the page to the top with behavior instant for better UX
     window.scrollTo({
       top: 0,
@@ -19,7 +19,7 @@ const ScrollToTop = () => {
     });
   }, [pathname]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Create a hidden element at the top of the page
     const topAnchor = document.createElement('div');
     topAnchor.id = 'top-anchor';

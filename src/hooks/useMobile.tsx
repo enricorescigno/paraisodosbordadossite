@@ -1,10 +1,10 @@
 
-import { useState, useEffect } from 'react';
+import * as React from 'react';
 
 export const useIsMobile = (): boolean => {
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const checkIfMobile = () => {
       const mobileWidth = 768; // Consider screens narrower than 768px as mobile
       setIsMobile(window.innerWidth < mobileWidth);
