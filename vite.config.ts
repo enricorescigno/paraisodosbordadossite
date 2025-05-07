@@ -31,8 +31,8 @@ export default defineConfig(({ mode }) => ({
           react: ['react', 'react-dom'],
           router: ['react-router-dom'],
           framer: ['framer-motion'],
-          ui: ['@radix-ui/react-slot', '@radix-ui/react-separator'],
-          components: ['@/components/ui/button', '@/components/ui/apple-button', '@/components/ui/card'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-tooltip'],
+          components: ['@/components/ui/button', '@/components/ui/dropdown-menu', '@/components/ui/tabs'],
           utils: ['@/lib/utils', '@/utils/imageUtils']
         },
         assetFileNames: assetInfo => {
