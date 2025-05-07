@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -23,6 +22,7 @@ export const useProductDetail = () => {
     const timer = setTimeout(() => {
       if (productId) {
         try {
+          console.log("useProductDetail - Looking for product with ID:", productId);
           let foundProduct = allProducts.find(p => p.id.toString() === productId);
           
           if (productId === "204") {
@@ -57,7 +57,10 @@ export const useProductDetail = () => {
           }
           
           if (foundProduct) {
-            // Handle simple string arrays for colors and sizes by converting to object format
+            console.log("useProductDetail - Found product:", foundProduct);
+            console.log("useProductDetail - Product images:", foundProduct.images);
+            console.log("useProductDetail - Product imageUrl:", foundProduct.imageUrl);
+            
             if (foundProduct.colors && Array.isArray(foundProduct.colors) && typeof foundProduct.colors[0] === 'string') {
               foundProduct.colors = (foundProduct.colors as string[]).map(color => ({
                 name: color,
@@ -89,7 +92,16 @@ export const useProductDetail = () => {
             if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
             if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
             
+            // Garantir que images sempre seja um array
+            if (!foundProduct.images) {
+              foundProduct.images = [];
+            }
+            
             setProduct(foundProduct);
+            
+            // Log de debug para verificar as imagens
+            console.log("useProductDetail - Final product images array:", foundProduct.images);
+            console.log("useProductDetail - Is images an array?", Array.isArray(foundProduct.images));
             
             if (foundProduct.images && Array.isArray(foundProduct.images)) {
               cacheImagesInBrowser(foundProduct.images);
@@ -114,10 +126,11 @@ export const useProductDetail = () => {
     return () => clearTimeout(timer);
   }, [productId]);
 
-  // Use the hook with only one argument
+  // Use o hook com informações adicionais para melhor fallback
   const productImageManager = useProductImageManager({
     images: product?.images || [],
-    mainImage: product?.imageUrl
+    mainImage: product?.imageUrl,
+    category: product?.category || ''
   });
 
   // Extract the needed properties
@@ -183,6 +196,13 @@ export const useProductDetail = () => {
     
     return '/produtos';
   };
+
+  // Log adicional quando as imagens mudam
+  useEffect(() => {
+    if (product) {
+      console.log("useProductDetail - Current images being passed to gallery:", currentImages);
+    }
+  }, [product, currentImages]);
 
   return {
     product,

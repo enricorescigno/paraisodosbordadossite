@@ -22,6 +22,14 @@ const ProductImageGallery = ({
   placeholder,
   category
 }: ProductImageGalleryProps) => {
+  // Verificar e validar o array de imagens
+  const validImages = images && Array.isArray(images) ? images : [];
+  
+  // Log de debug para verificar as imagens recebidas
+  console.log("ProductImageGallery - Received images:", images);
+  console.log("ProductImageGallery - Valid images:", validImages);
+  console.log("ProductImageGallery - Is images array?", Array.isArray(images));
+  
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -29,28 +37,20 @@ const ProductImageGallery = ({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
-  const galleryRef = useRef<HTMLDivElement>(null);
   
-  // Touch handling for swipe gestures
-  const touchStartX = useRef(0);
-  const touchEndX = useRef(0);
-
+  // Gerar um fallback se não houver imagens válidas
+  const fallbackImage = placeholder(category);
+  const displayImages = validImages.length > 0 ? validImages : [fallbackImage];
+  
   // Use InView hook for the gallery container
   const { ref: inViewRef, inView } = useInView({
     triggerOnce: true,
     threshold: 0.1,
   });
 
-  // Merge refs
-  const setRefs = useCallback(
-    (node: HTMLDivElement | null) => {
-      // Set the galleryRef manually
-      galleryRef.current = node;
-      // Set the inViewRef using its function form
-      inViewRef(node);
-    },
-    [inViewRef]
-  );
+  // Touch handling for swipe gestures
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   // Keyboard navigation
   useEffect(() => {
@@ -69,10 +69,10 @@ const ProductImageGallery = ({
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, [activeImageIndex, images.length, isLightboxOpen]);
+  }, [activeImageIndex, displayImages.length, isLightboxOpen]);
 
   useEffect(() => {
-    setImagesLoaded(Array(images.length).fill(false));
+    setImagesLoaded(Array(displayImages.length).fill(false));
     setImageError(false);
     
     const timer = setTimeout(() => {
@@ -80,11 +80,12 @@ const ProductImageGallery = ({
     }, 300);
     
     return () => clearTimeout(timer);
-  }, [images.length]);
+  }, [displayImages.length]);
 
   useEffect(() => {
     setActiveImageIndex(0);
     setImageError(false);
+    console.log("ProductImageGallery - Resetting active image index due to color/images change");
   }, [selectedColor, images]);
 
   const handleImageLoaded = useCallback((index: number) => {
@@ -93,6 +94,7 @@ const ProductImageGallery = ({
       newState[index] = true;
       return newState;
     });
+    console.log(`ProductImageGallery - Image ${index} loaded successfully`);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -123,11 +125,11 @@ const ProductImageGallery = ({
   };
 
   const nextImage = () => {
-    setActiveImageIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+    setActiveImageIndex(prev => (prev === displayImages.length - 1 ? 0 : prev + 1));
   };
 
   const prevImage = () => {
-    setActiveImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
+    setActiveImageIndex(prev => (prev === 0 ? displayImages.length - 1 : prev - 1));
   };
 
   // Touch handlers for swipe gestures
@@ -156,19 +158,23 @@ const ProductImageGallery = ({
     touchEndX.current = 0;
   };
 
-  const currentImage = images[activeImageIndex] ? fixImageExtension(images[activeImageIndex]) : '';
+  // Garantir que temos uma imagem válida
+  const currentImage = displayImages[activeImageIndex] ? fixImageExtension(displayImages[activeImageIndex]) : fallbackImage;
+  
+  // Log para debug da imagem atual
+  console.log("ProductImageGallery - Current image:", currentImage);
   
   // Pre-load next and previous images using IntersectionObserver
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (displayImages.length <= 1) return;
     
-    const nextIdx = activeImageIndex === images.length - 1 ? 0 : activeImageIndex + 1;
-    const prevIdx = activeImageIndex === 0 ? images.length - 1 : activeImageIndex - 1;
+    const nextIdx = activeImageIndex === displayImages.length - 1 ? 0 : activeImageIndex + 1;
+    const prevIdx = activeImageIndex === 0 ? displayImages.length - 1 : activeImageIndex - 1;
     
     const preloadImages = [nextIdx, prevIdx].map(idx => {
-      if (images[idx]) {
+      if (displayImages[idx]) {
         const img = new Image();
-        img.src = fixImageExtension(images[idx]);
+        img.src = fixImageExtension(displayImages[idx]);
         return img;
       }
       return null;
@@ -182,7 +188,7 @@ const ProductImageGallery = ({
         }
       });
     };
-  }, [activeImageIndex, images]);
+  }, [activeImageIndex, displayImages]);
 
   // Generate dynamic alt text
   const getImageAlt = (index: number) => {
@@ -192,7 +198,7 @@ const ProductImageGallery = ({
   return (
     <div 
       className="bg-white rounded-2xl overflow-hidden"
-      ref={setRefs}
+      ref={inViewRef}
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -212,7 +218,7 @@ const ProductImageGallery = ({
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
           >
-            {images.length > 0 && !imageError ? (
+            {displayImages.length > 0 && !imageError ? (
               <AspectRatio ratio={1/1}>
                 {!imagesLoaded[activeImageIndex] && (
                   <div className="absolute inset-0 animate-pulse">
@@ -232,10 +238,10 @@ const ProductImageGallery = ({
                     console.log("Image error for:", currentImage);
                     setImageError(true);
                     if (e.currentTarget) {
-                      e.currentTarget.src = placeholder(category);
+                      e.currentTarget.src = fallbackImage;
+                      handleImageLoaded(activeImageIndex); // Marcar como carregado mesmo com erro
                     }
                   }}
-                  fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                   decoding={activeImageIndex === 0 ? "sync" : "async"}
                   aria-label={`Visualizar ${productName} na cor ${selectedColor}`}
                 />
@@ -243,7 +249,7 @@ const ProductImageGallery = ({
             ) : (
               <AspectRatio ratio={1/1}>
                 <img 
-                  src={placeholder(category)}
+                  src={fallbackImage}
                   alt={productName}
                   className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4"
                 />
@@ -254,7 +260,7 @@ const ProductImageGallery = ({
               <ZoomIn className="h-4 w-4 text-gray-600" />
             </div>
             
-            {images.length > 1 && !imageError && (
+            {displayImages.length > 1 && !imageError && (
               <>
                 <button 
                   onClick={prevImage}
@@ -274,14 +280,14 @@ const ProductImageGallery = ({
             )}
           </div>
           
-          {images.length > 1 && !imageError && thumbnailsVisible && (
+          {displayImages.length > 1 && !imageError && thumbnailsVisible && (
             <motion.div 
               className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              {images.map((img, index) => (
+              {displayImages.map((img, index) => (
                 <motion.button
                   key={`thumb-${index}`}
                   onClick={() => handleImageClick(index)}
@@ -290,7 +296,7 @@ const ProductImageGallery = ({
                   className={`relative h-16 w-16 rounded-md overflow-hidden border ${
                     index === activeImageIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
                   }`}
-                  aria-label={`Ver imagem ${index + 1} de ${images.length}`}
+                  aria-label={`Ver imagem ${index + 1} de ${displayImages.length}`}
                 >
                   {!imagesLoaded[index] && (
                     <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
@@ -304,7 +310,14 @@ const ProductImageGallery = ({
                     loading="lazy"
                     decoding="async"
                     onLoad={() => handleImageLoaded(index)}
-                    onError={() => console.log("Thumbnail error loading:", img)}
+                    onError={() => {
+                      console.log("Thumbnail error loading:", img);
+                      setImagesLoaded(prev => {
+                        const newState = [...prev];
+                        newState[index] = true;
+                        return newState;
+                      });
+                    }}
                   />
                 </motion.button>
               ))}
@@ -314,7 +327,7 @@ const ProductImageGallery = ({
       </AnimatePresence>
       
       <AnimatePresence>
-        {isLightboxOpen && images.length > 0 && (
+        {isLightboxOpen && displayImages.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -333,6 +346,11 @@ const ProductImageGallery = ({
                 src={currentImage}
                 alt={`${productName} - Vista ampliada`}
                 className="max-w-full max-h-[90vh] object-contain"
+                onError={(e) => {
+                  if (e.currentTarget) {
+                    e.currentTarget.src = fallbackImage;
+                  }
+                }}
               />
               <button
                 onClick={closeLightbox}
@@ -342,7 +360,7 @@ const ProductImageGallery = ({
                 <span className="text-white text-2xl">&times;</span>
               </button>
               
-              {images.length > 1 && (
+              {displayImages.length > 1 && (
                 <>
                   <button
                     onClick={(e) => {
