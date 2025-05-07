@@ -11,7 +11,7 @@ import Newsletter from "../components/Newsletter";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 
 // Fallback component for error boundaries
-const ErrorFallback = ({ error, resetErrorBoundary }) => {
+const ErrorFallback = ({ error, resetErrorBoundary }: { error: Error, resetErrorBoundary: () => void }) => {
   return (
     <div className="text-center py-10 px-4">
       <h2 className="text-xl font-semibold mb-2">Oops, algo deu errado!</h2>

@@ -8,10 +8,10 @@ import { AppleButton } from '@/components/ui/apple-button';
 const Hero = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isHighQuality, setIsHighQuality] = useState(false);
   const [fallback, setFallback] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const posterImage = "/lovable-uploads/paraiso-agulha-poster.jpg";
 
   useEffect(() => {
     if (videoRef.current) {
@@ -30,7 +30,7 @@ const Hero = () => {
       video.addEventListener('loadeddata', onLoadedData);
       video.addEventListener('error', onError);
       
-      // Force video to load and play
+      // Force video to load
       try {
         video.load();
       } catch (err) {
@@ -38,19 +38,16 @@ const Hero = () => {
         setFallback(true);
       }
       
-      // Preload low quality by default for faster loading
-      video.preload = "metadata";
+      // Safety fallback in case video doesn't load within 5 seconds
+      const fallbackTimer = setTimeout(() => {
+        if (!isVideoLoaded) {
+          console.log("Video load timeout, using fallback image");
+          setFallback(true);
+        }
+      }, 5000);
       
-      // Check network connection quality
-      const connection = (navigator as any).connection;
-      if (connection && 
-          (connection.effectiveType === '4g' || connection.downlink > 1.5)) {
-        // Good connection, can enable higher quality after initial load
-        video.addEventListener('canplay', () => {
-          // Add a timer to switch to high quality after initial playback begins
-          setTimeout(() => setIsHighQuality(true), 3000);
-        }, { once: true });
-      }
+      // Preload with metadata only for better performance
+      video.preload = "metadata";
       
       // Attempt to play the video
       try {
@@ -66,15 +63,15 @@ const Hero = () => {
         }
       } catch (err) {
         console.error("Error playing video:", err);
-        // Don't set fallback here either to give it another chance
       }
       
       return () => {
         video.removeEventListener('loadeddata', onLoadedData);
         video.removeEventListener('error', onError);
+        clearTimeout(fallbackTimer);
       };
     }
-  }, []);
+  }, [isVideoLoaded]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,14 +91,6 @@ const Hero = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-  
-  // Lazy load high quality video when needed
-  useEffect(() => {
-    if (isHighQuality && videoRef.current) {
-      const video = videoRef.current;
-      video.preload = "auto";
-    }
-  }, [isHighQuality]);
 
   const buttonVariants = {
     hidden: {
@@ -150,7 +139,7 @@ const Hero = () => {
             transition: 'opacity 1s ease-in-out'
           }}
           preload="metadata"
-          poster="/lovable-uploads/paraiso-agulha-poster.jpg"
+          poster={posterImage}
           onError={() => setFallback(true)}
         >
           <source 
@@ -161,10 +150,10 @@ const Hero = () => {
         </video>
       ) : (
         <img
-          src="/lovable-uploads/paraiso-agulha-poster.jpg"
+          src={posterImage}
           alt="Banner institucional Paraíso dos Bordados"
           className="absolute inset-0 w-full h-full object-cover"
-          loading="lazy"
+          loading="eager"
           decoding="async"
         />
       )}

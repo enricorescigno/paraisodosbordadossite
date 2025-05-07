@@ -45,7 +45,7 @@ const ProductImageGallery = ({
     threshold: 0.1,
   });
 
-  const galleryRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement | null>(null);
   
   // Touch handling for swipe gestures
   const touchStartX = useRef(0);

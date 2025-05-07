@@ -57,7 +57,7 @@ const ProductCard = ({
   const productImages = useSafeImages(images, imageUrl || fallbackImage);
   
   // Get the main image to display with proper fallbacks
-  const optimizedImageUrl = productImages?.length > 0 ? 
+  const optimizedImageUrl = productImages && productImages.length > 0 ? 
     productImages[0] : 
     (imageUrl || fallbackImage || getPlaceholderImage(name || ""));
 

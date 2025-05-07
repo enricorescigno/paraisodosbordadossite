@@ -3,8 +3,28 @@ import * as React from 'react'
 import { createRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ErrorBoundary } from 'react-error-boundary'
 import App from './App.tsx'
 import './index.css'
+
+// Global fallback UI for any uncaught errors
+const FallbackComponent = ({ error }: { error: Error }) => {
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50">
+      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md text-center">
+        <h2 className="text-2xl font-semibold mb-4 text-red-600">Erro ao carregar a aplicação</h2>
+        <p className="mb-4 text-gray-600">Ocorreu um erro inesperado. Por favor, tente novamente mais tarde.</p>
+        <p className="text-sm text-gray-500 mb-4">{error.message || 'Erro desconhecido'}</p>
+        <button
+          onClick={() => window.location.reload()}
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+        >
+          Recarregar página
+        </button>
+      </div>
+    </div>
+  )
+}
 
 // Create a client with error handling
 const queryClient = new QueryClient({
@@ -13,9 +33,8 @@ const queryClient = new QueryClient({
       retry: 1,
       refetchOnWindowFocus: false,
       staleTime: 30000,
-      // Use the appropriate property for error handling
       meta: {
-        onError: (error) => {
+        onError: (error: any) => {
           console.error('Query error:', error);
         },
       },
@@ -36,11 +55,13 @@ try {
 
   root.render(
     <React.StrictMode>
-      <QueryClientProvider client={queryClient}>
-        <HelmetProvider>
-          <App />
-        </HelmetProvider>
-      </QueryClientProvider>
+      <ErrorBoundary FallbackComponent={FallbackComponent}>
+        <QueryClientProvider client={queryClient}>
+          <HelmetProvider>
+            <App />
+          </HelmetProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
     </React.StrictMode>
   );
 } catch (error) {
