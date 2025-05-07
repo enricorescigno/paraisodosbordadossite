@@ -252,8 +252,6 @@ const ProductImageGallery = ({
                   style={imageStyle}
                   loading={safeActiveIndex === 0 ? "eager" : "lazy"}
                   decoding={safeActiveIndex === 0 ? "sync" : "async"}
-                  // Use lowercase fetchpriority
-                  fetchpriority={safeActiveIndex === 0 ? "high" : "low"}
                   onLoad={() => handleImageLoaded(safeActiveIndex)}
                   onError={(e) => {
                     console.log("Image error for:", currentImage);
@@ -275,7 +273,6 @@ const ProductImageGallery = ({
                   className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply p-4"
                   loading="eager"
                   decoding="sync"
-                  fetchpriority="high"
                 />
               </AspectRatio>
             )}

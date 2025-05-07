@@ -90,8 +90,6 @@ const ProductCard = ({
             className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
             loading="lazy"
             decoding="async"
-            // Using lowercase fetchpriority
-            fetchpriority={optimizedImageUrl === productImages?.[0] ? "high" : "auto"}
             whileHover={{
               scale: 1.05
             }}
