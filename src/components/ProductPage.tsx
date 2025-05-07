@@ -6,7 +6,7 @@ import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
 import { allProducts } from '../utils/productUtils';
 import { Product } from '../types/product';
-import useScrollToTop from '../hooks/useScrollToTop';
+import { useScrollToTop } from '../hooks/useScrollToTop';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
 import EmptyState from './common/EmptyState';
