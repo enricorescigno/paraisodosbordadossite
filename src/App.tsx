@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { Toaster } from '@/components/ui/sonner';
 import Layout from '@/layouts/Layout';
 import Index from '@/pages/Index';
 import ProductPage from '@/components/ProductPage';
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>
+        <Toaster />
       </TooltipProvider>
     </Router>
   );

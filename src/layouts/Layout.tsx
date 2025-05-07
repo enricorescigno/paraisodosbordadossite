@@ -1,7 +1,6 @@
 
-import React from 'react';
+import * as React from 'react';
 import { Outlet } from 'react-router-dom';
-import { Toaster } from '@/components/ui/toaster';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import ScrollToTop from '@/components/ScrollToTop';
@@ -19,7 +18,6 @@ const Layout = () => {
       <Footer />
       <ScrollToTop />
       <WhatsAppSupport />
-      <Toaster />
     </div>
   );
 };
