@@ -27,7 +27,7 @@ export const useProductDetail = () => {
       
       try {
         console.log("useProductDetail - Looking for product with ID:", productId);
-        let foundProduct = allProducts.find(p => p.id.toString() === productId);
+        let foundProduct = allProducts.find(p => String(p.id) === String(productId));
         
         // Special handling for product 204 (could be moved to a config)
         if (productId === "204") {
@@ -64,62 +64,66 @@ export const useProductDetail = () => {
         if (foundProduct) {
           console.log("useProductDetail - Found product:", foundProduct);
           
-          // Corrigir estrutura de imagens baseada no imageUrl já existente
-          if (
-            !foundProduct.images ||
-            !Array.isArray(foundProduct.images) ||
-            foundProduct.images.length === 0
-          ) {
-            foundProduct.images = [foundProduct.imageUrl || "/placeholder.png"];
-          }
+          // Ensure product has necessary properties to avoid undefined errors
+          const safeProduct = {
+            ...foundProduct,
+            images: foundProduct.images || [foundProduct.imageUrl || "/placeholder.svg"],
+            imageUrl: foundProduct.imageUrl || "/placeholder.svg",
+            description: foundProduct.description || "Produto de alta qualidade da Paraíso dos Bordados.",
+            features: foundProduct.features || ["Qualidade premium"],
+            type: foundProduct.type || "product",
+            category: foundProduct.category || "Diversos"
+          };
           
           // Safe state updates with mounted check
           if (isMountedRef.current) {
             // Convert string colors to color objects
-            if (foundProduct.colors && Array.isArray(foundProduct.colors) && typeof foundProduct.colors[0] === 'string') {
-              foundProduct.colors = (foundProduct.colors as string[]).map(color => ({
+            if (safeProduct.colors && Array.isArray(safeProduct.colors) && typeof safeProduct.colors[0] === 'string') {
+              safeProduct.colors = (safeProduct.colors as string[]).map(color => ({
                 name: color,
                 value: color
               })) as ProductColor[];
             }
             
             // Convert string sizes to size objects
-            if (foundProduct.sizes && Array.isArray(foundProduct.sizes) && typeof foundProduct.sizes[0] === 'string') {
-              foundProduct.sizes = (foundProduct.sizes as string[]).map(size => ({
+            if (safeProduct.sizes && Array.isArray(safeProduct.sizes) && typeof safeProduct.sizes[0] === 'string') {
+              safeProduct.sizes = (safeProduct.sizes as string[]).map(size => ({
                 name: size,
                 value: size,
                 available: true
               })) as ProductSize[];
             }
             
-            if (foundProduct.colors && foundProduct.colors.length > 0) {
-              const firstColor = (foundProduct.colors as ProductColor[])[0];
+            if (safeProduct.colors && safeProduct.colors.length > 0) {
+              const firstColor = (safeProduct.colors as ProductColor[])[0];
               setSelectedColor(firstColor.name);
             }
             
-            if (foundProduct.sizes && foundProduct.sizes.length > 0) {
-              const firstSize = (foundProduct.sizes as ProductSize[])[0];
+            if (safeProduct.sizes && safeProduct.sizes.length > 0) {
+              const firstSize = (safeProduct.sizes as ProductSize[])[0];
               setSelectedSize(firstSize.name);
             }
             
-            setIsFromPortfolio(foundProduct.type === 'portfolio');
+            setIsFromPortfolio(safeProduct.type === 'portfolio');
             
             // Provide fallback values for missing fields
-            if (!foundProduct.rating) foundProduct.rating = 4.8;
-            if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
-            if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
+            if (!safeProduct.rating) safeProduct.rating = 4.8;
             
             // Ensure imageUrl is added to images if not already present
-            if (foundProduct.imageUrl && foundProduct.images && !foundProduct.images.includes(foundProduct.imageUrl)) {
-              foundProduct.images = [foundProduct.imageUrl, ...foundProduct.images];
+            if (safeProduct.imageUrl && safeProduct.images && !safeProduct.images.includes(safeProduct.imageUrl)) {
+              safeProduct.images = [safeProduct.imageUrl, ...safeProduct.images];
             }
             
-            setProduct(foundProduct);
+            setProduct(safeProduct);
             
             // Cache and preload images
-            if (foundProduct.images && Array.isArray(foundProduct.images)) {
-              cacheImagesInBrowser(foundProduct.images);
-              preloadImages(foundProduct.images.slice(0, 3));
+            if (safeProduct.images && Array.isArray(safeProduct.images)) {
+              try {
+                cacheImagesInBrowser(safeProduct.images);
+                preloadImages(safeProduct.images.slice(0, 3));
+              } catch (error) {
+                console.error("Error caching/preloading images:", error);
+              }
             }
           }
         } else if (isMountedRef.current) {
@@ -147,11 +151,13 @@ export const useProductDetail = () => {
 
   // Get product images in a safe way for the hook
   const safeImages = useMemo(() => {
-    return product?.images && Array.isArray(product.images) ? product.images.filter(Boolean) : 
-           (product?.id ? [`/lovable-uploads/${product.id}.png`] : []);
+    // Make sure we always return an array, even if empty
+    return (product?.images && Array.isArray(product.images) && product.images.length > 0)
+      ? product.images.filter(Boolean)
+      : (product?.imageUrl ? [product.imageUrl] : ["/placeholder.svg"]);
   }, [product]);
   
-  const safeCategory = product?.category || '';
+  const safeCategory = product?.category || 'Diversos';
   
   // Use the hook with product images and category for better fallback
   const { 

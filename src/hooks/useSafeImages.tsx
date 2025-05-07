@@ -10,12 +10,16 @@ import { useMemo } from 'react';
  */
 export const useSafeImages = (images?: string[] | null, fallbackImage?: string): string[] => {
   return useMemo(() => {
+    if (!images || !Array.isArray(images)) {
+      return fallbackImage ? [fallbackImage] : ['/placeholder.svg'];
+    }
+    
     // Filter out any falsy values (undefined, null, empty string)
-    const validImages = images?.filter(Boolean) || [];
+    const validImages = images.filter(Boolean);
     
     // If we have no valid images and a fallback was provided, use it
-    if (validImages.length === 0 && fallbackImage) {
-      return [fallbackImage];
+    if (validImages.length === 0) {
+      return fallbackImage ? [fallbackImage] : ['/placeholder.svg'];
     }
     
     return validImages;

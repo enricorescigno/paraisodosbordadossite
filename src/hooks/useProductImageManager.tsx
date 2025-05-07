@@ -19,13 +19,19 @@ const useProductImageManager = ({ images, category = '' }: ProductImageManagerPr
   
   // Get current images using useMemo to prevent unnecessary recalculations
   const currentImages = useMemo(() => {
-    // Even if validImages is empty, this will be an empty array
-    return validImages;
+    // Ensure we always return a valid array
+    return validImages && validImages.length > 0 ? validImages : ['/placeholder.svg'];
   }, [validImages]);
   
   // Memoized placeholder getter
-  const getPlaceholder = useCallback(() => {
-    return getImagePlaceholder(category);
+  const getPlaceholder = useCallback((categoryName?: string) => {
+    const fallbackCategory = categoryName || category;
+    try {
+      return getImagePlaceholder(fallbackCategory);
+    } catch (error) {
+      console.error("Error getting placeholder for category:", fallbackCategory, error);
+      return '/placeholder.svg';
+    }
   }, [category]);
   
   return {

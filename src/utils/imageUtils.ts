@@ -6,7 +6,7 @@
  */
 export const toAbsoluteURL = (path: string): string => {
   // Only transform local paths that don't already have a domain
-  if (!path) return '';
+  if (!path) return '/placeholder.svg';
   
   if (path.startsWith('http')) {
     return path;
@@ -30,7 +30,7 @@ export const getImageLoading = (isImportant: boolean): "eager" | "lazy" => {
  * @returns Fixed URL with proper extension
  */
 export const fixImageExtension = (url: string): string => {
-  if (!url) return '';
+  if (!url) return '/placeholder.svg';
   return url;
 };
 
@@ -42,12 +42,16 @@ export const fixImageExtension = (url: string): string => {
 export const getImagePlaceholder = (category: string): string => {
   const defaultPlaceholder = '/placeholder.svg';
   
+  if (!category) return defaultPlaceholder;
+  
   const categoryPlaceholders: Record<string, string> = {
     'Cama': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
     'Banho': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
     'Mesa e Cozinha': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
     'Vestuário': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
-    'Infantil': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250'
+    'Infantil': 'https://images.unsplash.com/photo-1721322800607-8c38375eef04?q=80&w=250',
+    'Bordados Infantis': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
+    'Tapete e Cortinas': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=250'
   };
   
   return categoryPlaceholders[category] || defaultPlaceholder;
@@ -58,14 +62,18 @@ export const getImagePlaceholder = (category: string): string => {
  * @param images Array of image URLs to cache
  */
 export const cacheImagesInBrowser = (images: string[]): void => {
-  if (!Array.isArray(images)) return;
-  
-  images.forEach(src => {
-    if (typeof src !== 'string') return;
+  try {
+    if (!Array.isArray(images)) return;
     
-    const img = new Image();
-    img.src = src;
-  });
+    images.forEach(src => {
+      if (typeof src !== 'string') return;
+      
+      const img = new Image();
+      img.src = src;
+    });
+  } catch (error) {
+    console.error("Error caching images:", error);
+  }
 };
 
 /**
@@ -73,15 +81,19 @@ export const cacheImagesInBrowser = (images: string[]): void => {
  * @param images Array of image URLs to preload
  */
 export const preloadImages = (images: string[]): void => {
-  if (!Array.isArray(images) || images.length === 0) return;
-  
-  images.forEach(src => {
-    if (typeof src !== 'string') return;
+  try {
+    if (!Array.isArray(images) || images.length === 0) return;
     
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
-    link.href = src;
-    document.head.appendChild(link);
-  });
+    images.forEach(src => {
+      if (typeof src !== 'string') return;
+      
+      const link = document.createElement('link');
+      link.rel = 'preload';
+      link.as = 'image';
+      link.href = src;
+      document.head.appendChild(link);
+    });
+  } catch (error) {
+    console.error("Error preloading images:", error);
+  }
 };
