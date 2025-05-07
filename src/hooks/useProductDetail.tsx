@@ -151,7 +151,7 @@ export const useProductDetail = () => {
             imageUrl: foundProduct.imageUrl || "/placeholder.svg",
             description: foundProduct.description || "Produto de alta qualidade da Paraíso dos Bordados.",
             features: foundProduct.features || ["Qualidade premium"],
-            type: foundProduct.type || ("product" as const), // Explicitly type as "product"
+            type: (foundProduct.type as "product" | "portfolio" | "service") || ("product" as const),
             category: foundProduct.category || "Diversos"
           };
           
@@ -176,12 +176,16 @@ export const useProductDetail = () => {
             
             if (safeProduct.colors && safeProduct.colors.length > 0) {
               const firstColor = (safeProduct.colors as ProductColor[])[0];
-              setSelectedColor(firstColor.name);
+              if (firstColor) {
+                setSelectedColor(firstColor.name);
+              }
             }
             
             if (safeProduct.sizes && safeProduct.sizes.length > 0) {
               const firstSize = (safeProduct.sizes as ProductSize[])[0];
-              setSelectedSize(firstSize.name);
+              if (firstSize) {
+                setSelectedSize(firstSize.name);
+              }
             }
             
             setIsFromPortfolio(safeProduct.type === 'portfolio');
@@ -342,4 +346,3 @@ export const useProductDetail = () => {
 };
 
 export default useProductDetail;
-

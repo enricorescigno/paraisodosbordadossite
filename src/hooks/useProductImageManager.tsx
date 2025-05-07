@@ -1,5 +1,5 @@
 
-import { useState, useMemo, useCallback } from 'react';
+import { useState, useMemo, useCallback, useEffect } from 'react';
 import useSafeImages from './useSafeImages';
 import { getImagePlaceholder } from '@/utils/imageUtils';
 
@@ -44,10 +44,12 @@ const useProductImageManager = ({ images, category = '' }: ProductImageManagerPr
     }
   }, [category]);
   
-  // Reset active index if images change
-  useMemo(() => {
-    setActiveImageIndex(0);
-  }, [validImages]);
+  // Reset active index when images change or if it's out of bounds
+  useEffect(() => {
+    if (activeImageIndex >= currentImages.length) {
+      setActiveImageIndex(0);
+    }
+  }, [currentImages, activeImageIndex]);
   
   return {
     currentImages,
