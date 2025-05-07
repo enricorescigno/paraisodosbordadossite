@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback, memo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
@@ -38,9 +37,25 @@ const ProductImageGallery = ({
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
   
+  // Extract product ID for fallback image if needed
+  const extractProductId = () => {
+    if (validImages.length > 0) {
+      const firstImagePath = validImages[0];
+      const idMatch = firstImagePath.match(/\/(\d+)\.png$/);
+      return idMatch ? idMatch[1] : '';
+    }
+    return '';
+  };
+  
   // Generate fallback if there are no valid images
-  const fallbackImage = placeholder(category);
+  const fallbackImage = validImages.length > 0 ? validImages[0] : 
+                        (extractProductId() ? `/lovable-uploads/${extractProductId()}.png` : placeholder(category));
+                        
+  // Make sure displayImages is always a valid array
   const displayImages = validImages.length > 0 ? validImages : [fallbackImage];
+  
+  console.log("ProductImageGallery - Using fallback image:", fallbackImage);
+  console.log("ProductImageGallery - Display images:", displayImages);
   
   // Use InView hook with proper initialization
   const { ref: inViewRef, inView } = useInView({

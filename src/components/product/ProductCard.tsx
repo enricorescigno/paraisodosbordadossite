@@ -47,6 +47,10 @@ const ProductCard = ({
   };
 
   const getImageUrl = () => {
+    console.log(`ProductCard - Processing product ${id} with images:`, images);
+    console.log(`ProductCard - imageUrl:`, imageUrl);
+    
+    // Fallback para imagens específicas por ID
     if (Number(id) === 2010) {
       if (images && Array.isArray(images) && images.length > 5) {
         return images[5];
@@ -106,11 +110,22 @@ const ProductCard = ({
       return images["Branco"]?.[0];
     }
     
-    if (!imageUrl && (!images || (Array.isArray(images) && images.length === 0))) {
-      return getPlaceholderImage(name);
+    // Implementar o fallback para imagens conforme solicitado
+    if (imageUrl) {
+      return imageUrl;
     }
     
-    return imageUrl || (Array.isArray(images) ? images[0] : null) || "https://via.placeholder.com/500x500?text=Sem+Imagem";
+    // Verificar se images é um array válido e não vazio
+    if (Array.isArray(images) && images.length > 0) {
+      return images[0];
+    }
+    
+    // Aplicar fallback utilizando o ID do produto
+    const fallbackImage = `/lovable-uploads/${id}.png`;
+    console.log(`ProductCard - Using fallback image: ${fallbackImage}`);
+    
+    // Se tudo falhar, use a imagem de placeholder
+    return fallbackImage || getPlaceholderImage(name);
   };
 
   const optimizedImageUrl = getImageUrl();

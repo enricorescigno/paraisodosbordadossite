@@ -59,7 +59,14 @@ export const useProductDetail = () => {
           
           if (foundProduct) {
             console.log("useProductDetail - Found product:", foundProduct);
-            console.log("useProductDetail - Product images:", foundProduct.images);
+            
+            // Implement fallback for images if they're missing or not an array
+            if (!foundProduct.images || !Array.isArray(foundProduct.images) || foundProduct.images.length === 0) {
+              console.log("useProductDetail - Using fallback image path for product:", productId);
+              foundProduct.images = [`/lovable-uploads/${foundProduct.id}.png`];
+            }
+            
+            console.log("useProductDetail - Product images after fallback:", foundProduct.images);
             console.log("useProductDetail - Product imageUrl:", foundProduct.imageUrl);
             
             if (foundProduct.colors && Array.isArray(foundProduct.colors) && typeof foundProduct.colors[0] === 'string') {
@@ -93,13 +100,8 @@ export const useProductDetail = () => {
             if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
             if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
             
-            // Ensure images is always an array
-            if (!foundProduct.images) {
-              foundProduct.images = [];
-            }
-            
             // Ensure imageUrl is added to images if not already present
-            if (foundProduct.imageUrl && !foundProduct.images.includes(foundProduct.imageUrl)) {
+            if (foundProduct.imageUrl && foundProduct.images && !foundProduct.images.includes(foundProduct.imageUrl)) {
               foundProduct.images = [foundProduct.imageUrl, ...foundProduct.images];
             }
             
@@ -134,7 +136,8 @@ export const useProductDetail = () => {
   }, [productId]);
 
   // Get product images in a safe way for the hook
-  const safeImages = product?.images && Array.isArray(product.images) ? product.images : [];
+  const safeImages = product?.images && Array.isArray(product.images) ? product.images : 
+                   (product?.id ? [`/lovable-uploads/${product.id}.png`] : []);
   const safeImageUrl = product?.imageUrl || '';
   const safeCategory = product?.category || '';
   

@@ -31,7 +31,7 @@ export default defineConfig(({ mode }) => ({
           react: ['react', 'react-dom'],
           router: ['react-router-dom'],
           framer: ['framer-motion'],
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-tooltip'],
+          ui: ['@radix-ui/react-dialog', '@radix-ui/react-tooltip', '@radix-ui/react-avatar', '@radix-ui/react-select', '@radix-ui/react-tabs', '@radix-ui/react-dropdown-menu'],
           components: ['@/components/ui/button', '@/components/ui/dropdown-menu', '@/components/ui/tabs'],
           utils: ['@/lib/utils', '@/utils/imageUtils']
         },

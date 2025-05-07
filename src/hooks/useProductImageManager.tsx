@@ -48,8 +48,24 @@ export const useProductImageManager = ({
   const allImages = useMemo(() => {
     // Ensure we have valid images before proceeding
     if (!mainImage && validImages.length === 0) {
-      console.log("No valid images or mainImage, using fallback placeholders");
-      // If we don't have valid images, use placeholders based on category
+      console.log("No valid images or mainImage, checking if we have category info to generate fallback");
+      
+      if (category && category !== '') {
+        console.log(`Using placeholders based on category: ${category}`);
+        return getDefaultPlaceholders(category);
+      }
+      
+      // Last resort fallback - try to extract an ID from the first image path if it exists
+      const firstImagePath = images && images.length > 0 ? images[0] : '';
+      const idMatch = firstImagePath.match(/\/(\d+)\.png$/);
+      const id = idMatch ? idMatch[1] : '';
+      
+      if (id) {
+        console.log(`Extracted ID ${id} from image path, using as fallback`);
+        return [`/lovable-uploads/${id}.png`];
+      }
+      
+      console.log("Using generic fallback placeholders");
       return getDefaultPlaceholders(category);
     }
     
@@ -62,7 +78,7 @@ export const useProductImageManager = ({
     const isMainImageIncluded = validImages.includes(mainImage);
     console.log("Main image already included in images?", isMainImageIncluded);
     return isMainImageIncluded ? validImages : [mainImage, ...validImages];
-  }, [mainImage, validImages, category]);
+  }, [mainImage, validImages, category, images]);
   
   const [imageIndex, setImageIndex] = useState(0);
   
