@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     minify: true,
-    sourcemap: false,
+    sourcemap: true, // Enable sourcemaps for debugging
     cssMinify: true,
     reportCompressedSize: false, // Disable size reporting to optimize build time
     rollupOptions: {

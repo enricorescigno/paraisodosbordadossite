@@ -10,8 +10,8 @@ const Hero = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHighQuality, setIsHighQuality] = useState(false);
   const [fallback, setFallback] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -79,14 +79,12 @@ const Hero = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      if (containerRef.current) {
-        setIsScrolled(scrollPosition > 50);
+      setIsScrolled(scrollPosition > 50);
 
-        // Optimize parallax effect - only apply if the element is in viewport
-        if (scrollPosition < window.innerHeight && videoRef.current) {
-          const yValue = scrollPosition * 0.4;
-          videoRef.current.style.setProperty('transform', `scale(1.01) translateY(${yValue}px)`);
-        }
+      // Optimize parallax effect - only apply if the element is in viewport
+      if (containerRef.current && videoRef.current && scrollPosition < window.innerHeight) {
+        const yValue = scrollPosition * 0.4;
+        videoRef.current.style.setProperty('transform', `scale(1.01) translateY(${yValue}px)`);
       }
     };
     

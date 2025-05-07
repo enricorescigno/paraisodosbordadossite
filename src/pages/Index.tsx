@@ -11,13 +11,20 @@ import Newsletter from "../components/Newsletter";
 import LoadingSpinner from "../components/common/LoadingSpinner";
 
 // Fallback component for error boundaries
-const ErrorFallback = () => {
+const ErrorFallback = ({ error, resetErrorBoundary }) => {
   return (
     <div className="text-center py-10 px-4">
       <h2 className="text-xl font-semibold mb-2">Oops, algo deu errado!</h2>
       <p>Estamos trabalhando para resolver o problema.</p>
+      <p className="text-red-600 text-sm mt-2">{error?.message || "Erro desconhecido"}</p>
       <button
-        onClick={() => window.location.reload()}
+        onClick={() => {
+          if (typeof resetErrorBoundary === 'function') {
+            resetErrorBoundary();
+          } else {
+            window.location.reload();
+          }
+        }}
         className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md"
       >
         Tentar novamente
