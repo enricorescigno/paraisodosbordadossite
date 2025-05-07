@@ -5,14 +5,17 @@
  * @returns Absolute URL for the image
  */
 export const toAbsoluteURL = (path: string): string => {
-  // Only transform local paths that don't already have a domain
+  // Safety check for undefined or null
   if (!path) return '/placeholder.svg';
   
+  // Only transform local paths that don't already have a domain
   if (path.startsWith('http')) {
     return path;
   }
   
-  return `https://191fbbb5-946d-442c-89b6-c5be03313102.lovableproject.com${path}`;
+  // Ensure the path starts with a slash
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `https://191fbbb5-946d-442c-89b6-c5be03313102.lovableproject.com${normalizedPath}`;
 };
 
 /**
@@ -44,17 +47,22 @@ export const getImagePlaceholder = (category: string): string => {
   
   if (!category) return defaultPlaceholder;
   
-  const categoryPlaceholders: Record<string, string> = {
-    'Cama': 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=250',
-    'Banho': 'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?q=80&w=250',
-    'Mesa e Cozinha': 'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=250',
-    'Vestuário': 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=250',
-    'Infantil': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
-    'Bordados Infantis': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
-    'Tapete e Cortinas': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=250'
-  };
-  
-  return categoryPlaceholders[category] || defaultPlaceholder;
+  try {
+    const categoryPlaceholders: Record<string, string> = {
+      'Cama': 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?q=80&w=250',
+      'Banho': 'https://images.unsplash.com/photo-1563291074-2bf8677ac0e5?q=80&w=250',
+      'Mesa e Cozinha': 'https://images.unsplash.com/photo-1556911220-bff31c812dba?q=80&w=250',
+      'Vestuário': 'https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=250',
+      'Infantil': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
+      'Bordados Infantis': 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=250',
+      'Tapete e Cortinas': 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=250'
+    };
+    
+    return categoryPlaceholders[category] || defaultPlaceholder;
+  } catch (error) {
+    console.error("Error getting placeholder for category:", category);
+    return defaultPlaceholder;
+  }
 };
 
 /**
