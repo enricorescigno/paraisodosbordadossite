@@ -1,5 +1,6 @@
 
 import { Product } from '../../../types/product';
+import { toAbsoluteURL } from '../../imageUtils';
 
 export const lencoisProducts: Product[] = [
   {
@@ -9,10 +10,10 @@ export const lencoisProducts: Product[] = [
     category: "Cama",
     price: "R$ 65,00",
     description: "Jogo de cama solteiro com 180 fios, modelo Turin. Inclui 3 peças: 1 lençol com elástico, 1 lençol de cobrir e 1 fronha. Design elegante em xadrez nas cores bege, azul e caramelo.",
-    imageUrl: "/lovable-uploads/c0427b76-6f55-4bec-9c6d-36f7a0a3740a.png",
+    imageUrl: toAbsoluteURL("/lovable-uploads/c0427b76-6f55-4bec-9c6d-36f7a0a3740a.png"),
     images: [
-      "/lovable-uploads/c0427b76-6f55-4bec-9c6d-36f7a0a3740a.png",
-      "/lovable-uploads/e2d02ef0-ffb8-4480-b3fe-2ed5f7d99d5d.png"
+      toAbsoluteURL("/lovable-uploads/c0427b76-6f55-4bec-9c6d-36f7a0a3740a.png"),
+      toAbsoluteURL("/lovable-uploads/e2d02ef0-ffb8-4480-b3fe-2ed5f7d99d5d.png")
     ],
     isNew: true,
     colors: ["Bege", "Azul", "Caramelo"],
@@ -34,10 +35,10 @@ export const lencoisProducts: Product[] = [
     category: "Cama",
     price: "R$ 65,00",
     description: "Jogo de cama solteiro com 180 fios, modelo Flower Rosa. O conjunto inclui 3 peças: 1 lençol com elástico, 1 lençol de cobrir e 1 fronha. Design floral delicado em tons de rosa e verde sobre fundo bege claro.",
-    imageUrl: "/lovable-uploads/52961fbf-941d-46f0-aa3b-90dd6b20917c.png",
+    imageUrl: toAbsoluteURL("/lovable-uploads/52961fbf-941d-46f0-aa3b-90dd6b20917c.png"),
     images: [
-      "/lovable-uploads/52961fbf-941d-46f0-aa3b-90dd6b20917c.png",
-      "/lovable-uploads/db462d61-f681-4d0b-9a2c-70687be0aaea.png"
+      toAbsoluteURL("/lovable-uploads/52961fbf-941d-46f0-aa3b-90dd6b20917c.png"),
+      toAbsoluteURL("/lovable-uploads/db462d61-f681-4d0b-9a2c-70687be0aaea.png")
     ],
     features: [
       "180 fios de alta qualidade",
