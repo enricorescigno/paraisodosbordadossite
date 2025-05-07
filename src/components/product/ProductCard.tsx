@@ -1,8 +1,10 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { ProductColor } from '@/types/product';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 interface ProductCardProps {
   id: number | string;
@@ -90,23 +92,27 @@ const ProductCard = ({
       className="flex flex-col h-full w-full"
     >
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center">
-        <motion.img
-          src={optimizedImageUrl}
-          alt={`Produto: ${name}`}
-          className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
-          loading="lazy"
-          whileHover={{
-            scale: 1.05
-          }}
-          transition={{
-            duration: 0.3
-          }}
-          onError={e => {
-            const target = e.target as HTMLImageElement;
-            target.onerror = null;
-            target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
-          }}
-        />
+        <AspectRatio ratio={1/1} className="w-full h-full">
+          <motion.img
+            src={optimizedImageUrl}
+            alt={`Produto: ${name}`}
+            className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+            whileHover={{
+              scale: 1.05
+            }}
+            transition={{
+              duration: 0.3
+            }}
+            onError={e => {
+              const target = e.target as HTMLImageElement;
+              target.onerror = null;
+              target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
+            }}
+          />
+        </AspectRatio>
       </div>
       
       <div className="flex flex-col flex-grow w-full">

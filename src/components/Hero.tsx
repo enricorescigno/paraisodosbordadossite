@@ -9,6 +9,7 @@ const Hero = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHighQuality, setIsHighQuality] = useState(false);
+  const [fallback, setFallback] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -23,6 +24,7 @@ const Hero = () => {
       
       const onError = (e: Event) => {
         console.error("Video loading error:", e);
+        setFallback(true);
       };
       
       video.addEventListener('loadeddata', onLoadedData);
@@ -50,7 +52,10 @@ const Hero = () => {
       if (playPromise !== undefined) {
         playPromise
           .then(() => console.log("Video playing"))
-          .catch(err => console.error("Video play error:", err));
+          .catch(err => {
+            console.error("Video play error:", err);
+            setFallback(true);
+          });
       }
       
       return () => {
@@ -122,27 +127,39 @@ const Hero = () => {
 
   return (
     <section ref={containerRef} className="relative w-full h-screen overflow-hidden">
-      {/* Video Background - optimized with lowered initial quality */}
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
-          opacity: isVideoLoaded ? 1 : 0,
-          transition: 'opacity 1s ease-in-out'
-        }}
-        preload="metadata"
-        poster="/lovable-uploads/paraiso-agulha-poster.jpg"
-      >
-        <source 
-          src="/lovable-uploads/paraiso-agulha.mp4" 
-          type="video/mp4" 
+      {/* Video Background with Fallback */}
+      {!fallback ? (
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{
+            opacity: isVideoLoaded ? 1 : 0,
+            transition: 'opacity 1s ease-in-out'
+          }}
+          preload="metadata"
+          poster="/lovable-uploads/paraiso-agulha-poster.jpg"
+          onError={() => setFallback(true)}
+        >
+          <source 
+            src="/lovable-uploads/paraiso-agulha.mp4" 
+            type="video/mp4" 
+          />
+          Seu navegador não suporta vídeos HTML5.
+        </video>
+      ) : (
+        <img
+          src="/lovable-uploads/paraiso-agulha-poster.jpg"
+          alt="Banner institucional Paraíso dos Bordados"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="lazy"
+          decoding="async"
+          fetchPriority="high"
         />
-        Seu navegador não suporta vídeos HTML5.
-      </video>
+      )}
 
       {/* Content */}
       <div className="relative z-20 flex items-center justify-center h-full">
@@ -176,6 +193,9 @@ const Hero = () => {
           </motion.div>
         </div>
       </div>
+
+      {/* Hidden anchor for scroll detection */}
+      <div id="top-anchor" className="absolute top-0 left-0 w-full h-10" aria-hidden="true"></div>
 
       {/* Scroll indicator with smoother animation */}
       <div
