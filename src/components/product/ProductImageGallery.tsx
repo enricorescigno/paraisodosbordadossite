@@ -35,6 +35,23 @@ const ProductImageGallery = ({
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
+  // Use InView hook for the gallery container
+  const { ref: inViewRef, inView } = useInView({
+    triggerOnce: true,
+    threshold: 0.1,
+  });
+
+  // Merge refs
+  const setRefs = useCallback(
+    (node: HTMLDivElement | null) => {
+      // Set the galleryRef manually
+      galleryRef.current = node;
+      // Set the inViewRef using its function form
+      inViewRef(node);
+    },
+    [inViewRef]
+  );
+
   // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -167,20 +184,6 @@ const ProductImageGallery = ({
     };
   }, [activeImageIndex, images]);
 
-  // Use IntersectionObserver for lazy loading thumbnails
-  const { ref: galleryInViewRef } = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
-  
-  // Create a combined ref function
-  const setCombinedRef = (element: HTMLDivElement | null) => {
-    galleryRef.current = element;
-    if (typeof galleryInViewRef === 'function') {
-      galleryInViewRef(element);
-    }
-  };
-
   // Generate dynamic alt text
   const getImageAlt = (index: number) => {
     return `${productName} - ${selectedColor} - ${index === 0 ? 'Principal' : `Detalhe ${index}`}`
@@ -189,7 +192,7 @@ const ProductImageGallery = ({
   return (
     <div 
       className="bg-white rounded-2xl overflow-hidden"
-      ref={setCombinedRef}
+      ref={setRefs}
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -278,44 +281,33 @@ const ProductImageGallery = ({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              {images.map((img, index) => {
-                // Use IntersectionObserver for each thumbnail
-                const { ref, inView } = useInView({
-                  triggerOnce: true,
-                  rootMargin: '200px 0px',
-                });
-                
-                return (
-                  <motion.button
-                    ref={ref}
-                    key={`thumb-${index}`}
-                    onClick={() => handleImageClick(index)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`relative h-16 w-16 rounded-md overflow-hidden border ${
-                      index === activeImageIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
+              {images.map((img, index) => (
+                <motion.button
+                  key={`thumb-${index}`}
+                  onClick={() => handleImageClick(index)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`relative h-16 w-16 rounded-md overflow-hidden border ${
+                    index === activeImageIndex ? 'border-[#0071E3] shadow-sm' : 'border-gray-200'
+                  }`}
+                  aria-label={`Ver imagem ${index + 1} de ${images.length}`}
+                >
+                  {!imagesLoaded[index] && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
+                  )}
+                  <img 
+                    src={fixImageExtension(img)} 
+                    alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
+                    className={`h-full w-full object-cover object-center absolute inset-0 mix-blend-multiply p-1 ${
+                      !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
                     }`}
-                    aria-label={`Ver imagem ${index + 1} de ${images.length}`}
-                  >
-                    {!imagesLoaded[index] && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 background-animate" />
-                    )}
-                    {(inView || index < 5) && (
-                      <img 
-                        src={fixImageExtension(img)} 
-                        alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
-                        className={`h-full w-full object-cover object-center absolute inset-0 mix-blend-multiply p-1 ${
-                          !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
-                        }`}
-                        loading="lazy"
-                        decoding="async"
-                        onLoad={() => handleImageLoaded(index)}
-                        onError={() => console.log("Thumbnail error loading:", img)}
-                      />
-                    )}
-                  </motion.button>
-                );
-              })}
+                    loading="lazy"
+                    decoding="async"
+                    onLoad={() => handleImageLoaded(index)}
+                    onError={() => console.log("Thumbnail error loading:", img)}
+                  />
+                </motion.button>
+              ))}
             </motion.div>
           )}
         </motion.div>
@@ -379,7 +371,6 @@ const ProductImageGallery = ({
         )}
       </AnimatePresence>
 
-      {/* Use a standard style element without jsx/global props */}
       <style>
         {`
         .background-animate {
@@ -397,4 +388,3 @@ const ProductImageGallery = ({
 };
 
 export default memo(ProductImageGallery);
-
