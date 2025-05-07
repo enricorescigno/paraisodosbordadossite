@@ -1,5 +1,5 @@
 
-import * as React from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import Hero from "../components/Hero";
 import ProductShowcase from "../components/ProductShowcase";
