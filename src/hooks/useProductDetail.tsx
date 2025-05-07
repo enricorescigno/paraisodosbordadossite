@@ -64,20 +64,15 @@ export const useProductDetail = () => {
         if (foundProduct) {
           console.log("useProductDetail - Found product:", foundProduct);
           
-          // Novo bloco de código para manipulação de imagens
+          // Ensure product has an images array
           if (!foundProduct.images || !Array.isArray(foundProduct.images) || foundProduct.images.length === 0) {
-            const fallbackImage = `/lovable-uploads/${foundProduct.id}.png`;
-            const imgList = [];
-
-            if (foundProduct.imageUrl && !imgList.includes(foundProduct.imageUrl)) {
-              imgList.push(foundProduct.imageUrl);
+            console.log("useProductDetail - Creating images array for product:", productId);
+            foundProduct.images = [`/lovable-uploads/${foundProduct.id}.png`];
+            
+            // If we have an imageUrl, add it to images array too
+            if (foundProduct.imageUrl && !foundProduct.images.includes(foundProduct.imageUrl)) {
+              foundProduct.images.unshift(foundProduct.imageUrl);
             }
-
-            if (!imgList.includes(fallbackImage)) {
-              imgList.push(fallbackImage);
-            }
-
-            foundProduct.images = imgList;
           }
           
           // Safe state updates with mounted check
