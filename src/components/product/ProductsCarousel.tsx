@@ -22,6 +22,9 @@ const ProductsCarousel = ({
 }: ProductsCarouselProps) => {
   const isMobile = useIsMobile();
   
+  // Safety check for products
+  const safeProducts = Array.isArray(products) ? products : [];
+  
   return (
     <motion.div 
       className="relative"
@@ -31,39 +34,44 @@ const ProductsCarousel = ({
     >
       <Carousel className="w-full">
         <CarouselContent className="-ml-4 md:-ml-6">
-          {products.map((product) => (
-            <CarouselItem 
-              key={product.id} 
-              className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3 h-full"
-            >
-              <div className="p-1 md:p-2 h-full flex flex-col">
-                <ProductCard 
-                  id={product.id}
-                  name={product.name}
-                  description={product.description}
-                  imageUrl={product.imageUrl}
-                  images={product.images}
-                  colors={product.colors}
-                  isNew={product.isNew}
-                  whatsappNumber={whatsappNumber}
-                  isPortfolio={isPortfolio}
-                  showActionButton={false}
-                />
-                
-                <Link 
-                  to={`/produto/${product.id}`} 
-                  className="mt-3 w-full"
-                >
-                  <Button 
-                    variant="outline" 
-                    className="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-800 font-medium rounded-lg py-2"
+          {safeProducts.map((product) => {
+            // Safety check for product
+            if (!product || !product.id) return null;
+            
+            return (
+              <CarouselItem 
+                key={product.id} 
+                className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3 h-full"
+              >
+                <div className="p-1 md:p-2 h-full flex flex-col">
+                  <ProductCard 
+                    id={product.id}
+                    name={product.name || "Produto"}
+                    description={product.description}
+                    imageUrl={product.imageUrl}
+                    images={product.images}
+                    colors={product.colors}
+                    isNew={product.isNew}
+                    whatsappNumber={whatsappNumber || ""}
+                    isPortfolio={isPortfolio}
+                    showActionButton={false}
+                  />
+                  
+                  <Link 
+                    to={`/produto/${product.id}`} 
+                    className="mt-3 w-full"
                   >
-                    {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
-                  </Button>
-                </Link>
-              </div>
-            </CarouselItem>
-          ))}
+                    <Button 
+                      variant="outline" 
+                      className="w-full bg-white hover:bg-gray-50 border border-gray-200 text-gray-800 font-medium rounded-lg py-2"
+                    >
+                      {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
+                    </Button>
+                  </Link>
+                </div>
+              </CarouselItem>
+            );
+          })}
         </CarouselContent>
         
         <div className={`absolute ${isMobile ? 'bottom-0 right-4' : '-bottom-16 right-8'} flex space-x-2 mt-8`}>
