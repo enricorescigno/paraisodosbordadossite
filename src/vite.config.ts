@@ -7,9 +7,9 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    allowedHosts: 'all',
+    allowedHosts: true, // Changed from 'all' to true to match expected type
     host: "0.0.0.0",
-    port: 8880,
+    port: 8080, // Setting back to 8080 as required
     strictPort: true,
   },
   plugins: [
@@ -71,7 +71,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   preview: {
-    port: 8880,
+    port: 8080, // Set back to 8080
     host: true,
   },
   // Add better file change detection
