@@ -14,5 +14,7 @@ export const toAbsoluteURL = (path: string | undefined): string => {
   
   // Make sure the path starts with a slash
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  
+  // Don't attempt to add or change file extensions, just return the normalized path
   return normalizedPath;
 };

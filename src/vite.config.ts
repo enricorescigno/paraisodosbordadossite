@@ -9,6 +9,8 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    strictPort: false,
+    cors: true,
   },
   plugins: [
     react(),
@@ -27,12 +29,10 @@ export default defineConfig(({ mode }) => ({
     rollupOptions: {
       output: {
         manualChunks: {
-          // Split vendor chunks by package type
           react: ['react', 'react-dom'],
           router: ['react-router-dom'],
           framer: ['framer-motion'],
           ui: ['@radix-ui/react-slot', '@radix-ui/react-separator'],
-          // New chunks for better code splitting
           components: ['@/components/ui/button', '@/components/ui/apple-button', '@/components/ui/card'],
           utils: ['@/lib/utils', '@/utils/imageUtils']
         },
@@ -53,10 +53,11 @@ export default defineConfig(({ mode }) => ({
     target: 'es2020',
     assetsInlineLimit: 4096, // 4kb
     chunkSizeWarningLimit: 1000, // 1000kb
-    // Enable these for production
     cssCodeSplit: true,
     modulePreload: true,
     treeshake: true,
+    // Image compression settings disabled for troubleshooting
+    assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp', '**/*.svg'],
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
@@ -72,6 +73,5 @@ export default defineConfig(({ mode }) => ({
       'Cache-Control': 'public, max-age=86400',
     }
   },
-  // Add better file change detection
   cacheDir: '.vite-cache',
 }));

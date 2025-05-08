@@ -1,3 +1,4 @@
+
 /**
  * Image optimization utilities
  */
@@ -120,34 +121,27 @@ export const preloadImages = (urls: string[]): void => {
     const img = new Image();
     img.src = url;
     
-    // Optional: Set loading priority
-    if ('fetchPriority' in HTMLImageElement.prototype) {
-      (img as any).fetchPriority = urls.length < 5 ? 'high' : 'auto';
+    // Optional: Set loading priority using attribute
+    if ('loading' in HTMLImageElement.prototype) {
+      (img as any).loading = urls.length < 5 ? 'eager' : 'lazy';
     }
   });
 };
 
-// Fix image extension issues
+// Fix image extension issues - updated to handle PNG files correctly
 export const fixImageExtension = (url: string): string => {
   if (!url) return '';
   
-  // Se for alguma das novas imagens de bonés, garanta que esteja correta
-  if (url.includes('afe9f856-920c-4f37-a090-e54c6d0eb85d') || 
-      url.includes('3a0d16aa-8bb6-45a1-92a5-352852950663') ||
-      url.includes('60729ca5-43f4-4c68-bc00-bdbf97652252') ||
-      url.includes('a521517c-0d8f-4061-88b7-b003cb7e2a92')) {
+  // Always return the original URL for external URLs
+  if (url.startsWith('http') || url.startsWith('data:')) {
     return url;
   }
   
-  // If the URL ends with .webp but we're having issues, try removing it
-  if (url.endsWith('.webp')) {
-    return url.replace('.webp', '.png');
+  // If the URL already has an image extension, return it as is
+  if (url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
+    return url;
   }
   
-  // If there's no extension, add .png as fallback
-  if (!url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i) && !url.includes('?')) {
-    return `${url}.png`;
-  }
-  
-  return url;
+  // For URLs without an extension, add .png as the default
+  return `${url}.png`;
 };

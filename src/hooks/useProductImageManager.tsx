@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
-import { getImagePlaceholder } from '@/utils/imageUtils';
+import { getImagePlaceholder, fixImageExtension } from '@/utils/imageUtils';
 import { toAbsoluteURL } from '@/utils/urlUtils';
 
 export const useProductImageManager = (product: Product | null, selectedColor: string) => {
@@ -11,6 +11,11 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
   // Provide a placeholder function that's safe to call even with no category
   const getPlaceholder = (category: string = '') => {
     return getImagePlaceholder(category);
+  };
+
+  // Helper function to process images with proper URL handling
+  const processImages = (images: string[]) => {
+    return images.map(img => toAbsoluteURL(img));
   };
 
   // Update images when product or selectedColor changes
@@ -55,10 +60,10 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       
       // Use the images for the selected color, or the first available color if no selection
       if (selectedColor && colorImages[selectedColor]) {
-        images = colorImages[selectedColor].map(img => toAbsoluteURL(img));
+        images = processImages(colorImages[selectedColor]);
       } else {
         const firstColor = Object.keys(colorImages)[0];
-        images = colorImages[firstColor].map(img => toAbsoluteURL(img));
+        images = processImages(colorImages[firstColor]);
       }
     } 
     // If product has images object organized by color
@@ -66,7 +71,7 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
       if (selectedColor && product.images[selectedColor]) {
         // Selected color images exist
         if (Array.isArray(product.images[selectedColor])) {
-          images = product.images[selectedColor].map(img => toAbsoluteURL(img));
+          images = processImages(product.images[selectedColor]);
         }
       } else {
         // No selected color or selected color has no images, try to get any available images
@@ -75,13 +80,13 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         );
         
         if (firstColorWithImages) {
-          images = product.images[firstColorWithImages].map(img => toAbsoluteURL(img));
+          images = processImages(product.images[firstColorWithImages]);
         }
       }
     } 
     // If product has a simple images array
     else if (product.images && Array.isArray(product.images)) {
-      images = product.images.map(img => toAbsoluteURL(img));
+      images = processImages(product.images);
     }
     
     // If we still have no images, try using imageUrl

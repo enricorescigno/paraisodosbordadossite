@@ -13,6 +13,11 @@ baseStyles.textContent = `
     min-height: 100vh;
     font-family: sans-serif;
   }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 `;
 document.head.appendChild(baseStyles);
 

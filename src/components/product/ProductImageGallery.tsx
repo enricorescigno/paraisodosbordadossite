@@ -99,7 +99,12 @@ const ProductImageGallery = ({
   };
 
   // Get current image and fix its extension if needed
-  const currentImage = validImages[activeImageIndex] ? toAbsoluteURL(fixImageExtension(validImages[activeImageIndex])) : '';
+  const processImageUrl = (url: string) => {
+    const absoluteUrl = toAbsoluteURL(url);
+    return fixImageExtension(absoluteUrl);
+  };
+  
+  const currentImage = validImages[activeImageIndex] ? processImageUrl(validImages[activeImageIndex]) : '';
   
   // Preload adjacent images for smoother navigation
   useEffect(() => {
@@ -112,7 +117,7 @@ const ProductImageGallery = ({
     const preloadImages = [nextIdx, prevIdx].map(idx => {
       if (validImages[idx]) {
         const img = new Image();
-        img.src = toAbsoluteURL(fixImageExtension(validImages[idx]));
+        img.src = processImageUrl(validImages[idx]);
         return img;
       }
       return null;
@@ -233,7 +238,7 @@ const ProductImageGallery = ({
                     <Skeleton className="h-full w-full absolute inset-0" />
                   )}
                   <img 
-                    src={toAbsoluteURL(fixImageExtension(img))} 
+                    src={processImageUrl(img)} 
                     alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
                     className={`h-full w-full object-contain bg-[#FAFAFA] mix-blend-multiply p-1 ${
                       !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'

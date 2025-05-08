@@ -22,6 +22,9 @@ const ProductsCarousel = ({
 }: ProductsCarouselProps) => {
   const isMobile = useIsMobile();
   
+  // Ensure products is an array to prevent errors
+  const safeProducts = Array.isArray(products) ? products : [];
+  
   return (
     <motion.div 
       className="relative"
@@ -31,7 +34,7 @@ const ProductsCarousel = ({
     >
       <Carousel className="w-full">
         <CarouselContent className="-ml-4 md:-ml-6">
-          {products.map((product) => (
+          {safeProducts.map((product) => (
             <CarouselItem 
               key={product.id} 
               className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3 h-full"

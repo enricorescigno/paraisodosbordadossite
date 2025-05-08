@@ -25,7 +25,7 @@ export const useProductDetail = () => {
     const timer = setTimeout(() => {
       if (productId) {
         try {
-          let foundProduct = allProducts.find(p => p.id.toString() === productId);
+          let foundProduct = allProducts.find(p => p.id?.toString() === productId);
           
           // Special case for product 204
           if (productId === "204") {
@@ -108,8 +108,12 @@ export const useProductDetail = () => {
             
             // If we have any images to preload, do it
             if (productImages.length > 0) {
-              cacheImagesInBrowser(productImages);
-              preloadImages(productImages); 
+              try {
+                cacheImagesInBrowser(productImages);
+                preloadImages(productImages);
+              } catch (error) {
+                console.error("Error preloading images:", error);
+              }
             }
           } else {
             setProduct(null);
