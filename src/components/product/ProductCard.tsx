@@ -126,6 +126,7 @@ const ProductCard = ({
   };
 
   const optimizedImageUrl = getImageUrl();
+  const [useContainFallback, setUseContainFallback] = React.useState(false);
 
   return (
     <motion.div
@@ -149,23 +150,26 @@ const ProductCard = ({
       className="flex flex-col h-full w-full"
     >
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
-        <motion.img
-          src={optimizedImageUrl}
-          alt={`Produto: ${name}`}
-          className="w-full h-full object-contain mix-blend-multiply"
-          loading="lazy"
-          whileHover={{
-            scale: 1.05
-          }}
-          transition={{
-            duration: 0.3
-          }}
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.onerror = null;
-            target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
-          }}
-        />
+        <div className="relative w-full h-full aspect-square overflow-hidden">
+          <motion.img
+            src={optimizedImageUrl}
+            alt={`Produto: ${name}`}
+            className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply`}
+            loading="lazy"
+            whileHover={{
+              scale: 1.05
+            }}
+            transition={{
+              duration: 0.3
+            }}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.onerror = null;
+              setUseContainFallback(true);
+              target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
+            }}
+          />
+        </div>
       </div>
       
       <div className="flex flex-col flex-grow w-full">

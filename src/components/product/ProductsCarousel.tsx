@@ -40,18 +40,20 @@ const ProductsCarousel = ({
               className="pl-4 md:pl-6 md:basis-1/2 lg:basis-1/3 h-full"
             >
               <div className="p-1 md:p-2 h-full flex flex-col">
-                <ProductCard 
-                  id={product.id}
-                  name={product.name}
-                  description={product.description}
-                  imageUrl={product.imageUrl}
-                  images={product.images}
-                  colors={product.colors}
-                  isNew={product.isNew}
-                  whatsappNumber={whatsappNumber}
-                  isPortfolio={isPortfolio}
-                  showActionButton={false} // Não exibe o botão dentro do card
-                />
+                <div className="flex-grow">
+                  <ProductCard 
+                    id={product.id}
+                    name={product.name}
+                    description={product.description}
+                    imageUrl={product.imageUrl}
+                    images={product.images}
+                    colors={product.colors}
+                    isNew={product.isNew}
+                    whatsappNumber={whatsappNumber}
+                    isPortfolio={isPortfolio}
+                    showActionButton={false} // Não exibe o botão dentro do card
+                  />
+                </div>
                 
                 {/* Botão Saiba Mais abaixo de cada produto */}
                 <Link 

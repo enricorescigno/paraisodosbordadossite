@@ -29,6 +29,7 @@ const ProductImageGallery = ({
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
+  const [useContainFallback, setUseContainFallback] = useState(false);
 
   // Ensure we have a valid images array
   const validImages = Array.isArray(images) && images.length > 0 
@@ -39,6 +40,7 @@ const ProductImageGallery = ({
   useEffect(() => {
     setImagesLoaded(Array(validImages.length).fill(false));
     setImageError(false);
+    setUseContainFallback(false);
     
     // Show thumbnails after slight delay for better perceived loading
     const timer = setTimeout(() => {
@@ -52,6 +54,7 @@ const ProductImageGallery = ({
   useEffect(() => {
     setActiveImageIndex(0);
     setImageError(false);
+    setUseContainFallback(false);
   }, [selectedColor, validImages]);
 
   // Handle image loading complete
@@ -159,32 +162,36 @@ const ProductImageGallery = ({
                     <Skeleton className="h-full w-full" />
                   </div>
                 )}
-                <motion.img 
-                  src={currentImage} 
-                  alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
-                  className={`w-full h-full object-contain mix-blend-multiply p-4 transition-transform duration-200 ${
-                    !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
-                  }`}
-                  style={imageStyle}
-                  loading={getImageLoading(activeImageIndex === 0 ? true : false)}
-                  onLoad={() => handleImageLoaded(activeImageIndex)}
-                  onError={(e) => {
-                    console.log("Image error for:", currentImage);
-                    setImageError(true);
-                    if (e.currentTarget) {
-                      e.currentTarget.src = placeholder(category);
-                    }
-                  }}
-                  decoding={activeImageIndex === 0 ? "sync" : "async"}
-                />
+                <div className="relative w-full h-full aspect-square overflow-hidden">
+                  <motion.img 
+                    src={currentImage} 
+                    alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
+                    className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply p-4 transition-transform duration-200 ${
+                      !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
+                    }`}
+                    style={imageStyle}
+                    loading={getImageLoading(activeImageIndex === 0 ? true : false)}
+                    onLoad={() => handleImageLoaded(activeImageIndex)}
+                    onError={(e) => {
+                      console.log("Image error for:", currentImage);
+                      setUseContainFallback(true);
+                      if (e.currentTarget) {
+                        e.currentTarget.src = placeholder(category);
+                      }
+                    }}
+                    decoding={activeImageIndex === 0 ? "sync" : "async"}
+                  />
+                </div>
               </AspectRatio>
             ) : (
               <AspectRatio ratio={1/1}>
-                <img 
-                  src={placeholder(category)}
-                  alt={productName}
-                  className="w-full h-full object-contain mix-blend-multiply p-4"
-                />
+                <div className="relative w-full h-full aspect-square overflow-hidden">
+                  <img 
+                    src={placeholder(category)}
+                    alt={productName}
+                    className="w-full h-full object-contain object-center mix-blend-multiply p-4"
+                  />
+                </div>
               </AspectRatio>
             )}
             
@@ -237,17 +244,19 @@ const ProductImageGallery = ({
                   {!imagesLoaded[index] && (
                     <Skeleton className="h-full w-full absolute inset-0" />
                   )}
-                  <img 
-                    src={processImageUrl(img)} 
-                    alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
-                    className={`h-full w-full object-contain bg-[#FAFAFA] mix-blend-multiply p-1 ${
-                      !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
-                    }`}
-                    loading="lazy"
-                    decoding="async"
-                    onLoad={() => handleImageLoaded(index)}
-                    onError={() => console.log("Thumbnail error loading:", img)}
-                  />
+                  <div className="relative w-full h-full aspect-square overflow-hidden">
+                    <img 
+                      src={processImageUrl(img)} 
+                      alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
+                      className={`h-full w-full object-cover object-center bg-[#FAFAFA] mix-blend-multiply p-1 ${
+                        !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
+                      }`}
+                      loading="lazy"
+                      decoding="async"
+                      onLoad={() => handleImageLoaded(index)}
+                      onError={() => console.log("Thumbnail error loading:", img)}
+                    />
+                  </div>
                 </motion.button>
               ))}
             </motion.div>
@@ -272,11 +281,13 @@ const ProductImageGallery = ({
               className="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <img 
-                src={currentImage}
-                alt={`${productName} - Vista ampliada`}
-                className="max-w-full max-h-[90vh] object-contain"
-              />
+              <div className="relative w-full h-full aspect-square overflow-hidden">
+                <img 
+                  src={currentImage}
+                  alt={`${productName} - Vista ampliada`}
+                  className="max-w-full max-h-[90vh] object-contain"
+                />
+              </div>
               <button
                 onClick={closeLightbox}
                 className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2"
