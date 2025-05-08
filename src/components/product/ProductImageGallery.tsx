@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getImageLoading, fixImageExtension } from '@/utils/imageUtils';
+import { getImageLoading } from '@/utils/imageUtils';
 import { toAbsoluteURL } from '@/utils/urlUtils';
 
 interface ProductImageGalleryProps {
@@ -100,14 +100,8 @@ const ProductImageGallery = ({
   const prevImage = () => {
     setActiveImageIndex(prev => (prev === 0 ? validImages.length - 1 : prev - 1));
   };
-
-  // Get current image and fix its extension if needed
-  const processImageUrl = (url: string) => {
-    const absoluteUrl = toAbsoluteURL(url);
-    return fixImageExtension(absoluteUrl);
-  };
   
-  const currentImage = validImages[activeImageIndex] ? processImageUrl(validImages[activeImageIndex]) : '';
+  const currentImage = validImages[activeImageIndex] ? toAbsoluteURL(validImages[activeImageIndex]) : '';
   
   // Preload adjacent images for smoother navigation
   useEffect(() => {
@@ -120,7 +114,7 @@ const ProductImageGallery = ({
     const preloadImages = [nextIdx, prevIdx].map(idx => {
       if (validImages[idx]) {
         const img = new Image();
-        img.src = processImageUrl(validImages[idx]);
+        img.src = toAbsoluteURL(validImages[idx]);
         return img;
       }
       return null;
@@ -154,46 +148,37 @@ const ProductImageGallery = ({
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsZoomed(true)}
             onMouseLeave={() => setIsZoomed(false)}
+            style={{ width: '100%', aspectRatio: '1/1', position: 'relative' }}
           >
-            {validImages.length > 0 && !imageError ? (
-              <AspectRatio ratio={1/1}>
+            <AspectRatio ratio={1/1}>
+              <div className="relative w-full h-full overflow-hidden">
                 {!imagesLoaded[activeImageIndex] && (
                   <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
                     <Skeleton className="h-full w-full" />
                   </div>
                 )}
-                <div className="relative w-full h-full aspect-square overflow-hidden">
-                  <motion.img 
-                    src={currentImage} 
-                    alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
-                    className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply p-4 transition-transform duration-200 ${
-                      !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
-                    }`}
-                    style={imageStyle}
-                    loading={getImageLoading(activeImageIndex === 0 ? true : false)}
-                    onLoad={() => handleImageLoaded(activeImageIndex)}
-                    onError={(e) => {
-                      console.log("Image error for:", currentImage);
-                      setUseContainFallback(true);
-                      if (e.currentTarget) {
-                        e.currentTarget.src = placeholder(category);
-                      }
-                    }}
-                    decoding={activeImageIndex === 0 ? "sync" : "async"}
-                  />
-                </div>
-              </AspectRatio>
-            ) : (
-              <AspectRatio ratio={1/1}>
-                <div className="relative w-full h-full aspect-square overflow-hidden">
-                  <img 
-                    src={placeholder(category)}
-                    alt={productName}
-                    className="w-full h-full object-contain object-center mix-blend-multiply p-4"
-                  />
-                </div>
-              </AspectRatio>
-            )}
+                
+                <img 
+                  src={currentImage || placeholder(category)}
+                  alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
+                  className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply p-4 transition-transform duration-200 ${
+                    !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
+                  }`}
+                  style={imageStyle}
+                  loading={getImageLoading(activeImageIndex === 0 ? true : false)}
+                  onLoad={() => handleImageLoaded(activeImageIndex)}
+                  onError={(e) => {
+                    console.log("Image error for:", currentImage);
+                    setUseContainFallback(true);
+                    if (e.currentTarget) {
+                      e.currentTarget.style.objectFit = 'contain';
+                      e.currentTarget.src = placeholder(category);
+                    }
+                  }}
+                  decoding={activeImageIndex === 0 ? "sync" : "async"}
+                />
+              </div>
+            </AspectRatio>
             
             {/* Zoom indicator for desktop */}
             <div className="absolute bottom-3 right-3 bg-white/80 backdrop-blur-sm p-1.5 rounded-full shadow-sm hidden md:flex items-center justify-center">
@@ -244,9 +229,9 @@ const ProductImageGallery = ({
                   {!imagesLoaded[index] && (
                     <Skeleton className="h-full w-full absolute inset-0" />
                   )}
-                  <div className="relative w-full h-full aspect-square overflow-hidden">
+                  <div className="relative w-full h-full overflow-hidden">
                     <img 
-                      src={processImageUrl(img)} 
+                      src={toAbsoluteURL(img)}
                       alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
                       className={`h-full w-full object-cover object-center bg-[#FAFAFA] mix-blend-multiply p-1 ${
                         !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
@@ -254,7 +239,13 @@ const ProductImageGallery = ({
                       loading="lazy"
                       decoding="async"
                       onLoad={() => handleImageLoaded(index)}
-                      onError={() => console.log("Thumbnail error loading:", img)}
+                      onError={(e) => {
+                        console.log("Thumbnail error loading:", img);
+                        if (e.currentTarget) {
+                          e.currentTarget.style.objectFit = 'contain';
+                          e.currentTarget.src = placeholder(category);
+                        }
+                      }}
                     />
                   </div>
                 </motion.button>
@@ -266,7 +257,7 @@ const ProductImageGallery = ({
       
       {/* Lightbox for zoomed view */}
       <AnimatePresence>
-        {isLightboxOpen && validImages.length > 0 && (
+        {isLightboxOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -281,9 +272,9 @@ const ProductImageGallery = ({
               className="relative max-w-4xl max-h-[90vh] w-full flex items-center justify-center"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative w-full h-full aspect-square overflow-hidden">
+              <div className="relative w-full h-full overflow-hidden">
                 <img 
-                  src={currentImage}
+                  src={currentImage || placeholder(category)}
                   alt={`${productName} - Vista ampliada`}
                   className="max-w-full max-h-[90vh] object-contain"
                 />

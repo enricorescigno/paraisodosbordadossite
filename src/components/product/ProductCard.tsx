@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
@@ -30,6 +30,8 @@ const ProductCard = ({
   isPortfolio = false,
   showActionButton = true
 }: ProductCardProps) => {
+  const [useContainFallback, setUseContainFallback] = useState(false);
+
   const getPlaceholderImage = (name: string) => {
     const lowerName = name.toLowerCase();
     if (lowerName.includes('necessaire') || lowerName.includes('bolsa')) {
@@ -47,6 +49,7 @@ const ProductCard = ({
   };
 
   const getImageUrl = () => {
+    // Special cases for specific product IDs
     if (Number(id) === 2010) {
       if (images && Array.isArray(images) && images.length > 5) {
         return fixImageExtension(toAbsoluteURL(images[5]));
@@ -113,12 +116,12 @@ const ProductCard = ({
     
     // First try to use the specified imageUrl
     if (imageUrl) {
-      return fixImageExtension(toAbsoluteURL(imageUrl));
+      return toAbsoluteURL(imageUrl);
     }
     
     // Then try the first image in the images array if available
     if (Array.isArray(images) && images.length > 0) {
-      return fixImageExtension(toAbsoluteURL(images[0]));
+      return toAbsoluteURL(images[0]);
     }
     
     // Final fallback
@@ -126,7 +129,6 @@ const ProductCard = ({
   };
 
   const optimizedImageUrl = getImageUrl();
-  const [useContainFallback, setUseContainFallback] = React.useState(false);
 
   return (
     <motion.div
@@ -150,7 +152,7 @@ const ProductCard = ({
       className="flex flex-col h-full w-full"
     >
       <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
-        <div className="relative w-full h-full aspect-square overflow-hidden">
+        <div className="relative w-full h-full aspect-square overflow-hidden" style={{ width: '100%', aspectRatio: '1/1', position: 'relative' }}>
           <motion.img
             src={optimizedImageUrl}
             alt={`Produto: ${name}`}
@@ -166,7 +168,8 @@ const ProductCard = ({
               const target = e.target as HTMLImageElement;
               target.onerror = null;
               setUseContainFallback(true);
-              target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
+              target.style.objectFit = 'contain';
+              target.src = getPlaceholderImage(name);
             }}
           />
         </div>
