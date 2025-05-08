@@ -7,8 +7,10 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    host: "::",
-    port: 8080,
+    allowedHosts: 'all',
+    host: "0.0.0.0",
+    port: 8880,
+    strictPort: true,
   },
   plugins: [
     react(),
@@ -61,7 +63,6 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     modulePreload: true,
     treeshake: true,
-    // publicPath: 'https://cdn.seudominio.com/', // personalize para CDN real
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
@@ -70,7 +71,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   preview: {
-    port: 8080,
+    port: 8880,
     host: true,
   },
   // Add better file change detection

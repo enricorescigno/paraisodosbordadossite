@@ -8,8 +8,9 @@ import { componentTagger } from "lovable-tagger";
 export default defineConfig(({ mode }) => ({
   server: {
     allowedHosts: 'all',
-    host: "::",
-    port: 8080,
+    host: "0.0.0.0",
+    port: 8880,
+    strictPort: true,
   },
   plugins: [
     react(),
@@ -73,7 +74,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   preview: {
-    port: 8080,
+    port: 8880,
     host: true,
     headers: {
       // Add cache control headers for better performance
