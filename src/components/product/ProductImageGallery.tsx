@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -102,6 +102,7 @@ const ProductImageGallery = ({
   };
   
   const currentImage = validImages[activeImageIndex] ? toAbsoluteURL(validImages[activeImageIndex]) : '';
+  const placeholderImage = placeholder(category || '');
   
   // Preload adjacent images for smoother navigation
   useEffect(() => {
@@ -159,7 +160,7 @@ const ProductImageGallery = ({
                 )}
                 
                 <img 
-                  src={currentImage || placeholder(category)}
+                  src={currentImage || placeholderImage}
                   alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
                   className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply p-4 transition-transform duration-200 ${
                     !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
@@ -172,7 +173,7 @@ const ProductImageGallery = ({
                     setUseContainFallback(true);
                     if (e.currentTarget) {
                       e.currentTarget.style.objectFit = 'contain';
-                      e.currentTarget.src = placeholder(category);
+                      e.currentTarget.src = placeholderImage;
                     }
                   }}
                   decoding={activeImageIndex === 0 ? "sync" : "async"}
@@ -243,7 +244,7 @@ const ProductImageGallery = ({
                         console.log("Thumbnail error loading:", img);
                         if (e.currentTarget) {
                           e.currentTarget.style.objectFit = 'contain';
-                          e.currentTarget.src = placeholder(category);
+                          e.currentTarget.src = placeholderImage;
                         }
                       }}
                     />
@@ -274,7 +275,7 @@ const ProductImageGallery = ({
             >
               <div className="relative w-full h-full overflow-hidden">
                 <img 
-                  src={currentImage || placeholder(category)}
+                  src={currentImage || placeholderImage}
                   alt={`${productName} - Vista ampliada`}
                   className="max-w-full max-h-[90vh] object-contain"
                 />

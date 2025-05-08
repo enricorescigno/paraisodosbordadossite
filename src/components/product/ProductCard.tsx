@@ -1,9 +1,9 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 import { toAbsoluteURL } from '@/utils/urlUtils';
-import { fixImageExtension } from '@/utils/imageUtils';
 
 interface ProductCardProps {
   id: number | string;
@@ -52,61 +52,61 @@ const ProductCard = ({
     // Special cases for specific product IDs
     if (Number(id) === 2010) {
       if (images && Array.isArray(images) && images.length > 5) {
-        return fixImageExtension(toAbsoluteURL(images[5]));
+        return toAbsoluteURL(images[5]);
       }
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png"));
+      return toAbsoluteURL("/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png");
     }
     
     if (Number(id) === 1004) {
       if (images && Array.isArray(images) && images.length > 0) {
-        return fixImageExtension(toAbsoluteURL("/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png"));
+        return toAbsoluteURL("/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png");
       }
     }
     
     if (Number(id) === 1005) {
       if (images && Array.isArray(images) && images.length > 0) {
-        return fixImageExtension(toAbsoluteURL("/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png"));
+        return toAbsoluteURL("/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png");
       }
     }
     
     if (Number(id) === 2002 || Number(id) === 901) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/185199e6-f644-4c5e-9df7-7c45a81dda9b.png"));
+      return toAbsoluteURL("/lovable-uploads/185199e6-f644-4c5e-9df7-7c45a81dda9b.png");
     }
     
     if (Number(id) === 2004 || Number(id) === 903) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png"));
+      return toAbsoluteURL("/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png");
     }
     
     if (Number(id) === 205 || Number(id) === 902) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png"));
+      return toAbsoluteURL("/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png");
     }
     
     if (Number(id) === 202) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png"));
+      return toAbsoluteURL("/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png");
     }
     
     if (Number(id) === 203) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png"));
+      return toAbsoluteURL("/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png");
     }
     
     if (Number(id) === 204) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png"));
+      return toAbsoluteURL("/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png");
     }
     
     if (Number(id) === 206) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png"));
+      return toAbsoluteURL("/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png");
     }
     
     if (Number(id) === 207) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"));
+      return toAbsoluteURL("/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png");
     }
     
     if (Number(id) === 208) {
-      return fixImageExtension(toAbsoluteURL("/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png"));
+      return toAbsoluteURL("/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png");
     }
     
     if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
-      return images["Branco"]?.[0] ? fixImageExtension(toAbsoluteURL(images["Branco"][0])) : null;
+      return images["Branco"]?.[0] ? toAbsoluteURL(images["Branco"][0]) : null;
     }
     
     // Handle missing images with proper fallbacks

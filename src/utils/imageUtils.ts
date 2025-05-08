@@ -18,9 +18,33 @@ export const getSrcSet = (imageUrl: string): string => {
 
 // Function to get placeholder while images are loading
 export const getImagePlaceholder = (category: string = ''): string => {
-  if (category.toLowerCase().includes('bone') || category.toLowerCase().includes('bonés')) {
+  const lowerCategory = category.toLowerCase();
+  
+  if (lowerCategory.includes('bone') || lowerCategory.includes('bonés')) {
     return '/placeholder.svg';
   }
+  
+  if (lowerCategory.includes('necessaire') || lowerCategory.includes('bolsa')) {
+    return "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop";
+  } 
+  
+  if (lowerCategory.includes('toalha') || lowerCategory.includes('banho')) {
+    return "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop";
+  } 
+  
+  if (lowerCategory.includes('camisa') || lowerCategory.includes('fardamento') || lowerCategory.includes('avental') || lowerCategory.includes('jaleco')) {
+    return "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop";
+  } 
+  
+  if (lowerCategory.includes('infantil') || lowerCategory.includes('fralda') || lowerCategory.includes('macacão') || lowerCategory.includes('manta')) {
+    return "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop";
+  } 
+  
+  if (lowerCategory.includes('bordado') || lowerCategory.includes('cama')) {
+    return "https://images.unsplash.com/photo-1479064555552-3ef4979f8908?q=80&w=500&auto=format&fit=crop";
+  }
+  
+  // Default placeholder
   return '/placeholder.svg';
 };
 
@@ -48,6 +72,8 @@ export const getWebPImageUrl = (imageUrl: string): string => {
 
 // Function to detect connection speed and choose appropriate image quality
 export const getImageQualityByConnection = (): 'low' | 'medium' | 'high' => {
+  if (typeof navigator === 'undefined') return 'medium';
+  
   const connection = (navigator as any).connection;
   
   if (connection) {
@@ -81,14 +107,13 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
     return url;
   }
   
-  // For local images, we'll just return the original since we aren't implementing
-  // a resizing server right now
+  // For local images, we'll just return the original
   return url;
 };
 
 // Updated cacheImagesInBrowser function with proper export
 export function cacheImagesInBrowser(imageUrls: string[]): void {
-  if (!('caches' in window)) return;
+  if (typeof window === 'undefined' || !('caches' in window)) return;
   
   // Use Cache API to store images (if browser supports it)
   const cacheName = 'paraiso-images-v1';
@@ -137,11 +162,6 @@ export const fixImageExtension = (url: string): string => {
     return url;
   }
   
-  // If the URL already has an image extension, return it as is
-  if (url.match(/\.(jpg|jpeg|png|gif|svg|webp)$/i)) {
-    return url;
-  }
-  
-  // For URLs without an extension, add .png as the default
-  return `${url}.png`;
+  // Return the URL as is since we're no longer forcing an extension
+  return url;
 };

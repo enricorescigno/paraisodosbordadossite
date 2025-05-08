@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/product';
-import { getImagePlaceholder, fixImageExtension } from '@/utils/imageUtils';
+import { getImagePlaceholder } from '@/utils/imageUtils';
 import { toAbsoluteURL } from '@/utils/urlUtils';
 
 export const useProductImageManager = (product: Product | null, selectedColor: string) => {
