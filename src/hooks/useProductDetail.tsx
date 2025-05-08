@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
@@ -5,6 +6,7 @@ import { Product } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
 import { useProductImageManager } from './useProductImageManager';
 import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
+import { toAbsoluteURL } from '@/utils/urlUtils';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -50,6 +52,24 @@ export const useProductDetail = () => {
           }
           
           if (foundProduct) {
+            // Ensure the imageUrl is absolute
+            if (foundProduct.imageUrl) {
+              foundProduct.imageUrl = toAbsoluteURL(foundProduct.imageUrl);
+            }
+            
+            // Ensure images are absolute URLs
+            if (foundProduct.images) {
+              if (Array.isArray(foundProduct.images)) {
+                foundProduct.images = foundProduct.images.map(img => toAbsoluteURL(img));
+              } else if (typeof foundProduct.images === 'object') {
+                Object.keys(foundProduct.images).forEach(color => {
+                  if (Array.isArray(foundProduct.images[color])) {
+                    foundProduct.images[color] = foundProduct.images[color].map(img => toAbsoluteURL(img));
+                  }
+                });
+              }
+            }
+            
             if (foundProduct.colors && foundProduct.colors.length > 0) {
               setSelectedColor(foundProduct.colors[0]);
             }
@@ -66,13 +86,30 @@ export const useProductDetail = () => {
             
             setProduct(foundProduct);
             
-            // Preload images for better performance
-            if (foundProduct.images && Array.isArray(foundProduct.images)) {
-              cacheImagesInBrowser(foundProduct.images);
-              preloadImages(foundProduct.images.slice(0, 3)); // Preload first three images
-            } else if (foundProduct.imageUrl) {
-              cacheImagesInBrowser([foundProduct.imageUrl]);
-              preloadImages([foundProduct.imageUrl]);
+            // Safe image preloading
+            const productImages = [];
+            
+            // Collect images to preload
+            if (foundProduct.images) {
+              if (Array.isArray(foundProduct.images) && foundProduct.images.length > 0) {
+                productImages.push(...foundProduct.images.slice(0, 3));
+              } else if (typeof foundProduct.images === 'object') {
+                const firstColorImages = Object.values(foundProduct.images)[0];
+                if (Array.isArray(firstColorImages) && firstColorImages.length > 0) {
+                  productImages.push(...firstColorImages.slice(0, 3));
+                }
+              }
+            }
+            
+            // Add imageUrl as fallback
+            if (foundProduct.imageUrl) {
+              productImages.push(foundProduct.imageUrl);
+            }
+            
+            // If we have any images to preload, do it
+            if (productImages.length > 0) {
+              cacheImagesInBrowser(productImages);
+              preloadImages(productImages); 
             }
           } else {
             setProduct(null);

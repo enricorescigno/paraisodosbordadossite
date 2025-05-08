@@ -21,9 +21,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    minify: true,
-    sourcemap: false,
-    cssMinify: true,
+    minify: false,
+    sourcemap: true,
+    cssMinify: false,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -54,7 +54,7 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     modulePreload: true,
     treeshake: true,
-    // Image compression settings (max compression level)
+    // Image compression settings disabled for troubleshooting
     assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp', '**/*.svg'],
   },
   optimizeDeps: {

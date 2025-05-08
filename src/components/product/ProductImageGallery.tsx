@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getImageLoading, fixImageExtension } from '@/utils/imageUtils';
+import { toAbsoluteURL } from '@/utils/urlUtils';
 
 interface ProductImageGalleryProps {
   images: string[];
@@ -29,9 +30,14 @@ const ProductImageGallery = ({
   const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
 
+  // Ensure we have a valid images array
+  const validImages = Array.isArray(images) && images.length > 0 
+    ? images 
+    : [placeholder(category || '')];
+
   // Initialize images loaded state array
   useEffect(() => {
-    setImagesLoaded(Array(images.length).fill(false));
+    setImagesLoaded(Array(validImages.length).fill(false));
     setImageError(false);
     
     // Show thumbnails after slight delay for better perceived loading
@@ -40,13 +46,13 @@ const ProductImageGallery = ({
     }, 300);
     
     return () => clearTimeout(timer);
-  }, [images.length]);
+  }, [validImages.length]);
 
   // Reset active image index when color or images change
   useEffect(() => {
     setActiveImageIndex(0);
     setImageError(false);
-  }, [selectedColor, images]);
+  }, [selectedColor, validImages]);
 
   // Handle image loading complete
   const handleImageLoaded = useCallback((index: number) => {
@@ -85,28 +91,28 @@ const ProductImageGallery = ({
   };
 
   const nextImage = () => {
-    setActiveImageIndex(prev => (prev === images.length - 1 ? 0 : prev + 1));
+    setActiveImageIndex(prev => (prev === validImages.length - 1 ? 0 : prev + 1));
   };
 
   const prevImage = () => {
-    setActiveImageIndex(prev => (prev === 0 ? images.length - 1 : prev - 1));
+    setActiveImageIndex(prev => (prev === 0 ? validImages.length - 1 : prev - 1));
   };
 
   // Get current image and fix its extension if needed
-  const currentImage = images[activeImageIndex] ? fixImageExtension(images[activeImageIndex]) : '';
+  const currentImage = validImages[activeImageIndex] ? toAbsoluteURL(fixImageExtension(validImages[activeImageIndex])) : '';
   
   // Preload adjacent images for smoother navigation
   useEffect(() => {
-    if (images.length <= 1) return;
+    if (validImages.length <= 1) return;
     
-    const nextIdx = activeImageIndex === images.length - 1 ? 0 : activeImageIndex + 1;
-    const prevIdx = activeImageIndex === 0 ? images.length - 1 : activeImageIndex - 1;
+    const nextIdx = activeImageIndex === validImages.length - 1 ? 0 : activeImageIndex + 1;
+    const prevIdx = activeImageIndex === 0 ? validImages.length - 1 : activeImageIndex - 1;
     
     // Preload next and previous images
     const preloadImages = [nextIdx, prevIdx].map(idx => {
-      if (images[idx]) {
+      if (validImages[idx]) {
         const img = new Image();
-        img.src = fixImageExtension(images[idx]);
+        img.src = toAbsoluteURL(fixImageExtension(validImages[idx]));
         return img;
       }
       return null;
@@ -121,7 +127,7 @@ const ProductImageGallery = ({
         }
       });
     };
-  }, [activeImageIndex, images]);
+  }, [activeImageIndex, validImages]);
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden">
@@ -141,7 +147,7 @@ const ProductImageGallery = ({
             onMouseEnter={() => setIsZoomed(true)}
             onMouseLeave={() => setIsZoomed(false)}
           >
-            {images.length > 0 && !imageError ? (
+            {validImages.length > 0 && !imageError ? (
               <AspectRatio ratio={1/1}>
                 {!imagesLoaded[activeImageIndex] && (
                   <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
@@ -164,7 +170,6 @@ const ProductImageGallery = ({
                       e.currentTarget.src = placeholder(category);
                     }
                   }}
-                  fetchPriority={activeImageIndex === 0 ? "high" : "auto"}
                   decoding={activeImageIndex === 0 ? "sync" : "async"}
                 />
               </AspectRatio>
@@ -184,7 +189,7 @@ const ProductImageGallery = ({
             </div>
             
             {/* Navigation Arrows */}
-            {images.length > 1 && !imageError && (
+            {validImages.length > 1 && !imageError && (
               <>
                 <button 
                   onClick={prevImage}
@@ -205,14 +210,14 @@ const ProductImageGallery = ({
           </div>
           
           {/* Thumbnails - only show when ready */}
-          {images.length > 1 && !imageError && thumbnailsVisible && (
+          {validImages.length > 1 && !imageError && thumbnailsVisible && (
             <motion.div 
               className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              {images.map((img, index) => (
+              {validImages.map((img, index) => (
                 <motion.button
                   key={`thumb-${index}`}
                   onClick={() => handleImageClick(index)}
@@ -228,7 +233,7 @@ const ProductImageGallery = ({
                     <Skeleton className="h-full w-full absolute inset-0" />
                   )}
                   <img 
-                    src={fixImageExtension(img)} 
+                    src={toAbsoluteURL(fixImageExtension(img))} 
                     alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
                     className={`h-full w-full object-contain bg-[#FAFAFA] mix-blend-multiply p-1 ${
                       !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
@@ -247,7 +252,7 @@ const ProductImageGallery = ({
       
       {/* Lightbox for zoomed view */}
       <AnimatePresence>
-        {isLightboxOpen && images.length > 0 && (
+        {isLightboxOpen && validImages.length > 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -276,7 +281,7 @@ const ProductImageGallery = ({
               </button>
               
               {/* Navigation buttons in lightbox */}
-              {images.length > 1 && (
+              {validImages.length > 1 && (
                 <>
                   <button
                     onClick={(e) => {

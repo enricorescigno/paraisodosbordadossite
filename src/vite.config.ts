@@ -1,3 +1,4 @@
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -20,9 +21,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    minify: true,
-    sourcemap: false,
-    cssMinify: true,
+    minify: false,
+    sourcemap: true,
+    cssMinify: false,
     rollupOptions: {
       output: {
         manualChunks: {
@@ -56,7 +57,6 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     modulePreload: true,
     treeshake: true,
-    // publicPath: 'https://cdn.seudominio.com/', // personalize para CDN real
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
@@ -67,6 +67,10 @@ export default defineConfig(({ mode }) => ({
   preview: {
     port: 8080,
     host: true,
+    headers: {
+      // Add cache control headers for better performance
+      'Cache-Control': 'public, max-age=86400',
+    }
   },
   // Add better file change detection
   cacheDir: '.vite-cache',
