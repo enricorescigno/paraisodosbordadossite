@@ -1,5 +1,4 @@
 
-import React from 'react';
 import { Medal, Headphones, Scale, ClipboardCheck } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { motion } from 'framer-motion';
@@ -26,7 +25,10 @@ const features = [{
 }];
 
 const Features = () => {
-  const { ref, inView } = useInView({
+  const {
+    ref,
+    inView
+  } = useInView({
     triggerOnce: true,
     threshold: 0.1
   });
@@ -35,9 +37,20 @@ const Features = () => {
     <section ref={ref} className="py-16 bg-white px-[10px]">
       <div className="container mx-auto px-4">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }} 
-          transition={{ duration: 0.5 }} 
+          initial={{
+            opacity: 0,
+            y: 20
+          }} 
+          animate={inView ? {
+            opacity: 1,
+            y: 0
+          } : {
+            opacity: 0,
+            y: 20
+          }} 
+          transition={{
+            duration: 0.5
+          }} 
           className="text-center mb-12"
         >
           <h2 className="text-3xl font-medium tracking-tight text-red-600 font-sans">Por que escolher a Paraíso dos Bordados?</h2>
@@ -65,9 +78,21 @@ const Features = () => {
             return (
               <motion.div 
                 key={index} 
-                initial={{ opacity: 0, y: 30 }} 
-                animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} 
-                transition={{ duration: 0.5, delay: index * 0.1 }} 
+                initial={{
+                  opacity: 0,
+                  y: 30
+                }} 
+                animate={inView ? {
+                  opacity: 1,
+                  y: 0
+                } : {
+                  opacity: 0,
+                  y: 30
+                }} 
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.1
+                }} 
                 className={feature.isClickable ? "cursor-pointer" : ""}
               >
                 {feature.isClickable ? (

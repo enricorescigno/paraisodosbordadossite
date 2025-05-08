@@ -1,6 +1,5 @@
 
 import { Product } from '../../types/product';
-import { toAbsoluteURL } from '../imageUtils';
 
 // Vestuário Collection (regular clothing products)
 export const vestuarioProducts: Product[] = [
@@ -9,7 +8,7 @@ export const vestuarioProducts: Product[] = [
     name: "Camisa Básica unisex 100% algodão adulto",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/e627464a-ea49-431e-bdfe-61fdc8d0ade6.png"),
+    imageUrl: "/lovable-uploads/e627464a-ea49-431e-bdfe-61fdc8d0ade6.png",
     description: "Camisa básica unisex confeccionada em 100% algodão, confortável e de alta qualidade.",
     price: "R$ 29,90",
     colors: ["Preto", "Amarelo", "Azul Royal", "Verde Água", "Branco", "Cinza", "Vermelho"],
@@ -21,13 +20,13 @@ export const vestuarioProducts: Product[] = [
       "Confortável"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/e627464a-ea49-431e-bdfe-61fdc8d0ade6.png"), // Preto
-      toAbsoluteURL("/lovable-uploads/413dc254-7151-42ff-8c76-9542fe0fd000.png"), // Amarelo
-      toAbsoluteURL("/lovable-uploads/5196f41e-9122-43b3-87e0-bba36f02db37.png"), // Azul Royal
-      toAbsoluteURL("/lovable-uploads/a9eb955b-2415-4603-83b7-b0bfe976aff8.png"), // Verde Água
-      toAbsoluteURL("/lovable-uploads/ea192bca-bdb8-4a1f-928f-81c705de4209.png"), // Branco
-      toAbsoluteURL("/lovable-uploads/fb5f097a-e5ed-4a81-ac17-6a80e73281e8.png"), // Cinza
-      toAbsoluteURL("/lovable-uploads/fe3394aa-dcf4-4d2e-9292-2049e3ee9f66.png"), // Vermelho
+      "/lovable-uploads/e627464a-ea49-431e-bdfe-61fdc8d0ade6.png", // Preto
+      "/lovable-uploads/413dc254-7151-42ff-8c76-9542fe0fd000.png", // Amarelo
+      "/lovable-uploads/5196f41e-9122-43b3-87e0-bba36f02db37.png", // Azul Royal
+      "/lovable-uploads/a9eb955b-2415-4603-83b7-b0bfe976aff8.png", // Verde Água
+      "/lovable-uploads/ea192bca-bdb8-4a1f-928f-81c705de4209.png", // Branco
+      "/lovable-uploads/fb5f097a-e5ed-4a81-ac17-6a80e73281e8.png", // Cinza
+      "/lovable-uploads/fe3394aa-dcf4-4d2e-9292-2049e3ee9f66.png", // Vermelho
     ],
     keywords: ["camisa", "básica", "unisex", "algodão", "adulto"]
   },
@@ -36,7 +35,7 @@ export const vestuarioProducts: Product[] = [
     name: "Camisa Polo Masculina",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/7d78953f-1496-4f4c-ba23-5acf30512358.png"),
+    imageUrl: "/lovable-uploads/7d78953f-1496-4f4c-ba23-5acf30512358.png",
     description: "Camisa polo masculina de alta qualidade, ideal para ambientes casuais ou formais. Disponível em diversas cores e tamanhos.",
     price: "Sob consulta",
     colors: [
@@ -54,9 +53,9 @@ export const vestuarioProducts: Product[] = [
       "Ampla variedade de tamanhos"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/7d78953f-1496-4f4c-ba23-5acf30512358.png"),
-      toAbsoluteURL("/lovable-uploads/0220db3b-aa3e-48cd-9637-a4a532a17de8.png"),
-      toAbsoluteURL("/lovable-uploads/8b1f7b0c-0709-4fd7-8b32-400b0aa610de.png")
+      "/lovable-uploads/7d78953f-1496-4f4c-ba23-5acf30512358.png",
+      "/lovable-uploads/0220db3b-aa3e-48cd-9637-a4a532a17de8.png",
+      "/lovable-uploads/8b1f7b0c-0709-4fd7-8b32-400b0aa610de.png"
     ],
     keywords: ["camisa", "polo", "masculina"]
   },
@@ -65,7 +64,7 @@ export const vestuarioProducts: Product[] = [
     name: "Pantufa Cotele",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/deffe1d3-4ea9-4bac-af0b-968592271c09.png"),
+    imageUrl: "/lovable-uploads/deffe1d3-4ea9-4bac-af0b-968592271c09.png",
     description: "Pantufa modelo Cotele, macia e confortável para uso doméstico.",
     price: "R$ 98,00",
     colors: ["Bege", "Cinza"],
@@ -77,8 +76,8 @@ export const vestuarioProducts: Product[] = [
       "Design elegante"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/deffe1d3-4ea9-4bac-af0b-968592271c09.png"),
-      toAbsoluteURL("/lovable-uploads/8ef339fb-f352-446f-8084-fc4f47afb4cd.png")
+      "/lovable-uploads/deffe1d3-4ea9-4bac-af0b-968592271c09.png",
+      "/lovable-uploads/8ef339fb-f352-446f-8084-fc4f47afb4cd.png"
     ],
     keywords: ["pantufa", "cotele", "calçado", "conforto"]
   },
@@ -87,7 +86,7 @@ export const vestuarioProducts: Product[] = [
     name: "Pantufa Popom",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/c7a9518a-56f6-41c6-9797-b1f9e0fb7c34.png"),
+    imageUrl: "/lovable-uploads/c7a9518a-56f6-41c6-9797-b1f9e0fb7c34.png",
     description: "Pantufa modelo Popom, macia e quentinha para os dias frios.",
     price: "R$ 98,00",
     colors: ["Rosa", "Bege"],
@@ -100,8 +99,8 @@ export const vestuarioProducts: Product[] = [
       "Sola antiderrapante"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/c7a9518a-56f6-41c6-9797-b1f9e0fb7c34.png"),
-      toAbsoluteURL("/lovable-uploads/b7fa37c5-9cee-4599-abbc-d07300366e9e.png")
+      "/lovable-uploads/c7a9518a-56f6-41c6-9797-b1f9e0fb7c34.png",
+      "/lovable-uploads/b7fa37c5-9cee-4599-abbc-d07300366e9e.png"
     ],
     keywords: ["pantufa", "popom", "pompom", "calçado", "conforto"]
   },
@@ -110,7 +109,7 @@ export const vestuarioProducts: Product[] = [
     name: "Robe",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/7209d481-e3c4-46e4-8fbe-78d1b8f8ba53.png"),
+    imageUrl: "/lovable-uploads/7209d481-e3c4-46e4-8fbe-78d1b8f8ba53.png",
     description: "Robe confortável para uso doméstico, perfeito para relaxar após o banho.",
     price: "R$ 59,90",
     colors: [
@@ -135,7 +134,7 @@ export const vestuarioProducts: Product[] = [
       "Diversas cores disponíveis"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/7209d481-e3c4-46e4-8fbe-78d1b8f8ba53.png")
+      "/lovable-uploads/7209d481-e3c4-46e4-8fbe-78d1b8f8ba53.png"
     ],
     keywords: ["robe", "roupão", "banho", "conforto"]
   },
@@ -144,7 +143,7 @@ export const vestuarioProducts: Product[] = [
     name: "Camisa Básica Infantil",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/ae9237f1-d928-455a-aef3-cd6ec98152b5.png"),
+    imageUrl: "/lovable-uploads/ae9237f1-d928-455a-aef3-cd6ec98152b5.png",
     description: "Camisa básica infantil, confortável e de alta qualidade para crianças.",
     price: "R$ 24,00",
     colors: ["Branco", "Preto"],
@@ -157,8 +156,8 @@ export const vestuarioProducts: Product[] = [
       "Fácil de lavar"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/ae9237f1-d928-455a-aef3-cd6ec98152b5.png"),
-      toAbsoluteURL("/lovable-uploads/9a19c748-b91d-49a9-afae-c0661b497dfa.png")
+      "/lovable-uploads/ae9237f1-d928-455a-aef3-cd6ec98152b5.png",
+      "/lovable-uploads/9a19c748-b91d-49a9-afae-c0661b497dfa.png"
     ],
     keywords: ["camisa", "básica", "infantil", "criança"]
   },
@@ -167,7 +166,7 @@ export const vestuarioProducts: Product[] = [
     name: "Jaleco Masculino - Oxford",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"),
+    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
     description: "Jaleco masculino em tecido Oxford, ideal para profissionais da saúde e laboratórios.",
     price: "R$ 75,00",
     colors: ["Branco"],
@@ -180,7 +179,7 @@ export const vestuarioProducts: Product[] = [
       "Design profissional"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png")
+      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
     ],
     keywords: ["jaleco", "masculino", "oxford", "profissional", "saúde"]
   },
@@ -189,7 +188,7 @@ export const vestuarioProducts: Product[] = [
     name: "Jaleco Feminino - Oxford",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"),
+    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
     description: "Jaleco feminino em tecido Oxford, ideal para profissionais da saúde e laboratórios.",
     price: "R$ 72,00",
     colors: ["Branco"],
@@ -203,7 +202,7 @@ export const vestuarioProducts: Product[] = [
       "Design profissional"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png")
+      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
     ],
     keywords: ["jaleco", "feminino", "oxford", "profissional", "saúde"]
   },
@@ -212,7 +211,7 @@ export const vestuarioProducts: Product[] = [
     name: "Pantufa Toque de Seda",
     type: "product",
     category: "Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png"),
+    imageUrl: "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png",
     description: "Pantufa com toque de seda, extremamente macia e confortável.",
     price: "R$ 58,00",
     colors: ["Bege", "Marrom", "Cinza"],
@@ -226,7 +225,7 @@ export const vestuarioProducts: Product[] = [
       "Design elegante"
     ],
     images: [
-      toAbsoluteURL("/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png")
+      "/lovable-uploads/e30c49de-23a5-4661-b1ef-1cd0733b2858.png"
     ],
     keywords: ["pantufa", "toque de seda", "calçado", "conforto"]
   }
@@ -239,7 +238,7 @@ export const bordadoVestuarioProducts: Product[] = [
     name: "Bordado em Camisa - Impcatto",
     type: "portfolio",
     category: "Bordado em Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png"),
+    imageUrl: "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png",
     description: "Bordado de logo em camisa para a empresa Impcatto. Trabalho detalhado em camisas verdes com bordado de alta precisão do logo da empresa em duas cores.",
     price: "35,00",
     isNew: false,
@@ -252,8 +251,8 @@ export const bordadoVestuarioProducts: Product[] = [
     tags: ["camisa", "bordado", "logo", "empresarial"],
     featured: false,
     images: [
-      toAbsoluteURL("/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png"),
-      toAbsoluteURL("/lovable-uploads/652a8949-cb0d-4fd6-8ac2-d73fdd4cd81e.png")
+      "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png",
+      "/lovable-uploads/652a8949-cb0d-4fd6-8ac2-d73fdd4cd81e.png"
     ],
     dimensions: {
       width: 0,
@@ -268,7 +267,7 @@ export const bordadoVestuarioProducts: Product[] = [
     name: "Bordado em Fardamento - Pet Dream",
     type: "portfolio",
     category: "Bordado em Fardamentos",
-    imageUrl: toAbsoluteURL("/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png"),
+    imageUrl: "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png",
     description: "Bordado do logo Pet Dream em fardamento para hospital veterinário. Disponível em branco e verde.",
     price: "40,00",
     isNew: true,
@@ -281,8 +280,8 @@ export const bordadoVestuarioProducts: Product[] = [
     tags: ["fardamento", "bordado", "veterinário", "pet", "empresarial"],
     featured: true,
     images: [
-      toAbsoluteURL("/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png"),
-      toAbsoluteURL("/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png")
+      "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png",
+      "/lovable-uploads/6d28ebce-a220-404c-b350-55f1be2bc89d.png"
     ],
     dimensions: {
       width: 0,
@@ -297,7 +296,7 @@ export const bordadoVestuarioProducts: Product[] = [
     name: "Bordado em Camisa - Girassol",
     type: "portfolio",
     category: "Bordado em Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png"),
+    imageUrl: "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png",
     description: "Bordado com design de girassol na camisa. Trabalho detalhado em camisa preta com bordado de girassol amarelo.",
     price: "30,00",
     isNew: true,
@@ -309,7 +308,7 @@ export const bordadoVestuarioProducts: Product[] = [
     minPurchaseQuantity: 1,
     tags: ["camisa", "bordado", "floral", "girassol"],
     featured: true,
-    images: [toAbsoluteURL("/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png")],
+    images: ["/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png"],
     dimensions: {
       width: 0,
       height: 0,
@@ -323,7 +322,7 @@ export const bordadoVestuarioProducts: Product[] = [
     name: "Bordado em Fardamento para Times de Futebol",
     type: "portfolio",
     category: "Bordado em Fardamentos",
-    imageUrl: toAbsoluteURL("/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png"),
+    imageUrl: "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png",
     description: "Bordado em fardamento para diversos times de futebol europeus incluindo PSG, Marseille e Montpellier. Trabalho de alta precisão para uniformes esportivos.",
     price: "45,00",
     isNew: true,
@@ -336,10 +335,10 @@ export const bordadoVestuarioProducts: Product[] = [
     tags: ["fardamento", "bordado", "futebol", "time", "esporte", "psg", "marseille", "montpellier"],
     featured: true,
     images: [
-      toAbsoluteURL("/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png"), 
-      toAbsoluteURL("/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png"), 
-      toAbsoluteURL("/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png"), 
-      toAbsoluteURL("/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png")
+      "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
+      "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Montpellier detalhe
+      "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png", // PSG detalhe
+      "/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"  // Marseille detalhe
     ],
     dimensions: {
       width: 0,
@@ -354,7 +353,7 @@ export const bordadoVestuarioProducts: Product[] = [
     name: "Bordado em Fardamento - Biscoitos Feitos por Nós",
     type: "portfolio",
     category: "Bordado em Fardamentos",
-    imageUrl: toAbsoluteURL("/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png"),
+    imageUrl: "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png",
     description: "Bordado do logo 'Biscoitos Feitos Por Nós' em fardamento. Disponível em azul marinho e branco, com design elegante para equipe de confeitaria artesanal.",
     price: "35,00",
     isNew: true,
@@ -367,8 +366,8 @@ export const bordadoVestuarioProducts: Product[] = [
     tags: ["fardamento", "bordado", "logo", "gastronomia", "empresarial", "confeitaria", "biscoitos"],
     featured: true,
     images: [
-      toAbsoluteURL("/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png"),
-      toAbsoluteURL("/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png")
+      "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png",
+      "/lovable-uploads/757b2068-de47-4d4a-9fe4-f68c46100c2d.png"
     ],
     dimensions: {
       width: 0,
@@ -383,7 +382,7 @@ export const bordadoVestuarioProducts: Product[] = [
     name: "Bordado em Camisa - Capibaribe",
     type: "portfolio",
     category: "Bordado em Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"),
+    imageUrl: "/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png",
     description: "Bordado de logo do time Capibaribe em uma camisa. Detalhes nítidos na mascote do leão com contorno amarelo vibrante em fundo preto.",
     price: "40,00",
     isNew: false,
@@ -395,7 +394,7 @@ export const bordadoVestuarioProducts: Product[] = [
     minPurchaseQuantity: 5,
     tags: ["camisa", "bordado", "futebol", "time", "esporte"],
     featured: false,
-    images: [toAbsoluteURL("/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png")],
+    images: ["/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png"],
     dimensions: {
       width: 0,
       height: 0,
@@ -409,7 +408,7 @@ export const bordadoVestuarioProducts: Product[] = [
     name: "Bordado em Camisa - Doutor Pet",
     type: "portfolio",
     category: "Bordado em Vestuário",
-    imageUrl: toAbsoluteURL("/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png"),
+    imageUrl: "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png",
     description: "Bordado com o logo Doutor Pet na camisa. Disponível em verde, verde água e caqui. O logo apresenta um veterinário com animais de estimação em um círculo verde.",
     price: "35,00",
     isNew: true,
@@ -422,10 +421,10 @@ export const bordadoVestuarioProducts: Product[] = [
     tags: ["camisa", "bordado", "veterinário", "pet", "empresarial"],
     featured: true,
     images: [
-      toAbsoluteURL("/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png"),
-      toAbsoluteURL("/lovable-uploads/d5b5532a-f97b-4e54-b83a-e67256cb21dc.png"),
-      toAbsoluteURL("/lovable-uploads/4a3d432f-60d7-4543-b6f8-bc13a8a3c870.png"),
-      toAbsoluteURL("/lovable-uploads/135d959f-0f03-4169-a803-d49bc2b1ea43.png")
+      "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png",
+      "/lovable-uploads/d5b5532a-f97b-4e54-b83a-e67256cb21dc.png",
+      "/lovable-uploads/4a3d432f-60d7-4543-b6f8-bc13a8a3c870.png",
+      "/lovable-uploads/135d959f-0f03-4169-a803-d49bc2b1ea43.png"
     ],
     dimensions: {
       width: 0,

@@ -14,7 +14,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Info } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 
 interface PrazoPagamento {
   id: string;
@@ -74,7 +73,7 @@ const PrazosPagamentoPage = () => {
 
       {loading ? (
         <LoadingSpinner />
-      ) : !prazos || prazos.length === 0 ? (
+      ) : prazos.length === 0 ? (
         <div className="text-center py-12 bg-gray-50 rounded-lg">
           <p className="text-gray-500 text-lg">Nenhum prazo de pagamento encontrado.</p>
         </div>
@@ -88,20 +87,16 @@ const PrazosPagamentoPage = () => {
               <CardContent className="pt-4">
                 <div className="font-medium text-sm text-muted-foreground mb-2">Parcelas (dias):</div>
                 <div className="flex flex-wrap gap-2">
-                  {Array.isArray(prazo.prazos) ? prazo.prazos.map((dias, index) => (
+                  {prazo.prazos.map((dias, index) => (
                     <Badge key={index} variant="outline" className="px-3 py-1 bg-gray-50">
                       {dias} dias
                     </Badge>
-                  )) : (
-                    <p className="text-sm text-gray-500">Dados de prazo indisponíveis</p>
-                  )}
+                  ))}
                 </div>
                 <Separator className="my-4" />
                 <div className="flex justify-between text-sm">
                   <div>Total de parcelas:</div>
-                  <div className="font-semibold">
-                    {Array.isArray(prazo.prazos) ? prazo.prazos.length : 0}
-                  </div>
+                  <div className="font-semibold">{prazo.prazos.length}</div>
                 </div>
               </CardContent>
             </Card>
@@ -109,6 +104,18 @@ const PrazosPagamentoPage = () => {
         </div>
       )}
     </div>
+  );
+};
+
+// Componente Badge personalizado para este contexto
+const Badge = ({ children, className, variant }: { children: React.ReactNode, className?: string, variant: string }) => {
+  const baseClass = "rounded-full text-sm font-medium";
+  const variantClass = variant === "outline" ? "border border-gray-300" : "bg-gray-100";
+  
+  return (
+    <span className={`${baseClass} ${variantClass} ${className}`}>
+      {children}
+    </span>
   );
 };
 

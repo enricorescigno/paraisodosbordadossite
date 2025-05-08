@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Search, ShoppingCart, Menu, X } from 'lucide-react';
 import MenubarNav from './MenubarNav';
 import SearchBox from './SearchBox';
-import { useIsMobile } from '@/hooks/useMobile';
+import { useIsMobile } from '../hooks/use-mobile';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
@@ -27,15 +27,13 @@ const Navbar = () => {
     <header className={cn("z-50 sticky top-0 left-0 right-0 w-full transition-all duration-300", 
       isScrolled ? "backdrop-blur-xl bg-white/90 shadow-sm" : "backdrop-blur-none bg-white")}>
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
-        <nav className="h-16 flex items-center justify-between" role="navigation" aria-label="Navegação principal">
+        <nav className="h-16 flex items-center justify-between">
           <div className="flex items-center space-x-6">
             <Link to="/" className="flex items-center">
               <img 
                 src="/lovable-uploads/1b6b8029-a368-4270-a444-57d4aab3676e.png" 
                 alt="Paraíso dos Bordados" 
-                className="h-14 w-auto"
-                loading="lazy"
-                decoding="async"
+                className="h-14 w-auto" 
               />
             </Link>
             
@@ -48,8 +46,6 @@ const Navbar = () => {
                 onClick={() => setIsSearchOpen(!isSearchOpen)} 
                 className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300" 
                 aria-label="Buscar"
-                aria-expanded={isSearchOpen}
-                aria-controls="searchbar"
               >
                 <Search className="h-5 w-5 text-brand-dark" />
               </button>
@@ -61,19 +57,13 @@ const Navbar = () => {
                   <button 
                     className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-100" 
                     aria-label="Menu"
-                    aria-expanded={isMobileMenuOpen}
-                    aria-controls="mobile-menu"
-                    onClick={() => setIsMobileMenuOpen(true)}
                   >
                     <Menu className="h-5 w-5 text-brand-dark" />
                   </button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-full h-full sm:w-[350px] p-4" id="mobile-menu">
+                <SheetContent side="right" className="w-full h-full sm:w-[350px] p-4">
                   <div className="flex justify-end">
-                    <SheetClose className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-100"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      aria-label="Fechar menu"
-                    >
+                    <SheetClose className="p-2 rounded-full hover:bg-gray-100 transition-colors duration-100">
                       <X className="h-5 w-5 text-brand-dark" />
                     </SheetClose>
                   </div>
@@ -141,7 +131,6 @@ const Navbar = () => {
                 exit={{ opacity: 0, y: -10 }} 
                 transition={{ duration: 0.2 }} 
                 className="py-3"
-                id="searchbar"
               >
                 <SearchBox onClose={() => setIsSearchOpen(false)} />
               </motion.div>

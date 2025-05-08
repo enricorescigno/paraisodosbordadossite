@@ -1,19 +1,15 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
-import { ProductColor } from '@/types/product';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
-import useSafeImages from '@/hooks/useSafeImages';
 
 interface ProductCardProps {
   id: number | string;
   name: string;
   description?: string;
   imageUrl?: string;
-  images?: string[];
-  colors?: (ProductColor[] | string[]);
+  images?: any;
+  colors?: string[];
   isNew?: boolean;
   whatsappNumber: string;
   isPortfolio?: boolean;
@@ -33,8 +29,6 @@ const ProductCard = ({
   showActionButton = true
 }: ProductCardProps) => {
   const getPlaceholderImage = (name: string) => {
-    if (!name) return "https://via.placeholder.com/500x500?text=Sem+Imagem";
-    
     const lowerName = name.toLowerCase();
     if (lowerName.includes('necessaire') || lowerName.includes('bolsa')) {
       return "https://images.unsplash.com/photo-1563904092230-7ec217b65fe2?q=80&w=500&auto=format&fit=crop";
@@ -50,16 +44,74 @@ const ProductCard = ({
     return "https://via.placeholder.com/500x500?text=Sem+Imagem";
   };
 
-  // Use the fallback URL based on ID
-  const fallbackImage = id ? `/lovable-uploads/${id}.png` : "/placeholder.svg";
+  const getImageUrl = () => {
+    if (Number(id) === 2010) {
+      if (images && Array.isArray(images) && images.length > 5) {
+        return images[5];
+      }
+      return "/lovable-uploads/361e96c1-55bd-4ca1-9c7a-fa6e82abe2f6.png";
+    }
+    
+    if (Number(id) === 1004) {
+      if (images && Array.isArray(images) && images.length > 0) {
+        return "/lovable-uploads/c8d43835-b876-42ab-9780-bf1c0225effa.png";
+      }
+    }
+    
+    if (Number(id) === 1005) {
+      if (images && Array.isArray(images) && images.length > 0) {
+        return "/lovable-uploads/7a304209-bf62-4d8f-8c86-e3adf38e105f.png";
+      }
+    }
+    
+    if (Number(id) === 2002 || Number(id) === 901) {
+      return "/lovable-uploads/185199e6-f644-4c5e-9df7-7c45a81dda9b.png";
+    }
+    
+    if (Number(id) === 2004 || Number(id) === 903) {
+      return "/lovable-uploads/88204373-69c0-48cb-91d9-9f9daeb5eaab.png";
+    }
+    
+    if (Number(id) === 205 || Number(id) === 902) {
+      return "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png";
+    }
+    
+    if (Number(id) === 202) {
+      return "/lovable-uploads/56fc7649-6f58-477d-b0c1-98d186701f99.png";
+    }
+    
+    if (Number(id) === 203) {
+      return "/lovable-uploads/7df842ab-4325-4c5e-8ff1-74b9d04ebe99.png";
+    }
+    
+    if (Number(id) === 204) {
+      return "/lovable-uploads/920afc88-794b-416c-90e6-e84ad10ee39a.png";
+    }
+    
+    if (Number(id) === 206) {
+      return "/lovable-uploads/b0ee6029-30cd-4f43-a4b2-76ec6563efc3.png";
+    }
+    
+    if (Number(id) === 207) {
+      return "/lovable-uploads/70803891-aa93-49d9-9256-5a07d0bcd142.png";
+    }
+    
+    if (Number(id) === 208) {
+      return "/lovable-uploads/6406277c-f290-4a94-abb0-24f098dd74c6.png";
+    }
+    
+    if (Number(id) === 204 && images && typeof images === 'object' && !Array.isArray(images)) {
+      return images["Branco"]?.[0];
+    }
+    
+    if (!imageUrl && (!images || (Array.isArray(images) && images.length === 0))) {
+      return getPlaceholderImage(name);
+    }
+    
+    return imageUrl || (Array.isArray(images) ? images[0] : null) || "https://via.placeholder.com/500x500?text=Sem+Imagem";
+  };
 
-  // Use our safe images hook
-  const productImages = useSafeImages(images, imageUrl || fallbackImage);
-  
-  // Get the main image to display with proper fallbacks
-  const optimizedImageUrl = productImages && productImages.length > 0 ? 
-    productImages[0] : 
-    (imageUrl || fallbackImage || getPlaceholderImage(name || ""));
+  const optimizedImageUrl = getImageUrl();
 
   return (
     <motion.div
@@ -82,34 +134,29 @@ const ProductCard = ({
       }}
       className="flex flex-col h-full w-full"
     >
-      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300 flex items-center justify-center">
-        <AspectRatio ratio={1/1} className="w-full h-full">
-          <motion.img
-            src={optimizedImageUrl}
-            alt={`Produto: ${name || ""}`}
-            className="w-full h-full object-cover object-center absolute inset-0 mix-blend-multiply"
-            loading="lazy"
-            decoding="async"
-            whileHover={{
-              scale: 1.05
-            }}
-            transition={{
-              duration: 0.3
-            }}
-            onError={e => {
-              const target = e.target as HTMLImageElement;
-              if (target) {
-                target.onerror = null;
-                target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
-              }
-            }}
-          />
-        </AspectRatio>
+      <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
+        <motion.img
+          src={optimizedImageUrl}
+          alt={`Produto: ${name}`}
+          className="w-full h-full object-contain mix-blend-multiply"
+          loading="lazy"
+          whileHover={{
+            scale: 1.05
+          }}
+          transition={{
+            duration: 0.3
+          }}
+          onError={e => {
+            const target = e.target as HTMLImageElement;
+            target.onerror = null;
+            target.src = "https://via.placeholder.com/500x500?text=Sem+Imagem";
+          }}
+        />
       </div>
       
       <div className="flex flex-col flex-grow w-full">
         <h3 className="text-xl md:text-2xl font-sans tracking-tight font-medium text-center mb-2">
-          {name || "Produto"}
+          {name}
         </h3>
         
         {description && (
@@ -126,7 +173,7 @@ const ProductCard = ({
               variant="default" 
               size="lg" 
               className="rounded-full px-8 w-full max-w-[200px] min-h-[48px]" 
-              aria-label={`Ver detalhes de ${name || "Produto"}`}
+              aria-label={`Ver detalhes de ${name}`}
             >
               {isPortfolio ? "Ver Detalhes" : "Saiba Mais"}
             </Button>

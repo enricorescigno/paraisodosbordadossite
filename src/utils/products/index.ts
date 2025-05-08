@@ -1,10 +1,11 @@
+
 import { Product } from '../../types/product';
 import { bonesProducts } from './bonesProducts';
 import { bordadosProducts } from './bordadosProducts';
 import { bordadosInfantisProducts } from './bordadosInfantisProducts';
 import { vestuarioProducts, bordadoVestuarioProducts } from './vestuarioProducts';
 import { banhoProducts } from './banhoProducts';
-import { camaProducts } from './cama';
+import { camaProducts } from './camaProducts';
 import { mesaCozinhaProducts } from './mesaCozinhaProducts';
 import { tapeteCortinasProducts } from './tapeteCortinasProducts';
 import { 
@@ -48,5 +49,5 @@ export const allProducts: Product[] = [
   ...camaProducts,
   ...mesaCozinhaProducts,
   ...tapeteCortinasProducts,
-  ...infantilProducts
+  ...infantilProducts // Add infantil products to the main collection
 ];

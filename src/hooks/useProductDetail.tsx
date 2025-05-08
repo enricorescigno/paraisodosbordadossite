@@ -1,272 +1,104 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Product, ProductColor, ProductSize } from '@/types/product';
+import { Product } from '@/types/product';
 import { allProducts } from '@/utils/productUtils';
-import useProductImageManager from '@/hooks/useProductImageManager';
-
-// Safety functions for image handling
-const safePreloadImages = (images: string[] = []) => {
-  try {
-    if (!Array.isArray(images) || images.length === 0) return;
-    
-    images.slice(0, 3).forEach(src => {
-      if (typeof src !== 'string') return;
-      
-      const link = document.createElement('link');
-      link.rel = 'preload';
-      link.as = 'image';
-      link.href = src;
-      document.head.appendChild(link);
-    });
-  } catch (error) {
-    console.error("Error preloading images:", error);
-  }
-};
-
-const safeCacheImages = (images: string[] = []) => {
-  try {
-    if (!Array.isArray(images)) return;
-    
-    images.forEach(src => {
-      if (typeof src !== 'string') return;
-      
-      const img = new Image();
-      img.src = src;
-    });
-  } catch (error) {
-    console.error("Error caching images:", error);
-  }
-};
+import { useProductImageManager } from './useProductImageManager';
+import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
   const location = useLocation();
-  const navigate = useNavigate();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [isFromPortfolio, setIsFromPortfolio] = useState(false);
-  const isMountedRef = useRef(true);
   
+  // Initialize product and check if special product 204
   useEffect(() => {
-    // Set mounting flag
-    isMountedRef.current = true;
+    setLoading(true);
     
-    const fetchProduct = async () => {
-      if (!productId) {
-        setLoading(false);
-        setProduct(null);
-        return;
-      }
-    
-      setLoading(true);
-      
-      try {
-        console.log("useProductDetail - Looking for product with ID:", productId);
-        
-        // First, check if this is the specific ID we're having issues with
-        if (productId === "1001") {
-          console.log("Loading special product ID 1001");
-          const infantProduct: Product = {
-            id: "1001",
-            name: "Bordado em Camisa Infantil - Caminhão",
-            type: "product" as const, // Explicitly type this as "product"
-            category: "Bordados Infantis",
-            imageUrl: "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
-            description: "Camisa infantil com bordado de caminhão, ideal para crianças aventureiras. Bordado detalhado com caminhão vermelho em tecido de alta qualidade.",
-            price: "Sob consulta",
-            colors: ["Branco", "Vermelho"],
-            sizes: ["P", "M", "G"],
-            rating: 4.7,
-            isNew: true,
-            features: [
-              "Bordado de alta qualidade",
-              "Tecido confortável 100% algodão",
-              "Ideal para o dia a dia",
-              "Detalhes em vermelho vibrante",
-              "Lavagem à máquina"
-            ],
-            images: [
-              "/lovable-uploads/91998edb-6477-4c56-9f7d-eb551e42e18a.png",
-              "/lovable-uploads/208739a6-dbf4-49b4-91f1-fefab9cb6eb9.png",
-              "/lovable-uploads/9b4b5a0c-3297-47b0-8b64-9d3166bd3088.png"
-            ],
-            keywords: ["camisa", "infantil", "bordado", "caminhão", "criança", "vermelho"]
-          };
+    const timer = setTimeout(() => {
+      if (productId) {
+        try {
+          let foundProduct = allProducts.find(p => p.id.toString() === productId);
           
-          if (isMountedRef.current) {
-            setProduct(infantProduct);
-            setSelectedColor("Branco");
-            setSelectedSize("P");
-            setLoading(false);
-            return;
+          // Special case for product 204
+          if (productId === "204") {
+            foundProduct = {
+              id: 204,
+              name: "Jogo Americano Requinte Ondulado",
+              type: "product",
+              category: "Mesa e Cozinha",
+              imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
+              description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
+              colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
+              sizes: [],
+              rating: 4.9,
+              isNew: true,
+              features: [
+                "Composição: 75% polipropileno e 25% poliéster", 
+                "Diâmetro: 38cm", 
+                "Conjunto com 4 unidades",
+                "Fácil lavagem e secagem rápida",
+                "Resistente para uso diário"
+              ],
+              keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
+            };
           }
-        }
-        
-        let foundProduct = allProducts.find(p => String(p.id) === String(productId));
-        
-        // Special handling for product 204 (could be moved to a config)
-        if (productId === "204") {
-          foundProduct = {
-            id: "204",
-            name: "Jogo Americano Requinte Ondulado",
-            type: "product" as const, // Explicitly type this as "product"
-            category: "Mesa e Cozinha",
-            imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
-            description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
-            colors: [
-              { name: "Branco", value: "#FFFFFF" },
-              { name: "Dourado", value: "#DAA520" },
-              { name: "Bege", value: "#F5F5DC" },
-              { name: "Marrom", value: "#8B4513" },
-              { name: "Rosa", value: "#FFC0CB" },
-              { name: "Verde", value: "#008000" },
-              { name: "Vinho", value: "#800020" }
-            ],
-            sizes: [],
-            rating: 4.9,
-            isNew: true,
-            features: [
-              "Composição: 75% polipropileno e 25% poliéster", 
-              "Diâmetro: 38cm", 
-              "Conjunto com 4 unidades",
-              "Fácil lavagem e secagem rápida",
-              "Resistente para uso diário"
-            ],
-            keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
-          };
-        }
-        
-        if (foundProduct) {
-          console.log("useProductDetail - Found product:", foundProduct);
           
-          // Ensure product has necessary properties to avoid undefined errors
-          const safeProduct = {
-            ...foundProduct,
-            images: foundProduct.images || [foundProduct.imageUrl || "/placeholder.svg"],
-            imageUrl: foundProduct.imageUrl || "/placeholder.svg",
-            description: foundProduct.description || "Produto de alta qualidade da Paraíso dos Bordados.",
-            features: foundProduct.features || ["Qualidade premium"],
-            type: (foundProduct.type as "product" | "portfolio" | "service") || ("product" as const),
-            category: foundProduct.category || "Diversos"
-          };
-          
-          // Safe state updates with mounted check
-          if (isMountedRef.current) {
-            // Convert string colors to color objects
-            if (safeProduct.colors && Array.isArray(safeProduct.colors) && typeof safeProduct.colors[0] === 'string') {
-              safeProduct.colors = (safeProduct.colors as string[]).map(color => ({
-                name: color,
-                value: color
-              })) as ProductColor[];
+          if (foundProduct) {
+            if (foundProduct.colors && foundProduct.colors.length > 0) {
+              setSelectedColor(foundProduct.colors[0]);
+            }
+            if (foundProduct.sizes && foundProduct.sizes.length > 0) {
+              setSelectedSize(foundProduct.sizes[0]);
             }
             
-            // Convert string sizes to size objects
-            if (safeProduct.sizes && Array.isArray(safeProduct.sizes) && typeof safeProduct.sizes[0] === 'string') {
-              safeProduct.sizes = (safeProduct.sizes as string[]).map(size => ({
-                name: size,
-                value: size,
-                available: true
-              })) as ProductSize[];
+            setIsFromPortfolio(foundProduct.type === 'portfolio');
+            
+            // Ensure default values for better UX
+            if (!foundProduct.rating) foundProduct.rating = 4.8;
+            if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
+            if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
+            
+            setProduct(foundProduct);
+            
+            // Preload images for better performance
+            if (foundProduct.images && Array.isArray(foundProduct.images)) {
+              cacheImagesInBrowser(foundProduct.images);
+              preloadImages(foundProduct.images.slice(0, 3)); // Preload first three images
+            } else if (foundProduct.imageUrl) {
+              cacheImagesInBrowser([foundProduct.imageUrl]);
+              preloadImages([foundProduct.imageUrl]);
             }
-            
-            if (safeProduct.colors && safeProduct.colors.length > 0) {
-              const firstColor = (safeProduct.colors as ProductColor[])[0];
-              if (firstColor) {
-                setSelectedColor(firstColor.name);
-              }
-            }
-            
-            if (safeProduct.sizes && safeProduct.sizes.length > 0) {
-              const firstSize = (safeProduct.sizes as ProductSize[])[0];
-              if (firstSize) {
-                setSelectedSize(firstSize.name);
-              }
-            }
-            
-            setIsFromPortfolio(safeProduct.type === 'portfolio');
-            
-            // Provide fallback values for missing fields
-            if (!safeProduct.rating) safeProduct.rating = 4.8;
-            
-            // Ensure imageUrl is added to images if not already present
-            if (safeProduct.imageUrl && safeProduct.images && !safeProduct.images.includes(safeProduct.imageUrl)) {
-              safeProduct.images = [safeProduct.imageUrl, ...safeProduct.images];
-            }
-            
-            setProduct(safeProduct);
-            
-            // Cache and preload images
-            if (safeProduct.images && Array.isArray(safeProduct.images)) {
-              try {
-                safeCacheImages(safeProduct.images);
-                safePreloadImages(safeProduct.images.slice(0, 3));
-              } catch (error) {
-                console.error("Error caching/preloading images:", error);
-              }
-            }
+          } else {
+            setProduct(null);
+            toast.error("Produto não encontrado.");
           }
-        } else if (isMountedRef.current) {
-          console.log("Product not found with ID:", productId);
-          setProduct(null);
-          toast.error("Produto não encontrado.");
-          
-          // Optional: redirect to products page after a delay
-          setTimeout(() => {
-            if (isMountedRef.current) {
-              navigate('/produtos');
-            }
-          }, 3000);
-        }
-      } catch (error) {
-        console.error("Erro ao carregar produto:", error);
-        if (isMountedRef.current) {
+        } catch (error) {
+          console.error("Erro ao carregar produto:", error);
           toast.error("Erro ao carregar o produto. Tente novamente mais tarde.");
           setProduct(null);
         }
-      } finally {
-        if (isMountedRef.current) {
-          setLoading(false);
-        }
       }
-    };
+      setLoading(false);
+    }, 300); // Reduced timeout for faster loading
     
-    fetchProduct();
-    
-    // Cleanup function to prevent memory leaks
-    return () => {
-      isMountedRef.current = false;
-    };
-  }, [productId, navigate]);
+    return () => clearTimeout(timer);
+  }, [productId]);
 
-  // Get product images in a safe way for the hook
-  const safeImages = useMemo(() => {
-    // Make sure we always return an array, even if empty
-    if (!product) {
-      return ["/placeholder.svg"];
-    }
-    
-    return (product.images && Array.isArray(product.images) && product.images.length > 0)
-      ? product.images.filter(Boolean)
-      : (product.imageUrl ? [product.imageUrl] : ["/placeholder.svg"]);
-  }, [product]);
-  
-  const safeCategory = product?.category || 'Diversos';
-  
-  // Use the hook with product images and category for better fallback
+  // Use product image manager for handling color and images
   const { 
     currentImages, 
     activeImageIndex, 
-    setActiveImageIndex, 
+    setActiveImageIndex,
     getPlaceholder 
-  } = useProductImageManager({
-    images: safeImages,
-    category: safeCategory
-  });
+  } = useProductImageManager(product, selectedColor);
 
+  // Functions to control quantity
   const incrementQuantity = () => {
     setQuantity(prev => prev + 1);
   };
@@ -275,8 +107,9 @@ export const useProductDetail = () => {
     setQuantity(prev => (prev > 1 ? prev - 1 : 1));
   };
 
+  // Generate WhatsApp link with product details
   const getWhatsAppLink = () => {
-    if (!product) return 'https://wa.me/5581995970776';
+    if (!product) return '';
     
     let message = `Olá! Vi o ${product.name} e gostaria de fazer um orçamento!`;
     
@@ -293,6 +126,7 @@ export const useProductDetail = () => {
     return `https://wa.me/5581995970776?text=${encodeURIComponent(message)}`;
   };
 
+  // Get back link based on product type and category
   const getBackLink = () => {
     if (isFromPortfolio || location.pathname.includes('/portfolio')) {
       return '/portfolio';
@@ -314,8 +148,7 @@ export const useProductDetail = () => {
         'bordado em bolsa': '/portfolio/bordado-bolsa',
         'jalecos': '/portfolio/bordado-jaleco',
         'roupões infantis': '/portfolio/bordado-infantis',
-        'toalhas infantis': '/portfolio/bordado-toalha-banho',
-        'bordados infantis': '/categoria/infantil',
+        'toalhas infantis': '/portfolio/bordado-toalha-banho'
       };
       
       return categoryMap[product.category.toLowerCase()] || '/produtos';
@@ -343,5 +176,3 @@ export const useProductDetail = () => {
     placeholder: getPlaceholder
   };
 };
-
-export default useProductDetail;

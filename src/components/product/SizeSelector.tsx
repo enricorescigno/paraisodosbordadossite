@@ -2,24 +2,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
-import { ProductSize } from '@/types/product';
 
 interface SizeSelectorProps {
-  sizes: ProductSize[] | string[];
+  sizes: string[];
   selectedSize: string;
   onSizeChange: (size: string) => void;
 }
 
 const SizeSelector = ({ sizes, selectedSize, onSizeChange }: SizeSelectorProps) => {
   if (!sizes || sizes.length === 0) return null;
-  
-  // Convert sizes to a consistent format for rendering
-  const normalizedSizes = sizes.map(size => {
-    if (typeof size === 'string') {
-      return { name: size, value: size, available: true };
-    }
-    return size;
-  });
   
   return (
     <div className="mb-8">
@@ -29,34 +20,32 @@ const SizeSelector = ({ sizes, selectedSize, onSizeChange }: SizeSelectorProps) 
         role="radiogroup"
         aria-label="Selecione um tamanho"
       >
-        {normalizedSizes.map((size) => (
+        {sizes.map((size) => (
           <motion.button
-            key={size.name}
-            onClick={() => onSizeChange(size.name)}
+            key={size}
+            onClick={() => onSizeChange(size)}
             whileTap={{ scale: 0.95 }}
             className={cn(
               "px-5 py-3 border rounded-lg transition-all duration-200 min-w-[60px]",
-              selectedSize === size.name 
+              selectedSize === size 
                 ? "border-[#0071E3] bg-[#0071E3]/5 text-[#0071E3] font-medium" 
-                : "border-gray-300 text-gray-600 hover:border-gray-400",
-              !size.available && "opacity-50 cursor-not-allowed"
+                : "border-gray-300 text-gray-600 hover:border-gray-400"
             )}
-            aria-label={`Selecionar tamanho ${size.name}`}
-            aria-pressed={selectedSize === size.name}
+            aria-label={`Selecionar tamanho ${size}`}
+            aria-pressed={selectedSize === size}
             role="radio"
-            aria-checked={selectedSize === size.name}
-            disabled={!size.available}
-            data-testid={`size-button-${size.name.toLowerCase().replace(/\s+/g, '-')}`}
+            aria-checked={selectedSize === size}
+            data-testid={`size-button-${size.toLowerCase().replace(/\s+/g, '-')}`}
           >
             {/* Format multiline labels if needed */}
-            {size.name.includes(' ') 
-              ? size.name.split(' ').map((word, index, array) => (
+            {size.includes(' ') 
+              ? size.split(' ').map((word, index, array) => (
                   <React.Fragment key={index}>
                     {word}
                     {index < array.length - 1 && <br />}
                   </React.Fragment>
                 ))
-              : size.name}
+              : size}
           </motion.button>
         ))}
       </div>

@@ -13,7 +13,6 @@ import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
 import BrowseByCategory from './common/BrowseByCategory';
 import { Skeleton } from './ui/skeleton';
-import useMountedState from '@/hooks/useMountedState';
 
 // Category name translations for titles
 const categoryTitles: Record<string, string> = {
@@ -22,7 +21,7 @@ const categoryTitles: Record<string, string> = {
   'mesa-cozinha': 'Mesa e Cozinha',
   'tapete-cortinas': 'Tapete e Cortinas',
   'infantil': 'Infantil',
-  'vestuario': 'Vestuário'
+  'vestuario': 'Vestuário'  // Added vestuario title
 };
 
 // Mapping from URL paths to product categories
@@ -32,38 +31,7 @@ const CATEGORY_MAPPINGS: Record<string, string> = {
   'mesa-cozinha': 'Mesa e Cozinha',
   'tapete-cortinas': 'Tapete e Cortinas',
   'infantil': 'Infantil',
-  'vestuario': 'Vestuário'
-};
-
-// Category filter map: defines what filters to apply for each URL category path
-const CATEGORY_FILTERS: Record<string, (product: Product) => boolean> = {
-  'mesa-cozinha': (product) => (
-    product.type === 'product' && 
-    !product.category.toLowerCase().includes('bordado') && 
-    !product.category.toLowerCase().includes('bonés') &&
-    (product.category.toLowerCase().includes('mesa') || 
-     product.category.toLowerCase().includes('cozinha'))
-  ),
-  'tapete-cortinas': (product) => (
-    product.type === 'product' && 
-    !product.category.toLowerCase().includes('bordado') && 
-    !product.category.toLowerCase().includes('bonés') &&
-    (product.category.toLowerCase().includes('tapete') || 
-     product.category.toLowerCase().includes('cortina'))
-  ),
-  'infantil': (product) => (
-    product.type === 'product' && 
-    !product.category.toLowerCase().includes('bordado') && 
-    !product.category.toLowerCase().includes('bonés') &&
-    product.category.toLowerCase().includes('infantil') &&
-    !product.name.toLowerCase().includes('kit infantil bordado')
-  ),
-  'vestuario': (product) => (
-    product.type === 'product' && 
-    !product.category.toLowerCase().includes('bordado') && 
-    !product.category.toLowerCase().includes('bonés') &&
-    product.category.toLowerCase().includes('vestuário')
-  )
+  'vestuario': 'Vestuário'  // Added vestuario mapping
 };
 
 const ProductPage = () => {
@@ -73,7 +41,6 @@ const ProductPage = () => {
   const [initialLoading, setInitialLoading] = useState(true);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const whatsappNumber = "+5581995970776";
-  const isMounted = useMountedState();
   useScrollToTop();
   
   // Extract the category from the URL path for title and active category
@@ -86,12 +53,10 @@ const ProductPage = () => {
     setLoading(true);
     
     // Simulate faster initial loading with a skeleton
-    let initialTimer: number | undefined;
+    let initialTimer: number;
     if (initialLoading) {
       initialTimer = window.setTimeout(() => {
-        if (isMounted.current) {
-          setInitialLoading(false);
-        }
+        setInitialLoading(false);
       }, 300);
     }
     
@@ -100,49 +65,71 @@ const ProductPage = () => {
       // Get the corresponding category name from the URL path
       const categoryName = CATEGORY_MAPPINGS[categoryPath] || categoryTitles[categoryPath] || '';
       
-      // Find the appropriate filter for this category or create a default one
-      const categoryFilter = CATEGORY_FILTERS[categoryPath] || ((product: Product) => (
-        product.type === 'product' && 
-        !product.category.toLowerCase().includes('bordado') && 
-        !product.category.toLowerCase().includes('bonés') &&
-        (product.category === categoryName || 
-          product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
-          categoryName.toLowerCase().includes(product.category.toLowerCase()))
-      ));
+      // Filter for products in this category
+      let categoryProducts: Product[] = [];
       
-      // Apply the filter
-      const categoryProducts = allProducts.filter(categoryFilter);
+      if (categoryPath === 'mesa-cozinha') {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          (product.category.toLowerCase().includes('mesa') || 
+           product.category.toLowerCase().includes('cozinha'))
+        );
+      } else if (categoryPath === 'tapete-cortinas') {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          (product.category.toLowerCase().includes('tapete') || 
+           product.category.toLowerCase().includes('cortina'))
+        );
+      } else if (categoryPath === 'infantil') {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          product.category.toLowerCase().includes('infantil') &&
+          !product.name.toLowerCase().includes('kit infantil bordado') // Exclude "Kit Infantil Bordado"
+        );
+      } else if (categoryPath === 'vestuario') {
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          product.category.toLowerCase().includes('vestuário')
+        );
+      } else {
+        // Standard category filtering
+        categoryProducts = allProducts.filter(product => 
+          product.type === 'product' && 
+          !product.category.toLowerCase().includes('bordado') && 
+          !product.category.toLowerCase().includes('bonés') &&
+          (product.category === categoryName || 
+            product.category.toLowerCase().includes(categoryName.toLowerCase()) ||
+            categoryName.toLowerCase().includes(product.category.toLowerCase()))
+        );
+      }
       
-      // If still no products found, try partial matching as a fallback
-      const finalProducts = categoryProducts.length === 0 ? 
-        allProducts.filter(product => 
+      // If still no products found, try partial matching
+      let finalProducts = categoryProducts;
+      if (categoryProducts.length === 0) {
+        finalProducts = allProducts.filter(product => 
           product.type === 'product' && 
           !product.category.toLowerCase().includes('bordado') && 
           !product.category.toLowerCase().includes('bonés') &&
           (categoryPath.includes(product.category.toLowerCase().replace(/\s+/g, '-')) ||
             product.category.toLowerCase().includes(categoryPath.replace(/-/g, ' ')))
-        ) : categoryProducts;
+        );
+      }
       
       // Add console logging to help debug
       console.log(`Category path: ${categoryPath}, Category name: ${categoryName}`);
       console.log(`Found ${finalProducts.length} products for category ${categoryName}`);
       
-      // Make sure each product has an images array
-      const productsWithImages = finalProducts.map(product => {
-        if (!product.images || !Array.isArray(product.images) || product.images.length === 0) {
-          return {
-            ...product,
-            images: [`/lovable-uploads/${product.id}.png`]
-          };
-        }
-        return product;
-      });
-      
-      if (isMounted.current) {
-        setProducts(productsWithImages);
-        setFilteredProducts(productsWithImages);
-        setLoading(false);
-      }
+      setProducts(finalProducts);
+      setFilteredProducts(finalProducts);
+      setLoading(false);
     };
     
     // Execute with slight delay to let initial render complete

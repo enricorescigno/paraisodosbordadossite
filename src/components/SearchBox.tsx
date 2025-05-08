@@ -77,10 +77,10 @@ const SearchBox = ({ onClose, showCloseButton = true }: SearchBoxProps) => {
             {searchResults.map((product) => (
               <li key={product.id} className="px-4 py-2 hover:bg-gray-50 cursor-pointer" onClick={() => handleResultClick(product)}>
                 <div className="flex items-center gap-3">
-                  {product.images?.[0] && (
+                  {product.imageUrl && (
                     <div className="h-10 w-10 bg-gray-100 rounded overflow-hidden flex-shrink-0">
                       <img 
-                        src={product.images[0]} 
+                        src={product.imageUrl} 
                         alt={product.name} 
                         className="h-full w-full object-cover"
                       />

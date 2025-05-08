@@ -7,10 +7,8 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    allowedHosts: true, // Changed from 'all' to true to match expected type
-    host: "0.0.0.0",
-    port: 8080, // Setting back to 8080 as required
-    strictPort: true,
+    host: "::",
+    port: 8080,
   },
   plugins: [
     react(),
@@ -22,24 +20,19 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  css: {
-    preprocessorOptions: {
-      // Fix for CSS @import error
-      order: 'preAndPostParsing'
-    }
-  },
   build: {
     minify: true,
-    sourcemap: true, // Enable sourcemaps for debugging
+    sourcemap: false,
     cssMinify: true,
-    reportCompressedSize: false, // Disable size reporting to optimize build time
     rollupOptions: {
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],
           router: ['react-router-dom'],
           framer: ['framer-motion'],
-          ui: ['@radix-ui/react-dialog', '@radix-ui/react-tooltip', '@radix-ui/react-avatar', '@radix-ui/react-select', '@radix-ui/react-tabs', '@radix-ui/react-dropdown-menu'],
+          ui: ['@radix-ui/react-slot', '@radix-ui/react-separator'],
+          components: ['@/components/ui/button', '@/components/ui/apple-button', '@/components/ui/card'],
+          utils: ['@/lib/utils', '@/utils/imageUtils']
         },
         assetFileNames: assetInfo => {
           const assetName = assetInfo.name || 'unknown';
@@ -64,17 +57,14 @@ export default defineConfig(({ mode }) => ({
     // Image compression settings (max compression level)
     assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp', '**/*.svg'],
   },
-  define: { 
-    "process.env": {} // Add process.env define for compatibility
-  },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion', 'react-error-boundary'],
+    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
     esbuildOptions: {
       target: 'es2020',
     }
   },
   preview: {
-    port: 8080, // Set back to 8080
+    port: 8080,
     host: true,
     headers: {
       // Add cache control headers for better performance

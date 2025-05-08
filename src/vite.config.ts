@@ -1,4 +1,3 @@
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
@@ -7,10 +6,8 @@ import { componentTagger } from "lovable-tagger";
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
   server: {
-    allowedHosts: true, // Changed from 'all' to true to match expected type
-    host: "0.0.0.0",
-    port: 8080, // Setting back to 8080 as required
-    strictPort: true,
+    host: "::",
+    port: 8080,
   },
   plugins: [
     react(),
@@ -22,14 +19,10 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  define: {
-    "process.env": {}
-  },
   build: {
     minify: true,
-    sourcemap: true, // Enable sourcemaps for debugging
+    sourcemap: false,
     cssMinify: true,
-    reportCompressedSize: false, // Disable size reporting to speed up builds
     rollupOptions: {
       output: {
         manualChunks: {
@@ -63,6 +56,7 @@ export default defineConfig(({ mode }) => ({
     cssCodeSplit: true,
     modulePreload: true,
     treeshake: true,
+    // publicPath: 'https://cdn.seudominio.com/', // personalize para CDN real
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
@@ -71,7 +65,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   preview: {
-    port: 8080, // Set back to 8080
+    port: 8080,
     host: true,
   },
   // Add better file change detection

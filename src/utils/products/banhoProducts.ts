@@ -1,6 +1,5 @@
 
 import { Product } from '../../types/product';
-import { toAbsoluteURL } from '../imageUtils';
 
 export const banhoProducts: Product[] = [
   {

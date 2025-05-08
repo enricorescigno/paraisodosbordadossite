@@ -1,9 +1,6 @@
 
-/* Import Tailwind directives */
-@import './GlobalStyles.css';
-
-/* Apple-inspired Typography */
 @layer base {
+  /* Apple-inspired Typography */
   body {
     @apply text-[15px] leading-relaxed text-brand-dark antialiased font-sans selection:bg-brand-red/10 selection:text-brand-red;
     -webkit-font-smoothing: antialiased;

@@ -1,17 +1,15 @@
 
-import * as React from "react";
 import { motion } from "framer-motion";
-import { ErrorBoundary } from "react-error-boundary";
 import Hero from "../components/Hero";
 import ProductShowcase from "../components/ProductShowcase";
 import Features from "../components/Features";
 import Partners from "../components/Partners";
 import Testimonials from "../components/Testimonials";
 import Newsletter from "../components/Newsletter";
-import LoadingSpinner from "../components/common/LoadingSpinner";
-import FallbackErrorComponent from "../components/common/FallbackErrorComponent";
+import Footer from "../components/Footer";
+import WhatsAppSupport from "../components/WhatsAppSupport";
 
-const Index: React.FC = () => {
+const Index = () => {
   return (
     <motion.div 
       className="min-h-screen bg-white"
@@ -19,41 +17,14 @@ const Index: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <Hero />
-        </React.Suspense>
-      </ErrorBoundary>
-
-      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <ProductShowcase />
-        </React.Suspense>
-      </ErrorBoundary>
-
-      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <Features />
-        </React.Suspense>
-      </ErrorBoundary>
-
-      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <Partners />
-        </React.Suspense>
-      </ErrorBoundary>
-
-      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <Testimonials />
-        </React.Suspense>
-      </ErrorBoundary>
-
-      <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <Newsletter />
-        </React.Suspense>
-      </ErrorBoundary>
+      <Hero />
+      <ProductShowcase />
+      <Features />
+      <Partners />
+      <Testimonials />
+      <Newsletter />
+      <Footer />
+      <WhatsAppSupport />
     </motion.div>
   );
 };

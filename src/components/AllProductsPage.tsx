@@ -1,8 +1,8 @@
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import Footer from './Footer';
 import WhatsAppSupport from './WhatsAppSupport';
-import { useIsMobile } from '@/hooks/useMobile'; 
+import { useIsMobile } from '../hooks/use-mobile';
 import { products } from '../utils/searchUtils';
 import PageHeader from './common/PageHeader';
 import LoadingSpinner from './common/LoadingSpinner';
@@ -10,29 +10,25 @@ import EmptyState from './common/EmptyState';
 import ProductsCarousel from './product/ProductsCarousel';
 import BrowseByCategory from './common/BrowseByCategory';
 import { Skeleton } from './ui/skeleton';
-import useMountedState from '@/hooks/useMountedState';
 
 const AllProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [initialLoading, setInitialLoading] = useState(true);
   const [allProductsList, setAllProductsList] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-  const [activeCategory, setActiveCategory] = useState('vestuario');  
+  const [activeCategory, setActiveCategory] = useState('vestuario');  // Changed to vestuario as default
   const isMobile = useIsMobile();
   const whatsappNumber = "+5581995970776";
-  const isMounted = useMountedState();
   
   // Load all products with improved loading states for better UX
   useEffect(() => {
     setLoading(true);
     
     // Show skeleton loader initially
-    let initialTimer: number | undefined;
+    let initialTimer: number;
     if (initialLoading) {
       initialTimer = window.setTimeout(() => {
-        if (isMounted.current) {
-          setInitialLoading(false);
-        }
+        setInitialLoading(false);
       }, 300);
     }
     
@@ -45,10 +41,8 @@ const AllProductsPage = () => {
         !product.category.toLowerCase().includes('bonés')
       );
       
-      if (isMounted.current) {
-        setAllProductsList(productItems);
-        setLoading(false);
-      }
+      setAllProductsList(productItems);
+      setLoading(false);
     }, 300);
     
     return () => {
@@ -94,9 +88,7 @@ const AllProductsPage = () => {
       });
     }
     
-    if (isMounted.current) {
-      setFilteredProducts(result);
-    }
+    setFilteredProducts(result);
   }, [activeCategory, allProductsList]);
   
   // Skeleton for initial loading

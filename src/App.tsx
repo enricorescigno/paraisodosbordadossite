@@ -1,126 +1,97 @@
 
-import * as React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { TooltipProvider } from '@/components/ui/tooltip';
-import { Toaster } from '@/components/ui/sonner';
-import { ErrorBoundary } from 'react-error-boundary';
-import Layout from '@/layouts/Layout';
-import Index from '@/pages/Index';
-import ProductPage from '@/components/ProductPage';
-import ProductDetailPage from '@/components/ProductDetailPage';
-import AboutUs from '@/pages/AboutUs';
-import OurPartners from '@/pages/OurPartners';
-import NotFound from '@/pages/NotFound';
-import PrivacyPolicy from '@/pages/PrivacyPolicy';
-import AllProductsPage from '@/components/AllProductsPage';
-import AllPortfolioPage from '@/components/AllPortfolioPage';
-import PortfolioPage from '@/components/PortfolioPage';
-import EstoquePage from '@/pages/EstoquePage';
-import VendasPage from '@/pages/VendasPage';
-import PedidosCompraStatusPage from '@/pages/PedidosCompraStatusPage';
-import PedidosCompraProdutosPage from '@/pages/PedidosCompraProdutosPage';
-import PedidosCompraDistribuicaoPage from '@/pages/PedidosCompraDistribuicaoPage';
-import TributacoesPage from '@/pages/TributacoesPage';
-import PrazosPagamentoPage from '@/pages/PrazosPagamentoPage';
-import FallbackErrorComponent from '@/components/common/FallbackErrorComponent';
+import React from 'react';
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Index from "./pages/Index";
+import AboutUs from "./pages/AboutUs";
+import NotFound from "./pages/NotFound";
+import ProductPage from "./components/ProductPage";
+import PortfolioPage from "./components/PortfolioPage";
+import ProductDetailPage from "./components/ProductDetailPage";
+import OurPartners from "./pages/OurPartners";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AllProductsPage from "./components/AllProductsPage";
+import AllPortfolioPage from "./components/AllPortfolioPage";
+import ScrollToTop from "./components/ScrollToTop";
+import EstoquePage from "./pages/EstoquePage";
+import TributacoesPage from "./pages/TributacoesPage";
+import VendasPage from "./pages/VendasPage";
+import PedidosCompraProdutosPage from "./pages/PedidosCompraProdutosPage";
+import PedidosCompraDistribuicaoPage from "./pages/PedidosCompraDistribuicaoPage";
+import PedidosCompraStatusPage from "./pages/PedidosCompraStatusPage";
+import PrazosPagamentoPage from "./pages/PrazosPagamentoPage";
 
-import './App.css';
+import "./styles/typography.css";
 
-const App = () => {
+const queryClient = new QueryClient();
+
+function App() {
   return (
-    <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-      <Router>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
         <TooltipProvider>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <Index />
-                </ErrorBoundary>
-              } />
-              <Route path="produtos" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <AllProductsPage />
-                </ErrorBoundary>
-              } />
-              <Route path="produto/:productId" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <ProductDetailPage />
-                </ErrorBoundary>
-              } />
-              <Route path="categoria/:category" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <ProductPage />
-                </ErrorBoundary>
-              } />
-              <Route path="portfolio" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <AllPortfolioPage />
-                </ErrorBoundary>
-              } />
-              <Route path="portfolio/:category" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <PortfolioPage />
-                </ErrorBoundary>
-              } />
-              <Route path="sobre-nos" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <AboutUs />
-                </ErrorBoundary>
-              } />
-              <Route path="nossos-parceiros" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <OurPartners />
-                </ErrorBoundary>
-              } />
-              <Route path="politica-de-privacidade" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <PrivacyPolicy />
-                </ErrorBoundary>
-              } />
-              <Route path="estoque" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <EstoquePage />
-                </ErrorBoundary>
-              } />
-              <Route path="vendas" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <VendasPage />
-                </ErrorBoundary>
-              } />
-              <Route path="pedidos-compra-status" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <PedidosCompraStatusPage />
-                </ErrorBoundary>
-              } />
-              <Route path="pedidos-compra-produtos" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <PedidosCompraProdutosPage />
-                </ErrorBoundary>
-              } />
-              <Route path="pedidos-compra-distribuicao" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <PedidosCompraDistribuicaoPage />
-                </ErrorBoundary>
-              } />
-              <Route path="tributacoes" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <TributacoesPage />
-                </ErrorBoundary>
-              } />
-              <Route path="prazos-pagamento" element={
-                <ErrorBoundary FallbackComponent={FallbackErrorComponent}>
-                  <PrazosPagamentoPage />
-                </ErrorBoundary>
-              } />
+          <ScrollToTop />
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/produtos" element={<AllProductsPage />} />
+
+              {/* Main Categories */}
+              <Route path="/categoria/cama-mesa-banho" element={<ProductPage />} />
+              <Route path="/categoria/infantil" element={<ProductPage />} />
+              <Route path="/categoria/vestuario" element={<ProductPage />} />
+              <Route path="/categoria/banho" element={<ProductPage />} />
+
+              {/* Cama, Mesa e Banho Subcategories */}
+              <Route path="/categoria/cama" element={<ProductPage />} />
+              <Route path="/categoria/mesa-cozinha" element={<ProductPage />} />
+              <Route path="/categoria/tapete-cortinas" element={<ProductPage />} />
+              <Route path="/categoria/banho" element={<ProductPage />} />
+
+              {/* Vestuário Subcategories */}
+              <Route path="/categoria/camisa" element={<ProductPage />} />
+              <Route path="/categoria/pantufa" element={<ProductPage />} />
+
+              {/* Portfolio Pages */}
+              <Route path="/portfolio" element={<AllPortfolioPage />} />
+              <Route path="/portfolio/bordado-bone" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-necessaire" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-bolsa" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-vestuario" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-infantis" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-toalha-banho" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-toalha" element={<PortfolioPage />} />
+
+              {/* Product Detail Page */}
+              <Route path="/produto/:productId" element={<ProductDetailPage />} />
+
+              {/* Institutional Pages */}
+              <Route path="/sobre" element={<AboutUs />} />
+              <Route path="/nossos-parceiros" element={<OurPartners />} />
+              <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+
+              {/* ERP Integration Routes */}
+              <Route path="/estoque" element={<EstoquePage />} />
+              <Route path="/tributacoes" element={<TributacoesPage />} />
+              <Route path="/vendas" element={<VendasPage />} />
+              <Route path="/pedidos-compra/produtos" element={<PedidosCompraProdutosPage />} />
+              <Route path="/pedidos-compra/distribuicao" element={<PedidosCompraDistribuicaoPage />} />
+              <Route path="/pedidos-compra/status" element={<PedidosCompraStatusPage />} />
+              <Route path="/prazos-pagamento" element={<PrazosPagamentoPage />} />
+
               <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
+            </Routes>
+          </Layout>
           <Toaster />
+          <Sonner />
         </TooltipProvider>
-      </Router>
-    </ErrorBoundary>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
-};
+}
 
 export default App;
