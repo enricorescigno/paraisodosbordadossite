@@ -75,6 +75,15 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/3499147c-700f-4062-a450-98a221bde195.png"
       ]);
     }
+    // Special case handling for "Jogo de Cama Solteiro 3 peças 180 Fios Supercal Spot Grid"
+    else if (product.id === "C003") {
+      // Make sure we always get these specific images
+      images = processImages([
+        "/lovable-uploads/1549a9ae-63bb-48fa-9050-0816dd805a4c.png",
+        "/lovable-uploads/701928ab-02b0-45d8-912f-172f5876b57c.png",
+        "/lovable-uploads/d8c6a6d1-5103-4786-86bb-0bacd11df6a6.png"
+      ]);
+    }
     // If product has images object organized by color
     else if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
       if (selectedColor && product.images[selectedColor]) {

@@ -56,9 +56,24 @@ export const camaProducts: Product[] = [
     type: "product",
     category: "Cama",
     price: "R$ 65,00",
-    description: "Jogo de cama solteiro com 180 fios, modelo Spot Grid. Inclui 3 peças para maior conforto.",
-    imageUrl: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?q=80&w=500&auto=format&fit=crop",
-    keywords: ["cama", "jogo de cama", "solteiro", "spot grid", "180 fios"]
+    description: "Jogo de cama solteiro com 180 fios, modelo Spot Grid com elegante padrão geométrico. Inclui 3 peças: 1 lençol com elástico, 1 lençol de cobrir e 1 fronha. Design sofisticado em padrão xadrez entrecruzado em tons de bege e cinza.",
+    imageUrl: "/lovable-uploads/1549a9ae-63bb-48fa-9050-0816dd805a4c.png",
+    images: [
+      "/lovable-uploads/1549a9ae-63bb-48fa-9050-0816dd805a4c.png",
+      "/lovable-uploads/701928ab-02b0-45d8-912f-172f5876b57c.png",
+      "/lovable-uploads/d8c6a6d1-5103-4786-86bb-0bacd11df6a6.png"
+    ],
+    isNew: true,
+    colors: ["Bege", "Cinza"],
+    features: [
+      "180 fios de alta qualidade",
+      "3 peças completas",
+      "Tecido 100% algodão",
+      "Design geométrico moderno",
+      "Acabamento premium",
+      "Durável e macio"
+    ],
+    keywords: ["cama", "jogo de cama", "solteiro", "spot grid", "180 fios", "geométrico"]
   },
   {
     id: "C004",
