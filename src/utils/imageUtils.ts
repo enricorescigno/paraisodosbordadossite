@@ -111,8 +111,8 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
   return url;
 };
 
-// Updated cacheImagesInBrowser function with proper export
-export function cacheImagesInBrowser(imageUrls: string[]): void {
+// Function to cache images in browser - properly exported
+export const cacheImagesInBrowser = (imageUrls: string[]): void => {
   if (typeof window === 'undefined' || !('caches' in window)) return;
   
   // Use Cache API to store images (if browser supports it)
@@ -134,7 +134,7 @@ export function cacheImagesInBrowser(imageUrls: string[]): void {
       }
     });
   });
-}
+};
 
 // Pre-load specific images for faster access
 export const preloadImages = (urls: string[]): void => {
