@@ -84,6 +84,15 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/d8c6a6d1-5103-4786-86bb-0bacd11df6a6.png"
       ]);
     }
+    // Special case handling for "Jogo de Cama Solteiro 3 peças 180 Fios Supercal Brenno"
+    else if (product.id === "C004") {
+      // Make sure we always get these specific images
+      images = processImages([
+        "/lovable-uploads/cc4ca3b8-68ac-4bd3-8f9b-8da566d45719.png",
+        "/lovable-uploads/0144cb13-c6ac-4443-a136-d1a72440f7af.png",
+        "/lovable-uploads/8744a44a-8df8-46e6-874c-df98fe623b45.png"
+      ]);
+    }
     // If product has images object organized by color
     else if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
       if (selectedColor && product.images[selectedColor]) {
