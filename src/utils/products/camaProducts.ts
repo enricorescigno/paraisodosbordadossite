@@ -31,9 +31,24 @@ export const camaProducts: Product[] = [
     type: "product",
     category: "Cama",
     price: "R$ 65,00",
-    description: "Jogo de cama solteiro com 180 fios, modelo Flower Rosa. Inclui 3 peças para maior conforto.",
-    imageUrl: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?q=80&w=500&auto=format&fit=crop",
-    keywords: ["cama", "jogo de cama", "solteiro", "flower", "rosa", "180 fios"]
+    description: "Jogo de cama solteiro com 180 fios, modelo Flower Rosa com estampa floral delicada. Inclui 3 peças: 1 lençol com elástico, 1 lençol de cobrir e 1 fronha. Design elegante em padrão floral com tons de rosa e verde em fundo claro.",
+    imageUrl: "/lovable-uploads/845b8ccc-939c-45c4-9d91-42cf5e89698c.png",
+    images: [
+      "/lovable-uploads/845b8ccc-939c-45c4-9d91-42cf5e89698c.png",
+      "/lovable-uploads/0ee3c72e-4e7c-42df-ae4b-0cf74e20a54c.png",
+      "/lovable-uploads/3499147c-700f-4062-a450-98a221bde195.png"
+    ],
+    isNew: true,
+    colors: ["Rosa", "Floral"],
+    features: [
+      "180 fios de alta qualidade",
+      "3 peças completas",
+      "Tecido 100% algodão",
+      "Design floral elegante",
+      "Acabamento premium",
+      "Durável e macio"
+    ],
+    keywords: ["cama", "jogo de cama", "solteiro", "flower", "rosa", "180 fios", "floral"]
   },
   {
     id: "C003",

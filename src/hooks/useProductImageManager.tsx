@@ -66,6 +66,15 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         images = processImages(colorImages[firstColor]);
       }
     } 
+    // Special case handling for "Jogo de Cama Solteiro 3 peças 180 Fios Supercal Flower Rosa"
+    else if (product.id === "C002") {
+      // Make sure we always get these specific images
+      images = processImages([
+        "/lovable-uploads/845b8ccc-939c-45c4-9d91-42cf5e89698c.png",
+        "/lovable-uploads/0ee3c72e-4e7c-42df-ae4b-0cf74e20a54c.png",
+        "/lovable-uploads/3499147c-700f-4062-a450-98a221bde195.png"
+      ]);
+    }
     // If product has images object organized by color
     else if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
       if (selectedColor && product.images[selectedColor]) {
@@ -98,6 +107,14 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
     if (images.length === 0) {
       const placeholder = getImagePlaceholder(product.category || '');
       images = [placeholder];
+    }
+    
+    // Ensure all images have valid URLs
+    images = images.filter(img => img && img.length > 0);
+    
+    // Set default placeholder if we somehow still have no images
+    if (images.length === 0) {
+      images = ['/placeholder.svg'];
     }
     
     setCurrentImages(images);

@@ -15,5 +15,10 @@ export const toAbsoluteURL = (path: string | undefined): string => {
   // Make sure the path starts with a slash
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   
+  // Check if the path is actually valid to prevent issues
+  if (normalizedPath === '/' || normalizedPath.length < 2) {
+    return '/placeholder.svg';
+  }
+  
   return normalizedPath;
 };
