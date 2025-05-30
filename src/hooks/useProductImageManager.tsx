@@ -93,6 +93,15 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/8744a44a-8df8-46e6-874c-df98fe623b45.png"
       ]);
     }
+    // Special case handling for "Jogo de Cama Solteiro 3 peças 180 Fios Supercal British"
+    else if (product.id === "C005") {
+      // Make sure we always get these specific images
+      images = processImages([
+        "https://i.imgur.com/d8wiZJJ.png",
+        "https://i.imgur.com/s9xSr3Y.png",
+        "https://i.imgur.com/GWRdOBi.png"
+      ]);
+    }
     // If product has images object organized by color
     else if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
       if (selectedColor && product.images[selectedColor]) {
