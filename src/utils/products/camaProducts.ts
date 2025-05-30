@@ -106,24 +106,9 @@ export const camaProducts: Product[] = [
     type: "product",
     category: "Cama",
     price: "R$ 65,00",
-    description: "Jogo de cama solteiro com 180 fios, modelo British com padrão clássico elegante. Inclui 3 peças: 1 lençol com elástico, 1 lençol de cobrir e 1 fronha. Design sofisticado com padrões geométricos em tons neutros.",
-    imageUrl: "https://i.imgur.com/d8wiZJJ.png",
-    images: [
-      "https://i.imgur.com/d8wiZJJ.png",
-      "https://i.imgur.com/s9xSr3Y.png",
-      "https://i.imgur.com/GWRdOBi.png"
-    ],
-    isNew: true,
-    colors: ["Neutro", "Clássico"],
-    features: [
-      "180 fios de alta qualidade",
-      "3 peças completas",
-      "Tecido 100% algodão",
-      "Design clássico britânico",
-      "Acabamento premium",
-      "Durável e macio"
-    ],
-    keywords: ["cama", "jogo de cama", "solteiro", "british", "180 fios", "clássico"]
+    description: "Jogo de cama solteiro com 180 fios, modelo British. Inclui 3 peças para maior conforto.",
+    imageUrl: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?q=80&w=500&auto=format&fit=crop",
+    keywords: ["cama", "jogo de cama", "solteiro", "british", "180 fios"]
   },
   {
     id: "C006",

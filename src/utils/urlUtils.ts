@@ -7,8 +7,8 @@
 export const toAbsoluteURL = (path: string | undefined): string => {
   if (!path) return '/placeholder.svg';
   
-  // If it's already an absolute URL (including imgur), a base64 data URL, return it as is
-  if (path.startsWith('http') || path.startsWith('data:') || path.includes('imgur.com')) {
+  // If it's already an absolute URL or a base64 data URL, return it as is
+  if (path.startsWith('http') || path.startsWith('data:')) {
     return path;
   }
   
