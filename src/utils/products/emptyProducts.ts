@@ -9,9 +9,10 @@ export const infantilProducts: Product[] = [
     name: "Roupão Infantil Cinderella",
     type: "product",
     category: "infantil",
-    imageUrl: "/lovable-uploads/c5a5f1e0-a7bb-49d6-bdc5-b6382ccdc453.png", // Using a placeholder image
+    imageUrl: "/lovable-uploads/c0a4477f-2cef-4b8f-91e0-a49dd6b10061.png",
     description: "Roupão infantil temático da Cinderella, macio e confortável.",
     price: "R$ 153,00",
+    sizes: ["01", "02", "03"],
     keywords: ["infantil", "roupão", "criança", "cinderela", "cinderela", "banho"],
     slug: "roupao-infantil-cinderella",
     isNew: true
