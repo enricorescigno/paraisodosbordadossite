@@ -57,5 +57,24 @@ export const mesaCozinhaProducts: Product[] = [
     },
     isNew: true,
     keywords: ["toalha", "mesa", "clean", "estampada", "moderno"]
+  },
+  {
+    id: 404,
+    name: "Jogo Americano Requinte Redondo",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/1a660e4f-ce2d-4096-a93c-23c55398f525.png",
+    description: "Jogo Americano Requinte Redondo com design sofisticado e textura trançada para uma mesa elegante.",
+    price: "R$ 28,00",
+    colors: ["Rosa", "Preto", "Azul", "Amarelo", "Cinza"],
+    images: {
+      "Rosa": ["/lovable-uploads/1a660e4f-ce2d-4096-a93c-23c55398f525.png"],
+      "Preto": ["/lovable-uploads/95d74c50-78c1-4d9a-9dc1-a076d17e28ef.png"],
+      "Azul": ["/lovable-uploads/f662a4b6-7e27-4616-be96-c777c154b66f.png"],
+      "Amarelo": ["/lovable-uploads/472b1f70-ce4c-4d98-9eb5-fdc8e7667be7.png"],
+      "Cinza": ["/lovable-uploads/4c404f2b-a678-432d-ba60-6b7db0bc473a.png"]
+    },
+    isNew: true,
+    keywords: ["jogo", "americano", "redondo", "requinte", "trançado", "mesa"]
   }
 ];
