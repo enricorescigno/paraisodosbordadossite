@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 export const mesaCozinhaProducts: Product[] = [
@@ -76,5 +75,21 @@ export const mesaCozinhaProducts: Product[] = [
     },
     isNew: true,
     keywords: ["jogo", "americano", "redondo", "requinte", "trançado", "mesa"]
+  },
+  {
+    id: 405,
+    name: "Jogo Americano Requinte Oval Tessi",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/c6164f5c-d822-48b0-ab4c-a0acfdb0c22f.png",
+    description: "Jogo Americano Requinte Oval Tessi com design elegante e textura trançada para uma mesa sofisticada.",
+    price: "R$ 32,00",
+    colors: ["Vinho", "Rosa"],
+    images: {
+      "Vinho": ["/lovable-uploads/c6164f5c-d822-48b0-ab4c-a0acfdb0c22f.png"],
+      "Rosa": ["/lovable-uploads/4414e64e-81ec-4f20-8afc-1ec520ccd85a.png"]
+    },
+    isNew: true,
+    keywords: ["jogo", "americano", "oval", "requinte", "tessi", "trançado", "mesa"]
   }
 ];
