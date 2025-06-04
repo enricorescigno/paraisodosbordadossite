@@ -1,4 +1,5 @@
 
+
 import { Product } from '../../../types/product';
 
 export const roupoesProducts: Product[] = [
@@ -162,10 +163,15 @@ export const roupoesProducts: Product[] = [
     name: "Roupão Adulto Velour Liberty - Döhler",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/e1955f9a-07f4-40a6-9532-a26f93072342.png",
     description: "Roupão adulto em velour da linha Liberty da Döhler, com design moderno e elegante.",
     price: "R$ 178,00",
-    colors: ["Azul", "Verde", "Bege"],
+    colors: ["Branco", "#C77993", "#F5E5BF"],
+    images: {
+      "Branco": ["/lovable-uploads/e1955f9a-07f4-40a6-9532-a26f93072342.png"],
+      "#C77993": ["/lovable-uploads/da18519c-562d-4094-8259-ec7983041173.png"],
+      "#F5E5BF": ["/lovable-uploads/b0ac9ed2-3d16-42bd-9c48-f9bd4e407bea.png"]
+    },
     sizes: ["M", "G", "GG"],
     rating: 4.5,
     isNew: false,
