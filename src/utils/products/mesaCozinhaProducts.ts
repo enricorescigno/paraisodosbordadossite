@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 export const mesaCozinhaProducts: Product[] = [
@@ -127,5 +128,26 @@ export const mesaCozinhaProducts: Product[] = [
     },
     isNew: true,
     keywords: ["jogo", "americano", "requinte", "mescla", "trançado", "mesa", "elegante"]
+  },
+  {
+    id: 408,
+    name: "Jogo Americano Requinte Ondulado",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/67496265-4fa6-4133-9879-0681aae50e21.png",
+    description: "Jogo Americano Requinte Ondulado com design sofisticado e bordas onduladas, perfeito para criar uma mesa elegante e moderna.",
+    price: "R$ 34,00",
+    colors: ["Dourado", "Cinza", "Rosa", "Marrom", "Vermelho", "Bronze", "Verde"],
+    images: {
+      "Dourado": ["/lovable-uploads/67496265-4fa6-4133-9879-0681aae50e21.png"],
+      "Cinza": ["/lovable-uploads/619dcddc-6383-46a6-b49c-605b94f44f72.png"],
+      "Rosa": ["/lovable-uploads/9b71c8c5-255b-4149-862f-338ea510c917.png"],
+      "Marrom": ["/lovable-uploads/caabf922-3f6d-4fff-aad3-2981747c715a.png"],
+      "Vermelho": ["/lovable-uploads/afc7cd24-a698-4f2c-b120-fd93630bcd07.png"],
+      "Bronze": ["/lovable-uploads/7f0e6c46-a32c-4279-8e5e-47a0f84d3714.png"],
+      "Verde": ["/lovable-uploads/bcb650d7-3f69-4081-af36-a137f5ddc095.png"]
+    },
+    isNew: true,
+    keywords: ["jogo", "americano", "requinte", "ondulado", "bordas", "mesa", "elegante", "moderno"]
   }
 ];
