@@ -139,10 +139,16 @@ export const banhoProducts: Product[] = [
     name: "Roupão Adulto Pérola - Döhler",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/15179846-9476-4613-aba3-436778aa6cd0.png",
     description: "Roupão adulto da linha Pérola da Döhler, confortável e elegante.",
     price: "R$ 342,00",
-    colors: ["Branco", "Bege", "Cinza"],
+    colors: ["Azul", "Laranja", "Bege", "Branco"],
+    images: {
+      "Azul": ["/lovable-uploads/a88033bd-e572-4764-b3fa-a273da416166.png"],
+      "Laranja": ["/lovable-uploads/9ebf6e36-ef91-4010-ae0a-4e19e4b5f86b.png"],
+      "Bege": ["/lovable-uploads/3226445a-369c-4b36-96a5-3bc8c6ce94e7.png"],
+      "Branco": ["/lovable-uploads/6b013376-a568-4eaa-8676-a315f4a26b51.png"]
+    },
     sizes: ["P", "M", "G", "GG"],
     rating: 4.8,
     isNew: false,
