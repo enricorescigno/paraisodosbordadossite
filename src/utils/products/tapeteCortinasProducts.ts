@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 export const tapeteCortinasProducts: Product[] = [
@@ -30,9 +31,18 @@ export const tapeteCortinasProducts: Product[] = [
     name: "Tapete de Cozinha Vermont",
     type: "product",
     category: "Tapete e Cortinas",
-    imageUrl: "https://via.placeholder.com/500x500?text=Tapete+Vermont",
+    imageUrl: "/lovable-uploads/9a189147-3c22-49be-8090-a285536ab26c.png",
     description: "Tapete de Cozinha Vermont resistente e de fácil limpeza.",
     price: "R$ 55,00",
+    colors: ["Preto", "Azul Claro", "Bege", "Cinza", "Azul", "Rosa"],
+    images: {
+      "Preto": ["/lovable-uploads/9a189147-3c22-49be-8090-a285536ab26c.png"],
+      "Azul Claro": ["/lovable-uploads/3e769bc5-e9e2-45ed-a6ad-f22fbe69919b.png"],
+      "Bege": ["/lovable-uploads/edae02e3-ac1f-4be6-8111-7bb3ceb93e6a.png"],
+      "Cinza": ["/lovable-uploads/0846b65c-3ef0-440c-a873-e53a21cee9e2.png"],
+      "Azul": ["/lovable-uploads/0846b65c-3ef0-440c-a873-e53a21cee9e2.png"],
+      "Rosa": ["/lovable-uploads/fce80992-c9d7-4641-8d75-440f58d11bc4.png"]
+    },
     isNew: true,
     keywords: ["tapete", "cozinha", "vermont", "resistente", "casa"]
   },
