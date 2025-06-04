@@ -1,5 +1,4 @@
 
-
 import { Product } from '../../../types/product';
 
 export const roupoesProducts: Product[] = [
@@ -186,10 +185,14 @@ export const roupoesProducts: Product[] = [
     name: "Roupão Adulto Feminino Fiori - Döhler",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/9656d158-7a1d-453a-819a-9611e5d9cb19.png",
     description: "Roupão adulto feminino da linha Fiori da Döhler, com detalhes florais e acabamento especial.",
     price: "R$ 178,00",
-    colors: ["Branco", "Rosa", "Lilás"],
+    colors: ["Vermelho", "Rosa"],
+    images: {
+      "Vermelho": ["/lovable-uploads/3b657709-1881-4d55-a275-2e313deefdee.png"],
+      "Rosa": ["/lovable-uploads/8481c3f3-9a3b-4b03-88a7-37bee8ebfa8c.png"]
+    },
     sizes: ["P", "M", "G"],
     rating: 4.7,
     isNew: false,
