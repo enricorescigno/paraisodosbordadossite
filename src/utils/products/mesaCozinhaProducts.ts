@@ -110,5 +110,22 @@ export const mesaCozinhaProducts: Product[] = [
     },
     isNew: true,
     keywords: ["jogo", "americano", "pvc", "folhas", "4 peças", "mesa", "decoração"]
+  },
+  {
+    id: 407,
+    name: "Jogo Americano Requinte Mescla",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/e8c37725-7abe-4d13-b92f-fbecfebb078d.png",
+    description: "Jogo Americano Requinte Mescla com textura trançada em tons mesclados, perfeito para criar uma mesa elegante e sofisticada.",
+    price: "R$ 30,00",
+    colors: ["Bege", "Cinza", "Rosa"],
+    images: {
+      "Bege": ["/lovable-uploads/e8c37725-7abe-4d13-b92f-fbecfebb078d.png"],
+      "Cinza": ["/lovable-uploads/003263ac-fa94-48c7-971b-77eb315ad0bf.png"],
+      "Rosa": ["/lovable-uploads/6013e0e6-b25b-4e8f-b686-5c08fb0892b5.png"]
+    },
+    isNew: true,
+    keywords: ["jogo", "americano", "requinte", "mescla", "trançado", "mesa", "elegante"]
   }
 ];
