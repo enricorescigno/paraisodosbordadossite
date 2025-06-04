@@ -1,4 +1,3 @@
-
 import { Product } from '../../../types/product';
 
 export const roupoesProducts: Product[] = [
@@ -232,10 +231,10 @@ export const roupoesProducts: Product[] = [
     name: "Roupão infantil Aristogatas",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/d32b5376-0e3f-4508-b603-894724e26233.png",
     description: "Roupão infantil com tema Aristogatas, macio e confortável para as crianças.",
     price: "R$ 153,00",
-    colors: ["Branco", "Rosa"],
+    colors: ["Rosa"],
     sizes: ["P", "M", "G"],
     rating: 4.8,
     isNew: false,
