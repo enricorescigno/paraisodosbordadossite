@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 // Vestuário Collection (regular clothing products)
@@ -166,11 +165,9 @@ export const vestuarioProducts: Product[] = [
     name: "Jaleco Masculino - Oxford",
     type: "product",
     category: "Vestuário",
-    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
+    imageUrl: "/lovable-uploads/2c3695dd-a4f6-4c45-99bb-7fde35c959d2.png",
     description: "Jaleco masculino em tecido Oxford, ideal para profissionais da saúde e laboratórios.",
     price: "R$ 75,00",
-    colors: ["Branco"],
-    sizes: ["P", "M", "G", "GG"],
     rating: 4.7,
     isNew: false,
     features: [
@@ -179,7 +176,7 @@ export const vestuarioProducts: Product[] = [
       "Design profissional"
     ],
     images: [
-      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+      "/lovable-uploads/2c3695dd-a4f6-4c45-99bb-7fde35c959d2.png"
     ],
     keywords: ["jaleco", "masculino", "oxford", "profissional", "saúde"]
   },
