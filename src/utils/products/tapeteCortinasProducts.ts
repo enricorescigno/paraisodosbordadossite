@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 export const tapeteCortinasProducts: Product[] = [
@@ -51,9 +50,15 @@ export const tapeteCortinasProducts: Product[] = [
     name: "Tapete Denver",
     type: "product",
     category: "Tapete e Cortinas",
-    imageUrl: "https://via.placeholder.com/500x500?text=Tapete+Denver",
+    imageUrl: "/lovable-uploads/1d719459-035f-4cd6-af49-217b1d34b9bd.png",
     description: "Tapete Denver com design moderno para sua sala ou quarto.",
     price: "R$ 75,00",
+    colors: ["Branco", "Cinza", "Bege"],
+    images: {
+      "Branco": ["/lovable-uploads/1d719459-035f-4cd6-af49-217b1d34b9bd.png"],
+      "Cinza": ["/lovable-uploads/7059ac6b-5c63-4a89-a64c-13bd416df223.png"],
+      "Bege": ["/lovable-uploads/2791ac09-0283-46a5-b273-5574e1c6a702.png"]
+    },
     isNew: true,
     keywords: ["tapete", "denver", "moderno", "sala", "quarto"]
   },
