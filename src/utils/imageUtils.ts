@@ -111,7 +111,7 @@ export const getOptimizedImageUrl = (url: string, width?: number): string => {
   return url;
 };
 
-// Function to cache images in browser - properly exported
+// Function to cache images in browser - now properly exported
 export const cacheImagesInBrowser = (imageUrls: string[]): void => {
   if (typeof window === 'undefined' || !('caches' in window)) return;
   
