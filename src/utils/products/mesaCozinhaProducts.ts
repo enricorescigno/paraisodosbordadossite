@@ -38,5 +38,24 @@ export const mesaCozinhaProducts: Product[] = [
     },
     isNew: true,
     keywords: ["toalha", "mesa", "damasco", "elegante", "sofisticado"]
+  },
+  {
+    id: 403,
+    name: "Toalha de Mesa Clean",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/403d9a63-340d-4031-82ee-df8d8f6d464d.png",
+    description: "Toalha de Mesa Clean com estampas delicadas e design moderno para o dia a dia.",
+    price: "R$ 35,00",
+    colors: ["Amarelo", "Vermelho", "Rosa", "Dourado"],
+    sizes: ["01", "02"],
+    images: {
+      "Amarelo": ["/lovable-uploads/403d9a63-340d-4031-82ee-df8d8f6d464d.png"],
+      "Vermelho": ["/lovable-uploads/93dd7d25-10f2-4a6b-a152-cad3fce54758.png"],
+      "Rosa": ["/lovable-uploads/ecd8585c-7110-4113-b488-d2d8271b940a.png"],
+      "Dourado": ["/lovable-uploads/a47e7ec8-cfb4-4863-b1d5-634cd0b05d74.png"]
+    },
+    isNew: true,
+    keywords: ["toalha", "mesa", "clean", "estampada", "moderno"]
   }
 ];
