@@ -120,10 +120,15 @@ export const roupoesProducts: Product[] = [
     name: "Roupão Aveludado Adulto Bata Venus - Teka",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/ac25c2d0-cef8-45e4-afc5-786cc93d59b7.png",
     description: "Roupão aveludado adulto da linha Bata Venus da Teka, com toque ultra macio.",
     price: "R$ 248,00",
-    colors: ["Branco", "Off-white", "Rosa"],
+    colors: ["#B79890", "#252334", "#494244"],
+    images: {
+      "#B79890": ["/lovable-uploads/ac25c2d0-cef8-45e4-afc5-786cc93d59b7.png"],
+      "#252334": ["/lovable-uploads/a119ae11-5681-4928-9e07-77e4643a8100.png"],
+      "#494244": ["/lovable-uploads/be8ef1f2-230e-4557-a406-c7fd7d1f0b72.png"]
+    },
     sizes: ["M", "G"],
     rating: 4.9,
     isNew: true,
