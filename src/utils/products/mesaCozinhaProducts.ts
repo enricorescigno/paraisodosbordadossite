@@ -91,5 +91,24 @@ export const mesaCozinhaProducts: Product[] = [
     },
     isNew: true,
     keywords: ["jogo", "americano", "oval", "requinte", "tessi", "trançado", "mesa"]
+  },
+  {
+    id: 406,
+    name: "Jogo Americano Pvc Folhas 4 peças",
+    type: "product",
+    category: "Mesa e Cozinha",
+    imageUrl: "/lovable-uploads/847f662c-227d-44dd-b693-7b33dd2a47f8.png",
+    description: "Jogo Americano de PVC com formato de folhas, conjunto com 4 peças para uma mesa moderna e sofisticada.",
+    price: "R$ 35,00",
+    colors: ["Preto", "Branco", "Rosa", "Dourado", "Vermelho"],
+    images: {
+      "Preto": ["/lovable-uploads/847f662c-227d-44dd-b693-7b33dd2a47f8.png"],
+      "Branco": ["/lovable-uploads/03899d93-0ca6-4a8e-8cee-e87713fffc55.png"],
+      "Rosa": ["/lovable-uploads/ba6eb87e-2c27-44de-b4db-278a6eb6ec00.png"],
+      "Dourado": ["/lovable-uploads/d7a1249c-8c8a-46cd-b679-e1f25f72f87d.png"],
+      "Vermelho": ["/lovable-uploads/b0ff6b2f-1f5c-4efc-99d0-91ce9cd8d453.png"]
+    },
+    isNew: true,
+    keywords: ["jogo", "americano", "pvc", "folhas", "4 peças", "mesa", "decoração"]
   }
 ];
