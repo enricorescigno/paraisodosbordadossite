@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 // Adding new Infantil products as requested
@@ -118,9 +119,22 @@ export const infantilProducts: Product[] = [
     name: "Toalha de Banho Baby Kids (sem capuz)",
     type: "product",
     category: "infantil",
-    imageUrl: "/lovable-uploads/979b2ce8-93f3-4b1a-afee-992dd0bbabc4.png", // Using a placeholder image
-    description: "Toalha de banho infantil modelo Baby Kids sem capuz, macia e absorvente.",
+    imageUrl: "/lovable-uploads/41dd00d2-c138-4f61-8ef3-c30cc2234524.png",
+    description: "Toalha de banho infantil modelo Baby Kids sem capuz, macia e absorvente com delicados bordados decorativos.",
     price: "R$ 58,80",
+    colors: ["Branco", "Azul", "Rosa"],
+    features: [
+      "100% Algodão",
+      "Sem capuz para facilitar o uso",
+      "Bordados decorativos delicados",
+      "Alta absorção",
+      "Ideal para crianças"
+    ],
+    images: {
+      "Branco": ["/lovable-uploads/41dd00d2-c138-4f61-8ef3-c30cc2234524.png"],
+      "Azul": ["/lovable-uploads/3d8fbfa4-43d9-4455-b81e-73f5986f1ff9.png"],
+      "Rosa": ["/lovable-uploads/a021ed19-f8f5-414d-8176-2c3bdc3360d1.png"]
+    },
     keywords: ["infantil", "toalha", "banho", "baby", "bebê", "kids"],
     slug: "toalha-de-banho-baby-kids"
   }
