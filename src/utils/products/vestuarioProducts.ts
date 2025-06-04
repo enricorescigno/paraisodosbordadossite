@@ -185,11 +185,9 @@ export const vestuarioProducts: Product[] = [
     name: "Jaleco Feminino - Oxford",
     type: "product",
     category: "Vestuário",
-    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png",
+    imageUrl: "/lovable-uploads/0052cf5e-35e5-4906-9aa3-cd14c952d781.png",
     description: "Jaleco feminino em tecido Oxford, ideal para profissionais da saúde e laboratórios.",
     price: "R$ 72,00",
-    colors: ["Branco"],
-    sizes: ["P", "M", "G", "GG"],
     rating: 4.7,
     isNew: false,
     features: [
@@ -199,7 +197,7 @@ export const vestuarioProducts: Product[] = [
       "Design profissional"
     ],
     images: [
-      "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png"
+      "/lovable-uploads/0052cf5e-35e5-4906-9aa3-cd14c952d781.png"
     ],
     keywords: ["jaleco", "feminino", "oxford", "profissional", "saúde"]
   },
