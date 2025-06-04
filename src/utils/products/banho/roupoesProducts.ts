@@ -1,3 +1,4 @@
+
 import { Product } from '../../../types/product';
 
 export const roupoesProducts: Product[] = [
@@ -143,10 +144,10 @@ export const roupoesProducts: Product[] = [
     name: "Roupão Velour Rosa formosa - Dohler",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/e909a6bf-0d31-49a8-a1f9-27dd87289c0d.png",
     description: "Roupão em velour da linha Rosa formosa da Dohler, com design floral delicado.",
     price: "R$ 178,00",
-    colors: ["Rosa", "Branco"],
+    colors: ["Rosa"],
     sizes: ["P", "M", "G"],
     rating: 4.6,
     isNew: false,
