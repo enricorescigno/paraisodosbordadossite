@@ -1,4 +1,5 @@
 
+
 import { Product } from '../../types/product';
 
 // Adding new Infantil products as requested
@@ -20,9 +21,21 @@ export const infantilProducts: Product[] = [
     name: "Camisa Básica Infantil",
     type: "product",
     category: "infantil",
-    imageUrl: "/lovable-uploads/e72c13a4-2f02-47ba-a597-1d174cfa421d.png", // Using a placeholder image
+    imageUrl: "/lovable-uploads/06a6a5fb-5363-46cd-83bd-a74087ac11d2.png",
     description: "Camisa básica infantil, confortável e de alta qualidade.",
     price: "R$ 24,00",
+    colors: ["Branco", "Preto"],
+    features: [
+      "100% Algodão",
+      "Corte confortável",
+      "Ideal para o dia a dia",
+      "Durabilidade e qualidade",
+      "Fácil manutenção"
+    ],
+    images: {
+      "Branco": ["/lovable-uploads/06a6a5fb-5363-46cd-83bd-a74087ac11d2.png"],
+      "Preto": ["/lovable-uploads/4a70ccc5-ca53-415a-ae63-2439b9e1afc6.png"]
+    },
     keywords: ["infantil", "camisa", "básica", "criança", "vestuário"],
     slug: "camisa-basica-infantil"
   },
@@ -147,3 +160,4 @@ export const camisasPoloProducts: Product[] = [];
 export const jalecosProducts: Product[] = [];
 export const roupoesProducts: Product[] = [];
 export const toalhasProducts: Product[] = [];
+
