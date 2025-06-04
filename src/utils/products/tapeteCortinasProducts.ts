@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 export const tapeteCortinasProducts: Product[] = [
@@ -67,16 +68,17 @@ export const tapeteCortinasProducts: Product[] = [
     name: "Tapete Los Angeles",
     type: "product",
     category: "Tapete e Cortinas",
-    imageUrl: "/lovable-uploads/1b9d1d8e-6235-4335-aac6-8a3e1b006bd3.png",
+    imageUrl: "/lovable-uploads/5d21ff51-e08b-4e7d-ab92-a9a4a24028cb.png",
     description: "Tapete Los Angeles com design exclusivo para valorizar seu ambiente.",
     price: "R$ 59,90",
     originalPrice: "R$ 72,00",
-    colors: ["Bege", "Marrom", "Cinza", "Rosa"],
+    colors: ["Branco", "Cinza", "Bege", "Azul", "Vermelho"],
     images: {
-      "Bege": ["/lovable-uploads/1b9d1d8e-6235-4335-aac6-8a3e1b006bd3.png"],
-      "Marrom": ["/lovable-uploads/26dc60a8-a105-4e1c-9cdc-c865d863e202.png"],
-      "Cinza": ["/lovable-uploads/acaa6e86-3c97-4cba-9ce9-3ca335672b5e.png"],
-      "Rosa": ["/lovable-uploads/781977bb-b310-4b93-a4eb-bfa1d247a147.png"]
+      "Branco": ["/lovable-uploads/5d21ff51-e08b-4e7d-ab92-a9a4a24028cb.png"],
+      "Cinza": ["/lovable-uploads/ad999c08-5fe7-41f1-93e4-645b1024c379.png"],
+      "Bege": ["/lovable-uploads/419325f4-e6e0-4069-a4e2-ce8f8dbea5b3.png"],
+      "Azul": ["/lovable-uploads/5218c15f-c7ea-4004-8919-07617e903286.png"],
+      "Vermelho": ["/lovable-uploads/4aa1e2e3-31bd-434f-93fa-91ba3b9fd0ee.png"]
     },
     isNew: true,
     keywords: ["tapete", "los angeles", "exclusivo", "ambiente"]
