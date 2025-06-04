@@ -74,10 +74,15 @@ export const roupoesProducts: Product[] = [
     name: "Roupão Adulto Feminino Fiore - Döhler",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/316a6306-9504-4838-9e0e-1001c2dd25b4.png",
     description: "Roupão adulto feminino da linha Fiore da Döhler, com design floral e acabamento especial.",
     price: "R$ 178,00",
-    colors: ["Rosa", "Lilás", "Branco"],
+    colors: ["Branco", "#A14C60", "#C3ABBE"],
+    images: {
+      "Branco": ["/lovable-uploads/316a6306-9504-4838-9e0e-1001c2dd25b4.png"],
+      "#A14C60": ["/lovable-uploads/4c2b9531-50a1-4e70-b040-9d2c928be4f5.png"],
+      "#C3ABBE": ["/lovable-uploads/6b1ec234-c929-4f3a-b060-b6699ceb2083.png"]
+    },
     sizes: ["P", "M", "G"],
     rating: 4.8,
     isNew: true,
