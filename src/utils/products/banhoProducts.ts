@@ -1,3 +1,4 @@
+
 import { Product } from '../../types/product';
 
 export const banhoProducts: Product[] = [
@@ -163,10 +164,20 @@ export const banhoProducts: Product[] = [
     name: "Toalha de rosto Artesanalle - Döhler",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/c9b458fe-a5c2-4b31-bf6a-733f8a7cc041.png",
     description: "Toalha de rosto da linha Artesanalle da Döhler, macia e absorvente.",
     price: "R$ 30,00",
-    colors: ["Branco", "Bege", "Rosa", "Azul"],
+    colors: ["Preto", "Branco", "Bege", "Vermelho", "Marrom Claro", "Verde", "Rosa", "Amarelo", "Cinza"],
+    images: {
+      "Rosa": ["/lovable-uploads/c9b458fe-a5c2-4b31-bf6a-733f8a7cc041.png"],
+      "Preto": ["/lovable-uploads/974d8c32-090c-4f72-9b50-ccb20fe227ad.png"],
+      "Branco": ["/lovable-uploads/3be33900-02d3-4a8e-a5b4-7deee8b5cc85.png"],
+      "Bege": ["/lovable-uploads/0219a0c3-b82f-40db-ad38-ffab2cf38720.png"],
+      "Vermelho": ["/lovable-uploads/cfdcc501-482d-4421-bf8a-b18269418aef.png"],
+      "Verde": ["/lovable-uploads/089be982-770a-4fae-8f74-085e8ff50b8a.png"],
+      "Rosa": ["/lovable-uploads/50f9c7dc-9dcd-4ecc-b93a-848b12d3d10d.png"],
+      "Amarelo": ["/lovable-uploads/48e8898b-6944-46f9-8717-6d8446a20c86.png"]
+    },
     sizes: ["Único"],
     rating: 4.5,
     isNew: false,
