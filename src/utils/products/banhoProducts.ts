@@ -116,10 +116,15 @@ export const banhoProducts: Product[] = [
     name: "Toalha de Banho com Capuz Velour Baby Love",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/98ddb6ee-8200-46f9-99f7-8ee37dc93edb.png",
     description: "Toalha de banho infantil com capuz, em velour, perfeita para depois do banho.",
     price: "R$ 69,90",
-    colors: ["Azul", "Rosa", "Amarelo"],
+    colors: ["Azul Claro", "Rosa", "Branco"],
+    images: {
+      "Azul Claro": ["/lovable-uploads/98ddb6ee-8200-46f9-99f7-8ee37dc93edb.png"],
+      "Rosa": ["/lovable-uploads/98ddb6ee-8200-46f9-99f7-8ee37dc93edb.png"],
+      "Branco": ["/lovable-uploads/98ddb6ee-8200-46f9-99f7-8ee37dc93edb.png"]
+    },
     sizes: ["Único"],
     rating: 4.9,
     isNew: true,
