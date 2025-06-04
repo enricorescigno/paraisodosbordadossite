@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 export const banhoProducts: Product[] = [
@@ -32,7 +31,7 @@ export const banhoProducts: Product[] = [
     name: "Toalha de Banho de Time",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/f39b7219-b860-48ef-87ed-b43424ac5196.png",
     description: "Toalha de banho com estampas de times de futebol, material macio e resistente.",
     price: "R$ 117,00",
     colors: ["Variados"],
