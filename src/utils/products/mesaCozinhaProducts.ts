@@ -3,81 +3,40 @@ import { Product } from '../../types/product';
 
 export const mesaCozinhaProducts: Product[] = [
   {
-    id: 601,
-    name: "Toalha de Mesa Damasco",
-    description: "Toalha de mesa elegante com padrão Damasco, perfeita para ocasiões especiais.",
-    category: "Mesa e Cozinha",
+    id: 401,
+    name: "Toalha de Mesa Quadriculada",
     type: "product",
-    imageUrl: "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
-    price: "A partir de R$ 76,00",
-    keywords: ["toalha", "mesa", "damasco", "decoração", "jantar"],
-    slug: "toalha-mesa-damasco"
-  },
-  {
-    id: 602,
-    name: "Toalha de Mesa Clean",
-    description: "Toalha de mesa com design clean e minimalista, ideal para o dia a dia.",
     category: "Mesa e Cozinha",
-    type: "product",
-    imageUrl: "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
-    price: "A partir de R$ 68,00",
-    keywords: ["toalha", "mesa", "clean", "minimalista", "decoração"],
-    slug: "toalha-mesa-clean"
-  },
-  {
-    id: 603,
-    name: "Jogo Americano Requinte Redondo",
-    description: "Jogo americano redondo com acabamento requintado para sua mesa de jantar.",
-    category: "Mesa e Cozinha",
-    type: "product",
-    imageUrl: "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
-    price: "R$ 11,99",
-    keywords: ["jogo americano", "redondo", "requinte", "mesa"],
-    slug: "jogo-americano-requinte-redondo"
-  },
-  {
-    id: 604,
-    name: "Jogo Americano Requinte Oval Tessi",
-    description: "Jogo americano oval da linha Tessi, perfeito para compor sua mesa.",
-    category: "Mesa e Cozinha",
-    type: "product",
-    imageUrl: "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
-    price: "R$ 9,99",
-    keywords: ["jogo americano", "oval", "tessi", "mesa"],
-    slug: "jogo-americano-requinte-oval-tessi"
-  },
-  {
-    id: 605,
-    name: "Jogo Americano Pvc Folhas 4 peças",
-    description: "Conjunto de 4 jogos americanos em PVC com estampa de folhas, prático e durável.",
-    category: "Mesa e Cozinha",
-    type: "product",
-    imageUrl: "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
-    price: "R$ 48,00",
+    imageUrl: "/lovable-uploads/c838ec71-8c01-4583-8e31-576a4829181c.png",
+    description: "Toalha de Mesa Quadriculada elegante e prática para sua mesa.",
+    price: "R$ 25,00",
+    colors: ["Azul", "Verde", "Vermelho", "Rosa"],
+    images: {
+      "Azul": ["/lovable-uploads/c838ec71-8c01-4583-8e31-576a4829181c.png"],
+      "Verde": ["/lovable-uploads/620a0828-61e3-409b-8639-64b8d65f538c.png"],
+      "Vermelho": ["/lovable-uploads/2d5a7e2c-50c4-4f92-9d2a-12d97193274f.png"],
+      "Rosa": ["/lovable-uploads/825c01c0-de2d-4af3-925e-93c8e24aaf6f.png"]
+    },
     isNew: true,
-    keywords: ["jogo americano", "pvc", "folhas", "conjunto", "promoção"],
-    slug: "jogo-americano-pvc-folhas"
+    keywords: ["toalha", "mesa", "quadriculada", "cozinha"]
   },
   {
-    id: 606,
-    name: "Jogo Americano Requinte Mescla",
-    description: "Jogo americano com tecido mescla, trazendo sofisticação para sua mesa.",
-    category: "Mesa e Cozinha",
+    id: 402,
+    name: "Toalha de Mesa Damasco",
     type: "product",
-    imageUrl: "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
-    price: "R$ 14,00",
-    keywords: ["jogo americano", "mescla", "requinte", "mesa"],
-    slug: "jogo-americano-requinte-mescla"
-  },
-  {
-    id: 607,
-    name: "Jogo Americano Requinte Ondulado",
-    description: "Jogo americano com bordas onduladas, criando um visual único para sua mesa.",
     category: "Mesa e Cozinha",
-    type: "product",
-    imageUrl: "/lovable-uploads/30b5a988-d353-486b-a6db-6a1ba58bdbc2.png",
-    price: "R$ 14,99",
-    keywords: ["jogo americano", "ondulado", "requinte", "mesa"],
-    slug: "jogo-americano-requinte-ondulado"
+    imageUrl: "/lovable-uploads/2796832f-9d02-47d6-bc57-9e2e10d0423d.png",
+    description: "Toalha de Mesa Damasco com design elegante e sofisticado para ocasiões especiais.",
+    price: "R$ 45,00",
+    colors: ["Branco", "Dourado", "Bege", "Cinza"],
+    sizes: ["01", "02", "06", "02", "03"],
+    images: {
+      "Branco": ["/lovable-uploads/82d39152-ea13-4ace-899d-606296c8251e.png"],
+      "Dourado": ["/lovable-uploads/2796832f-9d02-47d6-bc57-9e2e10d0423d.png"],
+      "Bege": ["/lovable-uploads/f080b572-7e42-4aa9-b35e-33fbc9812ac5.png"],
+      "Cinza": ["/lovable-uploads/281462f6-1b7e-4c73-bea9-34e8f5295786.png"]
+    },
+    isNew: true,
+    keywords: ["toalha", "mesa", "damasco", "elegante", "sofisticado"]
   }
 ];
