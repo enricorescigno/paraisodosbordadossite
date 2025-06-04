@@ -1,4 +1,3 @@
-
 import { Product } from '../../../types/product';
 
 export const roupoesProducts: Product[] = [
@@ -49,10 +48,18 @@ export const roupoesProducts: Product[] = [
     name: "Roupão Adulto Confort - Döhler",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/35ab2e86-93ce-4126-a1e1-4af841445571.png",
     description: "Roupão adulto da linha Confort da Döhler, com material macio e confortável.",
     price: "R$ 228,00",
-    colors: ["Branco", "Cinza", "Azul"],
+    colors: ["Branco", "Azul Escuro", "Marrom", "Vermelho", "Rosa", "Cinza"],
+    images: {
+      "Branco": ["/lovable-uploads/35ab2e86-93ce-4126-a1e1-4af841445571.png"],
+      "Azul Escuro": ["/lovable-uploads/dfdbb5f5-8204-41ed-a8ca-334347dbc433.png"],
+      "Marrom": ["/lovable-uploads/dde9c369-1ba8-4df9-b8d9-c88a5020aced.png"],
+      "Vermelho": ["/lovable-uploads/30e6b3e4-75de-4280-b9da-cf0f854b46bc.png"],
+      "Rosa": ["/lovable-uploads/79646acf-c2f0-4651-90ea-d41c992b827f.png"],
+      "Cinza": ["/lovable-uploads/1bd33f56-45ea-42a3-bd15-7715778b2f3e.png"]
+    },
     sizes: ["M", "G", "GG"],
     rating: 4.7,
     isNew: false,
