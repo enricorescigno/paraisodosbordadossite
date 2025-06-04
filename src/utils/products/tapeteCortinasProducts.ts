@@ -67,10 +67,17 @@ export const tapeteCortinasProducts: Product[] = [
     name: "Tapete Los Angeles",
     type: "product",
     category: "Tapete e Cortinas",
-    imageUrl: "https://via.placeholder.com/500x500?text=Tapete+Los+Angeles",
+    imageUrl: "/lovable-uploads/1b9d1d8e-6235-4335-aac6-8a3e1b006bd3.png",
     description: "Tapete Los Angeles com design exclusivo para valorizar seu ambiente.",
     price: "R$ 59,90",
     originalPrice: "R$ 72,00",
+    colors: ["Bege", "Marrom", "Cinza", "Rosa"],
+    images: {
+      "Bege": ["/lovable-uploads/1b9d1d8e-6235-4335-aac6-8a3e1b006bd3.png"],
+      "Marrom": ["/lovable-uploads/26dc60a8-a105-4e1c-9cdc-c865d863e202.png"],
+      "Cinza": ["/lovable-uploads/acaa6e86-3c97-4cba-9ce9-3ca335672b5e.png"],
+      "Rosa": ["/lovable-uploads/781977bb-b310-4b93-a4eb-bfa1d247a147.png"]
+    },
     isNew: true,
     keywords: ["tapete", "los angeles", "exclusivo", "ambiente"]
   },
