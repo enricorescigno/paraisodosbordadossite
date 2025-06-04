@@ -67,10 +67,16 @@ export const banhoProducts: Product[] = [
     name: "Toalha de Banho Lila",
     type: "product",
     category: "Banho",
-    imageUrl: "https://images.unsplash.com/photo-1563293815-7b9673b068a9?q=80&w=500&auto=format&fit=crop",
+    imageUrl: "/lovable-uploads/cc7833fe-1b56-4722-a679-9137b6562f68.png",
     description: "Toalha de banho Lila, feita com materiais de alta qualidade e toque macio.",
     price: "R$ 72,00",
-    colors: ["Lilás", "Rosa", "Branco"],
+    colors: ["Rosa"],
+    images: {
+      "Rosa": [
+        "/lovable-uploads/cc7833fe-1b56-4722-a679-9137b6562f68.png",
+        "/lovable-uploads/e1e1aa44-6fc0-4e08-9c6e-35e6b44d1dbc.png"
+      ]
+    },
     sizes: ["Único"],
     rating: 4.4,
     isNew: false,
