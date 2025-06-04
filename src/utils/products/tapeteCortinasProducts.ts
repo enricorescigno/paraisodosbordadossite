@@ -88,10 +88,18 @@ export const tapeteCortinasProducts: Product[] = [
     name: "Tapete Suria",
     type: "product",
     category: "Tapete e Cortinas",
-    imageUrl: "https://via.placeholder.com/500x500?text=Tapete+Suria",
+    imageUrl: "/lovable-uploads/31acdd44-1bc8-45ff-84f9-9af1e2e3ccc4.png",
     description: "Tapete Suria de alta qualidade para decorar com estilo.",
     price: "R$ 36,00",
     originalPrice: "R$ 42,00",
+    colors: ["Branco", "Dourado", "Cinza", "Azul", "Vermelho"],
+    images: {
+      "Branco": ["/lovable-uploads/31acdd44-1bc8-45ff-84f9-9af1e2e3ccc4.png"],
+      "Dourado": ["/lovable-uploads/269762fb-2670-4895-9fed-d8b0511d5688.png"],
+      "Cinza": ["/lovable-uploads/4d0d5351-5c24-45e2-993a-ce8ae3444cff.png"],
+      "Azul": ["/lovable-uploads/d8476fda-1f40-492d-9314-a0fbf8d4915f.png"],
+      "Vermelho": ["/lovable-uploads/834ef3c2-cb4d-4bbc-b675-b6d49174c949.png"]
+    },
     isNew: true,
     keywords: ["tapete", "suria", "decoração", "estilo"]
   }
