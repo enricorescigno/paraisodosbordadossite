@@ -20,6 +20,10 @@ export default defineConfig({
         'src/main.tsx',
       ],
     },
+    typecheck: {
+      include: ['src/**/*.{test,spec}.{ts,tsx}'],
+      tsconfig: './tsconfig.json'
+    }
   },
   resolve: {
     alias: {
