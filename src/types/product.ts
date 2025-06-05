@@ -69,8 +69,8 @@ export interface ProductMetadata {
 
 // Main Product interface - flexible for backward compatibility
 export interface Product extends ProductBase {
-  // Pricing (flexible for backward compatibility)
-  price: string | Price;
+  // Pricing (flexible for backward compatibility) - MADE OPTIONAL FOR COMPATIBILITY
+  price?: string | Price;
   isCustomizable?: boolean;
   
   // Media (flexible for backward compatibility) - all optional

@@ -4,9 +4,9 @@ import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
 import { useProductDomain } from './useProductDomain';
 import { useProductImageManager } from './useProductImageManager';
-import { ProductAdapter } from '../data/adapters/ProductAdapter';
 import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
 import { toAbsoluteURL } from '@/utils/urlUtils';
+import { Product } from '@/types/product';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -19,21 +19,21 @@ export const useProductDetail = () => {
   // Use domain layer for product management
   const { product: domainProduct, loading, error, processProductImages } = useProductDomain(productId);
   
-  // Convert domain product to legacy format for backward compatibility
-  const product = domainProduct ? ProductAdapter.toLegacyProduct({
+  // Convert domain product to Product format (not LegacyProduct)
+  const product: Product | null = domainProduct ? {
     id: domainProduct.id,
     name: domainProduct.name,
     type: domainProduct.type,
     category: domainProduct.category as any,
     description: domainProduct.description,
-    price: domainProduct.pricing.price,
+    price: domainProduct.pricing.price || '',
     images: domainProduct.images.map(img => img.url),
     colors: domainProduct.variants.colors,
     sizes: domainProduct.variants.sizes,
     rating: domainProduct.rating,
     isNew: domainProduct.isNew,
     features: domainProduct.features
-  }) : null;
+  } : null;
 
   // Initialize product data
   useEffect(() => {
