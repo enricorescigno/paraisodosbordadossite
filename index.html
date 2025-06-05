@@ -10,15 +10,20 @@
     <meta http-equiv="Cache-Control" content="max-age=86400, must-revalidate">
     <meta http-equiv="Expires" content="1d">
     
-    <!-- Google Fonts: Preconnect & Preload para Desempenho -->
+    <!-- Font Optimization: Preconnect para Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Exemplo Playfair Display (troque/adicione suas fontes aqui) -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" onload="this.rel='stylesheet'">
+    
+    <!-- Font Optimization: Preload Critical Fonts -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@400;600&display=swap">
+    
+    <!-- Font Optimization: Load Fonts with Optimal Settings -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@400;600&display=swap" media="print" onload="this.media='all'">
+    
+    <!-- Font Optimization: Noscript Fallback -->
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@400;600&display=swap">
     </noscript>
-    <!-- Adicione font-display:swap nas suas regras CSS para melhor performance -->
     
     <!-- Primary Meta Tags -->
     <title>Paraíso dos Bordados - Artigos Personalizados de Alta Qualidade</title>
@@ -52,12 +57,6 @@
     <meta name="apple-mobile-web-app-title" content="Paraíso dos Bordados">
     <meta name="format-detection" content="telephone=no">
     
-    <!-- CDN e Preconnects avançados -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Quando tiver CDN, adicione aqui -->
-    <!-- <link rel="preconnect" href="https://cdn.paraisodosbordados.com.br" crossorigin> -->
-    
     <!-- DNS prefetch para domínios externos -->
     <link rel="dns-prefetch" href="https://wa.me" />
     
@@ -68,6 +67,40 @@
     <!-- Preload de módulos críticos JavaScript -->
     <link rel="modulepreload" href="/src/main.tsx">
     
+    <!-- Font Performance Optimization: Inline Critical CSS -->
+    <style>
+      /* Critical font-face declarations for immediate rendering */
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        font-display: swap;
+      }
+      
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat', 'Inter', sans-serif;
+        font-display: swap;
+      }
+      
+      .font-serif {
+        font-family: 'Playfair Display', 'Georgia', serif;
+        font-display: swap;
+      }
+      
+      /* Prevent FOIT (Flash of Invisible Text) */
+      @font-face {
+        font-family: 'Inter';
+        font-display: swap;
+        font-weight: 400;
+        src: local('Inter');
+      }
+      
+      @font-face {
+        font-family: 'Montserrat';
+        font-display: swap;
+        font-weight: 600;
+        src: local('Montserrat');
+      }
+    </style>
+    
     <!-- Lovable script tag - required for select functionality -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
   </head>
@@ -75,9 +108,63 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Deferred non-critical scripts -->
+    <!-- Deferred optimization scripts -->
     <script type="module" defer>
-      // Configuração mais avançada do service worker
+      // Font and Icon Optimization
+      import { FontOptimizationService } from '/src/services/FontOptimizationService.js';
+      import { IconOptimizationService } from '/src/services/IconOptimizationService.js';
+      
+      const initOptimizations = async () => {
+        try {
+          const fontService = FontOptimizationService.getInstance();
+          const iconService = IconOptimizationService.getInstance();
+          
+          // Critical fonts configuration
+          const criticalFonts = [
+            {
+              family: 'Inter',
+              weights: [400, 500, 600],
+              display: 'swap',
+              subset: 'latin',
+              preload: true
+            },
+            {
+              family: 'Montserrat', 
+              weights: [500, 600, 700],
+              display: 'swap',
+              subset: 'latin',
+              preload: true
+            }
+          ];
+          
+          // Critical icons (most used throughout the app)
+          const criticalIcons = [
+            'Menu', 'X', 'Search', 'ShoppingCart', 'User', 
+            'Heart', 'Star', 'ChevronLeft', 'ChevronRight',
+            'Home', 'Phone', 'Mail', 'MapPin'
+          ];
+          
+          // Preload critical resources
+          await Promise.all([
+            fontService.preloadCriticalFonts(criticalFonts),
+            iconService.preloadCriticalIcons(criticalIcons)
+          ]);
+          
+          console.log('🚀 Font and Icon optimization completed');
+          
+        } catch (error) {
+          console.warn('⚠️ Optimization failed:', error);
+        }
+      };
+      
+      // Initialize optimizations when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initOptimizations);
+      } else {
+        initOptimizations();
+      }
+      
+      // Service Worker optimization
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', async () => {
           try {
@@ -85,116 +172,34 @@
               scope: '/'
             });
             
-            // Verificar atualizações do service worker periodicamente
+            // Enhanced service worker with font/icon caching
             setInterval(() => {
               registration.update();
-            }, 1000 * 60 * 60); // Verificar a cada hora
+            }, 1000 * 60 * 60);
             
-            // Configurar sincronização em segundo plano
             if ('SyncManager' in window) {
-              registration.sync.register('sync-data');
+              registration.sync.register('sync-assets');
             }
             
-            // Configurar sincronização periódica (se suportado)
-            if ('periodicSync' in registration) {
-              try {
-                await registration.periodicSync.register('update-content', {
-                  minInterval: 24 * 60 * 60 * 1000, // Uma vez por dia
-                });
-              } catch (error) {
-                console.log('Periodic sync could not be registered:', error);
-              }
-            }
-            
-            console.log('Service Worker registrado com sucesso:', registration.scope);
+            console.log('Service Worker registrado com otimizações de assets');
           } catch (error) {
             console.error('Falha no registro do Service Worker:', error);
           }
         });
-        
-        // Lidar com atualizações do service worker
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (refreshing) return;
-          refreshing = true;
-          window.location.reload();
-        });
       }
       
-      // Implementar cache local com IndexedDB para dados frequentes
-      const initLocalCache = async () => {
-        if (!('indexedDB' in window)) return;
-        
-        try {
-          const dbName = 'paraisoBordadosCache';
-          const request = indexedDB.open(dbName, 1);
-          
-          request.onupgradeneeded = (event) => {
-            const db = event.target.result;
-            
-            // Criar stores para diferentes tipos de dados
-            if (!db.objectStoreNames.contains('products')) {
-              db.createObjectStore('products', { keyPath: 'id' });
-            }
-            
-            if (!db.objectStoreNames.contains('categories')) {
-              db.createObjectStore('categories', { keyPath: 'id' });
-            }
-            
-            if (!db.objectStoreNames.contains('settings')) {
-              db.createObjectStore('settings', { keyPath: 'key' });
-            }
-          };
-          
-          request.onsuccess = (event) => {
-            console.log('IndexedDB inicializado com sucesso');
-            // Aqui você pode adicionar lógica para pré-carregar dados importantes
-          };
-          
-          request.onerror = (event) => {
-            console.error('Erro ao inicializar IndexedDB:', event.target.error);
-          };
-        } catch (error) {
-          console.error('Erro ao configurar cache local:', error);
-        }
-      };
-      
-      // Iniciar cache local
-      initLocalCache();
-      
-      // Adicionar analytics de forma otimizada
-      const addAnalytics = () => {
-        if (window.location.hostname !== 'localhost') {
-          // Implementação futura de analytics
-          // Usando requestIdleCallback para não afetar performance
-          if ('requestIdleCallback' in window) {
-            window.requestIdleCallback(() => {
-              // Código de analytics aqui
-            }, { timeout: 5000 });
-          } else {
-            setTimeout(() => {
-              // Fallback para browsers sem requestIdleCallback
-              // Código de analytics aqui
-            }, 5000);
-          }
-        }
-      };
-      
-      // Adicionar analytics com baixa prioridade
-      addAnalytics();
-      
-      // Monitor de performance
-      if ('performance' in window && 'PerformanceObserver' in window) {
-        // Monitorar Web Vitals
+      // Performance monitoring for fonts and icons
+      if ('PerformanceObserver' in window) {
         const observer = new PerformanceObserver((list) => {
           for (const entry of list.getEntries()) {
-            // Registrar métricas importantes
-            console.log(`[Performance] ${entry.name}: ${entry.startTime.toFixed(0)}ms`);
+            if (entry.name.includes('fonts.googleapis.com') || 
+                entry.name.includes('lucide')) {
+              console.log(`[Asset Performance] ${entry.name}: ${entry.duration.toFixed(0)}ms`);
+            }
           }
         });
         
-        // Observar métricas de performance diferentes
-        observer.observe({ entryTypes: ['largest-contentful-paint', 'first-input', 'layout-shift'] });
+        observer.observe({ entryTypes: ['resource'] });
       }
     </script>
   </body>

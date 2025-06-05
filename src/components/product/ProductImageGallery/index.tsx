@@ -1,164 +1,163 @@
 
-import React, { useState, useEffect, useCallback, memo } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { toAbsoluteURL } from '@/utils/urlUtils';
-import { useProductImages } from '@/hooks/useProductImages';
+import { ChevronLeft, ChevronRight, X, ZoomIn } from 'lucide-react';
 import ImageContainer from './ImageContainer';
-import NavigationControls from './NavigationControls';
 import ThumbnailGrid from './ThumbnailGrid';
+import NavigationControls from './NavigationControls';
 import Lightbox from './Lightbox';
 
 interface ProductImageGalleryProps {
   images: string[];
   productName: string;
-  selectedColor: string;
-  placeholder: (category: string) => string;
-  category: string;
+  currentIndex?: number;
+  onImageChange?: (index: number) => void;
+  className?: string;
 }
 
-const ProductImageGallery = ({ 
-  images, 
-  productName, 
-  selectedColor, 
-  placeholder,
-  category
-}: ProductImageGalleryProps) => {
-  const [isZoomed, setIsZoomed] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
+  images,
+  productName,
+  currentIndex = 0,
+  onImageChange,
+  className = ''
+}) => {
+  const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
-  const [useContainFallback, setUseContainFallback] = useState(false);
+  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Use the custom hook for image management
-  const {
-    activeImageIndex,
-    imagesLoaded,
-    imageError,
-    setImageError,
-    handleImageLoaded,
-    nextImage,
-    prevImage,
-    goToImage
-  } = useProductImages(images, selectedColor);
+  // Memoize filtered images to avoid recalculation
+  const validImages = useMemo(() => {
+    return images.filter(img => img && img.trim() !== '');
+  }, [images]);
 
-  // Ensure we have a valid images array
-  const validImages = Array.isArray(images) && images.length > 0 
-    ? images 
-    : [placeholder(category || '')];
+  const currentImage = validImages[activeIndex] || validImages[0] || '';
 
-  // Reset state when images change
-  useEffect(() => {
-    setImageError(false);
-    setUseContainFallback(false);
-    
-    // Show thumbnails after slight delay for better perceived loading
-    const timer = setTimeout(() => {
-      setThumbnailsVisible(true);
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, [validImages.length, setImageError]);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
-    const x = (e.clientX - left) / width;
-    const y = (e.clientY - top) / height;
-    setMousePosition({ x, y });
-  };
-
-  const handleImageClick = (index: number) => {
-    if (index === activeImageIndex && !isLightboxOpen) {
-      setIsLightboxOpen(true);
-    } else {
-      goToImage(index);
+  const handleImageChange = useCallback((index: number) => {
+    if (index >= 0 && index < validImages.length) {
+      setActiveIndex(index);
+      onImageChange?.(index);
     }
-  };
+  }, [validImages.length, onImageChange]);
 
-  const closeLightbox = () => {
+  const handlePrevious = useCallback(() => {
+    const newIndex = activeIndex > 0 ? activeIndex - 1 : validImages.length - 1;
+    handleImageChange(newIndex);
+  }, [activeIndex, validImages.length, handleImageChange]);
+
+  const handleNext = useCallback(() => {
+    const newIndex = activeIndex < validImages.length - 1 ? activeIndex + 1 : 0;
+    handleImageChange(newIndex);
+  }, [activeIndex, validImages.length, handleImageChange]);
+
+  const handleKeyDown = useCallback((event: React.KeyboardEvent) => {
+    if (event.key === 'ArrowLeft') {
+      handlePrevious();
+    } else if (event.key === 'ArrowRight') {
+      handleNext();
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setIsLightboxOpen(true);
+    } else if (event.key === 'Escape') {
+      setIsLightboxOpen(false);
+    }
+  }, [handlePrevious, handleNext]);
+
+  const handleImageLoad = useCallback((index: number) => {
+    setLoadedImages(prev => {
+      const newSet = new Set(prev);
+      newSet.add(index);
+      
+      // If this is the first image loaded, stop the loading state
+      if (newSet.size === 1) {
+        setIsLoading(false);
+      }
+      
+      return newSet;
+    });
+  }, []);
+
+  const handleImageLoadComplete = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
+  const openLightbox = useCallback(() => {
+    setIsLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => {
     setIsLightboxOpen(false);
-  };
+  }, []);
 
-  const handleImageLoadComplete = (index: number) => {
-    handleImageLoaded(index, validImages[index]);
-  };
-
-  const handleImageError = () => {
-    console.log("Image error for:", currentImage);
-    setUseContainFallback(true);
-    setImageError(true);
-  };
-  
-  const currentImage = validImages[activeImageIndex] ? toAbsoluteURL(validImages[activeImageIndex]) : '';
-  const placeholderImage = placeholder(category || '');
+  // Early return for empty images
+  if (!validImages.length) {
+    return (
+      <div className={`flex items-center justify-center bg-gray-100 rounded-lg h-96 ${className}`}>
+        <div className="text-center text-gray-500">
+          <ZoomIn size={48} className="mx-auto mb-2 opacity-50" />
+          <p>Nenhuma imagem disponível</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-white rounded-2xl overflow-hidden">
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`${selectedColor}-${activeImageIndex}`} 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="relative"
-        >
-          {/* Main Image */}
-          <div className="relative">
-            <ImageContainer
-              currentImage={currentImage}
-              placeholderImage={placeholderImage}
-              productName={productName}
-              selectedColor={selectedColor}
-              activeImageIndex={activeImageIndex}
-              imageLoaded={imagesLoaded[activeImageIndex]}
-              useContainFallback={useContainFallback}
-              isZoomed={isZoomed}
-              mousePosition={mousePosition}
-              onImageLoad={handleImageLoadComplete}
-              onImageError={handleImageError}
-              onMouseMove={handleMouseMove}
-              onMouseEnter={() => setIsZoomed(true)}
-              onMouseLeave={() => setIsZoomed(false)}
-            />
-            
-            {/* Navigation Arrows */}
-            {validImages.length > 1 && !imageError && (
-              <NavigationControls
-                onPrevImage={prevImage}
-                onNextImage={nextImage}
-              />
-            )}
-          </div>
-          
-          {/* Thumbnails */}
-          {validImages.length > 1 && !imageError && thumbnailsVisible && (
-            <ThumbnailGrid
-              images={validImages}
-              activeImageIndex={activeImageIndex}
-              imagesLoaded={imagesLoaded}
-              productName={productName}
-              selectedColor={selectedColor}
-              placeholderImage={placeholderImage}
-              onImageClick={handleImageClick}
-              onImageLoad={(index: number) => handleImageLoaded(index, validImages[index])}
-            />
-          )}
-        </motion.div>
-      </AnimatePresence>
-      
-      {/* Lightbox */}
-      <Lightbox
-        isOpen={isLightboxOpen}
-        currentImage={currentImage}
-        placeholderImage={placeholderImage}
+    <div className={`relative ${className}`} onKeyDown={handleKeyDown} tabIndex={0}>
+      {/* Main Image Container */}
+      <ImageContainer
+        image={currentImage}
         productName={productName}
-        hasMultipleImages={validImages.length > 1}
-        onClose={closeLightbox}
-        onPrevImage={prevImage}
-        onNextImage={nextImage}
+        isLoading={isLoading}
+        onImageLoad={() => handleImageLoad(activeIndex)}
+        onImageClick={openLightbox}
+        className="mb-4"
       />
+
+      {/* Navigation Controls */}
+      {validImages.length > 1 && (
+        <NavigationControls
+          onPrevious={handlePrevious}
+          onNext={handleNext}
+          currentIndex={activeIndex}
+          totalImages={validImages.length}
+          className="absolute top-1/2 transform -translate-y-1/2"
+        />
+      )}
+
+      {/* Thumbnail Grid */}
+      {validImages.length > 1 && (
+        <ThumbnailGrid
+          images={validImages}
+          activeIndex={activeIndex}
+          productName={productName}
+          onImageClick={handleImageChange}
+          onImageLoad={handleImageLoadComplete}
+          loadedImages={loadedImages}
+        />
+      )}
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {isLightboxOpen && (
+          <Lightbox
+            images={validImages}
+            currentIndex={activeIndex}
+            productName={productName}
+            onClose={closeLightbox}
+            onImageChange={handleImageChange}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Image Counter */}
+      {validImages.length > 1 && (
+        <div className="absolute top-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-sm">
+          {activeIndex + 1} / {validImages.length}
+        </div>
+      )}
     </div>
   );
 };
 
-export default memo(ProductImageGallery);
+export default ProductImageGallery;

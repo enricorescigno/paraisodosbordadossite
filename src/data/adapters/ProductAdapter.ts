@@ -13,7 +13,13 @@ export class ProductAdapter {
         imageUrl = product.images[0] || '';
       } else if ('primary' in product.images) {
         // ImageCollection type
-        imageUrl = Array.isArray(product.images.primary) ? product.images.primary[0]?.url || '' : product.images.primary || '';
+        if (Array.isArray(product.images.primary)) {
+          // Check if primary is array of strings or objects
+          const firstImage = product.images.primary[0];
+          imageUrl = typeof firstImage === 'string' ? firstImage : firstImage?.url || '';
+        } else {
+          imageUrl = product.images.primary || '';
+        }
       } else {
         // Record<string, string[]> type
         const firstKey = Object.keys(product.images)[0];
@@ -30,6 +36,18 @@ export class ProductAdapter {
 
     // Handle rating - check if it's a number or Rating object
     const rating = typeof product.rating === 'number' ? product.rating : product.rating?.value;
+
+    // Convert images to string array format
+    let imagesArray: string[] = [];
+    if (typeof product.images === 'object' && product.images !== null) {
+      if (Array.isArray(product.images)) {
+        imagesArray = product.images.map(img => typeof img === 'string' ? img : img.url || '');
+      } else if ('gallery' in product.images) {
+        imagesArray = Array.isArray(product.images.gallery) 
+          ? product.images.gallery.map(img => typeof img === 'string' ? img : img.url || '')
+          : [];
+      }
+    }
 
     return {
       id: product.id,
@@ -56,7 +74,7 @@ export class ProductAdapter {
       features: Array.isArray(product.features) ? product.features : product.features?.specifications,
       keywords: product.keywords,
       slug: product.slug,
-      images: Array.isArray(product.images) ? product.images : product.images?.gallery || []
+      images: imagesArray
     };
   }
 
