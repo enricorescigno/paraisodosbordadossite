@@ -51,8 +51,8 @@ interface AppStore extends ProductState, ImageState, UIState {
   setFilters: (filters: Partial<ProductState['filters']>) => void;
   clearFilters: () => void;
   
-  // Image actions
-  setImageLoaded: (url: string, data: string) => void;
+  // Image actions - renomeadas para evitar conflitos
+  setImageCached: (url: string) => void;
   setImageLoading: (url: string) => void;
   setImageError: (url: string) => void;
   clearImageCache: () => void;
@@ -101,11 +101,11 @@ export const useAppStore = create<AppStore>()(
       clearFilters: () => 
         set({ filters: {}, selectedCategory: null, searchQuery: '' }),
 
-      // Image actions
-      setImageLoaded: (url, data) =>
+      // Image actions - corrigidas
+      setImageCached: (url) =>
         set((state) => {
           const newCache = new Map(state.imageCache);
-          newCache.set(url, data);
+          newCache.set(url, url);
           const newLoading = new Set(state.loadingImages);
           newLoading.delete(url);
           const newErrors = new Set(state.errorImages);
@@ -228,7 +228,7 @@ export const useImageCache = () => useAppStore((state) => ({
   isLoaded: state.isImageLoaded,
   isLoading: state.isImageLoading,
   hasError: state.hasImageError,
-  setLoaded: state.setImageLoaded,
+  setCached: state.setImageCached,
   setLoading: state.setImageLoading,
   setError: state.setImageError,
 }));

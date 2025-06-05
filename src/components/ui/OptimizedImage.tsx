@@ -28,10 +28,10 @@ const OptimizedImage = memo<OptimizedImageProps>(({
   sizes = '100vw',
 }) => {
   const [isInView, setIsInView] = useState(priority);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  const [imageError, setImageError] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
-  const { isImageLoaded, setImageLoaded, setImageError: setStoreImageError } = useAppStore();
+  const { isImageLoaded, setImageCached, setImageError } = useAppStore();
 
   // Intersection Observer for lazy loading
   useEffect(() => {
@@ -57,15 +57,15 @@ const OptimizedImage = memo<OptimizedImageProps>(({
 
   // Handle image load
   const handleLoad = () => {
-    setImageLoaded(true);
-    setImageLoaded(src, src);
+    setIsLoaded(true);
+    setImageCached(src);
     onLoad?.();
   };
 
   // Handle image error
   const handleError = () => {
-    setImageError(true);
-    setStoreImageError(src);
+    setHasError(true);
+    setImageError(src);
     onError?.();
   };
 
@@ -97,7 +97,7 @@ const OptimizedImage = memo<OptimizedImageProps>(({
 
   const optimizedSrc = getOptimizedSrc(src, width);
   const srcSet = generateSrcSet(src);
-  const isLoaded = isImageLoaded(src) || imageLoaded;
+  const isCached = isImageLoaded(src) || isLoaded;
 
   // Show placeholder until image is in view
   if (!isInView) {
@@ -114,7 +114,7 @@ const OptimizedImage = memo<OptimizedImageProps>(({
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {/* Blur placeholder */}
-      {placeholder && !isLoaded && (
+      {placeholder && !isCached && (
         <img
           src={placeholder}
           alt=""
@@ -136,15 +136,15 @@ const OptimizedImage = memo<OptimizedImageProps>(({
         decoding="async"
         className={`
           w-full h-full object-cover transition-opacity duration-300
-          ${isLoaded ? 'opacity-100' : 'opacity-0'}
-          ${imageError ? 'bg-gray-200' : ''}
+          ${isCached ? 'opacity-100' : 'opacity-0'}
+          ${hasError ? 'bg-gray-200' : ''}
         `}
         onLoad={handleLoad}
         onError={handleError}
       />
       
       {/* Error fallback */}
-      {imageError && (
+      {hasError && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-400">
           <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
@@ -153,7 +153,7 @@ const OptimizedImage = memo<OptimizedImageProps>(({
       )}
       
       {/* Loading indicator */}
-      {!isLoaded && !imageError && (
+      {!isCached && !hasError && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
           <div className="w-6 h-6 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
         </div>
