@@ -22,44 +22,77 @@ export default defineConfig(({ mode }) => ({
     dedupe: ['react', 'react-dom']
   },
   build: {
-    minify: false,
-    sourcemap: true,
-    cssMinify: false,
+    minify: mode === 'production' ? 'terser' : false,
+    sourcemap: mode === 'development',
+    cssMinify: mode === 'production',
+    target: 'es2020',
+    assetsInlineLimit: 4096, // 4kb
+    chunkSizeWarningLimit: 500, // 500kb
+    cssCodeSplit: true,
+    modulePreload: true,
+    treeshake: true,
     rollupOptions: {
       output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          router: ['react-router-dom'],
-          framer: ['framer-motion'],
-          ui: ['@radix-ui/react-slot', '@radix-ui/react-separator'],
-          components: ['@/components/ui/button', '@/components/ui/apple-button', '@/components/ui/card'],
-          utils: ['@/lib/utils', '@/utils/imageUtils']
+        manualChunks: (id) => {
+          // Vendor chunks
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('framer-motion')) {
+              return 'animation-vendor';
+            }
+            if (id.includes('@radix-ui') || id.includes('lucide-react')) {
+              return 'ui-vendor';
+            }
+            if (id.includes('@tanstack/react-query')) {
+              return 'query-vendor';
+            }
+            return 'vendor';
+          }
+          
+          // Feature chunks
+          if (id.includes('/pages/') || id.includes('/views/')) {
+            return 'pages';
+          }
+          if (id.includes('/components/product/')) {
+            return 'product-components';
+          }
+          if (id.includes('/contexts/') || id.includes('/stores/')) {
+            return 'state-management';
+          }
+          if (id.includes('/utils/') || id.includes('/services/')) {
+            return 'utilities';
+          }
         },
-        assetFileNames: assetInfo => {
+        assetFileNames: (assetInfo) => {
           const assetName = assetInfo.name || 'unknown';
           let extType = assetName.split('.').pop() || '';
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
+          if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp/i.test(extType)) {
             extType = 'img';
           } else if (/woff|woff2|eot|ttf|otf/i.test(extType)) {
             extType = 'fonts';
           }
-          return `assets/${extType}/${assetName.replace(/\.[^/.]+$/, '')}-[hash][extname]`;
+          return `assets/${extType}/[name]-[hash][extname]`;
         },
         chunkFileNames: 'assets/js/[name]-[hash].js',
         entryFileNames: 'assets/js/[name]-[hash].js',
       }
     },
-    target: 'es2020',
-    assetsInlineLimit: 4096, // 4kb
-    chunkSizeWarningLimit: 1000, // 1000kb
-    cssCodeSplit: true,
-    modulePreload: true,
-    treeshake: true,
-    // Image compression settings disabled for troubleshooting
     assetsInclude: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.webp', '**/*.svg'],
+    terserOptions: mode === 'production' ? {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info', 'console.debug', 'console.trace'],
+      },
+      mangle: {
+        safari10: true,
+      },
+    } : undefined,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+    include: ['react', 'react-dom', 'react-router-dom'],
     esbuildOptions: {
       target: 'es2020',
     }
@@ -68,7 +101,6 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
     host: true,
     headers: {
-      // Add cache control headers for better performance
       'Cache-Control': 'public, max-age=86400',
     }
   },

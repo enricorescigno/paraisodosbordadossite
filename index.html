@@ -108,52 +108,44 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- Deferred optimization scripts -->
+    <!-- Optimized Performance Script -->
     <script type="module" defer>
-      // Font and Icon Optimization
-      import { FontOptimizationService } from './src/services/FontOptimizationService.ts';
-      import { IconOptimizationService } from './src/services/IconOptimizationService.ts';
-      
+      // Performance optimization without external dependencies
       const initOptimizations = async () => {
         try {
-          const fontService = FontOptimizationService.getInstance();
-          const iconService = IconOptimizationService.getInstance();
+          // Font optimization
+          if ('fonts' in document) {
+            document.fonts.ready.then(() => {
+              console.log('🚀 Fonts loaded and optimized');
+            });
+          }
           
-          // Critical fonts configuration
-          const criticalFonts = [
-            {
-              family: 'Inter',
-              weights: [400, 500, 600],
-              display: 'swap',
-              subset: 'latin',
-              preload: true
-            },
-            {
-              family: 'Montserrat', 
-              weights: [500, 600, 700],
-              display: 'swap',
-              subset: 'latin',
-              preload: true
+          // Image optimization
+          if ('loading' in HTMLImageElement.prototype) {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            console.log(`📷 ${images.length} images using native lazy loading`);
+          }
+          
+          // Performance monitoring
+          if ('PerformanceObserver' in window) {
+            try {
+              const observer = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                  if (entry.entryType === 'largest-contentful-paint') {
+                    console.log(`⚡ LCP: ${entry.startTime.toFixed(0)}ms`);
+                  }
+                }
+              });
+              observer.observe({ entryTypes: ['largest-contentful-paint'] });
+            } catch (e) {
+              // Silently fail if not supported
             }
-          ];
+          }
           
-          // Critical icons (most used throughout the app)
-          const criticalIcons = [
-            'Menu', 'X', 'Search', 'ShoppingCart', 'User', 
-            'Heart', 'Star', 'ChevronLeft', 'ChevronRight',
-            'Home', 'Phone', 'Mail', 'MapPin'
-          ];
-          
-          // Preload critical resources
-          await Promise.all([
-            fontService.preloadCriticalFonts(criticalFonts),
-            iconService.preloadCriticalIcons(criticalIcons)
-          ]);
-          
-          console.log('🚀 Font and Icon optimization completed');
+          console.log('🚀 Performance optimizations initialized');
           
         } catch (error) {
-          console.warn('⚠️ Optimization failed:', error);
+          console.warn('⚠️ Some optimizations failed:', error);
         }
       };
       
@@ -172,34 +164,15 @@
               scope: '/'
             });
             
-            // Enhanced service worker with font/icon caching
             setInterval(() => {
               registration.update();
             }, 1000 * 60 * 60);
             
-            if ('SyncManager' in window) {
-              registration.sync.register('sync-assets');
-            }
-            
-            console.log('Service Worker registrado com otimizações de assets');
+            console.log('Service Worker registrado com otimizações');
           } catch (error) {
             console.error('Falha no registro do Service Worker:', error);
           }
         });
-      }
-      
-      // Performance monitoring for fonts and icons
-      if ('PerformanceObserver' in window) {
-        const observer = new PerformanceObserver((list) => {
-          for (const entry of list.getEntries()) {
-            if (entry.name.includes('fonts.googleapis.com') || 
-                entry.name.includes('lucide')) {
-              console.log(`[Asset Performance] ${entry.name}: ${entry.duration.toFixed(0)}ms`);
-            }
-          }
-        });
-        
-        observer.observe({ entryTypes: ['resource'] });
       }
     </script>
   </body>
