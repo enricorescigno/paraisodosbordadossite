@@ -57,22 +57,24 @@ export function toLegacyProduct(product: ProductUnion): Product {
     slug: product.slug,
   };
 
-  // Add type-specific fields
-  if ('colors' in product) {
+  // Type-safe handling for different product types
+  if (product.type === 'product') {
+    const vestuarioProduct = product as VestuarioProduct;
     return {
       ...base,
-      colors: product.colors,
-      sizes: product.sizes,
-      price: product.price,
-      originalPrice: product.originalPrice,
-      discount: product.discount,
-      stockQuantity: product.stockQuantity,
-      minPurchaseQuantity: product.minPurchaseQuantity,
-      isCustomizable: product.isCustomizable,
-      images: product.images,
+      colors: vestuarioProduct.colors,
+      sizes: vestuarioProduct.sizes,
+      price: vestuarioProduct.price,
+      originalPrice: vestuarioProduct.originalPrice,
+      discount: vestuarioProduct.discount,
+      stockQuantity: vestuarioProduct.stockQuantity,
+      minPurchaseQuantity: vestuarioProduct.minPurchaseQuantity,
+      isCustomizable: vestuarioProduct.isCustomizable,
+      images: Array.isArray(vestuarioProduct.images) ? vestuarioProduct.images : undefined,
     };
   }
 
+  // For portfolio (bordado) products
   return base;
 }
 
