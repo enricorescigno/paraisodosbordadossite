@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
 import Footer from './Footer';
@@ -41,16 +42,6 @@ const ProductDetailPage = () => {
   
   const isMobile = useIsMobile();
   useScrollToTop();
-  
-  // Helper para extrair features como array de strings
-  const getFeatures = (features: string[] | { materials: string[]; care: string[]; specifications: string[]; } | undefined): string[] => {
-    if (!features) return [];
-    if (Array.isArray(features)) return features;
-    if (typeof features === 'object') {
-      return [...features.specifications, ...features.materials, ...features.care];
-    }
-    return [];
-  };
   
   // Fallback content when product is loading or not found
   if (loading) {
@@ -102,7 +93,10 @@ const ProductDetailPage = () => {
             {isMobile && (
               <ProductImageGallery 
                 images={currentImages} 
-                productName={product.name}
+                productName={product.name} 
+                selectedColor={selectedColor}
+                placeholder={placeholder}
+                category={product.category || ''}
               />
             )}
             
@@ -132,7 +126,7 @@ const ProductDetailPage = () => {
                 onDecrement={decrementQuantity} 
               />
               
-              <ProductFeatures features={getFeatures(product.features)} />
+              <ProductFeatures features={product.features || []} />
               
               {/* CTA Button - Desktop */}
               {!isMobile && (
@@ -160,7 +154,10 @@ const ProductDetailPage = () => {
             {!isMobile && (
               <ProductImageGallery 
                 images={currentImages} 
-                productName={product.name}
+                productName={product.name} 
+                selectedColor={selectedColor}
+                placeholder={placeholder}
+                category={product.category || ''}
               />
             )}
           </div>

@@ -1,126 +1,96 @@
 
-import { Suspense, lazy, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Toaster } from "@/components/ui/sonner";
-import { QueryProvider } from "./components/QueryProvider";
-import { ProductProvider } from "./contexts/ProductContext";
-import { ImageProvider } from "./contexts/ImageContext";
-import { UIProvider } from "./contexts/UIContext";
+import React from 'react';
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import LoadingSpinner from "./components/common/LoadingSpinner";
+import Index from "./pages/Index";
+import AboutUs from "./pages/AboutUs";
+import NotFound from "./pages/NotFound";
+import ProductPage from "./components/ProductPage";
+import PortfolioPage from "./components/PortfolioPage";
+import ProductDetailPage from "./components/ProductDetailPage";
+import OurPartners from "./pages/OurPartners";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AllProductsPage from "./components/AllProductsPage";
+import AllPortfolioPage from "./components/AllPortfolioPage";
 import ScrollToTop from "./components/ScrollToTop";
-import { ErrorBoundary } from "./utils/errorBoundary";
-import { logger } from "./utils/logger";
-import { performanceMonitor } from "./utils/performanceMonitor";
-import { createLazyComponent } from "./utils/lazyLoader";
+import EstoquePage from "./pages/EstoquePage";
+import TributacoesPage from "./pages/TributacoesPage";
+import VendasPage from "./pages/VendasPage";
+import PedidosCompraProdutosPage from "./pages/PedidosCompraProdutosPage";
+import PedidosCompraDistribuicaoPage from "./pages/PedidosCompraDistribuicaoPage";
+import PedidosCompraStatusPage from "./pages/PedidosCompraStatusPage";
+import PrazosPagamentoPage from "./pages/PrazosPagamentoPage";
 
-// Enhanced lazy loading with error boundaries and performance tracking
-const Index = createLazyComponent(() => import("./pages/Index"), { preload: true });
-const AboutUs = createLazyComponent(() => import("./pages/AboutUs"));
-const OurPartners = createLazyComponent(() => import("./pages/OurPartners"));
-const PrivacyPolicy = createLazyComponent(() => import("./pages/PrivacyPolicy"));
-const NotFound = createLazyComponent(() => import("./pages/NotFound"));
-const ProductDetailPage = createLazyComponent(() => import("./components/ProductDetailPage"));
-const ProductPage = createLazyComponent(() => import("./components/ProductPage"));
-const AllProductsPage = createLazyComponent(() => import("./components/AllProductsPage"));
-const PortfolioPage = createLazyComponent(() => import("./components/PortfolioPage"));
-const AllPortfolioPage = createLazyComponent(() => import("./components/AllPortfolioPage"));
+import "./styles/typography.css";
 
-// Business pages with smart preloading
-const EstoquePage = createLazyComponent(() => import("./pages/EstoquePage"));
-const VendasPage = createLazyComponent(() => import("./pages/VendasPage"));
-const PedidosCompraProdutosPage = createLazyComponent(() => import("./pages/PedidosCompraProdutosPage"));
-const PedidosCompraDistribuicaoPage = createLazyComponent(() => import("./pages/PedidosCompraDistribuicaoPage"));
-const PedidosCompraStatusPage = createLazyComponent(() => import("./pages/PedidosCompraStatusPage"));
-const PrazosPagamentoPage = createLazyComponent(() => import("./pages/PrazosPagamentoPage"));
-const TributacoesPage = createLazyComponent(() => import("./pages/TributacoesPage"));
+const queryClient = new QueryClient();
 
 function App() {
-  useEffect(() => {
-    // Initialize performance monitoring
-    const stopTiming = performanceMonitor.startTiming('app.initialization');
-    
-    // Service Worker registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then((registration) => {
-            logger.info('Service Worker registrado com sucesso', { scope: registration.scope });
-          })
-          .catch((error) => {
-            logger.error('Falha ao registrar Service Worker', error);
-          });
-      });
-    }
-
-    // Global error handling
-    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
-      logger.error('Unhandled promise rejection', new Error(event.reason), {
-        type: 'unhandledRejection'
-      });
-    };
-
-    const handleError = (event: ErrorEvent) => {
-      logger.error('Global error', new Error(event.message), {
-        type: 'globalError',
-        filename: event.filename,
-        lineno: event.lineno,
-        colno: event.colno
-      });
-    };
-
-    window.addEventListener('unhandledrejection', handleUnhandledRejection);
-    window.addEventListener('error', handleError);
-
-    stopTiming();
-
-    return () => {
-      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
-      window.removeEventListener('error', handleError);
-    };
-  }, []);
-
   return (
-    <ErrorBoundary>
-      <QueryProvider>
-        <UIProvider>
-          <ImageProvider>
-            <ProductProvider>
-              <Router>
-                <ScrollToTop />
-                <Layout>
-                  <Suspense fallback={<LoadingSpinner />}>
-                    <Routes>
-                      <Route path="/" element={<Index />} />
-                      <Route path="/sobre" element={<AboutUs />} />
-                      <Route path="/parceiros" element={<OurPartners />} />
-                      <Route path="/privacidade" element={<PrivacyPolicy />} />
-                      <Route path="/produtos" element={<AllProductsPage />} />
-                      <Route path="/produto/:productId" element={<ProductDetailPage />} />
-                      <Route path="/categoria/:category" element={<ProductPage />} />
-                      <Route path="/portfolio" element={<AllPortfolioPage />} />
-                      <Route path="/portfolio/:category" element={<PortfolioPage />} />
-                      
-                      {/* Business management routes */}
-                      <Route path="/estoque" element={<EstoquePage />} />
-                      <Route path="/vendas" element={<VendasPage />} />
-                      <Route path="/pedidos-compra-produtos" element={<PedidosCompraProdutosPage />} />
-                      <Route path="/pedidos-compra-distribuicao" element={<PedidosCompraDistribuicaoPage />} />
-                      <Route path="/pedidos-compra-status" element={<PedidosCompraStatusPage />} />
-                      <Route path="/prazos-pagamento" element={<PrazosPagamentoPage />} />
-                      <Route path="/tributacoes" element={<TributacoesPage />} />
-                      
-                      <Route path="*" element={<NotFound />} />
-                    </Routes>
-                  </Suspense>
-                </Layout>
-                <Toaster />
-              </Router>
-            </ProductProvider>
-          </ImageProvider>
-        </UIProvider>
-      </QueryProvider>
-    </ErrorBoundary>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <TooltipProvider>
+          <ScrollToTop />
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/produtos" element={<AllProductsPage />} />
+
+              {/* Main Categories */}
+              <Route path="/categoria/cama-mesa-banho" element={<ProductPage />} />
+              <Route path="/categoria/infantil" element={<ProductPage />} />
+              <Route path="/categoria/vestuario" element={<ProductPage />} />
+              <Route path="/categoria/banho" element={<ProductPage />} />
+
+              {/* Cama, Mesa e Banho Subcategories */}
+              <Route path="/categoria/cama" element={<ProductPage />} />
+              <Route path="/categoria/mesa-cozinha" element={<ProductPage />} />
+              <Route path="/categoria/tapete-cortinas" element={<ProductPage />} />
+              <Route path="/categoria/banho" element={<ProductPage />} />
+
+              {/* Vestuário Subcategories */}
+              <Route path="/categoria/camisa" element={<ProductPage />} />
+              <Route path="/categoria/pantufa" element={<ProductPage />} />
+
+              {/* Portfolio Pages */}
+              <Route path="/portfolio" element={<AllPortfolioPage />} />
+              <Route path="/portfolio/bordado-bone" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-necessaire" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-bolsa" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-vestuario" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-infantis" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-toalha-banho" element={<PortfolioPage />} />
+              <Route path="/portfolio/bordado-toalha" element={<PortfolioPage />} />
+
+              {/* Product Detail Page */}
+              <Route path="/produto/:productId" element={<ProductDetailPage />} />
+
+              {/* Institutional Pages */}
+              <Route path="/sobre" element={<AboutUs />} />
+              <Route path="/nossos-parceiros" element={<OurPartners />} />
+              <Route path="/politica-de-privacidade" element={<PrivacyPolicy />} />
+
+              {/* ERP Integration Routes */}
+              <Route path="/estoque" element={<EstoquePage />} />
+              <Route path="/tributacoes" element={<TributacoesPage />} />
+              <Route path="/vendas" element={<VendasPage />} />
+              <Route path="/pedidos-compra/produtos" element={<PedidosCompraProdutosPage />} />
+              <Route path="/pedidos-compra/distribuicao" element={<PedidosCompraDistribuicaoPage />} />
+              <Route path="/pedidos-compra/status" element={<PedidosCompraStatusPage />} />
+              <Route path="/prazos-pagamento" element={<PrazosPagamentoPage />} />
+
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Layout>
+          <Toaster />
+          <Sonner />
+        </TooltipProvider>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

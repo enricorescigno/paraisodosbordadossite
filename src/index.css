@@ -1,5 +1,5 @@
 
-/* Optimized CSS - removed duplicate font imports for better performance */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import './styles/apple-ui.css';
 @import './styles/product-pages.css';
 @import './styles/mobile-optimizations.css';
@@ -100,15 +100,12 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     letter-spacing: -0.015em;
-    /* Optimized font loading to prevent FOIT */
-    font-display: swap;
   }
 
-  /* Enhanced Typography with Performance Optimization */
+  /* Enhanced Typography */
   h1, h2, h3, h4, h5, h6 {
     @apply font-sans tracking-tight font-medium;
     letter-spacing: -0.025em;
-    font-display: swap;
   }
 
   p {
@@ -118,11 +115,9 @@
   /* Apple-like smooth scrolling */
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 70px;
+    scroll-padding-top: 70px; /* Adjust for fixed header */
   }
 }
-
-/* ... keep existing code (components layer and keyframes) the same ... */
 
 @layer components {
   .glass {

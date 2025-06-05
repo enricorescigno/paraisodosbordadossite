@@ -1,135 +1,178 @@
 
-import { Product, ProductCategory } from '../types/product';
-import { allProducts } from './products';
+// This file provides search functionality across products
+import { Product } from '../types/product';
+import { pantufaProducts, vestuarioProducts, banhoProducts, camaProducts, mesaCozinhaProducts, tapeteCortinasProducts } from './products';
+import { infantilProducts } from './products/emptyProducts';
 
-// Export products for other components
-export const products = allProducts;
-
-const categoryMappings: Record<string, ProductCategory> = {
-  'camisa': 'Vestuário',
-  'camiseta': 'Vestuário', 
-  'polo': 'Vestuário',
-  'blusa': 'Vestuário',
-  'uniforme': 'Vestuário',
-  'jaleco': 'Bordado em Fardamentos',
-  'avental': 'Vestuário',
-  'calça': 'Vestuário',
-  'bermuda': 'Vestuário',
-  'shorts': 'Vestuário',
-  'saia': 'Vestuário',
-  'vestido': 'Vestuário',
-  'necessaire': 'Bordado em Necessaire',
-  'necessaire bordada': 'Bordado em Necessaire',
-  'bordado necessaire': 'Bordado em Necessaire',
-  'bolsa': 'Bordado em Bolsa',
-  'bolsa bordada': 'Bordado em Bolsa',
-  'bordado bolsa': 'Bordado em Bolsa',
-  'toalha': 'Banho',
-  'toalha de banho': 'Bordado em Toalha de Banho',
-  'toalha de rosto': 'Bordado em Toalha de Rosto', 
-  'roupão': 'Banho',
-  'pantufa': 'Vestuário',
-  'chinelo': 'Vestuário',
-  'infantil': 'Infantil',
-  'criança': 'Infantil',
-  'bebê': 'Infantil',
-  'boné': 'Bonés',
-  'bone': 'Bonés',
-  'chapéu': 'Bonés',
-  'bordado': 'Bordados',
-  'bordados': 'Bordados',
-  'personalizado': 'Bordados',
-  'customizado': 'Bordados'
-};
-
-export const searchProducts = (productsArray: Product[] | string, query?: string): Product[] => {
-  // Handle both old and new calling patterns
-  let actualProducts: Product[];
-  let actualQuery: string;
-  
-  if (typeof productsArray === 'string') {
-    // Old pattern: searchProducts(query)
-    actualProducts = products;
-    actualQuery = productsArray;
-  } else {
-    // New pattern: searchProducts(products, query)
-    actualProducts = productsArray;
-    actualQuery = query || '';
+// Sample product database - In a real app, you would fetch this from an API
+const sampleProducts: Product[] = [
+  {
+    id: "330", // ID matching portfolio jaleco
+    name: "Jaleco Bordado",
+    category: "jaleco",
+    description: "Jaleco profissional com bordado personalizado",
+    keywords: ["jaleco", "médico", "medico", "enfermagem", "saúde", "saude", "bordado"],
+    slug: "jaleco-bordado",
+    type: "product",
+    imageUrl: "/lovable-uploads/7258c407-8a22-427b-a486-5e2bc2170d5f.png"
+  },
+  {
+    id: "310", // ID matching portfolio necessaire
+    name: "Necessaire Bordada",
+    category: "bordado-necessaire",
+    description: "Necessaire com bordados personalizados",
+    keywords: ["necessaire", "bolsa", "personalizada", "bordado"],
+    slug: "necessaire-bordada",
+    type: "portfolio",
+    imageUrl: "/lovable-uploads/0a4859ea-7a2a-45c7-ac73-e7f7a709aab4.png"
+  },
+  {
+    id: "150", // ID matching product in ProductDetailPage
+    name: "Kit Infantil Bordado",
+    category: "infantil",
+    description: "Kit completo de itens bordados para bebês e crianças",
+    keywords: ["infantil", "bebê", "bebe", "criança", "crianca", "kit", "bordado"],
+    slug: "kit-infantil-bordado",
+    type: "product",
+    imageUrl: "/lovable-uploads/120d7ca4-3d83-432d-81df-5bcf1993da75.png"
+  },
+  {
+    id: "320", // ID matching portfolio bolsa
+    name: "Bolsa Bordada Personalizada",
+    category: "bordado-bolsa",
+    description: "Bolsa com bordados personalizados exclusivos",
+    keywords: ["bolsa", "personalizada", "bordado", "acessório", "acessorio"],
+    slug: "bolsa-bordada-personalizada",
+    type: "portfolio",
+    imageUrl: "/lovable-uploads/cb60af2d-a399-4029-ab74-6f5374d38b9c.png"
   }
-  
-  if (!actualQuery.trim()) return actualProducts;
-  
-  const normalizedQuery = actualQuery.toLowerCase().trim();
-  
-  return actualProducts.filter(product => {
-    // Search in product name
-    if (product.name.toLowerCase().includes(normalizedQuery)) {
-      return true;
-    }
-    
-    // Search in description
-    if (product.description?.toLowerCase().includes(normalizedQuery)) {
-      return true;
-    }
-    
-    // Search in category
-    if (product.category.toLowerCase().includes(normalizedQuery)) {
-      return true;
-    }
-    
-    // Search in tags
-    if (product.tags?.some(tag => tag.toLowerCase().includes(normalizedQuery))) {
-      return true;
-    }
-    
-    // Search in keywords
-    if (product.keywords?.some(keyword => keyword.toLowerCase().includes(normalizedQuery))) {
-      return true;
-    }
-    
-    // Search by mapped category
-    const mappedCategory = categoryMappings[normalizedQuery];
-    if (mappedCategory && product.category === mappedCategory) {
-      return true;
-    }
-    
-    return false;
-  });
-};
+];
 
-export const getCategoryFromSearch = (query: string): ProductCategory | null => {
-  const normalizedQuery = query.toLowerCase().trim();
-  return categoryMappings[normalizedQuery] || null;
-};
+// Create keywords for pantufaProducts if they don't have them
+const pantufasWithKeywords = pantufaProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['pantufa', 'pantufas', 'conforto', 'calçado', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
 
-export const getSearchSuggestions = (products: Product[], query: string): string[] => {
-  if (!query.trim()) return [];
+// Create keywords for infantilProducts if they don't have them
+const infantilWithKeywords = infantilProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['infantil', 'criança', 'bebê', 'roupão', 'toalha', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
+
+// Create keywords for vestuarioProducts if they don't have them
+const vestuarioWithKeywords = vestuarioProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['vestuário', 'camisa', 'uniforme', 'bordado', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
+
+// Create keywords for banhoProducts if they don't have them
+const banhoWithKeywords = banhoProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['banho', 'toalha', 'roupão', 'toalha de rosto', 'toalha de banho', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
+
+// Create keywords for camaProducts if they don't have them
+const camaWithKeywords = camaProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['cama', 'jogo de cama', 'travesseiro', 'lençol', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
+
+// Create keywords for mesaCozinhaProducts if they don't have them
+const mesaCozinhaWithKeywords = mesaCozinhaProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['mesa', 'cozinha', 'toalha de mesa', 'jogo americano', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
+
+// Create keywords for tapeteCortinasProducts if they don't have them
+const tapeteCortinasWithKeywords = tapeteCortinasProducts.map(product => ({
+  ...product,
+  keywords: product.keywords || ['tapete', 'cortina', 'decoração', 'casa', product.name.toLowerCase()],
+  slug: product.slug || product.name.toLowerCase().replace(/\s+/g, '-')
+}));
+
+export const products: Product[] = [
+  ...sampleProducts, 
+  ...pantufasWithKeywords, 
+  ...infantilWithKeywords,  // Added infantil products
+  ...vestuarioWithKeywords, 
+  ...banhoWithKeywords, 
+  ...camaWithKeywords, 
+  ...mesaCozinhaWithKeywords, 
+  ...tapeteCortinasWithKeywords
+];
+
+// Function to search products based on query - with improved matching and prioritization
+export function searchProducts(query: string): Product[] {
+  if (!query || query.trim().length < 2) return [];
   
   const normalizedQuery = query.toLowerCase().trim();
-  const suggestions = new Set<string>();
+  const searchTerms = normalizedQuery.split(' ').filter(term => term.length > 0);
   
-  products.forEach(product => {
-    // Add product names that match
-    if (product.name.toLowerCase().includes(normalizedQuery)) {
-      suggestions.add(product.name);
+  // Score-based search for better relevance
+  const scoredResults = products.map(product => {
+    let score = 0;
+    
+    // Check for exact product name match (highest priority)
+    if (product.name.toLowerCase() === normalizedQuery) {
+      score += 100;
+    }
+    // Check for partial product name match
+    else if (product.name.toLowerCase().includes(normalizedQuery)) {
+      score += 50;
     }
     
-    // Add categories that match
-    if (product.category.toLowerCase().includes(normalizedQuery)) {
-      suggestions.add(product.category);
-    }
-    
-    // Add tags that match
-    product.tags?.forEach(tag => {
-      if (tag.toLowerCase().includes(normalizedQuery)) {
-        suggestions.add(tag);
+    // Check individual terms in product name
+    for (const term of searchTerms) {
+      if (product.name.toLowerCase().includes(term)) {
+        score += 30;
       }
-    });
+    }
+    
+    // Check keywords
+    if (product.keywords) {
+      // Check for exact keyword match
+      if (product.keywords.some(keyword => keyword.toLowerCase() === normalizedQuery)) {
+        score += 40;
+      }
+      // Check for keyword partial matches
+      for (const term of searchTerms) {
+        const matchingKeywords = product.keywords.filter(keyword => 
+          keyword.toLowerCase().includes(term)
+        );
+        score += matchingKeywords.length * 10;
+      }
+    }
+    
+    // Check category
+    if (product.category.toLowerCase().includes(normalizedQuery)) {
+      score += 20;
+    }
+    
+    // Check description (lowest priority)
+    if (product.description && product.description.toLowerCase().includes(normalizedQuery)) {
+      score += 10;
+    }
+    
+    return { product, score };
   });
   
-  return Array.from(suggestions).slice(0, 5);
-};
+  // Filter out products with no relevance and sort by score
+  const filteredResults = scoredResults
+    .filter(result => result.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map(result => result.product);
+  
+  return filteredResults;
+}
 
-export const getProductUrl = (product: Product): string => {
+// Function to get product URL
+export function getProductUrl(product: Product): string {
   return `/produto/${product.id}`;
-};
+}

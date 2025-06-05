@@ -1,4 +1,3 @@
-
 import { Product } from '../../types/product';
 
 // Vestuário Collection (regular clothing products)
@@ -238,7 +237,7 @@ export const bordadoVestuarioProducts: Product[] = [
     description: "Bordado de logo em camisa para a empresa Impcatto. Trabalho detalhado em camisas verdes com bordado de alta precisão do logo da empresa em duas cores.",
     price: "35,00",
     isNew: false,
-    // Removed: isAvailable: true, (not in Product type)
+    isAvailable: true,
     isCustomizable: true,
     colors: ["Verde"],
     sizes: ["P", "M", "G", "GG"],
@@ -267,7 +266,7 @@ export const bordadoVestuarioProducts: Product[] = [
     description: "Bordado do logo Pet Dream em fardamento para hospital veterinário. Disponível em branco e verde.",
     price: "40,00",
     isNew: true,
-    // Removed: isAvailable: true, (not in Product type)
+    isAvailable: true,
     isCustomizable: true,
     colors: ["Branco", "Verde"],
     sizes: ["P", "M", "G", "GG"],
@@ -296,7 +295,7 @@ export const bordadoVestuarioProducts: Product[] = [
     description: "Bordado com design de girassol na camisa. Trabalho detalhado em camisa preta com bordado de girassol amarelo.",
     price: "30,00",
     isNew: true,
-    // Removed: isAvailable: true, (not in Product type)
+    isAvailable: true,
     isCustomizable: true,
     colors: ["Preto", "Amarelo"],
     sizes: ["P", "M", "G", "GG"],
@@ -322,7 +321,7 @@ export const bordadoVestuarioProducts: Product[] = [
     description: "Bordado em fardamento para diversos times de futebol europeus incluindo PSG, Marseille e Montpellier. Trabalho de alta precisão para uniformes esportivos.",
     price: "45,00",
     isNew: true,
-    // Removed: isAvailable: true, (not in Product type)
+    isAvailable: true,
     isCustomizable: true,
     colors: ["Azul", "Branco", "variados"],
     sizes: ["P", "M", "G", "GG"],
@@ -331,10 +330,10 @@ export const bordadoVestuarioProducts: Product[] = [
     tags: ["fardamento", "bordado", "futebol", "time", "esporte", "psg", "marseille", "montpellier"],
     featured: true,
     images: [
-      "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png",
-      "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png",
-      "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png",
-      "/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"
+      "/lovable-uploads/e7ff2082-9189-4993-bcbd-5fe492d8f42b.png", // Overview de todos os times
+      "/lovable-uploads/ee7a7e95-5675-4250-9896-fabb9b05fa82.png", // Montpellier detalhe
+      "/lovable-uploads/c1a283d7-d768-423d-bbb8-b882a2e86f66.png", // PSG detalhe
+      "/lovable-uploads/e577a3c9-349a-4906-860e-257b33765459.png"  // Marseille detalhe
     ],
     dimensions: {
       width: 0,
@@ -353,7 +352,7 @@ export const bordadoVestuarioProducts: Product[] = [
     description: "Bordado do logo 'Biscoitos Feitos Por Nós' em fardamento. Disponível em azul marinho e branco, com design elegante para equipe de confeitaria artesanal.",
     price: "35,00",
     isNew: true,
-    // Removed: isAvailable: true, (not in Product type)
+    isAvailable: true,
     isCustomizable: true,
     colors: ["Azul Marinho", "Branco", "Vermelho"],
     sizes: ["P", "M", "G", "GG"],
@@ -382,7 +381,7 @@ export const bordadoVestuarioProducts: Product[] = [
     description: "Bordado de logo do time Capibaribe em uma camisa. Detalhes nítidos na mascote do leão com contorno amarelo vibrante em fundo preto.",
     price: "40,00",
     isNew: false,
-    // Removed: isAvailable: true, (not in Product type)
+    isAvailable: true,
     isCustomizable: true,
     colors: ["Preto", "Amarelo"],
     sizes: ["P", "M", "G", "GG"],
@@ -408,7 +407,7 @@ export const bordadoVestuarioProducts: Product[] = [
     description: "Bordado com o logo Doutor Pet na camisa. Disponível em verde, verde água e caqui. O logo apresenta um veterinário com animais de estimação em um círculo verde.",
     price: "35,00",
     isNew: true,
-    // Removed: isAvailable: true, (not in Product type)
+    isAvailable: true,
     isCustomizable: true,
     colors: ["Verde", "Verde Água", "Caqui"],
     sizes: ["P", "M", "G", "GG"],

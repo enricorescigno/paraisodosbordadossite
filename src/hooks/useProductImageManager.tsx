@@ -93,8 +93,8 @@ export const useProductImageManager = (product: Product | null, selectedColor: s
         "/lovable-uploads/8744a44a-8df8-46e6-874c-df98fe623b45.png"
       ]);
     }
-    // If product has images object organized by color (legacy format)
-    else if (product.images && typeof product.images === 'object' && !Array.isArray(product.images) && !('primary' in product.images)) {
+    // If product has images object organized by color
+    else if (product.images && typeof product.images === 'object' && !Array.isArray(product.images)) {
       if (selectedColor && product.images[selectedColor]) {
         // Selected color images exist
         if (Array.isArray(product.images[selectedColor])) {
