@@ -21,8 +21,7 @@ interface ProductState {
 }
 
 interface ImageState {
-  imageCache: Map<string, string>;
-  loadingImages: Set<string>;
+  imageCache: Set<string>;
   errorImages: Set<string>;
 }
 
@@ -51,9 +50,8 @@ interface AppStore extends ProductState, ImageState, UIState {
   setFilters: (filters: Partial<ProductState['filters']>) => void;
   clearFilters: () => void;
   
-  // Image actions - renomeadas para evitar conflitos
+  // Image actions - simplified
   setImageCached: (url: string) => void;
-  setImageLoading: (url: string) => void;
   setImageError: (url: string) => void;
   clearImageCache: () => void;
   
@@ -67,7 +65,6 @@ interface AppStore extends ProductState, ImageState, UIState {
   // Computed values
   filteredProducts: () => Product[];
   isImageLoaded: (url: string) => boolean;
-  isImageLoading: (url: string) => boolean;
   hasImageError: (url: string) => boolean;
 }
 
@@ -82,8 +79,7 @@ export const useAppStore = create<AppStore>()(
       selectedCategory: null,
       searchQuery: '',
       filters: {},
-      imageCache: new Map(),
-      loadingImages: new Set(),
+      imageCache: new Set(),
       errorImages: new Set(),
       sidebar: { isOpen: false, activeTab: null },
       modals: {},
@@ -101,42 +97,27 @@ export const useAppStore = create<AppStore>()(
       clearFilters: () => 
         set({ filters: {}, selectedCategory: null, searchQuery: '' }),
 
-      // Image actions - corrigidas
+      // Image actions - simplified
       setImageCached: (url) =>
         set((state) => {
-          const newCache = new Map(state.imageCache);
-          newCache.set(url, url);
-          const newLoading = new Set(state.loadingImages);
-          newLoading.delete(url);
+          const newCache = new Set(state.imageCache);
+          newCache.add(url);
           const newErrors = new Set(state.errorImages);
           newErrors.delete(url);
           return {
             imageCache: newCache,
-            loadingImages: newLoading,
             errorImages: newErrors,
           };
-        }),
-      setImageLoading: (url) =>
-        set((state) => {
-          const newLoading = new Set(state.loadingImages);
-          newLoading.add(url);
-          return { loadingImages: newLoading };
         }),
       setImageError: (url) =>
         set((state) => {
           const newErrors = new Set(state.errorImages);
           newErrors.add(url);
-          const newLoading = new Set(state.loadingImages);
-          newLoading.delete(url);
-          return {
-            errorImages: newErrors,
-            loadingImages: newLoading,
-          };
+          return { errorImages: newErrors };
         }),
       clearImageCache: () =>
         set({
-          imageCache: new Map(),
-          loadingImages: new Set(),
+          imageCache: new Set(),
           errorImages: new Set(),
         }),
 
@@ -211,14 +192,13 @@ export const useAppStore = create<AppStore>()(
       },
 
       isImageLoaded: (url) => get().imageCache.has(url),
-      isImageLoading: (url) => get().loadingImages.has(url),
       hasImageError: (url) => get().errorImages.has(url),
     })),
     { name: 'app-store' }
   )
 );
 
-// Selectors for better performance
+// Simplified selectors for better performance
 export const useProducts = () => useAppStore((state) => state.products);
 export const useSelectedProduct = () => useAppStore((state) => state.selectedProduct);
 export const useProductLoading = () => useAppStore((state) => state.loading);
@@ -226,9 +206,7 @@ export const useProductError = () => useAppStore((state) => state.error);
 export const useFilteredProducts = () => useAppStore((state) => state.filteredProducts());
 export const useImageCache = () => useAppStore((state) => ({
   isLoaded: state.isImageLoaded,
-  isLoading: state.isImageLoading,
   hasError: state.hasImageError,
   setCached: state.setImageCached,
-  setLoading: state.setImageLoading,
   setError: state.setImageError,
 }));

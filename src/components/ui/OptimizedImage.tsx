@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect, useRef, memo } from 'react';
-import { useAppStore } from '../../stores/useAppStore';
+import React, { useRef, memo } from 'react';
+import { useImageOptimization } from '../../hooks/useImageOptimization';
 
 interface OptimizedImageProps {
   src: string;
@@ -27,83 +27,21 @@ const OptimizedImage = memo<OptimizedImageProps>(({
   onError,
   sizes = '100vw',
 }) => {
-  const [isInView, setIsInView] = useState(priority);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
-  const { isImageLoaded, setImageCached, setImageError } = useAppStore();
-
-  // Intersection Observer for lazy loading
-  useEffect(() => {
-    if (priority || !imgRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: '50px',
-        threshold: 0.1,
-      }
-    );
-
-    observer.observe(imgRef.current);
-
-    return () => observer.disconnect();
-  }, [priority]);
-
-  // Handle image load
-  const handleLoad = () => {
-    setIsLoaded(true);
-    setImageCached(src);
-    onLoad?.();
-  };
-
-  // Handle image error
-  const handleError = () => {
-    setHasError(true);
-    setImageError(src);
-    onError?.();
-  };
-
-  // Generate srcSet for responsive images
-  const generateSrcSet = (baseSrc: string) => {
-    if (!baseSrc || baseSrc.includes('unsplash.com')) {
-      return baseSrc;
-    }
-    
-    const sizes = [320, 640, 960, 1280];
-    return sizes
-      .map(size => `${baseSrc}?w=${size} ${size}w`)
-      .join(', ');
-  };
-
-  // Get optimized src with width parameter
-  const getOptimizedSrc = (baseSrc: string, targetWidth?: number) => {
-    if (!baseSrc || baseSrc.includes('unsplash.com') || baseSrc.startsWith('data:')) {
-      return baseSrc;
-    }
-    
-    if (targetWidth) {
-      const separator = baseSrc.includes('?') ? '&' : '?';
-      return `${baseSrc}${separator}w=${targetWidth}&q=80&f=webp`;
-    }
-    
-    return baseSrc;
-  };
-
-  const optimizedSrc = getOptimizedSrc(src, width);
-  const srcSet = generateSrcSet(src);
-  const isCached = isImageLoaded(src) || isLoaded;
+  
+  const {
+    src: optimizedSrc,
+    isLoaded,
+    hasError,
+    isInView,
+    handleLoad,
+    handleError
+  } = useImageOptimization(src, { priority, placeholder, onLoad, onError });
 
   // Show placeholder until image is in view
   if (!isInView) {
     return (
       <div
-        ref={imgRef}
         className={`bg-gray-200 animate-pulse ${className}`}
         style={{ width, height, aspectRatio: width && height ? `${width}/${height}` : undefined }}
         aria-label={`Loading ${alt}`}
@@ -114,7 +52,7 @@ const OptimizedImage = memo<OptimizedImageProps>(({
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {/* Blur placeholder */}
-      {placeholder && !isCached && (
+      {placeholder && !isLoaded && (
         <img
           src={placeholder}
           alt=""
@@ -127,16 +65,15 @@ const OptimizedImage = memo<OptimizedImageProps>(({
       <img
         ref={imgRef}
         src={optimizedSrc}
-        srcSet={srcSet}
-        sizes={sizes}
         alt={alt}
         width={width}
         height={height}
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
+        data-src={src}
         className={`
           w-full h-full object-cover transition-opacity duration-300
-          ${isCached ? 'opacity-100' : 'opacity-0'}
+          ${isLoaded ? 'opacity-100' : 'opacity-0'}
           ${hasError ? 'bg-gray-200' : ''}
         `}
         onLoad={handleLoad}
@@ -153,7 +90,7 @@ const OptimizedImage = memo<OptimizedImageProps>(({
       )}
       
       {/* Loading indicator */}
-      {!isCached && !hasError && (
+      {!isLoaded && !hasError && (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
           <div className="w-6 h-6 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin" />
         </div>
