@@ -2,136 +2,65 @@
 import { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { toast } from 'sonner';
-import { Product } from '@/types/product';
-import { allProducts } from '@/utils/productUtils';
+import { useProductDomain } from './useProductDomain';
 import { useProductImageManager } from './useProductImageManager';
+import { ProductAdapter } from '../data/adapters/ProductAdapter';
 import { cacheImagesInBrowser, preloadImages } from '@/utils/imageUtils';
 import { toAbsoluteURL } from '@/utils/urlUtils';
 
 export const useProductDetail = () => {
   const { productId } = useParams<{ productId: string }>();
   const location = useLocation();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(true);
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [isFromPortfolio, setIsFromPortfolio] = useState(false);
   
-  // Initialize product and check if special product 204
+  // Use domain layer for product management
+  const { product: domainProduct, loading, error, processProductImages } = useProductDomain(productId);
+  
+  // Convert domain product to legacy format for backward compatibility
+  const product = domainProduct ? ProductAdapter.toLegacyProduct({
+    id: domainProduct.id,
+    name: domainProduct.name,
+    type: domainProduct.type,
+    category: domainProduct.category as any,
+    description: domainProduct.description,
+    price: domainProduct.pricing.price,
+    images: domainProduct.images.map(img => img.url),
+    colors: domainProduct.variants.colors,
+    sizes: domainProduct.variants.sizes,
+    rating: domainProduct.rating,
+    isNew: domainProduct.isNew,
+    features: domainProduct.features
+  }) : null;
+
+  // Initialize product data
   useEffect(() => {
-    setLoading(true);
+    if (!domainProduct) return;
+
+    // Set initial selections
+    if (domainProduct.variants.hasColors()) {
+      setSelectedColor(domainProduct.variants.getFirstColor() || "");
+    }
+    if (domainProduct.variants.hasSizes()) {
+      setSelectedSize(domainProduct.variants.getFirstSize() || "");
+    }
     
-    const timer = setTimeout(() => {
-      if (productId) {
-        try {
-          let foundProduct = allProducts.find(p => p.id?.toString() === productId);
-          
-          // Special case for product 204
-          if (productId === "204") {
-            foundProduct = {
-              id: 204,
-              name: "Jogo Americano Requinte Ondulado",
-              type: "product",
-              category: "Mesa e Cozinha",
-              imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
-              description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
-              price: "R$ 89,90",
-              images: [],
-              colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
-              sizes: [],
-              rating: 4.9,
-              isNew: true,
-              features: [
-                "Composição: 75% polipropileno e 25% poliéster", 
-                "Diâmetro: 38cm", 
-                "Conjunto com 4 unidades",
-                "Fácil lavagem e secagem rápida",
-                "Resistente para uso diário"
-              ],
-              keywords: ["jogo americano", "mesa", "cozinha", "bordado"],
-            };
-          }
-          
-          if (foundProduct) {
-            // Ensure the imageUrl is absolute
-            if (foundProduct.imageUrl) {
-              foundProduct.imageUrl = toAbsoluteURL(foundProduct.imageUrl);
-            }
-            
-            // Ensure images are absolute URLs
-            if (foundProduct.images) {
-              if (Array.isArray(foundProduct.images)) {
-                foundProduct.images = foundProduct.images.map(img => toAbsoluteURL(img));
-              } else if (typeof foundProduct.images === 'object' && foundProduct.images !== null && !('primary' in foundProduct.images)) {
-                Object.keys(foundProduct.images).forEach(color => {
-                  if (Array.isArray(foundProduct.images![color])) {
-                    (foundProduct.images as Record<string, string[]>)[color] = (foundProduct.images as Record<string, string[]>)[color].map(img => toAbsoluteURL(img));
-                  }
-                });
-              }
-            }
-            
-            if (foundProduct.colors && foundProduct.colors.length > 0) {
-              setSelectedColor(foundProduct.colors[0]);
-            }
-            if (foundProduct.sizes && foundProduct.sizes.length > 0) {
-              setSelectedSize(foundProduct.sizes[0]);
-            }
-            
-            setIsFromPortfolio(foundProduct.type === 'portfolio');
-            
-            // Ensure default values for better UX
-            if (typeof foundProduct.rating !== 'number') foundProduct.rating = 4.8;
-            if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
-            if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
-            
-            setProduct(foundProduct);
-            
-            // Safe image preloading
-            const productImages = [];
-            
-            // Collect images to preload
-            if (foundProduct.images) {
-              if (Array.isArray(foundProduct.images) && foundProduct.images.length > 0) {
-                productImages.push(...foundProduct.images.slice(0, 3));
-              } else if (typeof foundProduct.images === 'object' && foundProduct.images !== null && !('primary' in foundProduct.images)) {
-                const firstColorImages = Object.values(foundProduct.images)[0];
-                if (Array.isArray(firstColorImages) && firstColorImages.length > 0) {
-                  productImages.push(...firstColorImages.slice(0, 3));
-                }
-              }
-            }
-            
-            // Add imageUrl as fallback
-            if (foundProduct.imageUrl) {
-              productImages.push(foundProduct.imageUrl);
-            }
-            
-            // If we have any images to preload, do it
-            if (productImages.length > 0) {
-              try {
-                cacheImagesInBrowser(productImages);
-                preloadImages(productImages);
-              } catch (error) {
-                console.error("Error preloading images:", error);
-              }
-            }
-          } else {
-            setProduct(null);
-            toast.error("Produto não encontrado.");
-          }
-        } catch (error) {
-          console.error("Erro ao carregar produto:", error);
-          toast.error("Erro ao carregar o produto. Tente novamente mais tarde.");
-          setProduct(null);
-        }
+    setIsFromPortfolio(domainProduct.type === 'portfolio');
+    
+    // Preload images using domain layer
+    const imageResult = processProductImages();
+    if (imageResult && imageResult.hasImages) {
+      const imageUrls = imageResult.images.map(img => toAbsoluteURL(img.url));
+      try {
+        cacheImagesInBrowser(imageUrls.slice(0, 3));
+        preloadImages(imageUrls.slice(0, 3));
+      } catch (error) {
+        console.error("Error preloading images:", error);
       }
-      setLoading(false);
-    }, 300);
-    
-    return () => clearTimeout(timer);
-  }, [productId]);
+    }
+  }, [domainProduct, processProductImages]);
 
   // Use product image manager for handling color and images
   const { 
@@ -176,8 +105,6 @@ export const useProductDetail = () => {
     }
     
     if (product && product.category) {
-      const category = product.category.toLowerCase().replace(/\s+/g, '-');
-      
       const categoryMap: Record<string, string> = {
         'cama': '/categoria/cama',
         'mesa e cozinha': '/categoria/mesa-cozinha',
@@ -203,6 +130,7 @@ export const useProductDetail = () => {
   return {
     product,
     loading,
+    error,
     selectedColor,
     setSelectedColor,
     selectedSize,

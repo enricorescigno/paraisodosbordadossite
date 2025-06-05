@@ -2,6 +2,8 @@
 import { ProductImage } from '../value-objects/ProductImage';
 import { ProductVariant } from '../value-objects/ProductVariant';
 import { ProductPricing } from '../value-objects/ProductPricing';
+import { ImageCollection } from '../../types/image';
+import { Price, Rating } from '../../types/base';
 
 export interface ProductEntityData {
   id: string | number;
@@ -9,12 +11,12 @@ export interface ProductEntityData {
   type: 'product' | 'portfolio';
   category: string;
   description?: string;
-  images?: string[] | Record<string, string[]>;
+  images?: string[] | Record<string, string[]> | ImageCollection;
   imageUrl?: string;
   colors?: string[];
   sizes?: string[];
-  price?: string;
-  rating?: number;
+  price?: string | Price;
+  rating?: number | Rating;
   isNew?: boolean;
   features?: string[] | object;
 }
@@ -42,8 +44,8 @@ export class ProductEntity {
     this._description = data.description || '';
     this._images = this.processImages(data);
     this._variants = new ProductVariant(data.colors || [], data.sizes || []);
-    this._pricing = new ProductPricing(data.price || '');
-    this._rating = data.rating || 4.8;
+    this._pricing = new ProductPricing(this.convertPrice(data.price) || '');
+    this._rating = this.convertRating(data.rating);
     this._isNew = data.isNew || false;
     this._features = this.processFeatures(data.features);
   }
@@ -81,6 +83,18 @@ export class ProductEntity {
     if (!data.category) throw new Error('Product category is required');
   }
 
+  private convertPrice(price?: string | Price): string {
+    if (!price) return '';
+    if (typeof price === 'string') return price;
+    return price.value || '';
+  }
+
+  private convertRating(rating?: number | Rating): number {
+    if (!rating) return 4.8;
+    if (typeof rating === 'number') return rating;
+    return rating.value || 4.8;
+  }
+
   private processImages(data: ProductEntityData): ProductImage[] {
     const images: ProductImage[] = [];
     
@@ -89,29 +103,65 @@ export class ProductEntity {
       images.push(new ProductImage(data.imageUrl, true));
     }
     
-    // Handle images array
-    if (Array.isArray(data.images)) {
-      data.images.forEach((url, index) => {
-        if (url && url.trim()) {
-          images.push(new ProductImage(url, index === 0 && !data.imageUrl));
-        }
-      });
-    }
-    
-    // Handle images by color
-    if (data.images && typeof data.images === 'object' && !Array.isArray(data.images)) {
-      Object.entries(data.images).forEach(([color, urls]) => {
-        if (Array.isArray(urls)) {
-          urls.forEach((url, index) => {
-            if (url && url.trim()) {
-              images.push(new ProductImage(url, false, color));
-            }
-          });
-        }
-      });
+    // Handle different image formats
+    if (data.images) {
+      if (Array.isArray(data.images)) {
+        // Simple array format
+        data.images.forEach((url, index) => {
+          if (url && url.trim()) {
+            images.push(new ProductImage(url, index === 0 && !data.imageUrl));
+          }
+        });
+      } else if (this.isImageCollection(data.images)) {
+        // ImageCollection format
+        this.processImageCollection(data.images, images, !data.imageUrl);
+      } else {
+        // Record<string, string[]> format (by color)
+        Object.entries(data.images).forEach(([color, urls]) => {
+          if (Array.isArray(urls)) {
+            urls.forEach((url, index) => {
+              if (url && url.trim()) {
+                images.push(new ProductImage(url, false, color));
+              }
+            });
+          }
+        });
+      }
     }
     
     return images;
+  }
+
+  private isImageCollection(images: any): images is ImageCollection {
+    return images && typeof images === 'object' && ('primary' in images || 'gallery' in images);
+  }
+
+  private processImageCollection(collection: ImageCollection, images: ProductImage[], setPrimary: boolean): void {
+    // Process primary images
+    if (collection.primary) {
+      if (Array.isArray(collection.primary)) {
+        collection.primary.forEach((img, index) => {
+          const url = typeof img === 'string' ? img : img.url;
+          if (url) {
+            images.push(new ProductImage(url, setPrimary && index === 0));
+          }
+        });
+      } else if (typeof collection.primary === 'string') {
+        images.push(new ProductImage(collection.primary, setPrimary));
+      } else if (collection.primary.url) {
+        images.push(new ProductImage(collection.primary.url, setPrimary));
+      }
+    }
+
+    // Process gallery images
+    if (collection.gallery && Array.isArray(collection.gallery)) {
+      collection.gallery.forEach(img => {
+        const url = typeof img === 'string' ? img : img.url;
+        if (url) {
+          images.push(new ProductImage(url, false));
+        }
+      });
+    }
   }
 
   private processFeatures(features?: string[] | object): string[] {
@@ -122,6 +172,8 @@ export class ProductEntity {
       Object.values(features).forEach(value => {
         if (Array.isArray(value)) {
           result.push(...value);
+        } else if (typeof value === 'string') {
+          result.push(value);
         }
       });
       return result;
