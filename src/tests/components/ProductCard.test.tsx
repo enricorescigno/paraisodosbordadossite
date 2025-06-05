@@ -1,7 +1,6 @@
 
 import { describe, it, expect, vi } from 'vitest';
-import { render } from '@testing-library/react';
-import { screen } from '@testing-library/dom';
+import { render, screen } from '@testing-library/react';
 import ProductCard from '../../components/product/ProductCard';
 
 // Mock do React Router
