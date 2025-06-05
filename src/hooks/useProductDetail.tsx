@@ -36,6 +36,8 @@ export const useProductDetail = () => {
               category: "Mesa e Cozinha",
               imageUrl: "/lovable-uploads/77ef9243-1485-4e45-b51d-6e05b692b7e7.png", 
               description: "Jogo americano com bordado elegante, conjunto com 4 unidades.",
+              price: "R$ 89,90",
+              images: [],
               colors: ["Branco", "Dourado", "Bege", "Marrom", "Rosa", "Verde", "Vinho"],
               sizes: [],
               rating: 4.9,
@@ -63,8 +65,8 @@ export const useProductDetail = () => {
                 foundProduct.images = foundProduct.images.map(img => toAbsoluteURL(img));
               } else if (typeof foundProduct.images === 'object' && foundProduct.images !== null && !('primary' in foundProduct.images)) {
                 Object.keys(foundProduct.images).forEach(color => {
-                  if (Array.isArray(foundProduct.images[color])) {
-                    foundProduct.images[color] = foundProduct.images[color].map(img => toAbsoluteURL(img));
+                  if (Array.isArray(foundProduct.images![color])) {
+                    (foundProduct.images as Record<string, string[]>)[color] = (foundProduct.images as Record<string, string[]>)[color].map(img => toAbsoluteURL(img));
                   }
                 });
               }
@@ -80,7 +82,7 @@ export const useProductDetail = () => {
             setIsFromPortfolio(foundProduct.type === 'portfolio');
             
             // Ensure default values for better UX
-            if (!foundProduct.rating) foundProduct.rating = 4.8;
+            if (typeof foundProduct.rating !== 'number') foundProduct.rating = 4.8;
             if (!foundProduct.description) foundProduct.description = "Produto de alta qualidade da Paraíso dos Bordados.";
             if (!foundProduct.features) foundProduct.features = ["Qualidade premium", "Personalização disponível", "Material durável"];
             
@@ -126,7 +128,7 @@ export const useProductDetail = () => {
         }
       }
       setLoading(false);
-    }, 300); // Reduced timeout for faster loading
+    }, 300);
     
     return () => clearTimeout(timer);
   }, [productId]);

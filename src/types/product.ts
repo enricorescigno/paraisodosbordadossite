@@ -55,7 +55,7 @@ export interface ProductPricing {
 }
 
 export interface ProductMedia {
-  images: ImageCollection;
+  images?: ImageCollection; // Made optional
   videos?: string[];
 }
 
@@ -67,15 +67,16 @@ export interface ProductMetadata {
   features?: ProductFeatures;
 }
 
-// Main Product interface - does not extend others to avoid conflicts
+// Main Product interface - flexible for backward compatibility
 export interface Product extends ProductBase {
   // Pricing (flexible for backward compatibility)
   price: string | Price;
   isCustomizable?: boolean;
   
-  // Media (flexible for backward compatibility)
-  images: string[] | Record<string, string[]> | ImageCollection;
+  // Media (flexible for backward compatibility) - all optional
+  images?: string[] | Record<string, string[]> | ImageCollection;
   videos?: string[];
+  imageUrl?: string;
   
   // Metadata (flexible for backward compatibility)
   rating?: number | Rating;
@@ -89,7 +90,6 @@ export interface Product extends ProductBase {
   stock?: ProductStock;
   
   // Backward compatibility properties
-  imageUrl?: string;
   colors?: string[];
   sizes?: string[];
   originalPrice?: string;
