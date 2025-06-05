@@ -67,19 +67,37 @@ export interface ProductMetadata {
   features?: ProductFeatures;
 }
 
-// Mantém compatibilidade com o código existente
-export interface Product extends ProductBase, ProductPricing, ProductMedia, ProductMetadata {
+// Main Product interface - does not extend others to avoid conflicts
+export interface Product extends ProductBase {
+  // Pricing (flexible for backward compatibility)
+  price: string | Price;
+  isCustomizable?: boolean;
+  
+  // Media (flexible for backward compatibility)
+  images: string[] | Record<string, string[]> | ImageCollection;
+  videos?: string[];
+  
+  // Metadata (flexible for backward compatibility)
+  rating?: number | Rating;
+  isNew?: boolean;
+  isFeatured?: boolean;
+  dimensions?: Dimensions;
+  features?: string[] | ProductFeatures;
+  
+  // Variants and Stock
   variants?: ProductVariants;
   stock?: ProductStock;
-  // Propriedades de compatibilidade - mantidas por enquanto
+  
+  // Backward compatibility properties
   imageUrl?: string;
   colors?: string[];
   sizes?: string[];
-  // Permite tanto o novo formato quanto o antigo
-  price?: string | Price;
-  rating?: number | Rating;
-  features?: string[] | ProductFeatures;
-  images?: string[] | Record<string, string[]> | ImageCollection;
+  originalPrice?: string;
+  discount?: string;
+  isAvailable?: boolean;
+  stockQuantity?: number;
+  minPurchaseQuantity?: number;
+  featured?: boolean;
 }
 
 // Legacy interface for backward compatibility

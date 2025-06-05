@@ -6,7 +6,7 @@ export const tapeteCortinasProducts: Product[] = [
     id: 501,
     name: "Tapete Felpudo com Franja",
     type: "product",
-    category: "Tapete e Cortinas",
+    category: "Tapetes e Cortinas", // Fixed: was "Tapete e Cortinas"
     imageUrl: "/lovable-uploads/c8dbe619-a300-47b6-8465-98f790fd2233.png",
     description: "Tapete Felpudo com Franja de alta qualidade e conforto para seu ambiente.",
     price: "R$ 6,50",
@@ -30,7 +30,7 @@ export const tapeteCortinasProducts: Product[] = [
     id: 502,
     name: "Tapete de Cozinha Vermont",
     type: "product",
-    category: "Tapete e Cortinas",
+    category: "Tapetes e Cortinas", // Fixed: was "Tapete e Cortinas"
     imageUrl: "/lovable-uploads/9a189147-3c22-49be-8090-a285536ab26c.png",
     description: "Tapete de Cozinha Vermont resistente e de fácil limpeza.",
     price: "R$ 55,00",
@@ -50,7 +50,7 @@ export const tapeteCortinasProducts: Product[] = [
     id: 503,
     name: "Tapete Denver",
     type: "product",
-    category: "Tapete e Cortinas",
+    category: "Tapetes e Cortinas", // Fixed: was "Tapete e Cortinas"
     imageUrl: "/lovable-uploads/1d719459-035f-4cd6-af49-217b1d34b9bd.png",
     description: "Tapete Denver com design moderno para sua sala ou quarto.",
     price: "R$ 75,00",
@@ -67,7 +67,7 @@ export const tapeteCortinasProducts: Product[] = [
     id: 504,
     name: "Tapete Los Angeles",
     type: "product",
-    category: "Tapete e Cortinas",
+    category: "Tapetes e Cortinas", // Fixed: was "Tapete e Cortinas"
     imageUrl: "/lovable-uploads/e9e97ebd-a73c-4f7a-9fa2-3b30a1898baf.png",
     description: "Tapete Los Angeles com design exclusivo para valorizar seu ambiente.",
     price: "R$ 59,90",
@@ -86,7 +86,7 @@ export const tapeteCortinasProducts: Product[] = [
     id: 505,
     name: "Tapete Suria",
     type: "product",
-    category: "Tapete e Cortinas",
+    category: "Tapetes e Cortinas", // Fixed: was "Tapete e Cortinas"
     imageUrl: "/lovable-uploads/31acdd44-1bc8-45ff-84f9-9af1e2e3ccc4.png",
     description: "Tapete Suria de alta qualidade para decorar com estilo.",
     price: "R$ 36,00",

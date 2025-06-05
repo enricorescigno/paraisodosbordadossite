@@ -1,6 +1,5 @@
-
 // This file provides search functionality across products
-import { Product } from '../types/product';
+import { Product, ProductCategory } from '../types/product';
 import { pantufaProducts, vestuarioProducts, banhoProducts, camaProducts, mesaCozinhaProducts, tapeteCortinasProducts } from './products';
 import { infantilProducts } from './products/emptyProducts';
 
@@ -106,6 +105,58 @@ export const products: Product[] = [
   ...camaWithKeywords, 
   ...mesaCozinhaWithKeywords, 
   ...tapeteCortinasWithKeywords
+];
+
+// Define search categories with proper names
+export const searchCategories: { key: string; label: string; category: ProductCategory; icon: string }[] = [
+  {
+    key: 'cama',
+    label: 'Cama',
+    category: 'Cama',
+    icon: '🛏️'
+  },
+  {
+    key: 'jaleco',
+    label: 'Jaleco',
+    category: 'Vestuário', // Fixed: changed from "jaleco" to valid category
+    icon: '🥼'
+  },
+  {
+    key: 'mesa-cozinha',
+    label: 'Mesa e Cozinha',
+    category: 'Mesa e Cozinha',
+    icon: '🍽️'
+  },
+  {
+    key: 'bordado-necessaire',
+    label: 'Bordado em Necessaire',
+    category: 'Bordado em Necessaire', // Fixed: corrected category name
+    icon: '👜'
+  },
+  {
+    key: 'banho',
+    label: 'Banho',
+    category: 'Banho',
+    icon: '🛁'
+  },
+  {
+    key: 'infantil',
+    label: 'Infantil',
+    category: 'Infantil', // Fixed: capitalized properly
+    icon: '👶'
+  },
+  {
+    key: 'vestuario',
+    label: 'Vestuário',
+    category: 'Vestuário',
+    icon: '👕'
+  },
+  {
+    key: 'bordado-bolsa',
+    label: 'Bordado em Bolsa',
+    category: 'Bordado em Bolsa', // Fixed: corrected category name
+    icon: '👜'
+  }
 ];
 
 // Function to search products based on query - with improved matching and prioritization
