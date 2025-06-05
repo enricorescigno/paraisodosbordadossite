@@ -43,6 +43,16 @@ const ProductDetailPage = () => {
   const isMobile = useIsMobile();
   useScrollToTop();
   
+  // Helper para extrair features como array de strings
+  const getFeatures = (features: string[] | { materials: string[]; care: string[]; specifications: string[]; } | undefined): string[] => {
+    if (!features) return [];
+    if (Array.isArray(features)) return features;
+    if (typeof features === 'object') {
+      return [...features.specifications, ...features.materials, ...features.care];
+    }
+    return [];
+  };
+  
   // Fallback content when product is loading or not found
   if (loading) {
     return (
@@ -126,7 +136,7 @@ const ProductDetailPage = () => {
                 onDecrement={decrementQuantity} 
               />
               
-              <ProductFeatures features={product.features || []} />
+              <ProductFeatures features={getFeatures(product.features)} />
               
               {/* CTA Button - Desktop */}
               {!isMobile && (

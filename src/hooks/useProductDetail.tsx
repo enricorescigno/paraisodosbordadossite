@@ -61,7 +61,7 @@ export const useProductDetail = () => {
             if (foundProduct.images) {
               if (Array.isArray(foundProduct.images)) {
                 foundProduct.images = foundProduct.images.map(img => toAbsoluteURL(img));
-              } else if (typeof foundProduct.images === 'object') {
+              } else if (typeof foundProduct.images === 'object' && foundProduct.images !== null && !('primary' in foundProduct.images)) {
                 Object.keys(foundProduct.images).forEach(color => {
                   if (Array.isArray(foundProduct.images[color])) {
                     foundProduct.images[color] = foundProduct.images[color].map(img => toAbsoluteURL(img));
@@ -93,7 +93,7 @@ export const useProductDetail = () => {
             if (foundProduct.images) {
               if (Array.isArray(foundProduct.images) && foundProduct.images.length > 0) {
                 productImages.push(...foundProduct.images.slice(0, 3));
-              } else if (typeof foundProduct.images === 'object') {
+              } else if (typeof foundProduct.images === 'object' && foundProduct.images !== null && !('primary' in foundProduct.images)) {
                 const firstColorImages = Object.values(foundProduct.images)[0];
                 if (Array.isArray(firstColorImages) && firstColorImages.length > 0) {
                   productImages.push(...firstColorImages.slice(0, 3));

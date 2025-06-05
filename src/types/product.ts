@@ -14,7 +14,13 @@ export type ProductCategory =
   | 'Infantil'
   | 'Bonés'
   | 'Bordados'
-  | 'Bordados Infantis';
+  | 'Bordados Infantis'
+  | 'Bordado em Toalha'
+  | 'Bordado em Toalha de Banho'
+  | 'Bordado em Toalha de Rosto'
+  | 'Bordado em Necessaire'
+  | 'Bordado em Bolsa'
+  | 'Bonés Bordados';
 
 export interface ProductFeatures {
   materials: string[];
@@ -61,9 +67,19 @@ export interface ProductMetadata {
   features?: ProductFeatures;
 }
 
+// Mantém compatibilidade com o código existente
 export interface Product extends ProductBase, ProductPricing, ProductMedia, ProductMetadata {
   variants?: ProductVariants;
   stock?: ProductStock;
+  // Propriedades de compatibilidade - mantidas por enquanto
+  imageUrl?: string;
+  colors?: string[];
+  sizes?: string[];
+  // Permite tanto o novo formato quanto o antigo
+  price?: string | Price;
+  rating?: number | Rating;
+  features?: string[] | ProductFeatures;
+  images?: string[] | Record<string, string[]> | ImageCollection;
 }
 
 // Legacy interface for backward compatibility

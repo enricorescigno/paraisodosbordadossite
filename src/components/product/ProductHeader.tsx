@@ -10,6 +10,15 @@ interface ProductHeaderProps {
 }
 
 const ProductHeader = ({ product }: ProductHeaderProps) => {
+  // Helper para extrair valor numérico do rating
+  const getRatingValue = (rating: number | { value: number } | undefined): number => {
+    if (typeof rating === 'number') return rating;
+    if (rating && typeof rating === 'object' && 'value' in rating) return rating.value;
+    return 4.8; // fallback
+  };
+
+  const ratingValue = getRatingValue(product.rating);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -37,10 +46,10 @@ const ProductHeader = ({ product }: ProductHeaderProps) => {
         <span className="text-sm text-[#6E6E73]">{product.category}</span>
         <div 
           className="flex items-center gap-1" 
-          aria-label={`Avaliação ${(product.rating || 4.8).toFixed(1)} de 5 estrelas`}
+          aria-label={`Avaliação ${ratingValue.toFixed(1)} de 5 estrelas`}
         >
           <Star className="h-4 w-4 fill-[#FFD700] text-[#FFD700]" aria-hidden="true" />
-          <span className="text-sm text-[#6E6E73]">{(product.rating || 4.8).toFixed(1)}</span>
+          <span className="text-sm text-[#6E6E73]">{ratingValue.toFixed(1)}</span>
         </div>
       </div>
       
