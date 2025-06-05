@@ -2,6 +2,7 @@
 import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "@/components/ui/sonner";
+import { QueryProvider } from "./components/QueryProvider";
 import { ProductProvider } from "./contexts/ProductContext";
 import { ImageProvider } from "./contexts/ImageContext";
 import { UIProvider } from "./contexts/UIContext";
@@ -81,42 +82,44 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <UIProvider>
-        <ImageProvider>
-          <ProductProvider>
-            <Router>
-              <ScrollToTop />
-              <Layout>
-                <Suspense fallback={<LoadingSpinner />}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/sobre" element={<AboutUs />} />
-                    <Route path="/parceiros" element={<OurPartners />} />
-                    <Route path="/privacidade" element={<PrivacyPolicy />} />
-                    <Route path="/produtos" element={<AllProductsPage />} />
-                    <Route path="/produto/:productId" element={<ProductDetailPage />} />
-                    <Route path="/categoria/:category" element={<ProductPage />} />
-                    <Route path="/portfolio" element={<AllPortfolioPage />} />
-                    <Route path="/portfolio/:category" element={<PortfolioPage />} />
-                    
-                    {/* Business management routes */}
-                    <Route path="/estoque" element={<EstoquePage />} />
-                    <Route path="/vendas" element={<VendasPage />} />
-                    <Route path="/pedidos-compra-produtos" element={<PedidosCompraProdutosPage />} />
-                    <Route path="/pedidos-compra-distribuicao" element={<PedidosCompraDistribuicaoPage />} />
-                    <Route path="/pedidos-compra-status" element={<PedidosCompraStatusPage />} />
-                    <Route path="/prazos-pagamento" element={<PrazosPagamentoPage />} />
-                    <Route path="/tributacoes" element={<TributacoesPage />} />
-                    
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                </Suspense>
-              </Layout>
-              <Toaster />
-            </Router>
-          </ProductProvider>
-        </ImageProvider>
-      </UIProvider>
+      <QueryProvider>
+        <UIProvider>
+          <ImageProvider>
+            <ProductProvider>
+              <Router>
+                <ScrollToTop />
+                <Layout>
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <Routes>
+                      <Route path="/" element={<Index />} />
+                      <Route path="/sobre" element={<AboutUs />} />
+                      <Route path="/parceiros" element={<OurPartners />} />
+                      <Route path="/privacidade" element={<PrivacyPolicy />} />
+                      <Route path="/produtos" element={<AllProductsPage />} />
+                      <Route path="/produto/:productId" element={<ProductDetailPage />} />
+                      <Route path="/categoria/:category" element={<ProductPage />} />
+                      <Route path="/portfolio" element={<AllPortfolioPage />} />
+                      <Route path="/portfolio/:category" element={<PortfolioPage />} />
+                      
+                      {/* Business management routes */}
+                      <Route path="/estoque" element={<EstoquePage />} />
+                      <Route path="/vendas" element={<VendasPage />} />
+                      <Route path="/pedidos-compra-produtos" element={<PedidosCompraProdutosPage />} />
+                      <Route path="/pedidos-compra-distribuicao" element={<PedidosCompraDistribuicaoPage />} />
+                      <Route path="/pedidos-compra-status" element={<PedidosCompraStatusPage />} />
+                      <Route path="/prazos-pagamento" element={<PrazosPagamentoPage />} />
+                      <Route path="/tributacoes" element={<TributacoesPage />} />
+                      
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  </Suspense>
+                </Layout>
+                <Toaster />
+              </Router>
+            </ProductProvider>
+          </ImageProvider>
+        </UIProvider>
+      </QueryProvider>
     </ErrorBoundary>
   );
 }

@@ -9,6 +9,8 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    strictPort: false,
+    cors: true,
   },
   plugins: [
     react(),
@@ -19,15 +21,16 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    dedupe: ['react', 'react-dom']
+    // Force single instance of React to prevent hooks conflicts
+    dedupe: ['react', 'react-dom', '@tanstack/react-query']
   },
   build: {
     minify: mode === 'production' ? 'terser' : false,
     sourcemap: mode === 'development',
     cssMinify: mode === 'production',
     target: 'es2020',
-    assetsInlineLimit: 4096, // 4kb
-    chunkSizeWarningLimit: 500, // 500kb
+    assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 500,
     cssCodeSplit: true,
     modulePreload: true,
     treeshake: true,
@@ -39,14 +42,14 @@ export default defineConfig(({ mode }) => ({
             if (id.includes('react') || id.includes('react-dom')) {
               return 'react-vendor';
             }
+            if (id.includes('@tanstack/react-query')) {
+              return 'query-vendor';
+            }
             if (id.includes('framer-motion')) {
               return 'animation-vendor';
             }
             if (id.includes('@radix-ui') || id.includes('lucide-react')) {
               return 'ui-vendor';
-            }
-            if (id.includes('@tanstack/react-query')) {
-              return 'query-vendor';
             }
             return 'vendor';
           }
@@ -92,7 +95,7 @@ export default defineConfig(({ mode }) => ({
     } : undefined,
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'react-router-dom'],
+    include: ['react', 'react-dom', 'react-router-dom', '@tanstack/react-query'],
     esbuildOptions: {
       target: 'es2020',
     }
