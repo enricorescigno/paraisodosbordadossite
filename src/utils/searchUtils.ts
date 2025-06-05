@@ -1,5 +1,9 @@
 
 import { Product, ProductCategory } from '../types/product';
+import { allProducts } from './products';
+
+// Export products for other components
+export const products = allProducts;
 
 const categoryMappings: Record<string, ProductCategory> = {
   'camisa': 'Vestuário',
@@ -38,12 +42,26 @@ const categoryMappings: Record<string, ProductCategory> = {
   'customizado': 'Bordados'
 };
 
-export const searchProducts = (products: Product[], query: string): Product[] => {
-  if (!query.trim()) return products;
+export const searchProducts = (productsArray: Product[] | string, query?: string): Product[] => {
+  // Handle both old and new calling patterns
+  let actualProducts: Product[];
+  let actualQuery: string;
   
-  const normalizedQuery = query.toLowerCase().trim();
+  if (typeof productsArray === 'string') {
+    // Old pattern: searchProducts(query)
+    actualProducts = products;
+    actualQuery = productsArray;
+  } else {
+    // New pattern: searchProducts(products, query)
+    actualProducts = productsArray;
+    actualQuery = query || '';
+  }
   
-  return products.filter(product => {
+  if (!actualQuery.trim()) return actualProducts;
+  
+  const normalizedQuery = actualQuery.toLowerCase().trim();
+  
+  return actualProducts.filter(product => {
     // Search in product name
     if (product.name.toLowerCase().includes(normalizedQuery)) {
       return true;
@@ -110,4 +128,8 @@ export const getSearchSuggestions = (products: Product[], query: string): string
   });
   
   return Array.from(suggestions).slice(0, 5);
+};
+
+export const getProductUrl = (product: Product): string => {
+  return `/produto/${product.id}`;
 };

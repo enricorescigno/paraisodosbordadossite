@@ -1,6 +1,6 @@
 
-import { Product, LegacyProduct } from '../types/product';
-import { ImageService } from '../services/ImageService';
+import { Product, LegacyProduct } from '../../types/product';
+import { ImageService } from '../../services/ImageService';
 
 export class ProductAdapter {
   private static imageService = ImageService.getInstance();

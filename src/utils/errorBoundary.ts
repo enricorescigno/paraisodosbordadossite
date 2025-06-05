@@ -9,7 +9,7 @@ interface ErrorBoundaryState {
 }
 
 interface ErrorBoundaryProps {
-  children: ReactNode;
+  children?: ReactNode;
   fallback?: ReactNode;
   onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
 }
@@ -89,9 +89,7 @@ export const withErrorBoundary = <P extends object>(
   fallback?: ReactNode
 ) => {
   const WrappedComponent = (props: P) => {
-    return React.createElement(ErrorBoundary, { fallback },
-      React.createElement(Component, props)
-    );
+    return React.createElement(ErrorBoundary, { fallback, children: React.createElement(Component, props) });
   };
 
   WrappedComponent.displayName = `withErrorBoundary(${Component.displayName || Component.name})`;
