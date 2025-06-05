@@ -60,7 +60,7 @@ const ProductImage = ({ id, name, imageUrl, images }: ProductImageProps) => {
     return getImagePlaceholder(name);
   };
 
-  const imageUrl = getImageUrl();
+  const finalImageUrl = getImageUrl();
 
   return (
     <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -70,7 +70,7 @@ const ProductImage = ({ id, name, imageUrl, images }: ProductImageProps) => {
         transition={{ duration: 0.3 }}
       >
         <OptimizedImage
-          src={imageUrl}
+          src={finalImageUrl}
           alt={`Produto: ${name}`}
           className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply`}
           placeholder={getImagePlaceholder(name)}

@@ -70,6 +70,35 @@ export const preloadImages = (urls: string[]): void => {
   });
 };
 
+// Cache images in browser for faster subsequent loads
+export const cacheImagesInBrowser = (urls: string[]): void => {
+  if (!urls || urls.length === 0) return;
+  
+  urls.forEach(url => {
+    if (!url) return;
+    
+    const img = new Image();
+    img.src = getOptimizedImageUrl(url);
+    
+    // Add to cache without displaying
+    img.style.display = 'none';
+    document.body.appendChild(img);
+    
+    // Remove from DOM after loading
+    img.onload = () => {
+      if (img.parentNode) {
+        img.parentNode.removeChild(img);
+      }
+    };
+    
+    img.onerror = () => {
+      if (img.parentNode) {
+        img.parentNode.removeChild(img);
+      }
+    };
+  });
+};
+
 // Clean up image URLs
 export const cleanImageUrl = (url: string): string => {
   if (!url) return '';
