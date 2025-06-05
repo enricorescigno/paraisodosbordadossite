@@ -19,15 +19,12 @@ export default defineConfig({
         'src/**/*.d.ts',
         'src/main.tsx',
       ],
-    },
-    typecheck: {
-      include: ['src/**/*.{test,spec}.{ts,tsx}'],
-      tsconfig: './tsconfig.json'
     }
   },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
+    dedupe: ['react', 'react-dom']
   },
 });

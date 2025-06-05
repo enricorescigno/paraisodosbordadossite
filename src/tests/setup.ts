@@ -55,10 +55,15 @@ Object.defineProperty(window, 'performance', {
   },
 });
 
-// Mock requestIdleCallback - corrigindo o tipo de retorno
+// Mock requestIdleCallback with correct return type
 global.requestIdleCallback = vi.fn((callback: IdleRequestCallback) => {
-  const id = setTimeout(callback, 0);
+  const id = setTimeout(() => {
+    callback({
+      didTimeout: false,
+      timeRemaining: () => 50
+    });
+  }, 0);
   return Number(id);
-}) as any;
+}) as typeof requestIdleCallback;
 
 global.cancelIdleCallback = vi.fn();
