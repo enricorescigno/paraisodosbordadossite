@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { ArrowLeft, MessageCircle } from 'lucide-react';
 import Footer from './Footer';
@@ -103,10 +102,7 @@ const ProductDetailPage = () => {
             {isMobile && (
               <ProductImageGallery 
                 images={currentImages} 
-                productName={product.name} 
-                selectedColor={selectedColor}
-                placeholder={placeholder}
-                category={product.category || ''}
+                productName={product.name}
               />
             )}
             
@@ -164,10 +160,7 @@ const ProductDetailPage = () => {
             {!isMobile && (
               <ProductImageGallery 
                 images={currentImages} 
-                productName={product.name} 
-                selectedColor={selectedColor}
-                placeholder={placeholder}
-                category={product.category || ''}
+                productName={product.name}
               />
             )}
           </div>

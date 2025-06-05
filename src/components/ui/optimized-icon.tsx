@@ -22,10 +22,14 @@ const OptimizedIcon = memo<OptimizedIconProps>(({
   name, 
   fallback, 
   priority = 'normal',
+  size,
   ...props 
 }) => {
   const [IconComponent, setIconComponent] = React.useState<React.ComponentType<LucideProps> | null>(null);
   const [error, setError] = React.useState<string | null>(null);
+
+  // Normalize size to number
+  const normalizedSize = typeof size === 'string' ? parseInt(size, 10) || 24 : size || 24;
 
   React.useEffect(() => {
     let isMounted = true;
@@ -61,16 +65,16 @@ const OptimizedIcon = memo<OptimizedIconProps>(({
   }, [name, priority]);
 
   if (error) {
-    return fallback || <IconFallback size={props.size} />;
+    return fallback || <IconFallback size={normalizedSize} />;
   }
 
   if (!IconComponent) {
-    return <IconFallback size={props.size} />;
+    return <IconFallback size={normalizedSize} />;
   }
 
   return (
-    <Suspense fallback={fallback || <IconFallback size={props.size} />}>
-      <IconComponent {...props} />
+    <Suspense fallback={fallback || <IconFallback size={normalizedSize} />}>
+      <IconComponent size={normalizedSize} {...props} />
     </Suspense>
   );
 });

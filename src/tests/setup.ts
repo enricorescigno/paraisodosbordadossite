@@ -54,3 +54,10 @@ Object.defineProperty(window, 'performance', {
     measure: vi.fn(),
   },
 });
+
+// Mock requestIdleCallback
+global.requestIdleCallback = vi.fn((callback) => {
+  return setTimeout(callback, 0);
+});
+
+global.cancelIdleCallback = vi.fn();

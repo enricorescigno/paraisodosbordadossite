@@ -1,6 +1,7 @@
 
 import { Product, LegacyProduct } from '../../types/product';
 import { ImageService } from '../../services/ImageService';
+import { ProductImage } from '../../types/image';
 
 export class ProductAdapter {
   private static imageService = ImageService.getInstance();
@@ -13,17 +14,27 @@ export class ProductAdapter {
         imageUrl = product.images[0] || '';
       } else if ('primary' in product.images) {
         // ImageCollection type
-        if (Array.isArray(product.images.primary)) {
+        const primaryImages = product.images.primary;
+        if (Array.isArray(primaryImages)) {
           // Check if primary is array of strings or objects
-          const firstImage = product.images.primary[0];
-          imageUrl = typeof firstImage === 'string' ? firstImage : firstImage?.url || '';
-        } else {
-          imageUrl = product.images.primary || '';
+          const firstImage = primaryImages[0];
+          if (typeof firstImage === 'string') {
+            imageUrl = firstImage;
+          } else if (firstImage && typeof firstImage === 'object' && 'url' in firstImage) {
+            imageUrl = (firstImage as ProductImage).url || '';
+          }
+        } else if (typeof primaryImages === 'string') {
+          imageUrl = primaryImages;
+        } else if (primaryImages && typeof primaryImages === 'object' && 'url' in primaryImages) {
+          imageUrl = (primaryImages as ProductImage).url || '';
         }
       } else {
         // Record<string, string[]> type
         const firstKey = Object.keys(product.images)[0];
-        imageUrl = firstKey ? product.images[firstKey][0] || '' : '';
+        const firstKeyImages = firstKey ? product.images[firstKey] : null;
+        if (Array.isArray(firstKeyImages) && firstKeyImages.length > 0) {
+          imageUrl = firstKeyImages[0] || '';
+        }
       }
     } else if (typeof product.images === 'string') {
       imageUrl = product.images;
@@ -41,11 +52,14 @@ export class ProductAdapter {
     let imagesArray: string[] = [];
     if (typeof product.images === 'object' && product.images !== null) {
       if (Array.isArray(product.images)) {
-        imagesArray = product.images.map(img => typeof img === 'string' ? img : img.url || '');
+        imagesArray = product.images.map(img => typeof img === 'string' ? img : 
+          (img && typeof img === 'object' && 'url' in img ? (img as ProductImage).url || '' : ''));
       } else if ('gallery' in product.images) {
-        imagesArray = Array.isArray(product.images.gallery) 
-          ? product.images.gallery.map(img => typeof img === 'string' ? img : img.url || '')
-          : [];
+        const galleryImages = product.images.gallery;
+        if (Array.isArray(galleryImages)) {
+          imagesArray = galleryImages.map(img => typeof img === 'string' ? img : 
+            (img && typeof img === 'object' && 'url' in img ? (img as ProductImage).url || '' : ''));
+        }
       }
     }
 

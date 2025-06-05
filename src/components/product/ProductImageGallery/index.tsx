@@ -13,6 +13,9 @@ interface ProductImageGalleryProps {
   currentIndex?: number;
   onImageChange?: (index: number) => void;
   className?: string;
+  selectedColor?: string;
+  placeholder?: (category?: string) => string;
+  category?: string;
 }
 
 const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
@@ -20,7 +23,10 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
   productName,
   currentIndex = 0,
   onImageChange,
-  className = ''
+  className = '',
+  selectedColor = '',
+  placeholder,
+  category = ''
 }) => {
   const [activeIndex, setActiveIndex] = useState(currentIndex);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
@@ -33,6 +39,7 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
   }, [images]);
 
   const currentImage = validImages[activeIndex] || validImages[0] || '';
+  const placeholderImage = placeholder ? placeholder(category) : '/placeholder.svg';
 
   const handleImageChange = useCallback((index: number) => {
     if (index >= 0 && index < validImages.length) {
@@ -106,22 +113,27 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
     <div className={`relative ${className}`} onKeyDown={handleKeyDown} tabIndex={0}>
       {/* Main Image Container */}
       <ImageContainer
-        image={currentImage}
+        currentImage={currentImage}
+        placeholderImage={placeholderImage}
         productName={productName}
-        isLoading={isLoading}
+        selectedColor={selectedColor}
+        activeImageIndex={activeIndex}
+        imageLoaded={!isLoading}
+        useContainFallback={false}
+        isZoomed={false}
+        mousePosition={{ x: 0, y: 0 }}
         onImageLoad={() => handleImageLoad(activeIndex)}
-        onImageClick={openLightbox}
-        className="mb-4"
+        onImageError={() => setIsLoading(false)}
+        onMouseMove={() => {}}
+        onMouseEnter={() => {}}
+        onMouseLeave={() => {}}
       />
 
       {/* Navigation Controls */}
       {validImages.length > 1 && (
         <NavigationControls
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          currentIndex={activeIndex}
-          totalImages={validImages.length}
-          className="absolute top-1/2 transform -translate-y-1/2"
+          onPrevImage={handlePrevious}
+          onNextImage={handleNext}
         />
       )}
 
@@ -129,11 +141,13 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
       {validImages.length > 1 && (
         <ThumbnailGrid
           images={validImages}
-          activeIndex={activeIndex}
+          activeImageIndex={activeIndex}
+          imagesLoaded={Array.from({ length: validImages.length }, (_, i) => loadedImages.has(i))}
           productName={productName}
+          selectedColor={selectedColor}
+          placeholderImage={placeholderImage}
           onImageClick={handleImageChange}
           onImageLoad={handleImageLoadComplete}
-          loadedImages={loadedImages}
         />
       )}
 
@@ -141,11 +155,14 @@ const ProductImageGallery: React.FC<ProductImageGalleryProps> = ({
       <AnimatePresence>
         {isLightboxOpen && (
           <Lightbox
-            images={validImages}
-            currentIndex={activeIndex}
+            isOpen={isLightboxOpen}
+            currentImage={currentImage}
+            placeholderImage={placeholderImage}
             productName={productName}
+            hasMultipleImages={validImages.length > 1}
             onClose={closeLightbox}
-            onImageChange={handleImageChange}
+            onPrevImage={handlePrevious}
+            onNextImage={handleNext}
           />
         )}
       </AnimatePresence>
