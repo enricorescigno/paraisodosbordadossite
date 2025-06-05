@@ -78,8 +78,8 @@ const ProductImageGallery = ({
     setIsLightboxOpen(false);
   };
 
-  const handleImageLoadComplete = () => {
-    handleImageLoaded(activeImageIndex);
+  const handleImageLoadComplete = (index: number) => {
+    handleImageLoaded(index, validImages[index]);
   };
 
   const handleImageError = () => {
@@ -140,7 +140,7 @@ const ProductImageGallery = ({
               selectedColor={selectedColor}
               placeholderImage={placeholderImage}
               onImageClick={handleImageClick}
-              onImageLoad={handleImageLoaded}
+              onImageLoad={(index: number) => handleImageLoaded(index, validImages[index])}
             />
           )}
         </motion.div>
