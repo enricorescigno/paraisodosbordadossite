@@ -8,6 +8,7 @@ import Testimonials from "../components/Testimonials";
 import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import WhatsAppSupport from "../components/WhatsAppSupport";
+import { PerformanceDashboard } from "@/components/ui/PerformanceDashboard";
 
 const IndexOptimized = () => {
   return (
@@ -25,6 +26,12 @@ const IndexOptimized = () => {
       <Newsletter />
       <Footer />
       <WhatsAppSupport />
+      
+      {/* Performance Dashboard - Compact mode for production */}
+      <PerformanceDashboard 
+        enabled={process.env.NODE_ENV === 'development'} 
+        compact={true} 
+      />
     </motion.div>
   );
 };

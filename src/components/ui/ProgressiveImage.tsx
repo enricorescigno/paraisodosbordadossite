@@ -1,8 +1,10 @@
-
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { imageOptimizer, type ResponsiveImageSet } from '@/services/ImageOptimizer';
+import React, { useState, useEffect, forwardRef } from 'react';
+import { motion } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
+import { imageOptimizer } from '@/services/ImageOptimizer';
+import { imageManager } from '@/services/ImageManager';
+import { useImageAnalytics } from '@/hooks/useImageAnalytics';
+import { toAbsoluteURL } from '@/utils/urlUtils';
 
 interface ProgressiveImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src' | 'srcSet' | 'sizes'> {
   src: string;
@@ -14,11 +16,13 @@ interface ProgressiveImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageEl
   skeletonClassName?: string;
   onLoad?: () => void;
   onError?: (error: Error) => void;
+  onLoadStart?: () => void;
+  enableAnalytics?: boolean;
 }
 
 type LoadingStage = 'skeleton' | 'placeholder' | 'lowQuality' | 'highQuality' | 'complete';
 
-export const ProgressiveImage = React.forwardRef<HTMLImageElement, ProgressiveImageProps>(({
+export const ProgressiveImage = forwardRef<HTMLImageElement, ProgressiveImageProps>(({
   src,
   alt,
   maxWidth = 1200,
@@ -28,16 +32,26 @@ export const ProgressiveImage = React.forwardRef<HTMLImageElement, ProgressiveIm
   skeletonClassName,
   onLoad,
   onError,
+  onLoadStart,
+  enableAnalytics = true,
   className,
   style,
   ...props
 }, ref) => {
   const [loadingStage, setLoadingStage] = useState<LoadingStage>('skeleton');
   const [responsiveSet, setResponsiveSet] = useState<ResponsiveImageSet | null>(null);
-  const [currentImageUrl, setCurrentImageUrl] = useState<string>('');
+  const [currentSrc, setCurrentSrc] = useState<string>('');
+  const [placeholderLoaded, setPlaceholderLoaded] = useState(false);
+  const [lowQualityLoaded, setLowQualityLoaded] = useState(false);
+  const [highQualityLoaded, setHighQualityLoaded] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const { trackLoadStart, trackLoadSuccess, trackLoadError } = useImageAnalytics(src, {
+    enabled: enableAnalytics
+  });
 
   // Generate responsive image set
   useEffect(() => {
@@ -93,32 +107,32 @@ export const ProgressiveImage = React.forwardRef<HTMLImageElement, ProgressiveIm
     if (!responsiveSet) return;
 
     // Stage 1: Load placeholder
-    loadImage(responsiveSet.placeholder)
+    loadImageWithAnalytics(responsiveSet.placeholder, true)
       .then(() => {
-        setCurrentImageUrl(responsiveSet.placeholder);
+        setCurrentSrc(responsiveSet.placeholder);
         setLoadingStage('lowQuality');
         
         // Stage 2: Load low quality
         const lowQualityUrl = responsiveSet.lowQuality[0]?.url;
         if (lowQualityUrl) {
-          return loadImage(lowQualityUrl);
+          return loadImageWithAnalytics(lowQualityUrl, true);
         }
       })
       .then(() => {
         if (responsiveSet.lowQuality[0]?.url) {
-          setCurrentImageUrl(responsiveSet.lowQuality[0].url);
+          setCurrentSrc(responsiveSet.lowQuality[0].url);
           setLoadingStage('highQuality');
         }
         
         // Stage 3: Load high quality
         const highQualityUrl = responsiveSet.highQuality[0]?.url;
         if (highQualityUrl) {
-          return loadImage(highQualityUrl);
+          return loadImageWithAnalytics(highQualityUrl, false);
         }
       })
       .then(() => {
         if (responsiveSet.highQuality[0]?.url) {
-          setCurrentImageUrl(responsiveSet.highQuality[0].url);
+          setCurrentSrc(responsiveSet.highQuality[0].url);
           setLoadingStage('complete');
           onLoad?.();
         }
@@ -129,19 +143,114 @@ export const ProgressiveImage = React.forwardRef<HTMLImageElement, ProgressiveIm
         onError?.(err);
         
         // Fallback to original image
-        setCurrentImageUrl(src);
+        setCurrentSrc(src);
         setLoadingStage('complete');
       });
   };
 
-  const loadImage = (url: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve();
-      img.onerror = () => reject(new Error(`Failed to load: ${url}`));
-      img.src = url;
-    });
+  // Enhanced image loading with analytics
+  const loadImageWithAnalytics = async (imageUrl: string, isLowQuality: boolean = false) => {
+    if (!imageUrl) return null;
+
+    try {
+      setIsLoading(true);
+      if (enableAnalytics) {
+        trackLoadStart();
+      }
+      onLoadStart?.();
+
+      const startTime = performance.now();
+      const optimizedUrl = await imageManager.loadImage(imageUrl, {
+        priority: priority ? 'high' : 'medium',
+        quality: isLowQuality ? 'low' : 'high'
+      });
+
+      const loadTime = performance.now() - startTime;
+      
+      // Get file size from response headers if available
+      let fileSize = 0;
+      try {
+        const response = await fetch(optimizedUrl, { method: 'HEAD' });
+        const contentLength = response.headers.get('content-length');
+        fileSize = contentLength ? parseInt(contentLength) : 0;
+      } catch (e) {
+        // Ignore errors getting file size
+      }
+
+      if (enableAnalytics) {
+        trackLoadSuccess(
+          fileSize,
+          imageUrl.includes('.webp') ? 'webp' : 
+          imageUrl.includes('.avif') ? 'avif' : 'jpeg',
+          optimizedUrl.includes('cache'),
+          priority ? 'high' : 'medium'
+        );
+      }
+
+      return optimizedUrl;
+    } catch (error) {
+      console.error('Error loading image:', error);
+      if (enableAnalytics) {
+        trackLoadError(error as Error);
+      }
+      onError?.(error as Error);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  // Set up image loading with loadImageWithAnalytics instead of loadImage
+  useEffect(() => {
+    let isMounted = true;
+
+    const loadImages = async () => {
+      if (!responsiveSet || !isMounted) return;
+
+      try {
+        // Load placeholder first
+        if (responsiveSet.placeholder && !placeholderLoaded) {
+          const placeholderUrl = await loadImageWithAnalytics(responsiveSet.placeholder, true);
+          if (isMounted && placeholderUrl) {
+            setCurrentSrc(placeholderUrl);
+            setPlaceholderLoaded(true);
+          }
+        }
+
+        // Load low quality version
+        if (responsiveSet.lowQuality.length > 0 && !lowQualityLoaded) {
+          const lowQualityUrl = await loadImageWithAnalytics(responsiveSet.lowQuality[0].url, true);
+          if (isMounted && lowQualityUrl) {
+            setCurrentSrc(lowQualityUrl);
+            setLowQualityLoaded(true);
+          }
+        }
+
+        // Load high quality version
+        if (responsiveSet.highQuality.length > 0) {
+          const highQualityUrl = await loadImageWithAnalytics(responsiveSet.highQuality[0].url, false);
+          if (isMounted && highQualityUrl) {
+            setCurrentSrc(highQualityUrl);
+            setHighQualityLoaded(true);
+            setIsLoading(false);
+            onLoad?.();
+          }
+        }
+      } catch (error) {
+        console.error('Error in loadImages:', error);
+        if (isMounted) {
+          setError(error as Error);
+          onError?.(error as Error);
+        }
+      }
+    };
+
+    loadImages();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [responsiveSet, placeholderLoaded, lowQualityLoaded, onLoad, onError]);
 
   const getImageOpacity = () => {
     switch (loadingStage) {
@@ -170,50 +279,29 @@ export const ProgressiveImage = React.forwardRef<HTMLImageElement, ProgressiveIm
   };
 
   return (
-    <div className="relative overflow-hidden" style={style}>
-      <AnimatePresence>
-        {showSkeleton && loadingStage === 'skeleton' && (
-          <motion.div
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="absolute inset-0"
-          >
-            <Skeleton className={`w-full h-full ${skeletonClassName || ''}`} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {currentImageUrl && (
-        <img
-          ref={(node) => {
-            if (typeof ref === 'function') {
-              ref(node);
-            } else if (ref) {
-              ref.current = node;
-            }
-            if (imgRef) {
-              imgRef.current = node;
-            }
-          }}
-          src={currentImageUrl}
-          srcSet={loadingStage === 'complete' ? responsiveSet?.srcSet : undefined}
-          sizes={loadingStage === 'complete' ? responsiveSet?.sizes : undefined}
+    <div className="relative overflow-hidden" style={{ aspectRatio: aspectRatio || 'auto' }}>
+      {showSkeleton && isLoading && !currentSrc && (
+        <Skeleton className={`absolute inset-0 ${skeletonClassName}`} />
+      )}
+      
+      {error && (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500">
+          <span className="text-sm">Failed to load image</span>
+        </div>
+      )}
+      
+      {currentSrc && (
+        <motion.img
+          ref={ref}
+          src={currentSrc}
           alt={alt}
           className={className}
-          style={{
-            opacity: getImageOpacity(),
-            filter: getImageFilter(),
-            transition: 'opacity 0.3s ease, filter 0.3s ease'
-          }}
+          style={style}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
           {...props}
         />
-      )}
-
-      {error && !currentImageUrl && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500 text-sm">
-          Erro ao carregar imagem
-        </div>
       )}
     </div>
   );

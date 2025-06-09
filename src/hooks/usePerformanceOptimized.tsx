@@ -59,7 +59,7 @@ export const usePerformanceOptimized = (options: UsePerformanceOptimizedOptions 
   }, []);
 
   // Memory optimization for large arrays
-  const memoizeArray = useCallback(<T>(array: T[], keyFn?: (item: T) => string | number) => {
+  const memoizeArray = useCallback(<T,>(array: T[], keyFn?: (item: T) => string | number) => {
     return useMemo(() => {
       if (keyFn) {
         return array.map((item, index) => ({ ...item, _key: keyFn(item) || index }));
