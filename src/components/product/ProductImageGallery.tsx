@@ -3,8 +3,9 @@ import React, { useState, useEffect, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getImageLoading } from '@/utils/imageUtils';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
+import { useOptimizedProductImages } from '@/hooks/useOptimizedProductImages';
+import { useImagePreloader } from '@/hooks/useImagePreloader';
 import { toAbsoluteURL } from '@/utils/urlUtils';
 
 interface ProductImageGalleryProps {
@@ -22,49 +23,43 @@ const ProductImageGallery = ({
   placeholder,
   category
 }: ProductImageGalleryProps) => {
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
-  const [imageError, setImageError] = useState(false);
   const [isZoomed, setIsZoomed] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
   const [thumbnailsVisible, setThumbnailsVisible] = useState(false);
-  const [useContainFallback, setUseContainFallback] = useState(false);
 
-  // Ensure we have a valid images array
-  const validImages = Array.isArray(images) && images.length > 0 
-    ? images 
-    : [placeholder(category || '')];
+  const {
+    currentImages,
+    activeImageIndex,
+    setActiveImageIndex,
+    hasMultipleImages
+  } = useOptimizedProductImages({
+    images,
+    selectedColor,
+    category,
+    productId: productName
+  });
 
-  // Initialize images loaded state array
+  // Preload all gallery images with lower priority
+  useImagePreloader(currentImages, {
+    enabled: currentImages.length > 0,
+    priority: 'low',
+    delay: 500
+  });
+
+  // Show thumbnails after slight delay for better perceived loading
   useEffect(() => {
-    setImagesLoaded(Array(validImages.length).fill(false));
-    setImageError(false);
-    setUseContainFallback(false);
-    
-    // Show thumbnails after slight delay for better perceived loading
     const timer = setTimeout(() => {
       setThumbnailsVisible(true);
     }, 300);
     
     return () => clearTimeout(timer);
-  }, [validImages.length]);
+  }, [currentImages]);
 
-  // Reset active image index when color or images change
+  // Reset states when color or images change
   useEffect(() => {
     setActiveImageIndex(0);
-    setImageError(false);
-    setUseContainFallback(false);
-  }, [selectedColor, validImages]);
-
-  // Handle image loading complete
-  const handleImageLoaded = useCallback((index: number) => {
-    setImagesLoaded(prev => {
-      const newState = [...prev];
-      newState[index] = true;
-      return newState;
-    });
-  }, []);
+  }, [selectedColor, currentImages]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const { left, top, width, height } = e.currentTarget.getBoundingClientRect();
@@ -94,43 +89,15 @@ const ProductImageGallery = ({
   };
 
   const nextImage = () => {
-    setActiveImageIndex(prev => (prev === validImages.length - 1 ? 0 : prev + 1));
+    setActiveImageIndex(prev => (prev === currentImages.length - 1 ? 0 : prev + 1));
   };
 
   const prevImage = () => {
-    setActiveImageIndex(prev => (prev === 0 ? validImages.length - 1 : prev - 1));
+    setActiveImageIndex(prev => (prev === 0 ? currentImages.length - 1 : prev - 1));
   };
   
-  const currentImage = validImages[activeImageIndex] ? toAbsoluteURL(validImages[activeImageIndex]) : '';
+  const currentImage = currentImages[activeImageIndex];
   const placeholderImage = placeholder(category || '');
-  
-  // Preload adjacent images for smoother navigation
-  useEffect(() => {
-    if (validImages.length <= 1) return;
-    
-    const nextIdx = activeImageIndex === validImages.length - 1 ? 0 : activeImageIndex + 1;
-    const prevIdx = activeImageIndex === 0 ? validImages.length - 1 : activeImageIndex - 1;
-    
-    // Preload next and previous images
-    const preloadImages = [nextIdx, prevIdx].map(idx => {
-      if (validImages[idx]) {
-        const img = new Image();
-        img.src = toAbsoluteURL(validImages[idx]);
-        return img;
-      }
-      return null;
-    });
-    
-    // Cleanup
-    return () => {
-      preloadImages.forEach(img => {
-        if (img) {
-          img.onload = null;
-          img.onerror = null;
-        }
-      });
-    };
-  }, [activeImageIndex, validImages]);
 
   return (
     <div className="bg-white rounded-2xl overflow-hidden">
@@ -153,30 +120,14 @@ const ProductImageGallery = ({
           >
             <AspectRatio ratio={1/1}>
               <div className="relative w-full h-full overflow-hidden">
-                {!imagesLoaded[activeImageIndex] && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-gray-100 animate-pulse">
-                    <Skeleton className="h-full w-full" />
-                  </div>
-                )}
-                
-                <img 
+                <OptimizedImage
                   src={currentImage || placeholderImage}
                   alt={`${productName} - ${selectedColor} - Imagem ${activeImageIndex + 1}`}
-                  className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply p-4 transition-transform duration-200 ${
-                    !imagesLoaded[activeImageIndex] ? 'opacity-0' : 'opacity-100'
-                  }`}
+                  className="w-full h-full object-cover object-center mix-blend-multiply p-4 transition-transform duration-200"
                   style={imageStyle}
-                  loading={getImageLoading(activeImageIndex === 0 ? true : false)}
-                  onLoad={() => handleImageLoaded(activeImageIndex)}
-                  onError={(e) => {
-                    console.log("Image error for:", currentImage);
-                    setUseContainFallback(true);
-                    if (e.currentTarget) {
-                      e.currentTarget.style.objectFit = 'contain';
-                      e.currentTarget.src = placeholderImage;
-                    }
-                  }}
-                  decoding={activeImageIndex === 0 ? "sync" : "async"}
+                  priority={activeImageIndex === 0 ? 'high' : 'medium'}
+                  eager={activeImageIndex === 0}
+                  showSkeleton={true}
                 />
               </div>
             </AspectRatio>
@@ -187,7 +138,7 @@ const ProductImageGallery = ({
             </div>
             
             {/* Navigation Arrows */}
-            {validImages.length > 1 && !imageError && (
+            {hasMultipleImages && (
               <>
                 <button 
                   onClick={prevImage}
@@ -207,15 +158,15 @@ const ProductImageGallery = ({
             )}
           </div>
           
-          {/* Thumbnails - only show when ready */}
-          {validImages.length > 1 && !imageError && thumbnailsVisible && (
+          {/* Thumbnails - optimized with lazy loading */}
+          {hasMultipleImages && thumbnailsVisible && (
             <motion.div 
               className="flex justify-center gap-3 mt-4 overflow-x-auto py-2 hide-scrollbar"
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              {validImages.map((img, index) => (
+              {currentImages.map((img, index) => (
                 <motion.button
                   key={`thumb-${index}`}
                   onClick={() => handleImageClick(index)}
@@ -226,29 +177,15 @@ const ProductImageGallery = ({
                   }`}
                   aria-label={`Ver imagem ${index + 1}`}
                 >
-                  {/* Thumbnail skeleton */}
-                  {!imagesLoaded[index] && (
-                    <Skeleton className="h-full w-full absolute inset-0" />
-                  )}
-                  <div className="relative w-full h-full overflow-hidden">
-                    <img 
-                      src={toAbsoluteURL(img)}
-                      alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
-                      className={`h-full w-full object-cover object-center bg-[#FAFAFA] mix-blend-multiply p-1 ${
-                        !imagesLoaded[index] ? 'opacity-0' : 'opacity-100'
-                      }`}
-                      loading="lazy"
-                      decoding="async"
-                      onLoad={() => handleImageLoaded(index)}
-                      onError={(e) => {
-                        console.log("Thumbnail error loading:", img);
-                        if (e.currentTarget) {
-                          e.currentTarget.style.objectFit = 'contain';
-                          e.currentTarget.src = placeholderImage;
-                        }
-                      }}
-                    />
-                  </div>
+                  <OptimizedImage
+                    src={img}
+                    alt={`${productName} - ${selectedColor} - Miniatura ${index + 1}`}
+                    className="h-full w-full object-cover object-center bg-[#FAFAFA] mix-blend-multiply p-1"
+                    priority="low"
+                    eager={false}
+                    showSkeleton={true}
+                    skeletonClassName="h-16 w-16"
+                  />
                 </motion.button>
               ))}
             </motion.div>
@@ -274,10 +211,12 @@ const ProductImageGallery = ({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="relative w-full h-full overflow-hidden">
-                <img 
+                <OptimizedImage
                   src={currentImage || placeholderImage}
                   alt={`${productName} - Vista ampliada`}
                   className="max-w-full max-h-[90vh] object-contain"
+                  priority="high"
+                  eager={true}
                 />
               </div>
               <button
@@ -289,7 +228,7 @@ const ProductImageGallery = ({
               </button>
               
               {/* Navigation buttons in lightbox */}
-              {validImages.length > 1 && (
+              {hasMultipleImages && (
                 <>
                   <button
                     onClick={(e) => {
@@ -321,5 +260,4 @@ const ProductImageGallery = ({
   );
 };
 
-// Use memo to prevent unnecessary re-renders
 export default memo(ProductImageGallery);

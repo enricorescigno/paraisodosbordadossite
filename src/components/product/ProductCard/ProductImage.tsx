@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { OptimizedImage } from '@/components/ui/OptimizedImage';
 import { toAbsoluteURL } from '@/utils/urlUtils';
 
 interface ProductImageProps {
@@ -113,25 +114,22 @@ const ProductImage = ({ id, name, imageUrl, images }: ProductImageProps) => {
   return (
     <div className="w-full aspect-square bg-white rounded-2xl p-6 mb-4 overflow-hidden relative shadow-sm hover:shadow-md transition-shadow duration-300">
       <div className="relative w-full h-full aspect-square overflow-hidden" style={{ width: '100%', aspectRatio: '1/1', position: 'relative' }}>
-        <motion.img
-          src={optimizedImageUrl}
-          alt={`Produto: ${name}`}
-          className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply`}
-          loading="lazy"
-          whileHover={{
-            scale: 1.05
-          }}
-          transition={{
-            duration: 0.3
-          }}
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.onerror = null;
-            setUseContainFallback(true);
-            target.style.objectFit = 'contain';
-            target.src = getPlaceholderImage(name);
-          }}
-        />
+        <motion.div
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
+          className="w-full h-full"
+        >
+          <OptimizedImage
+            src={optimizedImageUrl}
+            alt={`Produto: ${name}`}
+            className={`w-full h-full ${useContainFallback ? 'object-contain' : 'object-cover'} object-center mix-blend-multiply`}
+            priority="medium"
+            showSkeleton={true}
+            onImageError={() => {
+              setUseContainFallback(true);
+            }}
+          />
+        </motion.div>
       </div>
     </div>
   );
