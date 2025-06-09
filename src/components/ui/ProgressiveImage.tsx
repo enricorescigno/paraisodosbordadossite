@@ -1,12 +1,13 @@
-import React, { useState, useEffect, forwardRef } from 'react';
+
+import React, { useState, useEffect, forwardRef, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Skeleton } from '@/components/ui/skeleton';
-import { imageOptimizer } from '@/services/ImageOptimizer';
+import { imageOptimizer, ResponsiveImageSet } from '@/services/ImageOptimizer';
 import { imageManager } from '@/services/ImageManager';
 import { useImageAnalytics } from '@/hooks/useImageAnalytics';
 import { toAbsoluteURL } from '@/utils/urlUtils';
 
-interface ProgressiveImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src' | 'srcSet' | 'sizes'> {
+interface ProgressiveImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src' | 'srcSet' | 'sizes' | 'onLoad' | 'onError'> {
   src: string;
   alt: string;
   maxWidth?: number;
@@ -252,32 +253,6 @@ export const ProgressiveImage = forwardRef<HTMLImageElement, ProgressiveImagePro
     };
   }, [responsiveSet, placeholderLoaded, lowQualityLoaded, onLoad, onError]);
 
-  const getImageOpacity = () => {
-    switch (loadingStage) {
-      case 'skeleton':
-      case 'placeholder':
-        return 0.6;
-      case 'lowQuality':
-        return 0.8;
-      case 'highQuality':
-      case 'complete':
-        return 1;
-      default:
-        return 0;
-    }
-  };
-
-  const getImageFilter = () => {
-    switch (loadingStage) {
-      case 'placeholder':
-        return 'blur(8px)';
-      case 'lowQuality':
-        return 'blur(2px)';
-      default:
-        return 'none';
-    }
-  };
-
   return (
     <div className="relative overflow-hidden" style={{ aspectRatio: aspectRatio || 'auto' }}>
       {showSkeleton && isLoading && !currentSrc && (
@@ -300,7 +275,7 @@ export const ProgressiveImage = forwardRef<HTMLImageElement, ProgressiveImagePro
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
-          {...props}
+          {...(props as any)}
         />
       )}
     </div>

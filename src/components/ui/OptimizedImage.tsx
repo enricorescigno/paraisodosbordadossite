@@ -3,7 +3,7 @@ import React, { forwardRef } from 'react';
 import { ProgressiveImage } from '@/components/ui/ProgressiveImage';
 import { useImageAnalytics } from '@/hooks/useImageAnalytics';
 
-interface OptimizedImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src' | 'loading'> {
+interface OptimizedImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src' | 'loading' | 'onLoad' | 'onError'> {
   src: string;
   alt: string;
   priority?: 'high' | 'medium' | 'low';
@@ -44,7 +44,7 @@ export const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
   });
 
   const handleLoad = () => {
-    trackLoadSuccess(0, 'unknown', false, priority); // File size would be detected in ProgressiveImage
+    trackLoadSuccess(0, 'unknown', false, priority);
     onImageLoad?.();
   };
 

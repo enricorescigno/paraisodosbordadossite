@@ -67,7 +67,8 @@ export class ImageAnalytics {
     const existing = this.metrics.get(entry.name);
     if (existing) {
       existing.loadTime = entry.duration;
-      existing.renderTime = entry.loadEventEnd - entry.loadEventStart;
+      // Use responseEnd - responseStart as a proxy for render time
+      existing.renderTime = entry.responseEnd - entry.responseStart;
     }
   }
 

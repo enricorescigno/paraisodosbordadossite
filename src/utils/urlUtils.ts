@@ -1,24 +1,17 @@
 
-/**
- * Converts a relative path to an absolute URL
- * @param path - The path to convert
- * @returns Absolute URL path
- */
-export const toAbsoluteURL = (path: string | undefined): string => {
-  if (!path) return '/placeholder.svg';
+export const toAbsoluteURL = (url: string): string => {
+  if (!url) return '';
   
-  // If it's already an absolute URL or a base64 data URL, return it as is
-  if (path.startsWith('http') || path.startsWith('data:')) {
-    return path;
+  // If already absolute URL, return as is
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
   }
   
-  // Make sure the path starts with a slash
-  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
-  
-  // Check if the path is actually valid to prevent issues
-  if (normalizedPath === '/' || normalizedPath.length < 2) {
-    return '/placeholder.svg';
+  // If starts with /, make it relative to current origin
+  if (url.startsWith('/')) {
+    return `${window.location.origin}${url}`;
   }
   
-  return normalizedPath;
+  // If relative path, make it relative to current origin
+  return `${window.location.origin}/${url}`;
 };
