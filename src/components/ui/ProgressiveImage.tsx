@@ -185,7 +185,7 @@ export const ProgressiveImage = React.forwardRef<HTMLImageElement, ProgressiveIm
       </AnimatePresence>
 
       {currentImageUrl && (
-        <motion.img
+        <img
           ref={(node) => {
             if (typeof ref === 'function') {
               ref(node);
@@ -206,9 +206,6 @@ export const ProgressiveImage = React.forwardRef<HTMLImageElement, ProgressiveIm
             filter: getImageFilter(),
             transition: 'opacity 0.3s ease, filter 0.3s ease'
           }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: getImageOpacity() }}
-          transition={{ duration: 0.3 }}
           {...props}
         />
       )}

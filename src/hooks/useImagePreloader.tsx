@@ -1,6 +1,7 @@
 
 import { useEffect, useRef } from 'react';
-import { imageManager } from '@/services/ImageManager';
+import { useSmartPreloader } from '@/hooks/useSmartPreloader';
+import { useAdaptiveLoading } from '@/hooks/useAdaptiveLoading';
 
 interface UseImagePreloaderOptions {
   enabled?: boolean;
@@ -13,27 +14,24 @@ export const useImagePreloader = (
   options: UseImagePreloaderOptions = {}
 ) => {
   const { enabled = true, priority = 'low', delay = 100 } = options;
-  const preloadedRef = useRef(new Set<string>());
+  const { shouldPreloadImages, getPreloadCount } = useAdaptiveLoading();
 
-  useEffect(() => {
-    if (!enabled || urls.length === 0) return;
+  // Limit URLs based on connection quality
+  const maxUrls = getPreloadCount();
+  const limitedUrls = urls.slice(0, maxUrls);
 
-    const newUrls = urls.filter(url => !preloadedRef.current.has(url));
-    if (newUrls.length === 0) return;
-
-    const timeoutId = setTimeout(() => {
-      imageManager.preloadImages(newUrls, { priority })
-        .then(() => {
-          newUrls.forEach(url => preloadedRef.current.add(url));
-        })
-        .catch(console.error);
-    }, delay);
-
-    return () => clearTimeout(timeoutId);
-  }, [urls, enabled, priority, delay]);
+  const { loadedUrls, isLoading, progress } = useSmartPreloader({
+    urls: limitedUrls,
+    enabled: enabled && shouldPreloadImages(),
+    priority,
+    delay,
+    maxConcurrent: 2
+  });
 
   return {
-    preloadedCount: preloadedRef.current.size,
-    isPreloading: urls.some(url => !preloadedRef.current.has(url))
+    preloadedCount: loadedUrls.size,
+    isPreloading: isLoading,
+    progress,
+    totalUrls: limitedUrls.length
   };
 };

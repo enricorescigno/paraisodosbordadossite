@@ -72,7 +72,7 @@ export class ImageOptimizer {
         lowQuality.push({
           url: lowUrl,
           width,
-          format,
+          format: format as 'avif' | 'webp' | 'jpeg' | 'png',
           quality: 'low'
         });
 
@@ -87,7 +87,7 @@ export class ImageOptimizer {
         highQuality.push({
           url: highUrl,
           width,
-          format,
+          format: format as 'avif' | 'webp' | 'jpeg' | 'png',
           quality: 'high'
         });
 

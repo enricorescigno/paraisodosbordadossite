@@ -1,6 +1,6 @@
 
 import { useState, useEffect, useCallback } from 'react';
-import { useImagePreloader } from '@/hooks/useImagePreloader';
+import { useAdvancedImagePreloader } from '@/hooks/useAdvancedImagePreloader';
 import { imageManager } from '@/services/ImageManager';
 import { toAbsoluteURL } from '@/utils/urlUtils';
 import { getImagePlaceholder } from '@/utils/imageUtils';
@@ -50,29 +50,19 @@ export const useOptimizedProductImages = ({
     setActiveImageIndex(0);
   }, [images, selectedColor, processImages]);
 
-  // Preload current and adjacent images
-  const preloadUrls = currentImages.slice(
-    Math.max(0, activeImageIndex - 1),
-    activeImageIndex + 4
-  );
-
-  useImagePreloader(preloadUrls, {
+  // Advanced preloading with smart strategy
+  const { loadedUrls, isLoading, strategy } = useAdvancedImagePreloader({
+    images: currentImages,
+    currentIndex: activeImageIndex,
     enabled: currentImages.length > 0,
-    priority: 'high'
+    strategy: 'smart'
   });
 
-  // Preload next images when index changes
-  useEffect(() => {
-    if (currentImages.length > 1) {
-      imageManager.preloadNextImages(activeImageIndex, currentImages.length, currentImages);
-    }
-  }, [activeImageIndex, currentImages]);
-
   const getImageLoadingState = (index: number) => {
-    // This is now handled by the OptimizedImage component
+    const imageUrl = currentImages[index];
     return {
-      loading: false,
-      loaded: true,
+      loading: isLoading && !loadedUrls.has(imageUrl),
+      loaded: loadedUrls.has(imageUrl),
       error: false,
     };
   };
@@ -83,5 +73,7 @@ export const useOptimizedProductImages = ({
     setActiveImageIndex,
     getImageLoadingState,
     hasMultipleImages: currentImages.length > 1,
+    preloadedCount: loadedUrls.size,
+    loadingStrategy: strategy
   };
 };
