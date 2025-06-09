@@ -4,8 +4,8 @@
 
 const API_BASE_URL = "https://sgps.sgsistemas.com.br:8201"; // Changed to HTTPS
 const getAuthHeader = () => {
-  const username = process.env.VITE_API_USERNAME || "";
-  const password = process.env.VITE_API_PASSWORD || "";
+  const username = import.meta.env.VITE_API_USERNAME || "";
+  const password = import.meta.env.VITE_API_PASSWORD || "";
   
   if (!username || !password) {
     console.error("API credentials not configured");

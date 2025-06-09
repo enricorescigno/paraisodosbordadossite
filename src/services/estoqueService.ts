@@ -4,8 +4,8 @@
 
 const API_BASE_URL = "https://sgps.sgsistemas.com.br:8201"; // Changed to HTTPS
 const AUTH = {
-  usuario: process.env.VITE_API_USERNAME || "", // Use environment variables
-  senha: process.env.VITE_API_PASSWORD || ""   // Use environment variables
+  usuario: import.meta.env.VITE_API_USERNAME || "", // Use import.meta.env for Vite
+  senha: import.meta.env.VITE_API_PASSWORD || ""   // Use import.meta.env for Vite
 };
 
 /**
