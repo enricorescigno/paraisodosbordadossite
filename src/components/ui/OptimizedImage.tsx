@@ -1,7 +1,6 @@
 
 import React, { forwardRef } from 'react';
-import { useOptimizedImage } from '@/hooks/useOptimizedImage';
-import { Skeleton } from '@/components/ui/skeleton';
+import { ProgressiveImage } from '@/components/ui/ProgressiveImage';
 
 interface OptimizedImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'src' | 'loading'> {
   src: string;
@@ -11,6 +10,8 @@ interface OptimizedImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElem
   placeholder?: string;
   showSkeleton?: boolean;
   skeletonClassName?: string;
+  maxWidth?: number;
+  aspectRatio?: number;
   onImageLoad?: () => void;
   onImageError?: (error: Error) => void;
 }
@@ -23,53 +24,32 @@ export const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
   placeholder,
   showSkeleton = true,
   skeletonClassName,
+  maxWidth = 1200,
+  aspectRatio,
   onImageLoad,
   onImageError,
   className,
   style,
   ...props
 }, forwardedRef) => {
-  const { src: optimizedSrc, isLoading, error, ref } = useOptimizedImage(src, {
-    priority,
-    eager,
-    placeholder,
-    onLoad: onImageLoad,
-    onError: onImageError
-  });
+  const isPriority = priority === 'high' || eager;
 
   return (
-    <div className="relative" style={style}>
-      {isLoading && showSkeleton && (
-        <Skeleton className={`absolute inset-0 ${skeletonClassName || ''}`} />
-      )}
-      
-      <img
-        ref={(node) => {
-          if (typeof forwardedRef === 'function') {
-            forwardedRef(node);
-          } else if (forwardedRef) {
-            forwardedRef.current = node;
-          }
-          if (ref) {
-            (ref as React.MutableRefObject<HTMLImageElement | null>).current = node;
-          }
-        }}
-        src={optimizedSrc}
-        alt={alt}
-        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
-        style={{
-          ...style,
-          ...(isLoading ? { visibility: 'hidden' } : {})
-        }}
-        {...props}
-      />
-      
-      {error && !optimizedSrc && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-500 text-sm">
-          Erro ao carregar imagem
-        </div>
-      )}
-    </div>
+    <ProgressiveImage
+      ref={forwardedRef}
+      src={src}
+      alt={alt}
+      maxWidth={maxWidth}
+      aspectRatio={aspectRatio}
+      priority={isPriority}
+      showSkeleton={showSkeleton}
+      skeletonClassName={skeletonClassName}
+      onLoad={onImageLoad}
+      onError={onImageError}
+      className={className}
+      style={style}
+      {...props}
+    />
   );
 });
 
