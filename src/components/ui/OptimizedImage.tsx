@@ -34,6 +34,15 @@ export const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
 }, forwardedRef) => {
   const isPriority = priority === 'high' || eager;
 
+  const handleLoad = () => {
+    onImageLoad?.();
+  };
+
+  const handleError = () => {
+    const error = new Error(`Failed to load image: ${src}`);
+    onImageError?.(error);
+  };
+
   return (
     <ProgressiveImage
       ref={forwardedRef}
@@ -44,8 +53,8 @@ export const OptimizedImage = forwardRef<HTMLImageElement, OptimizedImageProps>(
       priority={isPriority}
       showSkeleton={showSkeleton}
       skeletonClassName={skeletonClassName}
-      onLoad={onImageLoad}
-      onError={onImageError}
+      onLoad={handleLoad}
+      onError={handleError}
       className={className}
       style={style}
       {...props}
